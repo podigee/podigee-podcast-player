@@ -3,10 +3,14 @@
   <head>
     <link rel="stylesheet" href="build/stylesheets/app.css"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <script src="src/lib/jquery.1.11.0.min.js"></script>
     <script src="src/lib/mediaelement.js"></script>
   </head>
   <body>
+    <header>
+      <h1><a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a> Podcast Player</h1>
+    </header>
 
     <div class="video-player">
       <div class="info">
@@ -32,6 +36,45 @@
         <span class="speed" title="Playback speed">1x</span>
       </div>
     </div>
+
+    <div class="explain">
+      <p>This is a work in progress. It is lacking organization of code as well as some essential features.</p>
+      <p>We are developing the player to be used on our Podcast Publishing Platform <a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a>. Use in other areas is highly encouraged though!</p>
+      <p>Technically it is based on the excellent <a href="https://developer.mozilla.org/en/docs/Web/API/HTMLMediaElement">HTML5 Media Element API</a> and <a href="http://mediaelementjs.com/">mediaelement.js</a> (e.g. for flash fallback).</p>
+      <p>Find a list of current as well as future features below. If you have ideas or wishes regarding features or capabilities, or would like to contribute, please get in touch:</p>
+      <p class="mail-address"><a href="mailto:hello@podigee.com">hello@podigee.com</a></p>
+      <h2>Current capabilities</h2>
+      <ul>
+        <li>HTML5 first</li>
+        <li>play/pause, fast-forward/-backward</li>
+        <li>playback speed</li>
+        <li>drag to seek</li>
+        <li>click to jump</li>
+        <li>loading animation</li>
+        <li>show time played/time left</li>
+        <li>display logo/title/description</li>
+      </ul>
+
+      <h2>Capabilities to come</h2>
+      <ul>
+        <li>flash fallback</li>
+        <li>cross browser compatibility</li>
+        <li>browser feature detection</li>
+        <li>chapter mark list</li>
+        <li>jump to timestamp from URL</li>
+        <li>embedding</li>
+        <li>playlist support</li>
+        <li>fully configurable/themable</li>
+        <li>plugin support</li>
+      </ul>
+
+      <h2>License</h2>
+      <p>The code is released under the <a href="https://github.com/podigee/podiplay/blob/master/LICENSE">MIT license</a>.
+    </div>
+
+    <footer>
+      &copy; <a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a> 2014
+    </footer>
 
     <script src="build/javascripts/app.js"></script>
   </body>
