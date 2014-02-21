@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="build/stylesheets/app.css"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="src/lib/jquery.1.11.0.min.js"></script>
+    <script src="src/lib/mediaelement.js"></script>
+  </head>
+  <body>
+
+    <div class="video-player">
+      <div class="info">
+        <img src="samples/podigee-logo-256.png" />
+        <div class="title">Podigee Player Test</div>
+        <div class="description">We are testing a new podcast player.</div>
+      </div>
+      <audio id="player" src="samples/mpthreetest.mp3" preload="metadata"></audio>
+      <div class="time-scrubber">
+        <div class="time-played" title="Switch display mode"></div>
+        <div class="rail">
+          <span class="time-scrubber-loaded"></span>
+          <div class="time-scrubber-buffering"></div>
+          <span class="time-scrubber-played"></span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <i class="fa fa-backward backward" title="Backward 10s"></i>
+        <i class="fa fa-play play" title="Play/Pause"></i>
+        <i class="fa fa-forward forward" title="Forward 30s"></i>
+
+        <span class="speed" title="Playback speed">1x</span>
+      </div>
+    </div>
+
+    <script src="build/javascripts/app.js"></script>
+  </body>
+</html>
