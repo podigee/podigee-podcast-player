@@ -202,5 +202,3 @@ class PodiPlay
     $(@player).on('loadeddata', @triggerLoaded)
     $(@player).on('canplay', @triggerLoaded)
     $(@player).on('error', @triggerError)
-
-player = new PodiPlay('.video-player')

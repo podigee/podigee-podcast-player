@@ -1,4 +1,4 @@
-var PodiPlay, player,
+var PodiPlay,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 PodiPlay = (function() {
@@ -267,5 +267,3 @@ PodiPlay = (function() {
   return PodiPlay;
 
 })();
-
-player = new PodiPlay('.video-player');
