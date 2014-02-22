@@ -1,0 +1,39 @@
+{
+  "name": "podiplay",
+  "title": "Podigee Podcast Player",
+  "homepage": "https://podigee.github.io/podiplay",
+  "version": "0.0.1",
+  "contributors": [{
+    "name": "Benjamin Zimmer",
+    "email": "ben@podigee.com",
+    "url": "https://www.podigee.com"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/podigee/podiplay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/podigee/podiplay/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "keywords": [
+    "podcasting",
+    "podigee",
+    "html5audio",
+    "audio",
+    "podcast",
+    "player"
+  ],
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "gulp-util": "~2.2.14",
+    "gulp-coffee": "~1.4.1",
+    "gulp-ruby-sass": "~0.3.0",
+    "gulp-watch": "~0.5.0"
+  }
+}
