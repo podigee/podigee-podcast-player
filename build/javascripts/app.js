@@ -2,8 +2,8 @@ var PodiPlay, player,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 PodiPlay = (function() {
-  function PodiPlay(elemClass) {
-    var audioElem, that;
+  function PodiPlay(elemClass, options) {
+    var audioElem;
     this.elemClass = elemClass;
     this.jumpForward = __bind(this.jumpForward, this);
     this.jumpBackward = __bind(this.jumpBackward, this);
@@ -22,24 +22,28 @@ PodiPlay = (function() {
     this.togglePlayState = __bind(this.togglePlayState, this);
     this.scrubberWidth = __bind(this.scrubberWidth, this);
     this.elem = $(this.elemClass);
-    audioElem = $(this.elemClass).find('audio')[0];
-    that = this;
+    audioElem = this.elem.find('audio')[0];
+    this.setOptions(options);
     new MediaElement(audioElem, {
-      success: function(media, elem) {
-        return that.init(media, elem);
-      }
+      success: (function(_this) {
+        return function(media, elem) {
+          return _this.init(media, elem);
+        };
+      })(this)
     });
   }
 
-  PodiPlay.prototype.currentPlaybackRate = 1;
+  PodiPlay.prototype.defaultOptions = {
+    currentPlaybackRate: 1,
+    playbackRates: [1.0, 1.5, 2.0],
+    timeMode: 'countup',
+    backwardSeconds: 10,
+    forwardSeconds: 30
+  };
 
-  PodiPlay.prototype.playbackRates = [1.0, 1.5, 2.0];
-
-  PodiPlay.prototype.timeMode = 'countup';
-
-  PodiPlay.prototype.backwardSeconds = 10;
-
-  PodiPlay.prototype.forwardSeconds = 30;
+  PodiPlay.prototype.setOptions = function(options) {
+    return this.options = $.extend(true, this.defaultOptions, options);
+  };
 
   PodiPlay.prototype.init = function(player, elem) {
     var that;
@@ -93,7 +97,7 @@ PodiPlay = (function() {
   };
 
   PodiPlay.prototype.switchTimeDisplay = function() {
-    this.timeMode = this.timeMode === 'countup' ? 'countdown' : 'countup';
+    this.options.timeMode = this.options.timeMode === 'countup' ? 'countdown' : 'countup';
     return this.updateTime();
   };
 
@@ -125,7 +129,7 @@ PodiPlay = (function() {
 
   PodiPlay.prototype.updateTime = function() {
     var prefix, time, timeString;
-    time = this.timeMode === 'countup' ? (prefix = '', this.player.currentTime) : (prefix = '-', this.player.duration - this.player.currentTime);
+    time = this.options.timeMode === 'countup' ? (prefix = '', this.player.currentTime) : (prefix = '-', this.player.duration - this.player.currentTime);
     timeString = this.secondsToHHMMSS(time);
     this.timeElement.text(prefix + timeString);
     return this.updateScrubber();
@@ -185,21 +189,21 @@ PodiPlay = (function() {
 
   PodiPlay.prototype.changePlaySpeed = function() {
     var nextRate;
-    nextRate = this.playbackRates.indexOf(this.currentPlaybackRate) + 1;
-    if (nextRate >= this.playbackRates.length) {
+    nextRate = this.options.playbackRates.indexOf(this.options.currentPlaybackRate) + 1;
+    if (nextRate >= this.options.playbackRates.length) {
       nextRate = 0;
     }
-    this.player.playbackRate = this.currentPlaybackRate = this.playbackRates[nextRate];
-    return $(event.target).text("" + this.currentPlaybackRate + "x");
+    this.player.playbackRate = this.options.currentPlaybackRate = this.options.playbackRates[nextRate];
+    return $(event.target).text("" + this.options.currentPlaybackRate + "x");
   };
 
   PodiPlay.prototype.jumpBackward = function(seconds) {
-    seconds = seconds || this.backwardSeconds;
+    seconds = seconds || this.options.backwardSeconds;
     return this.player.currentTime = this.player.currentTime - seconds;
   };
 
   PodiPlay.prototype.jumpForward = function(seconds) {
-    seconds = seconds || this.forwardSeconds;
+    seconds = seconds || this.options.forwardSeconds;
     return this.player.currentTime = this.player.currentTime + seconds;
   };
 

@@ -1,17 +1,22 @@
 class PodiPlay
-  constructor: (@elemClass) ->
+  constructor: (@elemClass, options) ->
     @elem = $(@elemClass)
-    audioElem = $(@elemClass).find('audio')[0]
-    that = @
-    new MediaElement(audioElem, {success: (media, elem) -> that.init(media, elem) })
+    audioElem = @elem.find('audio')[0]
+    @setOptions(options)
+    new MediaElement(audioElem, {success: (media, elem) => @init(media, elem) })
 
   # options
 
-  currentPlaybackRate: 1
-  playbackRates: [1.0, 1.5, 2.0]
-  timeMode: 'countup'
-  backwardSeconds: 10
-  forwardSeconds: 30
+  defaultOptions: {
+    currentPlaybackRate: 1
+    playbackRates: [1.0, 1.5, 2.0]
+    timeMode: 'countup'
+    backwardSeconds: 10
+    forwardSeconds: 30
+  }
+
+  setOptions: (options) ->
+    @options = $.extend(true, @defaultOptions, options)
 
   init: (@player, elem) ->
     that = @
@@ -58,7 +63,7 @@ class PodiPlay
     @playPauseElement.toggleClass('fa-pause')
 
   switchTimeDisplay: =>
-    @timeMode = if @timeMode == 'countup'
+    @options.timeMode = if @options.timeMode == 'countup'
       'countdown'
     else
       'countup'
@@ -93,7 +98,7 @@ class PodiPlay
   # event handlers
 
   updateTime: =>
-    time = if @timeMode == 'countup'
+    time = if @options.timeMode == 'countup'
       prefix = ''
       @player.currentTime
     else
@@ -143,18 +148,18 @@ class PodiPlay
     @jumpToPosition(position)
 
   changePlaySpeed: () =>
-    nextRate = @playbackRates.indexOf(@currentPlaybackRate) + 1
-    if nextRate >= @playbackRates.length
+    nextRate = @options.playbackRates.indexOf(@options.currentPlaybackRate) + 1
+    if nextRate >= @options.playbackRates.length
       nextRate = 0
-    @player.playbackRate = @currentPlaybackRate = @playbackRates[nextRate]
-    $(event.target).text("#{@currentPlaybackRate}x")
+    @player.playbackRate = @options.currentPlaybackRate = @options.playbackRates[nextRate]
+    $(event.target).text("#{@options.currentPlaybackRate}x")
 
   jumpBackward: (seconds) =>
-    seconds = seconds || @backwardSeconds
+    seconds = seconds || @options.backwardSeconds
     @player.currentTime = @player.currentTime - seconds
 
   jumpForward: (seconds) =>
-    seconds = seconds || @forwardSeconds
+    seconds = seconds || @options.forwardSeconds
     @player.currentTime = @player.currentTime + seconds
 
   bindButtons: () ->
