@@ -63,6 +63,8 @@ class PodiPlay
     else
       'countup'
 
+    @updateTime()
+
   # used to determine the width of bars for
   # current playtime and loaded data indicator
   timeRailFactor: =>

@@ -93,7 +93,8 @@ PodiPlay = (function() {
   };
 
   PodiPlay.prototype.switchTimeDisplay = function() {
-    return this.timeMode = this.timeMode === 'countup' ? 'countdown' : 'countup';
+    this.timeMode = this.timeMode === 'countup' ? 'countdown' : 'countup';
+    return this.updateTime();
   };
 
   PodiPlay.prototype.timeRailFactor = function() {
