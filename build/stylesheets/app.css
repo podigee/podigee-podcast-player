@@ -104,18 +104,18 @@ footer {
   margin: 5px 0;
   text-align: center;
 }
-.controls .backward, .controls .forward {
+.controls .backward-button, .controls .forward-button {
   font-size: 24px;
   position: relative;
   top: -4px;
 }
-.controls .backward {
+.controls .backward-button {
   margin-right: 10px;
 }
-.controls .forward {
+.controls .forward-button {
   margin-left: 10px;
 }
-.controls .speed {
+.controls .speed-toggle {
   cursor: pointer;
   font-size: 18px;
   margin-top: 10px;
@@ -127,6 +127,7 @@ footer {
   overflow: hidden;
 }
 .time-scrubber .time-played {
+  cursor: pointer;
   float: left;
   font-size: 14px;
   height: 14px;

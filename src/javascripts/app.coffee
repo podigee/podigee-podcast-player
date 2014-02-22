@@ -1,18 +1,48 @@
-init = (me) ->
+class PodiPlay
+  constructor: (@elemClass) ->
+    @elem = $(@elemClass)
+    audioElem = $(@elemClass).find('audio')[0]
+    that = @
+    new MediaElement(audioElem, {success: (media, elem) -> that.init(media, elem) })
 
-  timeElement = $('.time-played')
-  scrubberElement = $('.time-scrubber')
-  scrubberPlayedElement = scrubberElement.find('.time-scrubber-played')
-  scrubberLoadedElement = scrubberElement.find('.time-scrubber-loaded')
-  scrubberBufferingElement = scrubberElement.find('.time-scrubber-buffering')
-  scrubberRailElement = scrubberElement.find('.rail')
-  scrubberWidth = -> scrubberRailElement.width()
-  timeMode = 'countup'
-  currentPlaybackRate = 1
-  playbackRates = [1.0, 1.5, 2.0]
+  # options
 
-  initLoadingAnimation = ->
-    elem = scrubberElement.find('.time-scrubber-buffering')
+  currentPlaybackRate: 1
+  playbackRates: [1.0, 1.5, 2.0]
+  timeMode: 'countup'
+  backwardSeconds: 10
+  forwardSeconds: 30
+
+  init: (@player, elem) ->
+    that = @
+    @findElements()
+    @initScrubber()
+    @bindButtons()
+    @bindPlayerEvents()
+
+  findElements: ->
+    @scrubberElement = @elem.find('.time-scrubber')
+    @timeElement = @elem.find('.time-played')
+    @scrubberRailElement = @scrubberElement.find('.rail')
+    @scrubberPlayedElement = @scrubberElement.find('.time-scrubber-played')
+    @scrubberLoadedElement = @scrubberElement.find('.time-scrubber-loaded')
+    @scrubberBufferingElement = @scrubberElement.find('.time-scrubber-buffering')
+    @playPauseElement = @elem.find('.play-button')
+    @backwardElement = @elem.find('.backward-button')
+    @forwardElement = @elem.find('.forward-button')
+    @speedElement = @elem.find('.speed-toggle')
+
+  scrubberWidth: => @scrubberRailElement.width()
+
+  # initialize elements
+
+  initScrubber: ->
+    newWidth = @scrubberElement.width() - @timeElement.width()
+    @scrubberRailElement.width(newWidth)
+    @initLoadingAnimation()
+
+  initLoadingAnimation: ->
+    elem = @scrubberElement.find('.time-scrubber-buffering')
     bar = $('<div>').addClass('time-scrubber-buffering-bar')
     line = $('<div>').addClass('time-scrubber-buffering-line')
 
@@ -23,138 +53,147 @@ init = (me) ->
 
     elem.append(bar)
 
-  initScrubber = ->
-    newWidth = scrubberElement.width() - timeElement.width()
-    scrubberRailElement.width(newWidth)
-    initLoadingAnimation()
+  togglePlayState: (elem) =>
+    @playPauseElement.toggleClass('fa-play')
+    @playPauseElement.toggleClass('fa-pause')
 
-  initScrubber()
+  switchTimeDisplay: =>
+    @timeMode = if @timeMode == 'countup'
+      'countdown'
+    else
+      'countup'
 
-  updateTime = ->
-    time = if timeMode == 'countup'
+  # used to determine the width of bars for
+  # current playtime and loaded data indicator
+  timeRailFactor: =>
+    duration = @player.duration
+    @scrubberWidth()/duration
+
+  secondsToHHMMSS: (seconds) ->
+    hours   = Math.floor(seconds / 3600)
+    minutes = Math.floor((seconds - (hours * 3600)) / 60)
+    seconds = seconds - (hours * 3600) - (minutes * 60)
+
+    seconds = seconds.toFixed(0)
+
+    hours = @padNumber(hours)
+    minutes = @padNumber(minutes)
+    seconds = @padNumber(seconds)
+
+    "#{hours}:#{minutes}:#{seconds}"
+
+  padNumber: (number) ->
+    if number < 10
+      "0#{number}"
+    else
+      number
+
+  # event handlers
+
+  updateTime: =>
+    time = if @timeMode == 'countup'
       prefix = ''
-      me.currentTime
+      @player.currentTime
     else
       prefix = '-'
-      me.duration - me.currentTime
+      @player.duration - @player.currentTime
 
-    timeString = secondsToHHMMSS(time)
-    timeElement.text(prefix + timeString)
+    timeString = @secondsToHHMMSS(time)
+    @timeElement.text(prefix + timeString)
 
-    updateScrubber()
+    @updateScrubber()
 
-  switchTimeDisplay = ->
-    if timeMode == 'countup'
-      timeMode = 'countdown'
-    else
-      timeMode = 'countup'
+  updateScrubber: () =>
+    newWidth = @player.currentTime * @timeRailFactor()
+    @scrubberPlayedElement.width(newWidth)
 
-  secondsToHHMMSS = (seconds) ->
-      hours   = Math.floor(seconds / 3600)
-      minutes = Math.floor((seconds - (hours * 3600)) / 60)
-      seconds = seconds - (hours * 3600) - (minutes * 60)
+  updateLoaded: (event) =>
+    if @player.buffered.length
+      newStart = @player.buffered.start(0) * @timeRailFactor()
+      newWidth = @player.buffered.end(0) * @timeRailFactor()
+      @scrubberLoadedElement.css('margin-left', newStart)
+      @scrubberLoadedElement.width(newWidth)
 
-      seconds = seconds.toFixed(0)
+  triggerLoading: =>
+    @updateLoaded()
+    @scrubberBufferingElement.show()
 
-      if hours < 10
-        hours = "0#{hours}"
-      if minutes < 10
-        minutes = "0#{minutes}"
-      if seconds < 10
-        seconds = "0#{seconds}"
+  triggerPlaying: =>
+    @updateLoaded()
+    @scrubberBufferingElement.hide()
 
-      "#{hours}:#{minutes}:#{seconds}"
+  triggerLoaded: =>
+    @updateLoaded()
+    @scrubberBufferingElement.hide()
 
-  timeRailFactor = ->
-    duration = me.duration
-    scrubberWidth()/duration
+  triggerError: =>
+    @scrubberBufferingElement.hide()
 
-  updateScrubber = () ->
-    newWidth = me.currentTime * timeRailFactor()
-    scrubberPlayedElement.width(newWidth)
-
-  updateLoaded = (event) ->
-    if me.buffered.length
-      newStart = me.buffered.start(0) * timeRailFactor()
-      newWidth = me.buffered.end(0) * timeRailFactor()
-      scrubberLoadedElement.css('margin-left', newStart)
-      scrubberLoadedElement.width(newWidth)
-
-  triggerLoading = ->
-    updateLoaded()
-    scrubberBufferingElement.show()
-
-  triggerPlaying = ->
-    updateLoaded()
-    scrubberBufferingElement.hide()
-
-  triggerLoaded = ->
-    updateLoaded()
-    scrubberBufferingElement.hide()
-
-  triggerError = ->
-    scrubberBufferingElement.hide()
-
-  $(me).on('timeupdate', updateTime)
-  #$(me).on('progress', triggerLoading)
-  $(me).on('play', triggerPlaying)
-  $(me).on('playing', triggerPlaying)
-  $(me).on('seeking', triggerLoading)
-  $(me).on('seeked', triggerLoaded)
-  $(me).on('waiting', triggerLoading)
-  $(me).on('loadeddata', triggerLoaded)
-  $(me).on('canplay', triggerLoaded)
-  $(me).on('error', triggerError)
-
-  togglePlayState = (elem)->
-    $(elem).toggleClass('fa-play')
-    $(elem).toggleClass('fa-pause')
-
-  $('.play').click ->
-    unless me.paused
-      me.pause()
-    else
-      me.play()
-
-    togglePlayState(this)
-
-  $('.backward').click ->
-    me.currentTime = me.currentTime - 10
-
-  $('.forward').click ->
-    me.currentTime = me.currentTime + 30
-
-  $('.speed').click ->
-    nextRate = playbackRates.indexOf(currentPlaybackRate) + 1
-    if nextRate >= playbackRates.length
-      nextRate = 0
-    me.playbackRate = currentPlaybackRate = playbackRates[nextRate]
-    $(this).text("#{currentPlaybackRate}x")
-
-  $('.time-played').click ->
-    switchTimeDisplay()
-
-  jumpToPosition = (position) ->
-    if me.duration
-      pixelPerSecond = me.duration/scrubberWidth()
+  jumpToPosition: (position) =>
+    if @player.duration
+      pixelPerSecond = @player.duration/@scrubberWidth()
       newTime = pixelPerSecond * position
-      unless newTime == me.currentTime
-        me.currentTime = newTime
+      unless newTime == @player.currentTime
+        @player.currentTime = newTime
 
-  handleMouseMove = (event) ->
+  handleMouseMove: (event) =>
     position = event.pageX - $(event.target).offset().left
-    jumpToPosition(position)
+    @jumpToPosition(position)
 
-  $('.rail').on 'mousedown', (event) ->
-    handleMouseMove(event)
+  changePlaySpeed: () =>
+    nextRate = @playbackRates.indexOf(@currentPlaybackRate) + 1
+    if nextRate >= @playbackRates.length
+      nextRate = 0
+    @player.playbackRate = @currentPlaybackRate = @playbackRates[nextRate]
+    $(event.target).text("#{@currentPlaybackRate}x")
 
-    $(this).on 'mousemove', (event) ->
-      handleMouseMove(event)
+  jumpBackward: (seconds) =>
+    seconds = seconds || @backwardSeconds
+    @player.currentTime = @player.currentTime - seconds
 
-    $(this).on 'mouseup', (event) ->
-      $(this).off('mousemove')
+  jumpForward: (seconds) =>
+    seconds = seconds || @forwardSeconds
+    @player.currentTime = @player.currentTime + seconds
 
-me = new MediaElement('player', {success: (media, elem) ->
-  window.init(media)
-})
+  bindButtons: () ->
+    @playPauseElement.click =>
+      if @player.paused
+        @player.play()
+      else
+        @player.pause()
+      @togglePlayState(this)
 
+    @backwardElement.click =>
+      @jumpBackward()
+
+    @forwardElement.click =>
+      @jumpForward()
+
+    @speedElement.click (event) =>
+      @changePlaySpeed()
+
+    @timeElement.click =>
+      @switchTimeDisplay()
+
+    # drag&drop on time rail
+    $('.rail').on 'mousedown', (event) =>
+      @handleMouseMove(event)
+      $(this).on 'mousemove', (event) =>
+        @handleMouseMove(event)
+      $(this).on 'mouseup', (event) =>
+        $(this).off('mousemove')
+        $(this).off('mouseup')
+
+  bindPlayerEvents: () ->
+    $(@player).on('timeupdate', @updateTime)
+    #$(@player).on('progress', @triggerLoading)
+    $(@player).on('play', @triggerPlaying)
+    $(@player).on('playing', @triggerPlaying)
+    $(@player).on('seeking', @triggerLoading)
+    $(@player).on('seeked', @triggerLoaded)
+    $(@player).on('waiting', @triggerLoading)
+    $(@player).on('loadeddata', @triggerLoaded)
+    $(@player).on('canplay', @triggerLoaded)
+    $(@player).on('error', @triggerError)
+
+player = new PodiPlay('.video-player')

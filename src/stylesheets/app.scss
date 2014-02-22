@@ -105,21 +105,21 @@ footer {
   margin: 5px 0;
   text-align: center;
 
-  .backward, .forward {
+  .backward-button, .forward-button {
     font-size: 24px;
     position: relative;
     top: -4px;
   }
 
-  .backward {
+  .backward-button {
     margin-right: 10px;
   }
 
-  .forward {
+  .forward-button {
     margin-left: 10px;
   }
 
-  .speed {
+  .speed-toggle {
     cursor: pointer;
     font-size: 18px;
     margin-top: 10px;
@@ -132,6 +132,7 @@ footer {
   overflow: hidden;
 
   .time-played {
+    cursor: pointer;
     float: left;
     font-size: 14px;
     height: 14px;

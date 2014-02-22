@@ -1,22 +1,83 @@
-var init, me;
+var PodiPlay, player,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-init = function(me) {
-  var currentPlaybackRate, handleMouseMove, initLoadingAnimation, initScrubber, jumpToPosition, playbackRates, scrubberBufferingElement, scrubberElement, scrubberLoadedElement, scrubberPlayedElement, scrubberRailElement, scrubberWidth, secondsToHHMMSS, switchTimeDisplay, timeElement, timeMode, timeRailFactor, togglePlayState, triggerError, triggerLoaded, triggerLoading, triggerPlaying, updateLoaded, updateScrubber, updateTime;
-  timeElement = $('.time-played');
-  scrubberElement = $('.time-scrubber');
-  scrubberPlayedElement = scrubberElement.find('.time-scrubber-played');
-  scrubberLoadedElement = scrubberElement.find('.time-scrubber-loaded');
-  scrubberBufferingElement = scrubberElement.find('.time-scrubber-buffering');
-  scrubberRailElement = scrubberElement.find('.rail');
-  scrubberWidth = function() {
-    return scrubberRailElement.width();
+PodiPlay = (function() {
+  function PodiPlay(elemClass) {
+    var audioElem, that;
+    this.elemClass = elemClass;
+    this.jumpForward = __bind(this.jumpForward, this);
+    this.jumpBackward = __bind(this.jumpBackward, this);
+    this.changePlaySpeed = __bind(this.changePlaySpeed, this);
+    this.handleMouseMove = __bind(this.handleMouseMove, this);
+    this.jumpToPosition = __bind(this.jumpToPosition, this);
+    this.triggerError = __bind(this.triggerError, this);
+    this.triggerLoaded = __bind(this.triggerLoaded, this);
+    this.triggerPlaying = __bind(this.triggerPlaying, this);
+    this.triggerLoading = __bind(this.triggerLoading, this);
+    this.updateLoaded = __bind(this.updateLoaded, this);
+    this.updateScrubber = __bind(this.updateScrubber, this);
+    this.updateTime = __bind(this.updateTime, this);
+    this.timeRailFactor = __bind(this.timeRailFactor, this);
+    this.switchTimeDisplay = __bind(this.switchTimeDisplay, this);
+    this.togglePlayState = __bind(this.togglePlayState, this);
+    this.scrubberWidth = __bind(this.scrubberWidth, this);
+    this.elem = $(this.elemClass);
+    audioElem = $(this.elemClass).find('audio')[0];
+    that = this;
+    new MediaElement(audioElem, {
+      success: function(media, elem) {
+        return that.init(media, elem);
+      }
+    });
+  }
+
+  PodiPlay.prototype.currentPlaybackRate = 1;
+
+  PodiPlay.prototype.playbackRates = [1.0, 1.5, 2.0];
+
+  PodiPlay.prototype.timeMode = 'countup';
+
+  PodiPlay.prototype.backwardSeconds = 10;
+
+  PodiPlay.prototype.forwardSeconds = 30;
+
+  PodiPlay.prototype.init = function(player, elem) {
+    var that;
+    this.player = player;
+    that = this;
+    this.findElements();
+    this.initScrubber();
+    this.bindButtons();
+    return this.bindPlayerEvents();
   };
-  timeMode = 'countup';
-  currentPlaybackRate = 1;
-  playbackRates = [1.0, 1.5, 2.0];
-  initLoadingAnimation = function() {
+
+  PodiPlay.prototype.findElements = function() {
+    this.scrubberElement = this.elem.find('.time-scrubber');
+    this.timeElement = this.elem.find('.time-played');
+    this.scrubberRailElement = this.scrubberElement.find('.rail');
+    this.scrubberPlayedElement = this.scrubberElement.find('.time-scrubber-played');
+    this.scrubberLoadedElement = this.scrubberElement.find('.time-scrubber-loaded');
+    this.scrubberBufferingElement = this.scrubberElement.find('.time-scrubber-buffering');
+    this.playPauseElement = this.elem.find('.play-button');
+    this.backwardElement = this.elem.find('.backward-button');
+    this.forwardElement = this.elem.find('.forward-button');
+    return this.speedElement = this.elem.find('.speed-toggle');
+  };
+
+  PodiPlay.prototype.scrubberWidth = function() {
+    return this.scrubberRailElement.width();
+  };
+
+  PodiPlay.prototype.initScrubber = function() {
+    var newWidth;
+    newWidth = this.scrubberElement.width() - this.timeElement.width();
+    this.scrubberRailElement.width(newWidth);
+    return this.initLoadingAnimation();
+  };
+
+  PodiPlay.prototype.initLoadingAnimation = function() {
     var bar, elem, i, line, numberOfLines, _i;
-    elem = scrubberElement.find('.time-scrubber-buffering');
+    elem = this.scrubberElement.find('.time-scrubber-buffering');
     bar = $('<div>').addClass('time-scrubber-buffering-bar');
     line = $('<div>').addClass('time-scrubber-buffering-line');
     numberOfLines = elem.width() / 100 * 3;
@@ -25,145 +86,181 @@ init = function(me) {
     }
     return elem.append(bar);
   };
-  initScrubber = function() {
-    var newWidth;
-    newWidth = scrubberElement.width() - timeElement.width();
-    scrubberRailElement.width(newWidth);
-    return initLoadingAnimation();
+
+  PodiPlay.prototype.togglePlayState = function(elem) {
+    this.playPauseElement.toggleClass('fa-play');
+    return this.playPauseElement.toggleClass('fa-pause');
   };
-  initScrubber();
-  updateTime = function() {
-    var prefix, time, timeString;
-    time = timeMode === 'countup' ? (prefix = '', me.currentTime) : (prefix = '-', me.duration - me.currentTime);
-    timeString = secondsToHHMMSS(time);
-    timeElement.text(prefix + timeString);
-    return updateScrubber();
+
+  PodiPlay.prototype.switchTimeDisplay = function() {
+    return this.timeMode = this.timeMode === 'countup' ? 'countdown' : 'countup';
   };
-  switchTimeDisplay = function() {
-    if (timeMode === 'countup') {
-      return timeMode = 'countdown';
-    } else {
-      return timeMode = 'countup';
-    }
+
+  PodiPlay.prototype.timeRailFactor = function() {
+    var duration;
+    duration = this.player.duration;
+    return this.scrubberWidth() / duration;
   };
-  secondsToHHMMSS = function(seconds) {
+
+  PodiPlay.prototype.secondsToHHMMSS = function(seconds) {
     var hours, minutes;
     hours = Math.floor(seconds / 3600);
     minutes = Math.floor((seconds - (hours * 3600)) / 60);
     seconds = seconds - (hours * 3600) - (minutes * 60);
     seconds = seconds.toFixed(0);
-    if (hours < 10) {
-      hours = "0" + hours;
-    }
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
+    hours = this.padNumber(hours);
+    minutes = this.padNumber(minutes);
+    seconds = this.padNumber(seconds);
     return "" + hours + ":" + minutes + ":" + seconds;
   };
-  timeRailFactor = function() {
-    var duration;
-    duration = me.duration;
-    return scrubberWidth() / duration;
-  };
-  updateScrubber = function() {
-    var newWidth;
-    newWidth = me.currentTime * timeRailFactor();
-    return scrubberPlayedElement.width(newWidth);
-  };
-  updateLoaded = function(event) {
-    var newStart, newWidth;
-    if (me.buffered.length) {
-      newStart = me.buffered.start(0) * timeRailFactor();
-      newWidth = me.buffered.end(0) * timeRailFactor();
-      scrubberLoadedElement.css('margin-left', newStart);
-      return scrubberLoadedElement.width(newWidth);
-    }
-  };
-  triggerLoading = function() {
-    updateLoaded();
-    return scrubberBufferingElement.show();
-  };
-  triggerPlaying = function() {
-    updateLoaded();
-    return scrubberBufferingElement.hide();
-  };
-  triggerLoaded = function() {
-    updateLoaded();
-    return scrubberBufferingElement.hide();
-  };
-  triggerError = function() {
-    return scrubberBufferingElement.hide();
-  };
-  $(me).on('timeupdate', updateTime);
-  $(me).on('play', triggerPlaying);
-  $(me).on('playing', triggerPlaying);
-  $(me).on('seeking', triggerLoading);
-  $(me).on('seeked', triggerLoaded);
-  $(me).on('waiting', triggerLoading);
-  $(me).on('loadeddata', triggerLoaded);
-  $(me).on('canplay', triggerLoaded);
-  $(me).on('error', triggerError);
-  togglePlayState = function(elem) {
-    $(elem).toggleClass('fa-play');
-    return $(elem).toggleClass('fa-pause');
-  };
-  $('.play').click(function() {
-    if (!me.paused) {
-      me.pause();
+
+  PodiPlay.prototype.padNumber = function(number) {
+    if (number < 10) {
+      return "0" + number;
     } else {
-      me.play();
+      return number;
     }
-    return togglePlayState(this);
-  });
-  $('.backward').click(function() {
-    return me.currentTime = me.currentTime - 10;
-  });
-  $('.forward').click(function() {
-    return me.currentTime = me.currentTime + 30;
-  });
-  $('.speed').click(function() {
-    var nextRate;
-    nextRate = playbackRates.indexOf(currentPlaybackRate) + 1;
-    if (nextRate >= playbackRates.length) {
-      nextRate = 0;
+  };
+
+  PodiPlay.prototype.updateTime = function() {
+    var prefix, time, timeString;
+    time = this.timeMode === 'countup' ? (prefix = '', this.player.currentTime) : (prefix = '-', this.player.duration - this.player.currentTime);
+    timeString = this.secondsToHHMMSS(time);
+    this.timeElement.text(prefix + timeString);
+    return this.updateScrubber();
+  };
+
+  PodiPlay.prototype.updateScrubber = function() {
+    var newWidth;
+    newWidth = this.player.currentTime * this.timeRailFactor();
+    return this.scrubberPlayedElement.width(newWidth);
+  };
+
+  PodiPlay.prototype.updateLoaded = function(event) {
+    var newStart, newWidth;
+    if (this.player.buffered.length) {
+      newStart = this.player.buffered.start(0) * this.timeRailFactor();
+      newWidth = this.player.buffered.end(0) * this.timeRailFactor();
+      this.scrubberLoadedElement.css('margin-left', newStart);
+      return this.scrubberLoadedElement.width(newWidth);
     }
-    me.playbackRate = currentPlaybackRate = playbackRates[nextRate];
-    return $(this).text("" + currentPlaybackRate + "x");
-  });
-  $('.time-played').click(function() {
-    return switchTimeDisplay();
-  });
-  jumpToPosition = function(position) {
+  };
+
+  PodiPlay.prototype.triggerLoading = function() {
+    this.updateLoaded();
+    return this.scrubberBufferingElement.show();
+  };
+
+  PodiPlay.prototype.triggerPlaying = function() {
+    this.updateLoaded();
+    return this.scrubberBufferingElement.hide();
+  };
+
+  PodiPlay.prototype.triggerLoaded = function() {
+    this.updateLoaded();
+    return this.scrubberBufferingElement.hide();
+  };
+
+  PodiPlay.prototype.triggerError = function() {
+    return this.scrubberBufferingElement.hide();
+  };
+
+  PodiPlay.prototype.jumpToPosition = function(position) {
     var newTime, pixelPerSecond;
-    if (me.duration) {
-      pixelPerSecond = me.duration / scrubberWidth();
+    if (this.player.duration) {
+      pixelPerSecond = this.player.duration / this.scrubberWidth();
       newTime = pixelPerSecond * position;
-      if (newTime !== me.currentTime) {
-        return me.currentTime = newTime;
+      if (newTime !== this.player.currentTime) {
+        return this.player.currentTime = newTime;
       }
     }
   };
-  handleMouseMove = function(event) {
+
+  PodiPlay.prototype.handleMouseMove = function(event) {
     var position;
     position = event.pageX - $(event.target).offset().left;
-    return jumpToPosition(position);
+    return this.jumpToPosition(position);
   };
-  return $('.rail').on('mousedown', function(event) {
-    handleMouseMove(event);
-    $(this).on('mousemove', function(event) {
-      return handleMouseMove(event);
-    });
-    return $(this).on('mouseup', function(event) {
-      return $(this).off('mousemove');
-    });
-  });
-};
 
-me = new MediaElement('player', {
-  success: function(media, elem) {
-    return window.init(media);
-  }
-});
+  PodiPlay.prototype.changePlaySpeed = function() {
+    var nextRate;
+    nextRate = this.playbackRates.indexOf(this.currentPlaybackRate) + 1;
+    if (nextRate >= this.playbackRates.length) {
+      nextRate = 0;
+    }
+    this.player.playbackRate = this.currentPlaybackRate = this.playbackRates[nextRate];
+    return $(event.target).text("" + this.currentPlaybackRate + "x");
+  };
+
+  PodiPlay.prototype.jumpBackward = function(seconds) {
+    seconds = seconds || this.backwardSeconds;
+    return this.player.currentTime = this.player.currentTime - seconds;
+  };
+
+  PodiPlay.prototype.jumpForward = function(seconds) {
+    seconds = seconds || this.forwardSeconds;
+    return this.player.currentTime = this.player.currentTime + seconds;
+  };
+
+  PodiPlay.prototype.bindButtons = function() {
+    this.playPauseElement.click((function(_this) {
+      return function() {
+        if (_this.player.paused) {
+          _this.player.play();
+        } else {
+          _this.player.pause();
+        }
+        return _this.togglePlayState(_this);
+      };
+    })(this));
+    this.backwardElement.click((function(_this) {
+      return function() {
+        return _this.jumpBackward();
+      };
+    })(this));
+    this.forwardElement.click((function(_this) {
+      return function() {
+        return _this.jumpForward();
+      };
+    })(this));
+    this.speedElement.click((function(_this) {
+      return function(event) {
+        return _this.changePlaySpeed();
+      };
+    })(this));
+    this.timeElement.click((function(_this) {
+      return function() {
+        return _this.switchTimeDisplay();
+      };
+    })(this));
+    return $('.rail').on('mousedown', (function(_this) {
+      return function(event) {
+        _this.handleMouseMove(event);
+        $(_this).on('mousemove', function(event) {
+          return _this.handleMouseMove(event);
+        });
+        return $(_this).on('mouseup', function(event) {
+          $(_this).off('mousemove');
+          return $(_this).off('mouseup');
+        });
+      };
+    })(this));
+  };
+
+  PodiPlay.prototype.bindPlayerEvents = function() {
+    $(this.player).on('timeupdate', this.updateTime);
+    $(this.player).on('play', this.triggerPlaying);
+    $(this.player).on('playing', this.triggerPlaying);
+    $(this.player).on('seeking', this.triggerLoading);
+    $(this.player).on('seeked', this.triggerLoaded);
+    $(this.player).on('waiting', this.triggerLoading);
+    $(this.player).on('loadeddata', this.triggerLoaded);
+    $(this.player).on('canplay', this.triggerLoaded);
+    return $(this.player).on('error', this.triggerError);
+  };
+
+  return PodiPlay;
+
+})();
+
+player = new PodiPlay('.video-player');
