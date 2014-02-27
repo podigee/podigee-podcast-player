@@ -7,7 +7,9 @@ PodiPlay = (function() {
     this.elemClass = elemClass;
     this.jumpForward = __bind(this.jumpForward, this);
     this.jumpBackward = __bind(this.jumpBackward, this);
+    this.setPlaySpeed = __bind(this.setPlaySpeed, this);
     this.changePlaySpeed = __bind(this.changePlaySpeed, this);
+    this.adjustPlaySpeed = __bind(this.adjustPlaySpeed, this);
     this.handleMouseMove = __bind(this.handleMouseMove, this);
     this.jumpToPosition = __bind(this.jumpToPosition, this);
     this.triggerError = __bind(this.triggerError, this);
@@ -132,7 +134,8 @@ PodiPlay = (function() {
     time = this.options.timeMode === 'countup' ? (prefix = '', this.player.currentTime) : (prefix = '-', this.player.duration - this.player.currentTime);
     timeString = this.secondsToHHMMSS(time);
     this.timeElement.text(prefix + timeString);
-    return this.updateScrubber();
+    this.updateScrubber();
+    return this.adjustPlaySpeed(timeString);
   };
 
   PodiPlay.prototype.updateScrubber = function() {
@@ -187,14 +190,42 @@ PodiPlay = (function() {
     return this.jumpToPosition(position);
   };
 
-  PodiPlay.prototype.changePlaySpeed = function() {
-    var nextRate;
-    nextRate = this.options.playbackRates.indexOf(this.options.currentPlaybackRate) + 1;
-    if (nextRate >= this.options.playbackRates.length) {
-      nextRate = 0;
+  PodiPlay.prototype.tempPlayBackSpeed = null;
+
+  PodiPlay.prototype.adjustPlaySpeed = function(timeString) {
+    var currentTime, data, item;
+    currentTime = this.player.currentTime;
+    data = production_data.statistics.music_speech;
+    item = $.grep(data, function(item, index) {
+      return item.start.indexOf(timeString) !== -1;
+    });
+    if (item.length) {
+      if (item[0].label === 'music') {
+        if (this.options.currentPlaybackRate !== 1.0) {
+          this.tempPlayBackSpeed = this.options.currentPlaybackRate;
+          return this.setPlaySpeed(1.0);
+        }
+      } else {
+        if (this.tempPlayBackSpeed) {
+          this.setPlaySpeed(this.tempPlayBackSpeed);
+          return this.tempPlayBackSpeed = null;
+        }
+      }
     }
-    this.player.playbackRate = this.options.currentPlaybackRate = this.options.playbackRates[nextRate];
-    return $(event.target).text("" + this.options.currentPlaybackRate + "x");
+  };
+
+  PodiPlay.prototype.changePlaySpeed = function() {
+    var nextRateIndex;
+    nextRateIndex = this.options.playbackRates.indexOf(this.options.currentPlaybackRate) + 1;
+    if (nextRateIndex >= this.options.playbackRates.length) {
+      nextRateIndex = 0;
+    }
+    return this.setPlaySpeed(this.options.playbackRates[nextRateIndex]);
+  };
+
+  PodiPlay.prototype.setPlaySpeed = function(speed) {
+    this.player.playbackRate = this.options.currentPlaybackRate = speed;
+    return this.speedElement.text("" + this.options.currentPlaybackRate + "x");
   };
 
   PodiPlay.prototype.jumpBackward = function(seconds) {

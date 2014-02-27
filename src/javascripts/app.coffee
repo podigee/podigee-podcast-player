@@ -110,6 +110,8 @@ class PodiPlay
 
     @updateScrubber()
 
+    @adjustPlaySpeed(timeString)
+
   updateScrubber: () =>
     newWidth = @player.currentTime * @timeRailFactor()
     @scrubberPlayedElement.width(newWidth)
@@ -147,12 +149,33 @@ class PodiPlay
     position = event.pageX - $(event.target).offset().left
     @jumpToPosition(position)
 
+  tempPlayBackSpeed: null
+  adjustPlaySpeed: (timeString) =>
+    currentTime = @player.currentTime
+    data = production_data.statistics.music_speech
+    item = $.grep data, (item, index) ->
+      item.start.indexOf(timeString) != -1
+
+    if item.length
+      if item[0].label == 'music'
+        unless @options.currentPlaybackRate == 1.0
+          @tempPlayBackSpeed = @options.currentPlaybackRate
+          @setPlaySpeed(1.0)
+      else
+        if @tempPlayBackSpeed
+          @setPlaySpeed(@tempPlayBackSpeed)
+          @tempPlayBackSpeed = null
+
   changePlaySpeed: () =>
-    nextRate = @options.playbackRates.indexOf(@options.currentPlaybackRate) + 1
-    if nextRate >= @options.playbackRates.length
-      nextRate = 0
-    @player.playbackRate = @options.currentPlaybackRate = @options.playbackRates[nextRate]
-    $(event.target).text("#{@options.currentPlaybackRate}x")
+    nextRateIndex = @options.playbackRates.indexOf(@options.currentPlaybackRate) + 1
+    if nextRateIndex >= @options.playbackRates.length
+      nextRateIndex = 0
+
+    @setPlaySpeed(@options.playbackRates[nextRateIndex])
+
+  setPlaySpeed: (speed) =>
+    @player.playbackRate = @options.currentPlaybackRate = speed
+    @speedElement.text("#{@options.currentPlaybackRate}x")
 
   jumpBackward: (seconds) =>
     seconds = seconds || @options.backwardSeconds
