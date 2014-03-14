@@ -4,6 +4,7 @@ var PodiPlay,
 PodiPlay = (function() {
   function PodiPlay(elemClass, options, data) {
     this.elemClass = elemClass;
+    this.initMoreInfo = __bind(this.initMoreInfo, this);
     this.initChaptermarks = __bind(this.initChaptermarks, this);
     this.chapterClickCallback = __bind(this.chapterClickCallback, this);
     this.jumpForward = __bind(this.jumpForward, this);
@@ -37,7 +38,9 @@ PodiPlay = (function() {
     playbackRates: [1.0, 1.5, 2.0],
     timeMode: 'countup',
     backwardSeconds: 10,
-    forwardSeconds: 30
+    forwardSeconds: 30,
+    showChaptermarks: false,
+    showMoreInfo: false
   };
 
   PodiPlay.prototype.setOptions = function(options) {
@@ -68,7 +71,8 @@ PodiPlay = (function() {
     this.initScrubber();
     this.bindButtons();
     this.bindPlayerEvents();
-    return this.initChaptermarks();
+    this.initChaptermarks();
+    return this.initMoreInfo();
   };
 
   PodiPlay.prototype.findElements = function() {
@@ -82,7 +86,10 @@ PodiPlay = (function() {
     this.backwardElement = this.elem.find('.backward-button');
     this.forwardElement = this.elem.find('.forward-button');
     this.speedElement = this.elem.find('.speed-toggle');
-    return this.chaptermarkElement = this.elem.find('.chaptermarks');
+    this.chaptermarkButtonElement = this.elem.find('.chaptermarks-button');
+    this.chaptermarkElement = this.elem.find('.chaptermarks');
+    this.moreInfoButtonElement = this.elem.find('.more-info-button');
+    return this.moreInfoElement = this.elem.find('.more-info');
   };
 
   PodiPlay.prototype.scrubberWidth = function() {
@@ -335,7 +342,30 @@ PodiPlay = (function() {
         return html.append(chaptermark);
       };
     })(this));
-    return this.chaptermarkElement.append(html);
+    this.chaptermarkElement.append(html);
+    if (this.options.showChaptermarks) {
+      this.chaptermarkElement.show();
+    } else {
+      this.chaptermarkElement.hide();
+    }
+    return this.chaptermarkButtonElement.on('click', (function(_this) {
+      return function() {
+        return _this.chaptermarkElement.slideToggle();
+      };
+    })(this));
+  };
+
+  PodiPlay.prototype.initMoreInfo = function() {
+    if (this.options.showInfo) {
+      this.moreInfoElement.show();
+    } else {
+      this.moreInfoElement.hide();
+    }
+    return this.moreInfoButtonElement.on('click', (function(_this) {
+      return function() {
+        return _this.moreInfoElement.slideToggle();
+      };
+    })(this));
   };
 
   return PodiPlay;

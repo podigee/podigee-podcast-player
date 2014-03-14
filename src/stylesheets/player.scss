@@ -211,6 +211,12 @@
 
   }
 
+  .buttons {
+    i {
+      width: 20px;
+    }
+  }
+
   .chaptermarks {
     background: #fff;
     font-size: 12px;
@@ -223,28 +229,34 @@
       margin: 0;
       padding: 0;
 
-       li {
-         background: none;
-         height: 25px;
-         list-style: none;
-         overflow: hidden;
-         padding: 5px;
+      li {
+        background: none;
+        height: 25px;
+        list-style: none;
+        overflow: hidden;
+        padding: 5px;
 
-         &+li {
-           border-top: 1px solid #222;
-         }
+        &+li {
+          border-top: 1px solid #222;
+        }
 
-         &:hover {
-           background-color: #f6f6f6;
-           cursor: pointer;
-         }
+        &:hover {
+          background-color: #f6f6f6;
+          cursor: pointer;
+        }
 
-         img {
-           float: left;
-           margin-right: 5px;
-           width: 15px;
-         }
-       }
+        img {
+          float: left;
+          margin-right: 5px;
+          width: 15px;
+        }
+      }
     }
+  }
+
+  .more-info {
+    background: #fff;
+    font-size: 12px;
+    padding: 5px;
   }
 }

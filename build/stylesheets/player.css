@@ -186,6 +186,9 @@
   animation-timing-function: linear;
   width: 120%;
 }
+.video-player .buttons i {
+  width: 20px;
+}
 .video-player .chaptermarks {
   background: #fff;
   font-size: 12px;
@@ -216,4 +219,9 @@
   float: left;
   margin-right: 5px;
   width: 15px;
+}
+.video-player .more-info {
+  background: #fff;
+  font-size: 12px;
+  padding: 5px;
 }

@@ -16,7 +16,7 @@ class PodiTheme
       <div class="info">
         <img src="{{logo_url}}" />
         <div class="title">{{title}}</div>
-        <div class="description">{{description}}</div>
+        <div class="description">{{subtitle}}</div>
       </div>
       <!--<audio id="player" src="http://cdn.files.podigee.com/tmp_media/auphonic-example.mp3" preload="metadata"></audio>-->
       <audio id="player" src="{{playlist.mp3}}" preload="metadata"></audio>
@@ -37,6 +37,11 @@ class PodiTheme
         <span class="speed-toggle" title="Playback speed">1x</span>
       </div>
 
+      <div class="buttons">
+        <i class="fa fa-list chaptermarks-button" title="Show chaptermarks"></i>
+        <i class="fa fa-info more-info-button" title="Show more info"></i>
+      </div>
       <div class="chaptermarks"></div>
+      <div class="more-info">{{description}}</div>
     </div>
     """

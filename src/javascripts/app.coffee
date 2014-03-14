@@ -14,6 +14,8 @@ class PodiPlay
     timeMode: 'countup'
     backwardSeconds: 10
     forwardSeconds: 30
+    showChaptermarks: false
+    showMoreInfo: false
   }
 
   setOptions: (options) ->
@@ -33,6 +35,7 @@ class PodiPlay
     @bindButtons()
     @bindPlayerEvents()
     @initChaptermarks()
+    @initMoreInfo()
 
   findElements: ->
     @scrubberElement = @elem.find('.time-scrubber')
@@ -45,7 +48,10 @@ class PodiPlay
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
     @speedElement = @elem.find('.speed-toggle')
+    @chaptermarkButtonElement = @elem.find('.chaptermarks-button')
     @chaptermarkElement = @elem.find('.chaptermarks')
+    @moreInfoButtonElement = @elem.find('.more-info-button')
+    @moreInfoElement = @elem.find('.more-info')
 
   scrubberWidth: => @scrubberRailElement.width()
 
@@ -254,3 +260,22 @@ class PodiPlay
       html.append(chaptermark)
     )
     @chaptermarkElement.append(html)
+
+    if @options.showChaptermarks
+      @chaptermarkElement.show()
+    else
+      @chaptermarkElement.hide()
+
+    @chaptermarkButtonElement.on('click', =>
+      @chaptermarkElement.slideToggle()
+    )
+
+  initMoreInfo: =>
+    if @options.showInfo
+      @moreInfoElement.show()
+    else
+      @moreInfoElement.hide()
+
+    @moreInfoButtonElement.on('click', =>
+      @moreInfoElement.slideToggle()
+    )
