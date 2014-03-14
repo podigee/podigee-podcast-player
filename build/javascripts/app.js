@@ -2,9 +2,10 @@ var PodiPlay,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 PodiPlay = (function() {
-  function PodiPlay(elemClass, options) {
-    var audioElem;
+  function PodiPlay(elemClass, options, data) {
     this.elemClass = elemClass;
+    this.initChaptermarks = __bind(this.initChaptermarks, this);
+    this.chapterClickCallback = __bind(this.chapterClickCallback, this);
     this.jumpForward = __bind(this.jumpForward, this);
     this.jumpBackward = __bind(this.jumpBackward, this);
     this.setPlaySpeed = __bind(this.setPlaySpeed, this);
@@ -66,7 +67,8 @@ PodiPlay = (function() {
     this.findElements();
     this.initScrubber();
     this.bindButtons();
-    return this.bindPlayerEvents();
+    this.bindPlayerEvents();
+    return this.initChaptermarks();
   };
 
   PodiPlay.prototype.findElements = function() {
@@ -79,7 +81,8 @@ PodiPlay = (function() {
     this.playPauseElement = this.elem.find('.play-button');
     this.backwardElement = this.elem.find('.backward-button');
     this.forwardElement = this.elem.find('.forward-button');
-    return this.speedElement = this.elem.find('.speed-toggle');
+    this.speedElement = this.elem.find('.speed-toggle');
+    return this.chaptermarkElement = this.elem.find('.chaptermarks');
   };
 
   PodiPlay.prototype.scrubberWidth = function() {
@@ -131,6 +134,15 @@ PodiPlay = (function() {
     minutes = this.padNumber(minutes);
     seconds = this.padNumber(seconds);
     return "" + hours + ":" + minutes + ":" + seconds;
+  };
+
+  PodiPlay.prototype.hhmmssToSeconds = function(string) {
+    var hours, minutes, parts, result, seconds;
+    parts = string.split(':');
+    seconds = parseInt(parts[2], 10);
+    minutes = parseInt(parts[1], 10);
+    hours = parseInt(parts[0], 10);
+    return result = seconds + minutes * 60 + hours * 60 * 60;
   };
 
   PodiPlay.prototype.padNumber = function(number) {
@@ -305,6 +317,25 @@ PodiPlay = (function() {
     $(this.player).on('loadeddata', this.triggerLoaded);
     $(this.player).on('canplay', this.triggerLoaded);
     return $(this.player).on('error', this.triggerError);
+  };
+
+  PodiPlay.prototype.chapterClickCallback = function(event) {
+    var time;
+    time = event.data.start;
+    return this.player.currentTime = this.hhmmssToSeconds(time);
+  };
+
+  PodiPlay.prototype.initChaptermarks = function() {
+    var html;
+    html = $('<ul>');
+    this.data.chaptermarks.forEach((function(_this) {
+      return function(item, index, array) {
+        var chaptermark;
+        chaptermark = new PodiChaptermark(item, _this.chapterClickCallback).render();
+        return html.append(chaptermark);
+      };
+    })(this));
+    return this.chaptermarkElement.append(html);
   };
 
   return PodiPlay;

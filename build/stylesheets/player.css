@@ -58,6 +58,11 @@
 }
 
 }
+.video-player *, .video-player *:before, .video-player *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 .video-player .info {
   position: relative;
   overflow: hidden;
@@ -180,4 +185,35 @@
   animation-name: noTrespassingAnimationG;
   animation-timing-function: linear;
   width: 120%;
+}
+.video-player .chaptermarks {
+  background: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.video-player .chaptermarks ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.video-player .chaptermarks ul li {
+  background: none;
+  height: 25px;
+  list-style: none;
+  overflow: hidden;
+  padding: 5px;
+}
+.video-player .chaptermarks ul li + li {
+  border-top: 1px solid #222;
+}
+.video-player .chaptermarks ul li:hover {
+  background-color: #f6f6f6;
+  cursor: pointer;
+}
+.video-player .chaptermarks ul li img {
+  float: left;
+  margin-right: 5px;
+  width: 15px;
 }

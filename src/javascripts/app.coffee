@@ -1,8 +1,8 @@
 class PodiPlay
-  constructor: (@elemClass, options) ->
-    @elem = $(@elemClass)
-    audioElem = @elem.find('audio')[0]
+  constructor: (@elemClass, options, data) ->
     @setOptions(options)
+    @data = data
+
     @renderTheme()
     @initAudioPlayer()
 
@@ -45,6 +45,7 @@ class PodiPlay
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
     @speedElement = @elem.find('.speed-toggle')
+    @chaptermarkElement = @elem.find('.chaptermarks')
 
   scrubberWidth: => @scrubberRailElement.width()
 
@@ -97,6 +98,13 @@ class PodiPlay
     seconds = @padNumber(seconds)
 
     "#{hours}:#{minutes}:#{seconds}"
+
+  hhmmssToSeconds: (string) ->
+    parts = string.split(':')
+    seconds = parseInt(parts[2], 10)
+    minutes = parseInt(parts[1], 10)
+    hours = parseInt(parts[0], 10)
+    result = seconds + minutes * 60 + hours * 60 * 60
 
   padNumber: (number) ->
     if number < 10
@@ -234,3 +242,15 @@ class PodiPlay
     $(@player).on('loadeddata', @triggerLoaded)
     $(@player).on('canplay', @triggerLoaded)
     $(@player).on('error', @triggerError)
+
+  chapterClickCallback: (event) =>
+    time = event.data.start
+    @player.currentTime = @hhmmssToSeconds(time)
+
+  initChaptermarks: =>
+    html = $('<ul>')
+    @data.chaptermarks.forEach((item, index, array) =>
+      chaptermark = new PodiChaptermark(item, @chapterClickCallback).render()
+      html.append(chaptermark)
+    )
+    @chaptermarkElement.append(html)

@@ -65,11 +65,24 @@
 
     <script src="build/javascripts/app.js"></script>
     <script src="build/javascripts/theme.js"></script>
+    <script src="build/javascripts/chaptermark.js"></script>
     <script>
       player = new PodiPlay('#player',
         {},
         {
           playlist: {mp3: 'samples/auphonic-example.mp3'},
+          chaptermarks: [
+            {title: "First Chaptermark", start: '00:00:10', image: 'samples/podigee-logo-256.png', href: ''},
+            {title: "Second Chaptermark with a lot of text and stuff to make it go out of the container and so on and so on", start: '00:00:20', image: '', href: ''},
+            {title: "Third Chaptermark", start: '00:00:30', image: '', href: ''},
+            {title: "Fourth Chaptermark", start: '00:00:40', image: '', href: ''},
+            {title: "Fifth Chaptermark", start: '00:00:50', image: '', href: ''},
+            {title: "Sixth Chaptermark", start: '00:01:00', image: '', href: ''},
+            {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
+            {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
+            {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
+            {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
+          ],
           logo_url: "samples/podigee-logo-256.png",
           title: "Podigee Player Test",
           description: "We are testing a new podcast player.",
