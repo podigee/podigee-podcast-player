@@ -233,8 +233,8 @@
         background: none;
         height: 25px;
         list-style: none;
-        overflow: hidden;
         padding: 5px;
+        position: relative;
 
         &+li {
           border-top: 1px solid #222;
@@ -246,9 +246,23 @@
         }
 
         img {
-          float: left;
-          margin-right: 5px;
+          left: 5px;
+          position: absolute;
+          top: 5px;
           width: 15px;
+        }
+
+        span {
+          display: block;
+          height: 100%;
+          margin: 0 20px;
+          overflow: hidden;
+        }
+
+        a {
+          right: 5px;
+          position: absolute;
+          top: 5px;
         }
       }
     }

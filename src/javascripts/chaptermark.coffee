@@ -5,7 +5,7 @@ class PodiChaptermark
 
   render: =>
     template = Handlebars.compile(@defaultHtml)
-    $(template(@data)).on('click', null, @data, @callback)
+    $(template(@data)).on('click', 'img, span', @data, @callback)
 
   defaultHtml:
     """
@@ -13,6 +13,9 @@ class PodiChaptermark
       {{#if image}}
         <img src="{{image}}" />
       {{/if}}
-      {{title}}
+      <span>{{title}}</span>
+      {{#if href}}
+        <a href="{{href}}" target="_blank"><i class="fa fa-external-link"></i></a>
+      {{/if}}
     </li>
     """

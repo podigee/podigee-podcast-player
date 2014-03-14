@@ -205,8 +205,8 @@
   background: none;
   height: 25px;
   list-style: none;
-  overflow: hidden;
   padding: 5px;
+  position: relative;
 }
 .video-player .chaptermarks ul li + li {
   border-top: 1px solid #222;
@@ -216,9 +216,21 @@
   cursor: pointer;
 }
 .video-player .chaptermarks ul li img {
-  float: left;
-  margin-right: 5px;
+  left: 5px;
+  position: absolute;
+  top: 5px;
   width: 15px;
+}
+.video-player .chaptermarks ul li span {
+  display: block;
+  height: 100%;
+  margin: 0 20px;
+  overflow: hidden;
+}
+.video-player .chaptermarks ul li a {
+  right: 5px;
+  position: absolute;
+  top: 5px;
 }
 .video-player .more-info {
   background: #fff;
