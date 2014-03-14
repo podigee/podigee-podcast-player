@@ -8,6 +8,12 @@
   position: relative;
   width: 400px;
 
+  *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
   .info {
     position: relative;
     overflow: hidden;
