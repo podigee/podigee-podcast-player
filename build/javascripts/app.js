@@ -23,16 +23,12 @@ PodiPlay = (function() {
     this.switchTimeDisplay = __bind(this.switchTimeDisplay, this);
     this.togglePlayState = __bind(this.togglePlayState, this);
     this.scrubberWidth = __bind(this.scrubberWidth, this);
-    this.elem = $(this.elemClass);
-    audioElem = this.elem.find('audio')[0];
+    this.initAudioPlayer = __bind(this.initAudioPlayer, this);
+    this.renderTheme = __bind(this.renderTheme, this);
     this.setOptions(options);
-    new MediaElement(audioElem, {
-      success: (function(_this) {
-        return function(media, elem) {
-          return _this.init(media, elem);
-        };
-      })(this)
-    });
+    this.data = data;
+    this.renderTheme();
+    this.initAudioPlayer();
   }
 
   PodiPlay.prototype.defaultOptions = {
@@ -45,6 +41,22 @@ PodiPlay = (function() {
 
   PodiPlay.prototype.setOptions = function(options) {
     return this.options = $.extend(true, this.defaultOptions, options);
+  };
+
+  PodiPlay.prototype.renderTheme = function() {
+    return this.elem = new PodiTheme(this.elemClass, this.data).render();
+  };
+
+  PodiPlay.prototype.initAudioPlayer = function() {
+    var audioElem;
+    audioElem = this.elem.find('audio')[0];
+    return new MediaElement(audioElem, {
+      success: (function(_this) {
+        return function(media, elem) {
+          return _this.init(media, elem);
+        };
+      })(this)
+    });
   };
 
   PodiPlay.prototype.init = function(player, elem) {

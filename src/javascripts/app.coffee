@@ -3,7 +3,8 @@ class PodiPlay
     @elem = $(@elemClass)
     audioElem = @elem.find('audio')[0]
     @setOptions(options)
-    new MediaElement(audioElem, {success: (media, elem) => @init(media, elem) })
+    @renderTheme()
+    @initAudioPlayer()
 
   # options
 
@@ -18,12 +19,20 @@ class PodiPlay
   setOptions: (options) ->
     @options = $.extend(true, @defaultOptions, options)
 
+  renderTheme: =>
+    @elem = new PodiTheme(@elemClass, @data).render()
+
+  initAudioPlayer: =>
+    audioElem = @elem.find('audio')[0]
+    new MediaElement(audioElem, {success: (media, elem) => @init(media, elem) })
+
   init: (@player, elem) ->
     that = @
     @findElements()
     @initScrubber()
     @bindButtons()
     @bindPlayerEvents()
+    @initChaptermarks()
 
   findElements: ->
     @scrubberElement = @elem.find('.time-scrubber')

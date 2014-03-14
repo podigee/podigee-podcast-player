@@ -6,6 +6,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <script src="src/lib/jquery.1.11.0.min.js"></script>
     <script src="src/lib/mediaelement.js"></script>
+    <script src="src/lib/handlebars-v1.3.0.js"></script>
     <script>
       $.getJSON('samples/audio_production.json').done(function(data) {
         window.production_data = data.data
@@ -17,30 +18,7 @@
       <h1><a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a> Podcast Player</h1>
     </header>
 
-    <div class="video-player">
-      <div class="info">
-        <img src="samples/podigee-logo-256.png" />
-        <div class="title">Podigee Player Test</div>
-        <div class="description">We are testing a new podcast player.</div>
-      </div>
-      <audio id="player" src="http://cdn.files.podigee.com/tmp_media/auphonic-example.mp3" preload="metadata"></audio>
-      <div class="time-scrubber">
-        <div class="time-played" title="Switch display mode"></div>
-        <div class="rail">
-          <span class="time-scrubber-loaded"></span>
-          <div class="time-scrubber-buffering"></div>
-          <span class="time-scrubber-played"></span>
-        </div>
-      </div>
-
-      <div class="controls">
-        <i class="fa fa-backward backward-button" title="Backward 10s"></i>
-        <i class="fa fa-play play-button" title="Play/Pause"></i>
-        <i class="fa fa-forward forward-button" title="Forward 30s"></i>
-
-        <span class="speed-toggle" title="Playback speed">1x</span>
-      </div>
-    </div>
+    <audio id="player"></audio>
 
     <div class="explain">
       <p>This is a work in progress. It is lacking organization of code as well as some essential features.</p>
@@ -82,8 +60,18 @@
     </footer>
 
     <script src="build/javascripts/app.js"></script>
+    <script src="build/javascripts/theme.js"></script>
     <script>
-      player = new PodiPlay('.video-player')
+      player = new PodiPlay('#player',
+        {},
+        {
+          playlist: {mp3: 'samples/auphonic-example.mp3'},
+          logo_url: "samples/podigee-logo-256.png",
+          title: "Podigee Player Test",
+          description: "We are testing a new podcast player.",
+          audio_url: "samples/auphonic-example.mp3"
+        }
+      )
     </script>
   </body>
 </html>
