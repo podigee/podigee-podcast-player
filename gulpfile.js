@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch')
 
 gulp.task('stylesheets', function() {
-  return gulp.src('./src/stylesheets/app.scss')
+  return gulp.src('./src/stylesheets/*.scss')
     .pipe(sass({style: 'expanded'}))
     .pipe(gulp.dest('./build/stylesheets'))
 })
