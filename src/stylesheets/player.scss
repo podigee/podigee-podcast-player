@@ -2,11 +2,10 @@
   background-color: #f6f6f6;
   color: #222;
   font-family: Helvetica;
-  margin: 40px auto;
   overflow: hidden;
   padding: 10px;
   position: relative;
-  width: 400px;
+  width: 100%;
 
   &, *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -274,5 +273,18 @@
     font-size: 12px;
     margin-top: 10px;
     padding: 5px;
+  }
+
+  @media screen and (max-width: 480px) {
+    .info {
+      img {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      div {
+        margin-left: 0;
+      }
+    }
   }
 }

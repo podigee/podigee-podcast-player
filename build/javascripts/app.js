@@ -101,7 +101,12 @@ PodiPlay = (function() {
     var newWidth;
     newWidth = this.scrubberElement.width() - this.timeElement.width();
     this.scrubberRailElement.width(newWidth);
-    return this.initLoadingAnimation();
+    this.initLoadingAnimation();
+    return window.onresize = (function(_this) {
+      return function() {
+        return _this.initScrubber();
+      };
+    })(this);
   };
 
   PodiPlay.prototype.initLoadingAnimation = function() {

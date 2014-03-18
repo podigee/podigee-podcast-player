@@ -62,6 +62,9 @@ class PodiPlay
     @scrubberRailElement.width(newWidth)
     @initLoadingAnimation()
 
+    window.onresize = =>
+      @initScrubber()
+
   initLoadingAnimation: ->
     elem = @scrubberElement.find('.time-scrubber-buffering')
     bar = $('<div>').addClass('time-scrubber-buffering-bar')
