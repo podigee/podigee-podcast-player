@@ -64,4 +64,6 @@ footer {
 
 .video-player {
   box-shadow: 0 0 24px -2px #000;
+  margin: 40px auto;
+  width: 400px;
 }
