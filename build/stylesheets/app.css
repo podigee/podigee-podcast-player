@@ -61,3 +61,7 @@ footer {
   text-align: center;
   width: 100%;
 }
+
+.video-player {
+  box-shadow: 0 0 24px -2px #000;
+}

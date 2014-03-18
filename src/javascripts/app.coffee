@@ -266,9 +266,8 @@ class PodiPlay
     else
       @chaptermarkElement.hide()
 
-    @chaptermarkButtonElement.on('click', =>
-      @chaptermarkElement.slideToggle()
-    )
+    @chaptermarkButtonElement.on 'click', =>
+      @chaptermarkElement.slideToggle(400, @sendHeightChange)
 
   initMoreInfo: =>
     if @options.showInfo
@@ -276,6 +275,10 @@ class PodiPlay
     else
       @moreInfoElement.hide()
 
-    @moreInfoButtonElement.on('click', =>
-      @moreInfoElement.slideToggle()
-    )
+    @moreInfoButtonElement.on 'click', =>
+      @moreInfoElement.slideToggle(400, @sendHeightChange)
+
+  sendHeightChange: =>
+    height = @elem.height() + 2 * parseInt(@elem.css('padding-top'), 10)
+    window.parent.postMessage("resize:#{height}", '*')
+

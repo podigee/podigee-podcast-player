@@ -1,14 +1,14 @@
 .video-player {
   background-color: #f6f6f6;
-  box-shadow: 0 0 24px -2px #000;
   color: #222;
+  font-family: Helvetica;
   margin: 40px auto;
   overflow: hidden;
   padding: 10px;
   position: relative;
   width: 400px;
 
-  *, *:before, *:after {
+  &, *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -221,6 +221,7 @@
     background: #fff;
     font-size: 12px;
     line-height: 16px;
+    margin-top: 10px;
     max-height: 200px;
     overflow-y: scroll;
 
@@ -271,6 +272,7 @@
   .more-info {
     background: #fff;
     font-size: 12px;
+    margin-top: 10px;
     padding: 5px;
   }
 }

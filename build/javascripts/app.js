@@ -4,6 +4,7 @@ var PodiPlay,
 PodiPlay = (function() {
   function PodiPlay(elemClass, options, data) {
     this.elemClass = elemClass;
+    this.sendHeightChange = __bind(this.sendHeightChange, this);
     this.initMoreInfo = __bind(this.initMoreInfo, this);
     this.initChaptermarks = __bind(this.initChaptermarks, this);
     this.chapterClickCallback = __bind(this.chapterClickCallback, this);
@@ -350,7 +351,7 @@ PodiPlay = (function() {
     }
     return this.chaptermarkButtonElement.on('click', (function(_this) {
       return function() {
-        return _this.chaptermarkElement.slideToggle();
+        return _this.chaptermarkElement.slideToggle(400, _this.sendHeightChange);
       };
     })(this));
   };
@@ -363,9 +364,15 @@ PodiPlay = (function() {
     }
     return this.moreInfoButtonElement.on('click', (function(_this) {
       return function() {
-        return _this.moreInfoElement.slideToggle();
+        return _this.moreInfoElement.slideToggle(400, _this.sendHeightChange);
       };
     })(this));
+  };
+
+  PodiPlay.prototype.sendHeightChange = function() {
+    var height;
+    height = this.elem.height() + 2 * parseInt(this.elem.css('padding-top'), 10);
+    return window.parent.postMessage("resize:" + height, '*');
   };
 
   return PodiPlay;
