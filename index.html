@@ -8,6 +8,7 @@
     <script src="src/lib/javascripts/jquery.1.11.0.min.js"></script>
     <script src="src/lib/javascripts/mediaelement.js"></script>
     <script src="src/lib/javascripts/handlebars-v1.3.0.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
     <script>
       $.getJSON('samples/audio_production.json').done(function(data) {
         window.production_data = data.data
@@ -63,6 +64,7 @@
     <script src="build/javascripts/app.js"></script>
     <script src="build/javascripts/theme.js"></script>
     <script src="build/javascripts/chaptermark.js"></script>
+    <script src="build/javascripts/chromecast.js"></script>
     <script>
       player = new PodiPlay('#player',
         {

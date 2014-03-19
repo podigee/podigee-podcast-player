@@ -26,6 +26,7 @@ PodiPlay = (function() {
     this.switchTimeDisplay = __bind(this.switchTimeDisplay, this);
     this.togglePlayState = __bind(this.togglePlayState, this);
     this.scrubberWidth = __bind(this.scrubberWidth, this);
+    this.initChromeCastSupport = __bind(this.initChromeCastSupport, this);
     this.initAudioPlayer = __bind(this.initAudioPlayer, this);
     this.renderTheme = __bind(this.renderTheme, this);
     this.setOptions(options);
@@ -73,7 +74,20 @@ PodiPlay = (function() {
     this.bindButtons();
     this.bindPlayerEvents();
     this.initChaptermarks();
-    return this.initMoreInfo();
+    this.initMoreInfo();
+    return this.initChromeCastSupport();
+  };
+
+  PodiPlay.prototype.initChromeCastSupport = function() {
+    return window.__onGCastApiAvailable = (function(_this) {
+      return function(loaded, errorInfo) {
+        if (loaded) {
+          return _this.chromecast = new PodiCast(_this);
+        } else {
+          return console.log(errorInfo);
+        }
+      };
+    })(this);
   };
 
   PodiPlay.prototype.findElements = function() {
@@ -278,10 +292,18 @@ PodiPlay = (function() {
   PodiPlay.prototype.bindButtons = function() {
     this.playPauseElement.click((function(_this) {
       return function() {
-        if (_this.player.paused) {
-          _this.player.play();
+        if (_this.chromecast) {
+          if (_this.chromecast.paused()) {
+            _this.chromecast.play();
+          } else {
+            _this.chromecast.pause();
+          }
         } else {
-          _this.player.pause();
+          if (_this.player.paused) {
+            _this.player.play();
+          } else {
+            _this.player.pause();
+          }
         }
         return _this.togglePlayState(_this);
       };

@@ -212,7 +212,12 @@
 
   .buttons {
     i {
-      width: 20px;
+      text-align: center;
+      width: 15px;
+    }
+
+    img {
+      height: 14px;
     }
   }
 
@@ -273,6 +278,11 @@
     font-size: 12px;
     margin-top: 10px;
     padding: 5px;
+  }
+
+  .chromecast-ui {
+    font-size: 10px;
+    display: none;
   }
 
   @media screen and (max-width: 480px) {

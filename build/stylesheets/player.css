@@ -186,7 +186,11 @@
   width: 120%;
 }
 .video-player .buttons i {
-  width: 20px;
+  text-align: center;
+  width: 15px;
+}
+.video-player .buttons img {
+  height: 14px;
 }
 .video-player .chaptermarks {
   background: #fff;
@@ -237,6 +241,10 @@
   font-size: 12px;
   margin-top: 10px;
   padding: 5px;
+}
+.video-player .chromecast-ui {
+  font-size: 10px;
+  display: none;
 }
 @media screen and (max-width: 480px) {
   .video-player .info img {

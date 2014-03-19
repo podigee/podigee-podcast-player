@@ -40,6 +40,10 @@ class PodiTheme
       <div class="buttons">
         <i class="fa fa-list chaptermarks-button" title="Show chaptermarks"></i>
         <i class="fa fa-info more-info-button" title="Show more info"></i>
+        <span class="chromecast-ui">
+          <img class="chromecast-button" title="Play on chromecast" src="samples/chromcast.png"/>
+          <span class="chromecast-receiver"></span>
+        </span>
       </div>
       <div class="chaptermarks"></div>
       <div class="more-info">{{description}}</div>

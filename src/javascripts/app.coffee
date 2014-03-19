@@ -36,6 +36,14 @@ class PodiPlay
     @bindPlayerEvents()
     @initChaptermarks()
     @initMoreInfo()
+    @initChromeCastSupport()
+
+  initChromeCastSupport: () =>
+    window.__onGCastApiAvailable = (loaded, errorInfo) =>
+      if loaded
+        @chromecast = new PodiCast(@)
+      else
+        console.log(errorInfo)
 
   findElements: ->
     @scrubberElement = @elem.find('.time-scrubber')
@@ -213,10 +221,16 @@ class PodiPlay
 
   bindButtons: () ->
     @playPauseElement.click =>
-      if @player.paused
-        @player.play()
+      if @chromecast
+        if @chromecast.paused()
+          @chromecast.play()
+        else
+          @chromecast.pause()
       else
-        @player.pause()
+        if @player.paused
+          @player.play()
+        else
+          @player.pause()
       @togglePlayState(this)
 
     @backwardElement.click =>
