@@ -6,8 +6,6 @@ class PodiCast
     @initializeUI()
 
   initializeCastApi: () ->
-    applicationID = 'D7C34EC7'
-    #sessionRequest = new chrome.cast.SessionRequest(applicationID)
     sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID)
     apiConfig = new chrome.cast.ApiConfig(sessionRequest, @sessionListener, @receiverListener)
     chrome.cast.initialize(apiConfig, @onInitSuccess, @onError)
