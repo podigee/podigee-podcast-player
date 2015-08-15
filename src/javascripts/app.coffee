@@ -204,6 +204,8 @@ class PodigeePodcastPlayer
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
+    return unless @productionData
+
     currentTime = @player.currentTime
     item = $.grep @productionData.statistics.music_speech, (item, index) ->
       item.start.indexOf(timeString) != -1

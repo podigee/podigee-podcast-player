@@ -3815,6 +3815,9 @@ PodigeePodcastPlayer = (function() {
 
   PodigeePodcastPlayer.prototype.adjustPlaySpeed = function(timeString) {
     var currentTime, item;
+    if (!this.productionData) {
+      return;
+    }
     currentTime = this.player.currentTime;
     item = $.grep(this.productionData.statistics.music_speech, function(item, index) {
       return item.start.indexOf(timeString) !== -1;
