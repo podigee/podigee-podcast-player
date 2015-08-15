@@ -3,11 +3,13 @@
   "title": "Podigee Podcast Player",
   "homepage": "https://podigee.github.io/podiplay",
   "version": "0.0.1",
-  "contributors": [{
-    "name": "Benjamin Zimmer",
-    "email": "ben@podigee.com",
-    "url": "https://www.podigee.com"
-  }],
+  "contributors": [
+    {
+      "name": "Benjamin Zimmer",
+      "email": "ben@podigee.com",
+      "url": "https://www.podigee.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/podigee/podiplay.git"
@@ -41,7 +43,8 @@
     "gulp-ruby-sass": "^0.7.1",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
-    "gulp-watch": "^0.6.9"
+    "gulp-watch": "^0.6.9",
+    "source-map": "^0.4.4"
   },
   "engines": {
     "node": ">=0.10.0"

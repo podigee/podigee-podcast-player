@@ -1,11 +1,11 @@
-class PodiEmbed
-  constructor: ->
-    @init()
+$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+IframeResizer = require('./iframe_resizer.coffee')
 
-  init: ->
-    elems = document.getElementsByClassName('podi-embed')
-    @elem = elems[elems.length-1]
-    @url = @elem.dataset.source
+class Iframe
+  constructor: (@elem)->
+    @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+    @dataVariableName = $(@elem).data('configuration')
+    @url = "podigee-podcast-player.html?configuration=#{@dataVariableName}&id=#{@id}"
 
     @buildIframe()
     @setupListeners()
@@ -13,6 +13,7 @@ class PodiEmbed
 
   buildIframe: ->
     @iframe = document.createElement('iframe')
+    @iframe.id = @id
     @iframe.scrolling = 'no'
     @iframe.src = @url
     @iframe.style.border = '0'
@@ -23,13 +24,22 @@ class PodiEmbed
     @iframe
 
   setupListeners: ->
-    window.addEventListener("message", @receiveMessage, false)
-
-  receiveMessage: (event) =>
-    newHeight = event.data.split(':')[1]
-    @iframe.height = "#{newHeight}px"
+    IframeResizer.listen('resizePlayer', $(@iframe))
 
   replaceElem: ->
     @elem.parentNode.replaceChild(@iframe, @elem)
 
-new PodiEmbed()
+
+class Embed
+  constructor: ->
+    players = []
+    elems = $('.podigee-podcast-player')
+
+    return if elems.length == 0
+
+    for elem in elems
+      players.push(new Iframe(elem))
+
+    window.podigeePodcastPlayers = players
+
+module.exports = Embed

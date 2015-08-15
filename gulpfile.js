@@ -16,7 +16,8 @@ var paths = {
   main_javascript: ['./src/javascripts/app.coffee'],
   javascripts: ['./src/javascripts/*.coffee'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
-  images: ['./src/images/**']
+  images: ['./src/images/**'],
+  fonts: ['./vendor/fonts/**']
 };
 
 gulp.task('stylesheets', function() {
@@ -34,7 +35,7 @@ gulp.task('javascripts', function() {
       transform: ['coffeeify'],
       extensions: ['.coffee']
     }))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(gzip())
@@ -54,7 +55,13 @@ gulp.task('images', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('default', ['stylesheets', 'javascripts', 'html', 'images'])
+gulp.task('fonts', function() {
+  gulp.src(paths.fonts)
+    .pipe(gulp.dest('./build/fonts'))
+    .pipe(connect.reload())
+})
+
+gulp.task('default', ['stylesheets', 'javascripts', 'html', 'images', 'fonts'])
 
 gulp.task('watch', function() {
   // Watch .scss files

@@ -1,4 +1,4 @@
-class PodiCast
+class ChromeCast
   constructor: (podiplay) ->
     @podiplay = podiplay
     @player = @podiplay.player
@@ -31,7 +31,7 @@ class PodiCast
     elem.show()
 
     @castButton.on 'click', =>
-      chrome.cast.requestSession(@onRequestSessionSuccess, @onLaunchError);
+      chrome.cast.requestSession(@onRequestSessionSuccess, @onLaunchError)
 
   onRequestSessionSuccess: (event) =>
     @session = event
@@ -76,3 +76,5 @@ class PodiCast
 
   onLaunchError: () =>
     console.log('onLaunchError:', arguments)
+
+module.exports = ChromeCast

@@ -1,7 +1,17 @@
-class PodiPlay
-  constructor: (@elemClass, options, data) ->
-    @setOptions(options)
-    @data = data
+$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+_ = require('../../vendor/javascripts/lodash-3.10.1.js')
+MediaElement = require('../../vendor/javascripts/mediaelement.js')
+Theme = require('./theme.coffee')
+ChromeCast = require('./chromecast.coffee')
+ChapterMark = require('./chaptermark.coffee')
+Embed = require('./embed.coffee')
+Utils = require('./utils.coffee')
+
+class PodigeePodcastPlayer
+  constructor: (@elemClass) ->
+    frameOptions = @getFrameOptions()
+    @data = window.parent[frameOptions.configuration]
+    @setOptions(@data.playerOptions, frameOptions)
 
     @renderTheme()
     @initAudioPlayer()
@@ -18,18 +28,21 @@ class PodiPlay
     showMoreInfo: false
   }
 
-  setOptions: (options) ->
+  getFrameOptions: () ->
+    Utils.locationToOptions(window.location.search)
+
+  setOptions: (options, frameOptions) ->
     @options = $.extend(true, @defaultOptions, options)
+    @options = $.extend(true, @options, frameOptions)
 
   renderTheme: =>
-    @elem = new PodiTheme(@elemClass, @data).render()
+    @elem = new Theme(@elemClass, @data).render()
 
   initAudioPlayer: =>
     audioElem = @elem.find('audio')[0]
     new MediaElement(audioElem, {success: (media, elem) => @init(media, elem) })
 
   init: (@player, elem) ->
-    that = @
     @findElements()
     @initScrubber()
     @bindButtons()
@@ -41,7 +54,7 @@ class PodiPlay
   initChromeCastSupport: () =>
     window.__onGCastApiAvailable = (loaded, errorInfo) =>
       if loaded
-        @chromecast = new PodiCast(@)
+        @chromecast = new ChromeCast(@)
       else
         console.log(errorInfo)
 
@@ -273,29 +286,38 @@ class PodiPlay
   initChaptermarks: =>
     html = $('<ul>')
     @data.chaptermarks.forEach((item, index, array) =>
-      chaptermark = new PodiChaptermark(item, @chapterClickCallback).render()
+      chaptermark = new ChapterMark(item, @chapterClickCallback).render()
       html.append(chaptermark)
     )
     @chaptermarkElement.append(html)
 
     if @options.showChaptermarks
-      @chaptermarkElement.show()
+      @chaptermarkElement.show(400, @sendHeightChange)
     else
-      @chaptermarkElement.hide()
+      @chaptermarkElement.hide(400, @sendHeightChange)
 
     @chaptermarkButtonElement.on 'click', =>
       @chaptermarkElement.slideToggle(400, @sendHeightChange)
 
   initMoreInfo: =>
-    if @options.showInfo
-      @moreInfoElement.show()
+    if @options.showMoreInfo
+      @moreInfoElement.show(400, @sendHeightChange)
     else
-      @moreInfoElement.hide()
+      @moreInfoElement.hide(400, @sendHeightChange)
 
     @moreInfoButtonElement.on 'click', =>
       @moreInfoElement.slideToggle(400, @sendHeightChange)
 
   sendHeightChange: =>
-    height = @elem.height() + 2 * parseInt(@elem.css('padding-top'), 10)
-    window.parent.postMessage("resize:#{height}", '*')
+    resizeData = JSON.stringify({
+      id: @options.id,
+      listenTo: 'resizePlayer',
+      height: @elem.height() + 2 * parseInt(@elem.css('padding-top'), 10)
+    })
+    window.parent.postMessage(resizeData, '*')
 
+
+unless window.inEmbed
+  new Embed()
+else
+  window.PodigeePodcastPlayer = PodigeePodcastPlayer

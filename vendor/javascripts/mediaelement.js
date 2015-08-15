@@ -1671,6 +1671,8 @@ function onYouTubePlayerReady(id) {
 window.mejs = mejs;
 window.MediaElement = mejs.MediaElement;
 
+module.exports = mejs.MediaElement
+
 /*!
  * Adds Internationalization and localization to mediaelement.
  *

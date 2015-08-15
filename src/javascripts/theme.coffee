@@ -1,4 +1,7 @@
-class PodiTheme
+$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+Handlebars = require('../../vendor/javascripts/handlebars-v3.0.3.js')
+
+class Theme
   constructor: (render_to, context, html) ->
     @render_to = $(render_to)
     @html = html || @defaultHtml
@@ -18,7 +21,6 @@ class PodiTheme
         <div class="title">{{title}}</div>
         <div class="description">{{subtitle}}</div>
       </div>
-      <!--<audio id="player" src="http://cdn.files.podigee.com/tmp_media/auphonic-example.mp3" preload="metadata"></audio>-->
       <audio id="player" src="{{playlist.mp3}}" preload="metadata"></audio>
       <div class="time-scrubber">
         <div class="time-played" title="Switch display mode"></div>
@@ -41,7 +43,7 @@ class PodiTheme
         <i class="fa fa-list chaptermarks-button" title="Show chaptermarks"></i>
         <i class="fa fa-info more-info-button" title="Show more info"></i>
         <span class="chromecast-ui">
-          <img class="chromecast-button" title="Play on chromecast" src="samples/chromcast.png"/>
+          <img class="chromecast-button" title="Play on chromecast" src="/samples/chromcast.png"/>
           <span class="chromecast-receiver"></span>
         </span>
       </div>
@@ -49,3 +51,5 @@ class PodiTheme
       <div class="more-info">{{description}}</div>
     </div>
     """
+
+module.exports = Theme

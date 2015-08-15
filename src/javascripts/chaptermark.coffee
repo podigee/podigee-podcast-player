@@ -1,4 +1,7 @@
-class PodiChaptermark
+$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+Handlebars = require('../../vendor/javascripts/handlebars-v3.0.3.js')
+
+class ChapterMark
   constructor: (data, callback) ->
     @data = data
     @callback = callback
@@ -19,3 +22,5 @@ class PodiChaptermark
       {{/if}}
     </li>
     """
+
+module.exports = ChapterMark
