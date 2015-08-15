@@ -3587,6 +3587,7 @@ PodigeePodcastPlayer = (function() {
     frameOptions = this.getFrameOptions();
     this.data = window.parent[frameOptions.configuration];
     this.setOptions(this.data.playerOptions, frameOptions);
+    this.getProductionData();
     this.renderTheme();
     this.initAudioPlayer();
   }
@@ -3603,6 +3604,16 @@ PodigeePodcastPlayer = (function() {
 
   PodigeePodcastPlayer.prototype.getFrameOptions = function() {
     return Utils.locationToOptions(window.location.search);
+  };
+
+  PodigeePodcastPlayer.prototype.getProductionData = function() {
+    var self;
+    self = this;
+    return $.getJSON(this.data.productionDataUrl).done((function(_this) {
+      return function(data) {
+        return self.productionData = data.data;
+      };
+    })(this));
   };
 
   PodigeePodcastPlayer.prototype.setOptions = function(options, frameOptions) {
@@ -3803,10 +3814,9 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.tempPlayBackSpeed = null;
 
   PodigeePodcastPlayer.prototype.adjustPlaySpeed = function(timeString) {
-    var currentTime, data, item;
+    var currentTime, item;
     currentTime = this.player.currentTime;
-    data = production_data.statistics.music_speech;
-    item = $.grep(data, function(item, index) {
+    item = $.grep(this.productionData.statistics.music_speech, function(item, index) {
       return item.start.indexOf(timeString) !== -1;
     });
     if (item.length) {

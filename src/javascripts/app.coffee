@@ -12,6 +12,7 @@ class PodigeePodcastPlayer
     frameOptions = @getFrameOptions()
     @data = window.parent[frameOptions.configuration]
     @setOptions(@data.playerOptions, frameOptions)
+    @getProductionData()
 
     @renderTheme()
     @initAudioPlayer()
@@ -30,6 +31,11 @@ class PodigeePodcastPlayer
 
   getFrameOptions: () ->
     Utils.locationToOptions(window.location.search)
+
+  getProductionData: () ->
+    self = @
+    $.getJSON(@data.productionDataUrl).done (data) =>
+      self.productionData = data.data
 
   setOptions: (options, frameOptions) ->
     @options = $.extend(true, @defaultOptions, options)
@@ -199,8 +205,7 @@ class PodigeePodcastPlayer
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
     currentTime = @player.currentTime
-    data = production_data.statistics.music_speech
-    item = $.grep data, (item, index) ->
+    item = $.grep @productionData.statistics.music_speech, (item, index) ->
       item.start.indexOf(timeString) != -1
 
     if item.length
