@@ -4,8 +4,9 @@ MediaElement = require('../../vendor/javascripts/mediaelement.js')
 Theme = require('./theme.coffee')
 ChromeCast = require('./chromecast.coffee')
 ChapterMark = require('./chaptermark.coffee')
-PlaylistItem = require('./playlist_item.coffee')
 Embed = require('./embed.coffee')
+Playlist = require('./playlist.coffee')
+Feed = require('./feed.coffee')
 Utils = require('./utils.coffee')
 
 class PodigeePodcastPlayer
@@ -14,6 +15,7 @@ class PodigeePodcastPlayer
     @data = window.parent[frameOptions.configuration]
     @setOptions(@data.playerOptions, frameOptions)
     @getProductionData()
+    @getFeed()
 
     @renderTheme()
     @initAudioPlayer()
@@ -37,6 +39,11 @@ class PodigeePodcastPlayer
     self = @
     $.getJSON(@data.productionDataUrl).done (data) =>
       self.productionData = data.data
+
+  getFeed: () ->
+    return unless @data.feedUrl
+
+    @feed = new Feed(@data.feedUrl, @playlistElement).fetch()
 
   setOptions: (options, frameOptions) ->
     @options = $.extend(true, @defaultOptions, options)
@@ -301,28 +308,12 @@ class PodigeePodcastPlayer
     @data.playlist.mp3 = item.enclosure
 
   initPlaylist: =>
-    return unless @data.feedUrl
+    return unless @feed
     self = this
 
-    $.get @data.feedUrl, (data) ->
-      feed = $(data)
-      items = feed.find('item')
-
-      list = $('<ul>')
-      $(items).each((index, item) =>
-        item = $(item)
-        item = {
-          title: item.find('title').html(),
-          href: item.find('link').html(),
-          enclosure: item.find('enclosure').attr('url'),
-          description: item.find('description').html()
-        }
-        playlistItem = new PlaylistItem(item, self.playlistClickCallback).render()
-        list.append(playlistItem)
-      )
-      self.playlistElement.append(list)
-
-      self.playlistElement.show(400, @sendHeightChange)
+    @feed.promise.done ->
+      self.playlist = new Playlist(self.feed.items,
+        self.playlistElement, self.playlistClickCallback)
 
   chapterClickCallback: (event) =>
     time = event.data.start
