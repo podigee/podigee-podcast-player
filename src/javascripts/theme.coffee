@@ -1,27 +1,32 @@
 $ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
-Handlebars = require('../../vendor/javascripts/handlebars-v3.0.3.js')
+sightglass = require('../../vendor/javascripts/sightglass.js')
+rivets = require('../../vendor/javascripts/rivets.min.js')
 
 class Theme
-  constructor: (render_to, context, html) ->
-    @render_to = $(render_to)
+  constructor: (renderTo, context, html) ->
+    @renderTo = $(renderTo)
     @html = html || @defaultHtml
     @context = context
 
   render: =>
-    template = Handlebars.compile(@html)
-    output = $(template(@context))
-    @render_to.replaceWith(output)
-    output
+    @elem = $(@defaultHtml)
+    rivets.bind(@elem, @context)
+    @renderTo.replaceWith(@elem)
+
+    return @elem
+
+  rerender: =>
+    $(@template(@context))
 
   defaultHtml:
     """
     <div class="video-player">
       <div class="info">
-        <img src="{{logo_url}}" />
-        <div class="title">{{title}}</div>
-        <div class="description">{{subtitle}}</div>
+        <img rv-src="logo_url" />
+        <div class="title">{ title }</div>
+        <div class="description">{ subtitle }</div>
       </div>
-      <audio id="player" src="{{playlist.mp3}}" preload="metadata"></audio>
+      <audio id="player" rv-src="playlist.mp3" preload="metadata"></audio>
       <div class="time-scrubber">
         <div class="time-played" title="Switch display mode"></div>
         <div class="rail">
@@ -48,7 +53,8 @@ class Theme
         </span>
       </div>
       <div class="chaptermarks"></div>
-      <div class="more-info">{{description}}</div>
+      <div class="more-info">{ description }</div>
+      <div class="playlist"></div>
     </div>
     """
 

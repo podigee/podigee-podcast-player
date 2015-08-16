@@ -4,6 +4,7 @@ MediaElement = require('../../vendor/javascripts/mediaelement.js')
 Theme = require('./theme.coffee')
 ChromeCast = require('./chromecast.coffee')
 ChapterMark = require('./chaptermark.coffee')
+PlaylistItem = require('./playlist_item.coffee')
 Embed = require('./embed.coffee')
 Utils = require('./utils.coffee')
 
@@ -42,17 +43,21 @@ class PodigeePodcastPlayer
     @options = $.extend(true, @options, frameOptions)
 
   renderTheme: =>
-    @elem = new Theme(@elemClass, @data).render()
+    @theme = new Theme(@elemClass, @data)
+    @elem = @theme.render()
 
   initAudioPlayer: =>
     audioElem = @elem.find('audio')[0]
-    new MediaElement(audioElem, {success: (media, elem) => @init(media, elem) })
+    new MediaElement(audioElem, {success: (media, elem) =>
+      @init(media, elem)
+    })
 
   init: (@player, elem) ->
     @findElements()
     @initScrubber()
     @bindButtons()
     @bindPlayerEvents()
+    @initPlaylist()
     @initChaptermarks()
     @initMoreInfo()
     @initChromeCastSupport()
@@ -79,6 +84,8 @@ class PodigeePodcastPlayer
     @chaptermarkElement = @elem.find('.chaptermarks')
     @moreInfoButtonElement = @elem.find('.more-info-button')
     @moreInfoElement = @elem.find('.more-info')
+    @playlistButtonElement = @elem.find('.playlist-button')
+    @playlistElement = @elem.find('.playlist')
 
   scrubberWidth: => @scrubberRailElement.width()
 
@@ -286,11 +293,44 @@ class PodigeePodcastPlayer
     $(@player).on('canplay', @triggerLoaded)
     $(@player).on('error', @triggerError)
 
+  playlistClickCallback: (event) =>
+    item = event.data
+    @data.title = item.title
+    @data.subtitle = item.subtitle
+    @data.description = item.description
+    @data.playlist.mp3 = item.enclosure
+
+  initPlaylist: =>
+    return unless @data.feedUrl
+    self = this
+
+    $.get @data.feedUrl, (data) ->
+      feed = $(data)
+      items = feed.find('item')
+
+      list = $('<ul>')
+      $(items).each((index, item) =>
+        item = $(item)
+        item = {
+          title: item.find('title').html(),
+          href: item.find('link').html(),
+          enclosure: item.find('enclosure').attr('url'),
+          description: item.find('description').html()
+        }
+        playlistItem = new PlaylistItem(item, self.playlistClickCallback).render()
+        list.append(playlistItem)
+      )
+      self.playlistElement.append(list)
+
+      self.playlistElement.show(400, @sendHeightChange)
+
   chapterClickCallback: (event) =>
     time = event.data.start
     @player.currentTime = @hhmmssToSeconds(time)
 
   initChaptermarks: =>
+    return unless @data.chaptermarks.length
+
     html = $('<ul>')
     @data.chaptermarks.forEach((item, index, array) =>
       chaptermark = new ChapterMark(item, @chapterClickCallback).render()
