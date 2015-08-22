@@ -241,6 +241,9 @@ PodigeePodcastPlayer = (function() {
     var frameOptions;
     this.elemClass = elemClass;
     this.sendHeightChange = bind(this.sendHeightChange, this);
+    this.toggleElement = bind(this.toggleElement, this);
+    this.hideElement = bind(this.hideElement, this);
+    this.showElement = bind(this.showElement, this);
     this.initMoreInfo = bind(this.initMoreInfo, this);
     this.initChaptermarks = bind(this.initChaptermarks, this);
     this.chapterClickCallback = bind(this.chapterClickCallback, this);
@@ -662,28 +665,47 @@ PodigeePodcastPlayer = (function() {
     })(this));
     this.chaptermarkElement.append(html);
     if (this.options.showChaptermarks) {
-      this.chaptermarkElement.show(400, this.sendHeightChange);
+      this.showElement(this.chaptermarkElement);
     } else {
-      this.chaptermarkElement.hide(400, this.sendHeightChange);
+      this.hideElement(this.chaptermarkElement);
     }
     return this.chaptermarkButtonElement.on('click', (function(_this) {
       return function() {
-        return _this.chaptermarkElement.slideToggle(400, _this.sendHeightChange);
+        return _this.toggleElement(_this.chaptermarkElement);
       };
     })(this));
   };
 
   PodigeePodcastPlayer.prototype.initMoreInfo = function() {
     if (this.options.showMoreInfo) {
-      this.moreInfoElement.show(400, this.sendHeightChange);
+      this.showElement(this.moreInfoElement);
     } else {
-      this.moreInfoElement.hide(400, this.sendHeightChange);
+      this.hideElement(this.moreInfoElement);
     }
     return this.moreInfoButtonElement.on('click', (function(_this) {
       return function() {
-        return _this.moreInfoElement.slideToggle(400, _this.sendHeightChange);
+        return _this.toggleElement(_this.moreInfoElement);
       };
     })(this));
+  };
+
+  PodigeePodcastPlayer.prototype.animationOptions = function() {
+    return {
+      duration: 300,
+      step: this.sendHeightChange
+    };
+  };
+
+  PodigeePodcastPlayer.prototype.showElement = function(elem) {
+    return elem.show(this.animationOptions());
+  };
+
+  PodigeePodcastPlayer.prototype.hideElement = function(elem) {
+    return elem.hide(this.animationOptions());
+  };
+
+  PodigeePodcastPlayer.prototype.toggleElement = function(elem) {
+    return elem.slideToggle(this.animationOptions());
   };
 
   PodigeePodcastPlayer.prototype.sendHeightChange = function() {

@@ -330,21 +330,34 @@ class PodigeePodcastPlayer
     @chaptermarkElement.append(html)
 
     if @options.showChaptermarks
-      @chaptermarkElement.show(400, @sendHeightChange)
+      @showElement(@chaptermarkElement)
     else
-      @chaptermarkElement.hide(400, @sendHeightChange)
+      @hideElement(@chaptermarkElement)
 
     @chaptermarkButtonElement.on 'click', =>
-      @chaptermarkElement.slideToggle(400, @sendHeightChange)
+      @toggleElement(@chaptermarkElement)
 
   initMoreInfo: =>
     if @options.showMoreInfo
-      @moreInfoElement.show(400, @sendHeightChange)
+      @showElement(@moreInfoElement)
     else
-      @moreInfoElement.hide(400, @sendHeightChange)
+      @hideElement(@moreInfoElement)
 
     @moreInfoButtonElement.on 'click', =>
-      @moreInfoElement.slideToggle(400, @sendHeightChange)
+      @toggleElement(@moreInfoElement)
+
+  animationOptions: ->
+    duration: 300
+    step: @sendHeightChange
+
+  showElement: (elem) =>
+    elem.show(@animationOptions())
+
+  hideElement: (elem) =>
+    elem.hide(@animationOptions())
+
+  toggleElement: (elem) =>
+    elem.slideToggle(@animationOptions())
 
   sendHeightChange: =>
     resizeData = JSON.stringify({
