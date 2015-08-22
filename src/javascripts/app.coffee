@@ -1,7 +1,6 @@
 $ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
-_ = require('../../vendor/javascripts/lodash-3.10.1.js')
-MediaElement = require('../../vendor/javascripts/mediaelement.js')
 Theme = require('./theme.coffee')
+Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
 ChromeCast = require('./chromecast.coffee')
 ChapterMark = require('./chaptermark.coffee')
@@ -19,7 +18,7 @@ class PodigeePodcastPlayer
     @getFeed()
 
     @renderTheme()
-    @initAudioPlayer()
+    @initPlayer()
 
   # options
 
@@ -39,7 +38,7 @@ class PodigeePodcastPlayer
   getProductionData: () ->
     self = @
     $.getJSON(@data.productionDataUrl).done (data) =>
-      self.productionData = data.data
+      self.data.productionData = data.data
 
   getFeed: () ->
     return unless @data.feedUrl
@@ -54,13 +53,12 @@ class PodigeePodcastPlayer
     @theme = new Theme(@elemClass, @data)
     @elem = @theme.render()
 
-  initAudioPlayer: =>
-    audioElem = @elem.find('audio')[0]
-    new MediaElement(audioElem, {success: (media, elem) =>
-      @init(media, elem)
-    })
+  initPlayer: =>
+    mediaElem = @elem.find('audio')[0]
+    new Player(mediaElem, @options, @init)
 
-  init: (@player, elem) ->
+  init: (player) =>
+    @player = player
     @findElements()
     @initProgressBar()
     @bindButtons()
@@ -95,7 +93,7 @@ class PodigeePodcastPlayer
   initProgressBar: ->
     @progressBar = new ProgressBar(
       @progressBarElement,
-      @player,
+      @player.media,
       @options.timeMode,
     )
 
@@ -129,75 +127,59 @@ class PodigeePodcastPlayer
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
-    return unless @productionData
+    return unless @data.productionData
 
-    currentTime = @player.currentTime
-    item = $.grep @productionData.statistics.music_speech, (item, index) ->
+    currentTime = @player.media.currentTime
+    item = $.grep @data.productionData.statistics.music_speech, (item, index) ->
       item.start.indexOf(timeString) != -1
 
     if item.length
       if item[0].label == 'music'
         unless @options.currentPlaybackRate == 1.0
           @tempPlayBackSpeed = @options.currentPlaybackRate
-          @setPlaySpeed(1.0)
+          @player.setPlaySpeed(1.0)
       else
         if @tempPlayBackSpeed
-          @setPlaySpeed(@tempPlayBackSpeed)
+          @player.setPlaySpeed(@tempPlayBackSpeed)
           @tempPlayBackSpeed = null
 
-  changePlaySpeed: () =>
-    nextRateIndex = @options.playbackRates.indexOf(@options.currentPlaybackRate) + 1
-    if nextRateIndex >= @options.playbackRates.length
-      nextRateIndex = 0
+    @updateSpeedDisplay()
 
-    @setPlaySpeed(@options.playbackRates[nextRateIndex])
-
-  setPlaySpeed: (speed) =>
-    @player.playbackRate = @options.currentPlaybackRate = speed
-    @speedElement.text("#{@options.currentPlaybackRate}x")
-
-  jumpBackward: (seconds) =>
-    seconds = seconds || @options.backwardSeconds
-    @player.currentTime = @player.currentTime - seconds
-
-  jumpForward: (seconds) =>
-    seconds = seconds || @options.forwardSeconds
-    @player.currentTime = @player.currentTime + seconds
-
-  bindButtons: () ->
+  bindButtons: () =>
     @playPauseElement.click =>
       if @chromecast
-        if @chromecast.paused()
-          @chromecast.play()
-        else
-          @chromecast.pause()
+        @chromecast.togglePlayState()
       else
-        if @player.paused
-          @player.play()
+        if @player.media.paused
+          @player.media.play()
         else
-          @player.pause()
+          @player.media.pause()
       @togglePlayState(this)
 
     @backwardElement.click =>
-      @jumpBackward()
+      @player.jumpBackward()
 
     @forwardElement.click =>
-      @jumpForward()
+      @player.jumpForward()
 
     @speedElement.click (event) =>
-      @changePlaySpeed()
+      @player.changePlaySpeed()
+      @updateSpeedDisplay()
+
+  updateSpeedDisplay: () ->
+    @speedElement.text("#{@options.currentPlaybackRate}x")
 
   bindPlayerEvents: () ->
-    $(@player).on('timeupdate', @updateTime)
-    #$(@player).on('progress', @triggerLoading)
-    $(@player).on('play', @triggerPlaying)
-    $(@player).on('playing', @triggerPlaying)
-    $(@player).on('seeking', @triggerLoading)
-    $(@player).on('seeked', @triggerLoaded)
-    $(@player).on('waiting', @triggerLoading)
-    $(@player).on('loadeddata', @triggerLoaded)
-    $(@player).on('canplay', @triggerLoaded)
-    $(@player).on('error', @triggerError)
+    $(@player.media).on('timeupdate', @updateTime)
+      .on('play', @triggerPlaying)
+      .on('playing', @triggerPlaying)
+      .on('seeking', @triggerLoading)
+      .on('seeked', @triggerLoaded)
+      .on('waiting', @triggerLoading)
+      .on('loadeddata', @triggerLoaded)
+      .on('canplay', @triggerLoaded)
+      .on('error', @triggerError)
+      #.on('progress', @triggerLoading)
 
   playlistClickCallback: (event) =>
     item = event.data
@@ -216,7 +198,7 @@ class PodigeePodcastPlayer
 
   chapterClickCallback: (event) =>
     time = event.data.start
-    @player.currentTime = Utils.hhmmssToSeconds(time)
+    @player.media.currentTime = Utils.hhmmssToSeconds(time)
 
   initChaptermarks: =>
     return unless @data.chaptermarks.length
@@ -265,7 +247,6 @@ class PodigeePodcastPlayer
       height: @elem.height() + 2 * parseInt(@elem.css('padding-top'), 10)
     })
     window.parent.postMessage(resizeData, '*')
-
 
 unless window.inEmbed
   new Embed()

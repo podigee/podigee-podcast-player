@@ -5,6 +5,11 @@ class ChromeCast
     @initializeCastApi()
     @initializeUI()
 
+  togglePlayState: () ->
+    if @paused() then @play() else @pause()
+
+  #private
+
   initializeCastApi: () ->
     sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID)
     apiConfig = new chrome.cast.ApiConfig(sessionRequest, @sessionListener, @receiverListener)
