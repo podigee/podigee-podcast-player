@@ -71,10 +71,10 @@
     }
   }
 
-  .time-scrubber {
+  .progress-bar {
     overflow: hidden;
 
-    .time-played {
+    .progress-bar-time-played {
       cursor: pointer;
       float: left;
       font-size: 14px;
@@ -84,7 +84,7 @@
       width: 70px;
     }
 
-    .rail {
+    .progress-bar-rail {
       float: left;
       background-color: #ddd;
       height: 10px;
@@ -94,8 +94,8 @@
     }
   }
 
-  .time-scrubber-played,
-  .time-scrubber-loaded {
+  .progress-bar-played,
+  .progress-bar-loaded {
     background-color: cornflowerblue;
     display: block;
     height: 10px;
@@ -104,12 +104,12 @@
     width: 0;
   }
 
-  .time-scrubber-loaded {
+  .progress-bar-loaded {
     background-color: #aaa;
   }
 
   // loading animation
-  .time-scrubber-buffering {
+  .progress-bar-buffering {
     background-color:rgba(255,255,255,0.4);
     display: none;
     height:10px;
@@ -117,7 +117,7 @@
     width:100%;
   }
 
-  .time-scrubber-buffering-line {
+  .progress-bar-buffering-line {
     -moz-transform:rotate(45deg);
     -ms-transform:rotate(45deg);
     -o-transform:rotate(45deg);
@@ -131,7 +131,7 @@
     width:14px;
   }
 
-  .time-scrubber-buffering-bar {
+  .progress-bar-buffering-bar {
     -moz-animation-duration:1.3s;
     -moz-animation-iteration-count:infinite;
     -moz-animation-name:noTrespassingAnimationG;

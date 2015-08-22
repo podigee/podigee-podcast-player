@@ -27,12 +27,12 @@ class Theme
         <div class="description">{ subtitle }</div>
       </div>
       <audio id="player" rv-src="playlist.mp3" preload="metadata"></audio>
-      <div class="time-scrubber">
-        <div class="time-played" title="Switch display mode"></div>
-        <div class="rail">
-          <span class="time-scrubber-loaded"></span>
-          <div class="time-scrubber-buffering"></div>
-          <span class="time-scrubber-played"></span>
+      <div class="progress-bar">
+        <div class="progress-bar-time-played" title="Switch display mode"></div>
+        <div class="progress-bar-rail">
+          <span class="progress-bar-loaded"></span>
+          <div class="progress-bar-buffering"></div>
+          <span class="progress-bar-played"></span>
         </div>
       </div>
 

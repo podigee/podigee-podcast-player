@@ -2,6 +2,7 @@ $ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
 _ = require('../../vendor/javascripts/lodash-3.10.1.js')
 MediaElement = require('../../vendor/javascripts/mediaelement.js')
 Theme = require('./theme.coffee')
+ProgressBar = require('./progress_bar.coffee')
 ChromeCast = require('./chromecast.coffee')
 ChapterMark = require('./chaptermark.coffee')
 Embed = require('./embed.coffee')
@@ -61,7 +62,7 @@ class PodigeePodcastPlayer
 
   init: (@player, elem) ->
     @findElements()
-    @initScrubber()
+    @initProgressBar()
     @bindButtons()
     @bindPlayerEvents()
     @initPlaylist()
@@ -77,12 +78,7 @@ class PodigeePodcastPlayer
         console.log(errorInfo)
 
   findElements: ->
-    @scrubberElement = @elem.find('.time-scrubber')
-    @timeElement = @elem.find('.time-played')
-    @scrubberRailElement = @scrubberElement.find('.rail')
-    @scrubberPlayedElement = @scrubberElement.find('.time-scrubber-played')
-    @scrubberLoadedElement = @scrubberElement.find('.time-scrubber-loaded')
-    @scrubberBufferingElement = @scrubberElement.find('.time-scrubber-buffering')
+    @progressBarElement = @elem.find('.progress-bar')
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
@@ -94,127 +90,42 @@ class PodigeePodcastPlayer
     @playlistButtonElement = @elem.find('.playlist-button')
     @playlistElement = @elem.find('.playlist')
 
-  scrubberWidth: => @scrubberRailElement.width()
-
   # initialize elements
 
-  initScrubber: ->
-    newWidth = @scrubberElement.width() - @timeElement.width()
-    @scrubberRailElement.width(newWidth)
-    @initLoadingAnimation()
-
-    window.onresize = =>
-      @initScrubber()
-
-  initLoadingAnimation: ->
-    elem = @scrubberElement.find('.time-scrubber-buffering')
-    bar = $('<div>').addClass('time-scrubber-buffering-bar')
-    line = $('<div>').addClass('time-scrubber-buffering-line')
-
-    # render 3 lines per 100px of bar length
-    numberOfLines = elem.width() / 100 * 3
-    for i in [0..numberOfLines]
-      bar.append(line.clone())
-
-    elem.append(bar)
+  initProgressBar: ->
+    @progressBar = new ProgressBar(
+      @progressBarElement,
+      @player,
+      @options.timeMode,
+    )
 
   togglePlayState: (elem) =>
     @playPauseElement.toggleClass('fa-play')
     @playPauseElement.toggleClass('fa-pause')
 
-  switchTimeDisplay: =>
-    @options.timeMode = if @options.timeMode == 'countup'
-      'countdown'
-    else
-      'countup'
-
-    @updateTime()
-
-  # used to determine the width of bars for
-  # current playtime and loaded data indicator
-  timeRailFactor: =>
-    duration = @player.duration
-    @scrubberWidth()/duration
-
-  secondsToHHMMSS: (seconds) ->
-    hours   = Math.floor(seconds / 3600)
-    minutes = Math.floor((seconds - (hours * 3600)) / 60)
-    seconds = seconds - (hours * 3600) - (minutes * 60)
-
-    seconds = seconds.toFixed(0)
-
-    hours = @padNumber(hours)
-    minutes = @padNumber(minutes)
-    seconds = @padNumber(seconds)
-
-    "#{hours}:#{minutes}:#{seconds}"
-
-  hhmmssToSeconds: (string) ->
-    parts = string.split(':')
-    seconds = parseInt(parts[2], 10)
-    minutes = parseInt(parts[1], 10)
-    hours = parseInt(parts[0], 10)
-    result = seconds + minutes * 60 + hours * 60 * 60
-
-  padNumber: (number) ->
-    if number < 10
-      "0#{number}"
-    else
-      number
-
   # event handlers
 
-  updateTime: =>
-    time = if @options.timeMode == 'countup'
-      prefix = ''
-      @player.currentTime
-    else
-      prefix = '-'
-      @player.duration - @player.currentTime
-
-    timeString = @secondsToHHMMSS(time)
-    @timeElement.text(prefix + timeString)
-
-    @updateScrubber()
-
+  updateTime: () =>
+    timeString = @progressBar.updateTime()
     @adjustPlaySpeed(timeString)
 
-  updateScrubber: () =>
-    newWidth = @player.currentTime * @timeRailFactor()
-    @scrubberPlayedElement.width(newWidth)
-
-  updateLoaded: (event) =>
-    if @player.buffered.length
-      newStart = @player.buffered.start(0) * @timeRailFactor()
-      newWidth = @player.buffered.end(0) * @timeRailFactor()
-      @scrubberLoadedElement.css('margin-left', newStart)
-      @scrubberLoadedElement.width(newWidth)
+  updateLoaded: () =>
+    @progressBar.updateLoaded()
 
   triggerLoading: =>
     @updateLoaded()
-    @scrubberBufferingElement.show()
+    @progressBar.showBuffering()
 
   triggerPlaying: =>
     @updateLoaded()
-    @scrubberBufferingElement.hide()
+    @progressBar.hideBuffering()
 
   triggerLoaded: =>
     @updateLoaded()
-    @scrubberBufferingElement.hide()
+    @progressBar.hideBuffering()
 
   triggerError: =>
-    @scrubberBufferingElement.hide()
-
-  jumpToPosition: (position) =>
-    if @player.duration
-      pixelPerSecond = @player.duration/@scrubberWidth()
-      newTime = pixelPerSecond * position
-      unless newTime == @player.currentTime
-        @player.currentTime = newTime
-
-  handleMouseMove: (event) =>
-    position = event.pageX - $(event.target).offset().left
-    @jumpToPosition(position)
+    @progressBar.hideBuffering()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
@@ -276,18 +187,6 @@ class PodigeePodcastPlayer
     @speedElement.click (event) =>
       @changePlaySpeed()
 
-    @timeElement.click =>
-      @switchTimeDisplay()
-
-    # drag&drop on time rail
-    $('.rail').on 'mousedown', (event) =>
-      @handleMouseMove(event)
-      $(this).on 'mousemove', (event) =>
-        @handleMouseMove(event)
-      $(this).on 'mouseup', (event) =>
-        $(this).off('mousemove')
-        $(this).off('mouseup')
-
   bindPlayerEvents: () ->
     $(@player).on('timeupdate', @updateTime)
     #$(@player).on('progress', @triggerLoading)
@@ -317,7 +216,7 @@ class PodigeePodcastPlayer
 
   chapterClickCallback: (event) =>
     time = event.data.start
-    @player.currentTime = @hhmmssToSeconds(time)
+    @player.currentTime = Utils.hhmmssToSeconds(time)
 
   initChaptermarks: =>
     return unless @data.chaptermarks.length
