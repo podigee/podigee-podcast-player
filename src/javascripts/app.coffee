@@ -1,4 +1,5 @@
 $ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+_ = require('../../vendor/javascripts/lodash-3.10.1.js')
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
@@ -11,11 +12,7 @@ Utils = require('./utils.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
-    frameOptions = @getFrameOptions()
-    @data = window.parent[frameOptions.configuration]
-    @setOptions(@data.playerOptions, frameOptions)
-    @getProductionData()
-    @getFeed()
+    @getConfiguration()
 
     @renderTheme()
     @initPlayer()
@@ -32,25 +29,32 @@ class PodigeePodcastPlayer
     showMoreInfo: false
   }
 
-  getFrameOptions: () ->
-    Utils.locationToOptions(window.location.search)
+  getFeed: () ->
+    return unless @podcast.feedUrl
+
+    @feed = new Feed(@podcast.feedUrl)
 
   getProductionData: () ->
+    return unless @episode.productionDataUrl
+
     self = @
-    $.getJSON(@data.productionDataUrl).done (data) =>
-      self.data.productionData = data.data
+    $.getJSON(@episode.productionDataUrl).done (data) =>
+      self.episode.productionData = data.data
 
-  getFeed: () ->
-    return unless @data.feedUrl
+  getConfiguration: () ->
+    frameOptions = Utils.locationToOptions(window.location.search)
+    configuration = window.parent[frameOptions.configuration]
 
-    @feed = new Feed(@data.feedUrl, @playlistElement).fetch()
+    @podcast = configuration.podcast
+    @getFeed()
 
-  setOptions: (options, frameOptions) ->
-    @options = $.extend(true, @defaultOptions, options)
-    @options = $.extend(true, @options, frameOptions)
+    @episode = configuration.episode
+    @getProductionData()
+
+    @options = _.extend(@defaultOptions, configuration.options, frameOptions)
 
   renderTheme: =>
-    @theme = new Theme(@elemClass, @data)
+    @theme = new Theme(@elemClass, @episode)
     @elem = @theme.render()
 
   initPlayer: =>
@@ -59,7 +63,6 @@ class PodigeePodcastPlayer
 
   init: (player) =>
     @player = player
-    @findElements()
     @initProgressBar()
     @bindButtons()
     @bindPlayerEvents()
@@ -75,31 +78,18 @@ class PodigeePodcastPlayer
       else
         console.log(errorInfo)
 
-  findElements: ->
-    @progressBarElement = @elem.find('.progress-bar')
-    @playPauseElement = @elem.find('.play-button')
-    @backwardElement = @elem.find('.backward-button')
-    @forwardElement = @elem.find('.forward-button')
-    @speedElement = @elem.find('.speed-toggle')
-    @chaptermarksButtonElement = @elem.find('.chaptermarks-button')
-    @chaptermarksElement = @elem.find('.chaptermarks')
-    @moreInfoButtonElement = @elem.find('.more-info-button')
-    @moreInfoElement = @elem.find('.more-info')
-    @playlistButtonElement = @elem.find('.playlist-button')
-    @playlistElement = @elem.find('.playlist')
-
   # initialize elements
 
   initProgressBar: ->
     @progressBar = new ProgressBar(
-      @progressBarElement,
+      @theme.progressBarElement,
       @player.media,
       @options.timeMode,
     )
 
   togglePlayState: (elem) =>
-    @playPauseElement.toggleClass('fa-play')
-    @playPauseElement.toggleClass('fa-pause')
+    @theme.playPauseElement.toggleClass('fa-play')
+    @theme.playPauseElement.toggleClass('fa-pause')
 
   # event handlers
 
@@ -127,10 +117,10 @@ class PodigeePodcastPlayer
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
-    return unless @data.productionData
+    return unless @episode.productionData
 
     currentTime = @player.media.currentTime
-    item = $.grep @data.productionData.statistics.music_speech, (item, index) ->
+    item = $.grep @episode.productionData.statistics.music_speech, (item, index) ->
       item.start.indexOf(timeString) != -1
 
     if item.length
@@ -146,7 +136,7 @@ class PodigeePodcastPlayer
     @updateSpeedDisplay()
 
   bindButtons: () =>
-    @playPauseElement.click =>
+    @theme.playPauseElement.click =>
       if @chromecast
         @chromecast.togglePlayState()
       else
@@ -156,18 +146,18 @@ class PodigeePodcastPlayer
           @player.media.pause()
       @togglePlayState(this)
 
-    @backwardElement.click =>
+    @theme.backwardElement.click =>
       @player.jumpBackward()
 
-    @forwardElement.click =>
+    @theme.forwardElement.click =>
       @player.jumpForward()
 
-    @speedElement.click (event) =>
+    @theme.speedElement.click (event) =>
       @player.changePlaySpeed()
       @updateSpeedDisplay()
 
   updateSpeedDisplay: () ->
-    @speedElement.text("#{@options.currentPlaybackRate}x")
+    @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
   bindPlayerEvents: () ->
     $(@player.media).on('timeupdate', @updateTime)
@@ -194,7 +184,7 @@ class PodigeePodcastPlayer
 
     @feed.promise.done ->
       self.playlist = new Playlist(self.feed.items,
-        self.playlistElement, self.playlistClickCallback)
+        self.theme.playlistElement, self.playlistClickCallback)
 
   chapterClickCallback: (event) =>
     time = event.data.start
@@ -202,16 +192,16 @@ class PodigeePodcastPlayer
 
   initChaptermarks: =>
     chaptermarks = new ChapterMarks(
-      @data.chaptermarks,
-      @chaptermarksElement,
+      @episode.chaptermarks,
+      @theme.chaptermarksElement,
       @chapterClickCallback)
 
-    @chaptermarksButtonElement.on 'click', =>
+    @theme.chaptermarksButtonElement.on 'click', =>
       @toggleElement(chaptermarks.elem)
 
   initMoreInfo: =>
-    @moreInfoButtonElement.on 'click', =>
-      @toggleElement(@moreInfoElement)
+    @theme.moreInfoButtonElement.on 'click', =>
+      @toggleElement(@theme.moreInfoElement)
 
   animationOptions: ->
     duration: 300

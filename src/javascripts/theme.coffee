@@ -13,10 +13,22 @@ class Theme
     rivets.bind(@elem, @context)
     @renderTo.replaceWith(@elem)
 
+    @findElements()
+
     return @elem
 
-  rerender: =>
-    $(@template(@context))
+  findElements: ->
+    @progressBarElement = @elem.find('.progress-bar')
+    @playPauseElement = @elem.find('.play-button')
+    @backwardElement = @elem.find('.backward-button')
+    @forwardElement = @elem.find('.forward-button')
+    @speedElement = @elem.find('.speed-toggle')
+    @chaptermarksButtonElement = @elem.find('.chaptermarks-button')
+    @chaptermarksElement = @elem.find('.chaptermarks')
+    @moreInfoButtonElement = @elem.find('.more-info-button')
+    @moreInfoElement = @elem.find('.more-info')
+    @playlistButtonElement = @elem.find('.playlist-button')
+    @playlistElement = @elem.find('.playlist')
 
   defaultHtml:
     """
