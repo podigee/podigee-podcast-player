@@ -3,7 +3,7 @@ Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
 ChromeCast = require('./chromecast.coffee')
-ChapterMark = require('./chaptermark.coffee')
+ChapterMarks = require('./chaptermarks.coffee')
 Embed = require('./embed.coffee')
 Playlist = require('./playlist.coffee')
 Feed = require('./feed.coffee')
@@ -81,8 +81,8 @@ class PodigeePodcastPlayer
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
     @speedElement = @elem.find('.speed-toggle')
-    @chaptermarkButtonElement = @elem.find('.chaptermarks-button')
-    @chaptermarkElement = @elem.find('.chaptermarks')
+    @chaptermarksButtonElement = @elem.find('.chaptermarks-button')
+    @chaptermarksElement = @elem.find('.chaptermarks')
     @moreInfoButtonElement = @elem.find('.more-info-button')
     @moreInfoElement = @elem.find('.more-info')
     @playlistButtonElement = @elem.find('.playlist-button')
@@ -201,41 +201,21 @@ class PodigeePodcastPlayer
     @player.media.currentTime = Utils.hhmmssToSeconds(time)
 
   initChaptermarks: =>
-    return unless @data.chaptermarks.length
+    chaptermarks = new ChapterMarks(
+      @data.chaptermarks,
+      @chaptermarksElement,
+      @chapterClickCallback)
 
-    html = $('<ul>')
-    @data.chaptermarks.forEach((item, index, array) =>
-      chaptermark = new ChapterMark(item, @chapterClickCallback).render()
-      html.append(chaptermark)
-    )
-    @chaptermarkElement.append(html)
-
-    if @options.showChaptermarks
-      @showElement(@chaptermarkElement)
-    else
-      @hideElement(@chaptermarkElement)
-
-    @chaptermarkButtonElement.on 'click', =>
-      @toggleElement(@chaptermarkElement)
+    @chaptermarksButtonElement.on 'click', =>
+      @toggleElement(chaptermarks.elem)
 
   initMoreInfo: =>
-    if @options.showMoreInfo
-      @showElement(@moreInfoElement)
-    else
-      @hideElement(@moreInfoElement)
-
     @moreInfoButtonElement.on 'click', =>
       @toggleElement(@moreInfoElement)
 
   animationOptions: ->
     duration: 300
     step: @sendHeightChange
-
-  showElement: (elem) =>
-    elem.show(@animationOptions())
-
-  hideElement: (elem) =>
-    elem.hide(@animationOptions())
 
   toggleElement: (elem) =>
     elem.slideToggle(@animationOptions())
