@@ -23,12 +23,15 @@ class Theme
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
     @speedElement = @elem.find('.speed-toggle')
-    @chaptermarksButtonElement = @elem.find('.chaptermarks-button')
-    @chaptermarksElement = @elem.find('.chaptermarks')
-    @moreInfoButtonElement = @elem.find('.more-info-button')
-    @moreInfoElement = @elem.find('.more-info')
-    @playlistButtonElement = @elem.find('.playlist-button')
-    @playlistElement = @elem.find('.playlist')
+
+    @buttons = @elem.find('.buttons')
+    @panels = @elem.find('.panels')
+
+  addButton: (button) =>
+    @buttons.append(button)
+
+  addPanel: (panel) =>
+    @panels.append(panel)
 
   defaultHtml:
     """
@@ -57,16 +60,13 @@ class Theme
       </div>
 
       <div class="buttons">
-        <i class="fa fa-list chaptermarks-button" title="Show chaptermarks"></i>
-        <i class="fa fa-info more-info-button" title="Show more info"></i>
         <span class="chromecast-ui">
           <img class="chromecast-button" title="Play on chromecast" src="/samples/chromcast.png"/>
           <span class="chromecast-receiver"></span>
         </span>
       </div>
-      <div class="chaptermarks"></div>
-      <div class="more-info">{ description }</div>
-      <div class="playlist"></div>
+      <div class="panels">
+      </div>
     </div>
     """
 

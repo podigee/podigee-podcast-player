@@ -15,7 +15,7 @@ var paths = {
   main_stylesheet: ['./src/stylesheets/app.scss'],
   stylesheets: ['./src/stylesheets/*.scss'],
   main_javascript: ['./src/javascripts/app.coffee'],
-  javascripts: ['./src/javascripts/*.coffee'],
+  javascripts: ['./src/javascripts/**/*.coffee'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
   images: ['./src/images/**'],
   fonts: ['./vendor/fonts/**']

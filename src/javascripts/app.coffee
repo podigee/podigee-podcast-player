@@ -4,11 +4,13 @@ Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
 ChromeCast = require('./chromecast.coffee')
-ChapterMarks = require('./chaptermarks.coffee')
 Embed = require('./embed.coffee')
-Playlist = require('./playlist.coffee')
 Feed = require('./feed.coffee')
 Utils = require('./utils.coffee')
+
+ChapterMarks = require('./extensions/chaptermarks.coffee')
+EpisodeInfo = require('./extensions/episode_info.coffee')
+Playlist = require('./extensions/playlist.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
@@ -29,10 +31,14 @@ class PodigeePodcastPlayer
     showMoreInfo: false
   }
 
-  getFeed: () ->
-    return unless @podcast.feedUrl
+  extensions: [
+    ChapterMarks
+  ]
 
-    @feed = new Feed(@podcast.feedUrl)
+  getFeed: () ->
+    return unless @podcast.feed
+
+    @podcast.feed = new Feed(@podcast.feed)
 
   getProductionData: () ->
     return unless @episode.productionDataUrl
@@ -66,9 +72,7 @@ class PodigeePodcastPlayer
     @initProgressBar()
     @bindButtons()
     @bindPlayerEvents()
-    @initPlaylist()
-    @initChaptermarks()
-    @initMoreInfo()
+    @initializeExtensions()
     @initChromeCastSupport()
 
   initChromeCastSupport: () =>
@@ -171,43 +175,20 @@ class PodigeePodcastPlayer
       .on('error', @triggerError)
       #.on('progress', @triggerLoading)
 
-  playlistClickCallback: (event) =>
-    item = event.data
-    @data.title = item.title
-    @data.subtitle = item.subtitle
-    @data.description = item.description
-    @data.playlist.mp3 = item.enclosure
+  renderPanel: (extension) =>
+    @theme.addButton(extension.button)
+    @theme.addPanel(extension.panel)
 
-  initPlaylist: =>
-    return unless @feed
+  initializeExtensions: () =>
     self = this
-
-    @feed.promise.done ->
-      self.playlist = new Playlist(self.feed.items,
-        self.theme.playlistElement, self.playlistClickCallback)
-
-  chapterClickCallback: (event) =>
-    time = event.data.start
-    @player.media.currentTime = Utils.hhmmssToSeconds(time)
-
-  initChaptermarks: =>
-    chaptermarks = new ChapterMarks(
-      @episode.chaptermarks,
-      @theme.chaptermarksElement,
-      @chapterClickCallback)
-
-    @theme.chaptermarksButtonElement.on 'click', =>
-      @toggleElement(chaptermarks.elem)
-
-  initMoreInfo: =>
-    @theme.moreInfoButtonElement.on 'click', =>
-      @toggleElement(@theme.moreInfoElement)
+    [ChapterMarks, EpisodeInfo, Playlist].forEach (extension) =>
+      new extension(self)
 
   animationOptions: ->
     duration: 300
     step: @sendHeightChange
 
-  toggleElement: (elem) =>
+  togglePanel: (elem) =>
     elem.slideToggle(@animationOptions())
 
   sendHeightChange: =>
