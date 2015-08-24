@@ -912,6 +912,7 @@ Playlist = (function() {
         item = $(feedItem);
         item = {
           title: item.find('title').html(),
+          subtitle: item.find('subtitle').html(),
           href: item.find('link').html(),
           enclosure: item.find('enclosure').attr('url'),
           description: item.find('description').html()
