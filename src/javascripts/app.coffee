@@ -3,7 +3,6 @@ _ = require('../../vendor/javascripts/lodash-3.10.1.js')
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
-ChromeCast = require('./chromecast.coffee')
 Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
 Utils = require('./utils.coffee')
@@ -11,6 +10,7 @@ Utils = require('./utils.coffee')
 ChapterMarks = require('./extensions/chaptermarks.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
+ChromeCast = require('./extensions/chromecast.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
@@ -31,9 +31,7 @@ class PodigeePodcastPlayer
     showMoreInfo: false
   }
 
-  extensions: [
-    ChapterMarks
-  ]
+  extensions: {}
 
   getFeed: () ->
     return unless @podcast.feed
@@ -73,14 +71,6 @@ class PodigeePodcastPlayer
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
-    @initChromeCastSupport()
-
-  initChromeCastSupport: () =>
-    window.__onGCastApiAvailable = (loaded, errorInfo) =>
-      if loaded
-        @chromecast = new ChromeCast(@)
-      else
-        console.log(errorInfo)
 
   # initialize elements
 
@@ -141,8 +131,8 @@ class PodigeePodcastPlayer
 
   bindButtons: () =>
     @theme.playPauseElement.click =>
-      if @chromecast
-        @chromecast.togglePlayState()
+      if @extensions.ChromeCast
+        @extensions.ChromeCast.togglePlayState()
       else
         if @player.media.paused
           @player.media.play()
@@ -181,8 +171,8 @@ class PodigeePodcastPlayer
 
   initializeExtensions: () =>
     self = this
-    [ChapterMarks, EpisodeInfo, Playlist].forEach (extension) =>
-      new extension(self)
+    [ChapterMarks, EpisodeInfo, Playlist, ChromeCast].forEach (extension) =>
+      self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->
     duration: 300

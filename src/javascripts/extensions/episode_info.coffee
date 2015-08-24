@@ -3,6 +3,10 @@ sightglass = require('../../../vendor/javascripts/sightglass.js')
 rivets = require('../../../vendor/javascripts/rivets.min.js')
 
 class EpisodeInfo
+  @extension:
+    name: 'EpisodeInfo'
+    type: 'panel'
+
   constructor: (@app) ->
     @episode = @app.episode
     return unless @episode

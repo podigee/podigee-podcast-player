@@ -226,8 +226,6 @@ Player = require('./player.coffee');
 
 ProgressBar = require('./progress_bar.coffee');
 
-ChromeCast = require('./chromecast.coffee');
-
 Embed = require('./embed.coffee');
 
 Feed = require('./feed.coffee');
@@ -239,6 +237,8 @@ ChapterMarks = require('./extensions/chaptermarks.coffee');
 EpisodeInfo = require('./extensions/episode_info.coffee');
 
 Playlist = require('./extensions/playlist.coffee');
+
+ChromeCast = require('./extensions/chromecast.coffee');
 
 PodigeePodcastPlayer = (function() {
   function PodigeePodcastPlayer(elemClass) {
@@ -256,7 +256,6 @@ PodigeePodcastPlayer = (function() {
     this.updateLoaded = bind(this.updateLoaded, this);
     this.updateTime = bind(this.updateTime, this);
     this.togglePlayState = bind(this.togglePlayState, this);
-    this.initChromeCastSupport = bind(this.initChromeCastSupport, this);
     this.init = bind(this.init, this);
     this.initPlayer = bind(this.initPlayer, this);
     this.renderTheme = bind(this.renderTheme, this);
@@ -275,7 +274,7 @@ PodigeePodcastPlayer = (function() {
     showMoreInfo: false
   };
 
-  PodigeePodcastPlayer.prototype.extensions = [ChapterMarks];
+  PodigeePodcastPlayer.prototype.extensions = {};
 
   PodigeePodcastPlayer.prototype.getFeed = function() {
     if (!this.podcast.feed) {
@@ -324,20 +323,7 @@ PodigeePodcastPlayer = (function() {
     this.initProgressBar();
     this.bindButtons();
     this.bindPlayerEvents();
-    this.initializeExtensions();
-    return this.initChromeCastSupport();
-  };
-
-  PodigeePodcastPlayer.prototype.initChromeCastSupport = function() {
-    return window.__onGCastApiAvailable = (function(_this) {
-      return function(loaded, errorInfo) {
-        if (loaded) {
-          return _this.chromecast = new ChromeCast(_this);
-        } else {
-          return console.log(errorInfo);
-        }
-      };
-    })(this);
+    return this.initializeExtensions();
   };
 
   PodigeePodcastPlayer.prototype.initProgressBar = function() {
@@ -408,8 +394,8 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.bindButtons = function() {
     this.theme.playPauseElement.click((function(_this) {
       return function() {
-        if (_this.chromecast) {
-          _this.chromecast.togglePlayState();
+        if (_this.extensions.ChromeCast) {
+          _this.extensions.ChromeCast.togglePlayState();
         } else {
           if (_this.player.media.paused) {
             _this.player.media.play();
@@ -454,9 +440,9 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ChapterMarks, EpisodeInfo, Playlist].forEach((function(_this) {
+    return [ChapterMarks, EpisodeInfo, Playlist, ChromeCast].forEach((function(_this) {
       return function(extension) {
-        return new extension(self);
+        return self.extensions[extension.extension.name] = new extension(self);
       };
     })(this));
   };
@@ -494,134 +480,7 @@ if (!window.inEmbed) {
 
 
 
-},{"../../vendor/javascripts/jquery.1.11.0.min.js":14,"../../vendor/javascripts/lodash-3.10.1.js":15,"./chromecast.coffee":3,"./embed.coffee":4,"./extensions/chaptermarks.coffee":5,"./extensions/episode_info.coffee":6,"./extensions/playlist.coffee":7,"./feed.coffee":8,"./player.coffee":10,"./progress_bar.coffee":11,"./theme.coffee":12,"./utils.coffee":13}],3:[function(require,module,exports){
-var ChromeCast,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-ChromeCast = (function() {
-  function ChromeCast(podiplay) {
-    this.onLaunchError = bind(this.onLaunchError, this);
-    this.onMediaError = bind(this.onMediaError, this);
-    this.buildMediaInfo = bind(this.buildMediaInfo, this);
-    this.onRequestSessionSuccess = bind(this.onRequestSessionSuccess, this);
-    this.initializeUI = bind(this.initializeUI, this);
-    this.receiverListener = bind(this.receiverListener, this);
-    this.sessionListener = bind(this.sessionListener, this);
-    this.onError = bind(this.onError, this);
-    this.onInitSuccess = bind(this.onInitSuccess, this);
-    this.podiplay = podiplay;
-    this.player = this.podiplay.player;
-    this.initializeCastApi();
-    this.initializeUI();
-  }
-
-  ChromeCast.prototype.togglePlayState = function() {
-    if (this.paused()) {
-      return this.play();
-    } else {
-      return this.pause();
-    }
-  };
-
-  ChromeCast.prototype.initializeCastApi = function() {
-    var apiConfig, sessionRequest;
-    sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
-    apiConfig = new chrome.cast.ApiConfig(sessionRequest, this.sessionListener, this.receiverListener);
-    return chrome.cast.initialize(apiConfig, this.onInitSuccess, this.onError);
-  };
-
-  ChromeCast.prototype.onInitSuccess = function() {
-    return console.log('onInitSuccess:', arguments);
-  };
-
-  ChromeCast.prototype.onError = function() {
-    return console.log('onError:', arguments);
-  };
-
-  ChromeCast.prototype.sessionListener = function(session) {
-    console.log('sessionListener:', arguments);
-    return this.onRequestSessionSuccess(session);
-  };
-
-  ChromeCast.prototype.receiverListener = function(event) {
-    return console.log('receiverListener:', event);
-  };
-
-  ChromeCast.prototype.initializeUI = function() {
-    var elem;
-    elem = this.podiplay.elem.find('.chromecast-ui');
-    this.castButton = elem.find('.chromecast-button');
-    this.castReceiver = elem.find('.chromecast-receiver');
-    elem.show();
-    return this.castButton.on('click', (function(_this) {
-      return function() {
-        return chrome.cast.requestSession(_this.onRequestSessionSuccess, _this.onLaunchError);
-      };
-    })(this));
-  };
-
-  ChromeCast.prototype.onRequestSessionSuccess = function(event) {
-    var request;
-    this.session = event;
-    this.castReceiver.text("Receiver: " + event.displayName);
-    request = new chrome.cast.media.LoadRequest(this.buildMediaInfo());
-    request.autoplay = false;
-    return this.session.loadMedia(request, this.onMediaDiscovered.bind(this, 'loadMedia'), this.onMediaError);
-  };
-
-  ChromeCast.prototype.buildMediaInfo = function() {
-    var image, mediaInfo, metadata;
-    mediaInfo = new chrome.cast.media.MediaInfo(this.player.src, 'audio/mpeg');
-    mediaInfo.duration = this.player.duration;
-    metadata = new chrome.cast.media.MusicTrackMediaMetadata();
-    image = new chrome.cast.Image(this.podiplay.data.logo_url);
-    metadata.title = this.podiplay.data.title;
-    metadata.images = [image];
-    mediaInfo.metadata = metadata;
-    return mediaInfo;
-  };
-
-  ChromeCast.prototype.onMediaDiscovered = function(how, media) {
-    return this.currentMedia = media;
-  };
-
-  ChromeCast.prototype.play = function() {
-    return this.currentMedia.play(null, this.onPlaySuccess, this.onPlayError);
-  };
-
-  ChromeCast.prototype.pause = function() {
-    return this.currentMedia.pause(null, this.onPlaySuccess, this.onPlayError);
-  };
-
-  ChromeCast.prototype.paused = function() {
-    return this.currentMedia.playerState === 'PAUSED';
-  };
-
-  ChromeCast.prototype.onPlaySuccess = function() {
-    return console.log('onPlaySuccess', arguments);
-  };
-
-  ChromeCast.prototype.onPlayError = function() {
-    return console.log('onPlayError', arguments);
-  };
-
-  ChromeCast.prototype.onMediaError = function() {
-    return console.log('onMediaError:', arguments);
-  };
-
-  ChromeCast.prototype.onLaunchError = function() {
-    return console.log('onLaunchError:', arguments);
-  };
-
-  return ChromeCast;
-
-})();
-
-module.exports = ChromeCast;
-
-
-
-},{}],4:[function(require,module,exports){
+},{"../../vendor/javascripts/jquery.1.11.0.min.js":14,"../../vendor/javascripts/lodash-3.10.1.js":15,"./embed.coffee":3,"./extensions/chaptermarks.coffee":4,"./extensions/chromecast.coffee":5,"./extensions/episode_info.coffee":6,"./extensions/playlist.coffee":7,"./feed.coffee":8,"./player.coffee":10,"./progress_bar.coffee":11,"./theme.coffee":12,"./utils.coffee":13}],3:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer;
 
 $ = require('../../vendor/javascripts/jquery.1.11.0.min.js');
@@ -687,7 +546,7 @@ module.exports = Embed;
 
 
 
-},{"../../vendor/javascripts/jquery.1.11.0.min.js":14,"./iframe_resizer.coffee":9}],5:[function(require,module,exports){
+},{"../../vendor/javascripts/jquery.1.11.0.min.js":14,"./iframe_resizer.coffee":9}],4:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -700,10 +559,6 @@ rivets = require('../../../vendor/javascripts/rivets.min.js');
 Utils = require('../utils.coffee');
 
 ChapterMark = (function() {
-  ChapterMark.extension = {
-    type: 'panel'
-  };
-
   function ChapterMark(context, callback) {
     this.render = bind(this.render, this);
     this.context = context;
@@ -724,6 +579,11 @@ ChapterMark = (function() {
 })();
 
 ChapterMarks = (function() {
+  ChapterMarks.extension = {
+    name: 'ChapterMarks',
+    type: 'panel'
+  };
+
   function ChapterMarks(app) {
     this.app = app;
     this.renderPanel = bind(this.renderPanel, this);
@@ -777,7 +637,142 @@ module.exports = ChapterMarks;
 
 
 
-},{"../../../vendor/javascripts/jquery.1.11.0.min.js":14,"../../../vendor/javascripts/rivets.min.js":17,"../../../vendor/javascripts/sightglass.js":18,"../utils.coffee":13}],6:[function(require,module,exports){
+},{"../../../vendor/javascripts/jquery.1.11.0.min.js":14,"../../../vendor/javascripts/rivets.min.js":17,"../../../vendor/javascripts/sightglass.js":18,"../utils.coffee":13}],5:[function(require,module,exports){
+var $, ChromeCast,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+$ = require('../../../vendor/javascripts/jquery.1.11.0.min.js');
+
+ChromeCast = (function() {
+  ChromeCast.extension = {
+    name: 'ChromeCast',
+    type: 'player'
+  };
+
+  function ChromeCast(app) {
+    this.app = app;
+    this.onLaunchError = bind(this.onLaunchError, this);
+    this.onMediaError = bind(this.onMediaError, this);
+    this.buildMediaInfo = bind(this.buildMediaInfo, this);
+    this.onRequestSessionSuccess = bind(this.onRequestSessionSuccess, this);
+    this.renderButton = bind(this.renderButton, this);
+    this.initializeUI = bind(this.initializeUI, this);
+    this.receiverListener = bind(this.receiverListener, this);
+    this.sessionListener = bind(this.sessionListener, this);
+    this.onError = bind(this.onError, this);
+    this.onInitSuccess = bind(this.onInitSuccess, this);
+    window.__onGCastApiAvailable = (function(_this) {
+      return function(loaded, errorInfo) {
+        if (loaded) {
+          _this.player = _this.app.player.media;
+          _this.initializeCastApi();
+          _this.renderButton();
+          return _this.app.theme.addButton(_this.button);
+        } else {
+          return console.debug(errorInfo);
+        }
+      };
+    })(this);
+  }
+
+  ChromeCast.prototype.togglePlayState = function() {
+    if (this.paused()) {
+      return this.play();
+    } else {
+      return this.pause();
+    }
+  };
+
+  ChromeCast.prototype.initializeCastApi = function() {
+    var apiConfig, sessionRequest;
+    sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+    apiConfig = new chrome.cast.ApiConfig(sessionRequest, this.sessionListener, this.receiverListener);
+    return chrome.cast.initialize(apiConfig, this.onInitSuccess, this.onError);
+  };
+
+  ChromeCast.prototype.onInitSuccess = function() {};
+
+  ChromeCast.prototype.onError = function() {};
+
+  ChromeCast.prototype.sessionListener = function(session) {
+    return this.onRequestSessionSuccess(session);
+  };
+
+  ChromeCast.prototype.receiverListener = function(event) {};
+
+  ChromeCast.prototype.initializeUI = function() {
+    var elem;
+    elem = this.app.elem.find('.chromecast-ui');
+    return elem.show();
+  };
+
+  ChromeCast.prototype.renderButton = function() {
+    this.button = $(this.buttonHtml);
+    this.button.on('click', (function(_this) {
+      return function() {
+        return chrome.cast.requestSession(_this.onRequestSessionSuccess, _this.onLaunchError);
+      };
+    })(this));
+    this.castButton = this.button.find('.chromecast-button');
+    return this.castReceiver = this.button.find('.chromecast-receiver');
+  };
+
+  ChromeCast.prototype.buttonHtml = "<span class=\"chromecast-ui\">\n  <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"/samples/chromcast.png\"/>\n  <span class=\"chromecast-receiver\"></span>\n</span>";
+
+  ChromeCast.prototype.onRequestSessionSuccess = function(event) {
+    var request;
+    this.session = event;
+    this.castReceiver.text("Receiver: " + event.receiver.friendlyName);
+    request = new chrome.cast.media.LoadRequest(this.buildMediaInfo());
+    request.autoplay = false;
+    return this.session.loadMedia(request, this.onMediaDiscovered.bind(this, 'loadMedia'), this.onMediaError);
+  };
+
+  ChromeCast.prototype.buildMediaInfo = function() {
+    var image, mediaInfo, metadata;
+    mediaInfo = new chrome.cast.media.MediaInfo(this.player.src, 'audio/mpeg');
+    mediaInfo.duration = this.player.duration;
+    metadata = new chrome.cast.media.MusicTrackMediaMetadata();
+    image = new chrome.cast.Image(this.app.episode.logo_url);
+    metadata.title = this.app.episode.title;
+    metadata.images = [image];
+    mediaInfo.metadata = metadata;
+    return mediaInfo;
+  };
+
+  ChromeCast.prototype.onMediaDiscovered = function(how, media) {
+    return this.currentMedia = media;
+  };
+
+  ChromeCast.prototype.play = function() {
+    return this.currentMedia.play(null, this.onPlaySuccess, this.onPlayError);
+  };
+
+  ChromeCast.prototype.pause = function() {
+    return this.currentMedia.pause(null, this.onPlaySuccess, this.onPlayError);
+  };
+
+  ChromeCast.prototype.paused = function() {
+    return this.currentMedia.playerState === 'PAUSED';
+  };
+
+  ChromeCast.prototype.onPlaySuccess = function() {};
+
+  ChromeCast.prototype.onPlayError = function() {};
+
+  ChromeCast.prototype.onMediaError = function() {};
+
+  ChromeCast.prototype.onLaunchError = function() {};
+
+  return ChromeCast;
+
+})();
+
+module.exports = ChromeCast;
+
+
+
+},{"../../../vendor/javascripts/jquery.1.11.0.min.js":14}],6:[function(require,module,exports){
 var $, EpisodeInfo, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -788,6 +783,11 @@ sightglass = require('../../../vendor/javascripts/sightglass.js');
 rivets = require('../../../vendor/javascripts/rivets.min.js');
 
 EpisodeInfo = (function() {
+  EpisodeInfo.extension = {
+    name: 'EpisodeInfo',
+    type: 'panel'
+  };
+
   function EpisodeInfo(app) {
     this.app = app;
     this.renderPanel = bind(this.renderPanel, this);
@@ -860,6 +860,11 @@ PlaylistItem = (function() {
 })();
 
 Playlist = (function() {
+  Playlist.extension = {
+    name: 'Playlist',
+    type: 'panel'
+  };
+
   function Playlist(app) {
     this.app = app;
     this.renderPanel = bind(this.renderPanel, this);
@@ -1247,7 +1252,7 @@ Theme = (function() {
     return this.panels.append(panel);
   };
 
-  Theme.prototype.defaultHtml = "<div class=\"video-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio id=\"player\" rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <div class=\"progress-bar-buffering\"></div>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n    <span class=\"chromecast-ui\">\n      <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"/samples/chromcast.png\"/>\n      <span class=\"chromecast-receiver\"></span>\n    </span>\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
+  Theme.prototype.defaultHtml = "<div class=\"video-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio id=\"player\" rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <div class=\"progress-bar-buffering\"></div>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
 
   return Theme;
 

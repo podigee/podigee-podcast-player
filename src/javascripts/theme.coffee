@@ -60,10 +60,6 @@ class Theme
       </div>
 
       <div class="buttons">
-        <span class="chromecast-ui">
-          <img class="chromecast-button" title="Play on chromecast" src="/samples/chromcast.png"/>
-          <span class="chromecast-receiver"></span>
-        </span>
       </div>
       <div class="panels">
       </div>

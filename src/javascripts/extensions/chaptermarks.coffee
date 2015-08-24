@@ -4,9 +4,6 @@ rivets = require('../../../vendor/javascripts/rivets.min.js')
 Utils = require('../utils.coffee')
 
 class ChapterMark
-  @extension:
-    type: 'panel'
-
   constructor: (context, callback) ->
     @context = context
     @callback = callback
@@ -28,6 +25,10 @@ class ChapterMark
     """
 
 class ChapterMarks
+  @extension:
+    name: 'ChapterMarks'
+    type: 'panel'
+
   constructor: (@app) ->
     @chaptermarks = @app.episode.chaptermarks
     return unless @chaptermarks && @chaptermarks.length

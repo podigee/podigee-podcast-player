@@ -26,6 +26,10 @@ class PlaylistItem
     """
 
 class Playlist
+  @extension:
+    name: 'Playlist'
+    type: 'panel'
+
   constructor: (@app) ->
     @feed = @app.podcast.feed
     return unless @feed
