@@ -3,18 +3,16 @@
   <head>
     <style>
       body { font-family: Helvetica Neue, Helvetica, Arial, sans-serif;}
-      .wrapper { margin: 0 auto; width: 600px; }
+      .wrapper { margin: 0 auto; width: 80%; }
     </style>
   </head>
   <body>
     <div class="wrapper">
       <h2>Single file player</h2>
-      <p>
-        Given only information for a single episode with no extended metadata, the player acts as a simple audio player.
-      </p>
+      <p>Given only information for a single episode with no extended metadata, the player acts as a simple audio player.</p>
 
       <script>
-        window.playerData1 = {
+        window.singlePlayer = {
           episode: {
             playlist: {mp3: '/samples/auphonic-example.mp3'},
             logo_url: "/samples/podigee-logo-256.png",
@@ -23,14 +21,32 @@
           }
         }
       </script>
-      <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="playerData1"></script>
+      <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="singlePlayer"></script>
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa. Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh.
-      </p>
+      <h2>Player with custom theme</h2>
+      <p>The simple player with a custom theme applied.</p>
 
       <script>
-        window.playerData2 = {
+        window.customThemePlayer = {
+          options: {
+            themeHtml: "/samples/custom.html",
+            themeCss: "/samples/custom.css"
+          },
+          episode: {
+            playlist: {mp3: '/samples/auphonic-example.mp3'},
+            logo_url: "/samples/podigee-logo-256.png",
+            title: "Nice, I have a custom theme!",
+            subtitle: "Yes, you can apply a custom themes.",
+          }
+        }
+      </script>
+      <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
+
+      <h2>Player with full metadata.</h2>
+      <p>The simple player with a custom theme applied.</p>
+
+      <script>
+        window.fullMetadata = {
           options: {
             showChaptermarks: false,
             showMoreInfo: false
@@ -61,7 +77,7 @@
           }
         }
       </script>
-      <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="playerData2"></script>
+      <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="fullMetadata"></script>
     </div>
   </body>
 </html>

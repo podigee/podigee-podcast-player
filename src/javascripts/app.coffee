@@ -16,8 +16,8 @@ class PodigeePodcastPlayer
   constructor: (@elemClass) ->
     @getConfiguration()
 
-    @renderTheme()
-    @initPlayer()
+    @renderTheme().done =>
+      @initPlayer()
 
   # options
 
@@ -58,8 +58,13 @@ class PodigeePodcastPlayer
     @options = _.extend(@defaultOptions, configuration.options, frameOptions)
 
   renderTheme: =>
-    @theme = new Theme(@elemClass, @episode)
-    @elem = @theme.render()
+    rendered = $.Deferred()
+    @theme = new Theme(@elemClass, @episode, @options.themeHtml, @options.themeCss)
+    @theme.loaded.done =>
+      @elem = @theme.render()
+      rendered.resolve()
+
+    rendered.promise()
 
   initPlayer: =>
     mediaElem = @elem.find('audio')[0]
@@ -71,6 +76,7 @@ class PodigeePodcastPlayer
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
+    window.setTimeout @sendHeightChange, 0
 
   # initialize elements
 
@@ -106,6 +112,11 @@ class PodigeePodcastPlayer
     @updateLoaded()
     @progressBar.hideBuffering()
 
+  triggerEnded: =>
+    @player.media.setCurrentTime(0)
+    @progressBar.updateTime()
+    @togglePlayState(this)
+
   triggerError: =>
     @progressBar.hideBuffering()
 
@@ -131,7 +142,7 @@ class PodigeePodcastPlayer
 
   bindButtons: () =>
     @theme.playPauseElement.click =>
-      if @extensions.ChromeCast
+      if @extensions.ChromeCast && @extensions.ChromeCast.active
         @extensions.ChromeCast.togglePlayState()
       else
         if @player.media.paused
@@ -162,6 +173,7 @@ class PodigeePodcastPlayer
       .on('waiting', @triggerLoading)
       .on('loadeddata', @triggerLoaded)
       .on('canplay', @triggerLoaded)
+      .on('ended', @triggerEnded)
       .on('error', @triggerError)
       #.on('progress', @triggerLoading)
 
@@ -182,10 +194,13 @@ class PodigeePodcastPlayer
     elem.slideToggle(@animationOptions())
 
   sendHeightChange: =>
+    paddingTop = parseInt(@elem.css('padding-top'), 10)
+    paddingBottom = parseInt(@elem.css('padding-bottom'), 10)
+    newHeight = @elem.height() + paddingTop + paddingBottom
     resizeData = JSON.stringify({
       id: @options.id,
       listenTo: 'resizePlayer',
-      height: @elem.height() + 2 * parseInt(@elem.css('padding-top'), 10)
+      height: newHeight
     })
     window.parent.postMessage(resizeData, '*')
 

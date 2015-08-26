@@ -78,19 +78,18 @@
       cursor: pointer;
       float: left;
       font-size: 14px;
-      height: 14px;
-      margin: 5px 0;
+      min-height: 14px;
+      margin: 5px 0 0;
       text-align: left;
       width: 70px;
     }
 
     .progress-bar-rail {
-      float: left;
       background-color: #ddd;
-      height: 10px;
+      min-height: 10px;
       margin: 9px 0 0;
+      overflow: hidden;
       position: relative;
-      width: 100px;
     }
   }
 
@@ -211,6 +210,8 @@
   }
 
   .buttons {
+    height: 18px;
+
     i {
       text-align: center;
       width: 15px;

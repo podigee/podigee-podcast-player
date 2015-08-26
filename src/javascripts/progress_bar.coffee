@@ -5,7 +5,6 @@ class ProgressBar
   constructor: (@elem, @player, @timeMode) ->
     @findElements()
     @bindEvents()
-    @adjustWidth()
     @initLoadingAnimation()
 
   showBuffering: () ->
@@ -46,10 +45,6 @@ class ProgressBar
 
   #private
 
-  adjustWidth: () ->
-    newWidth = @elem.width() - @timeElement.width()
-    @railElement.width(newWidth)
-
   findElements: () ->
     @timeElement = @elem.find('.progress-bar-time-played')
     @railElement = @elem.find('.progress-bar-rail')
@@ -74,7 +69,7 @@ class ProgressBar
       pixelPerSecond = @player.duration/@barWidth()
       newTime = pixelPerSecond * position
       unless newTime == @player.currentTime
-        @player.currentTime = newTime
+        @player.setCurrentTime(newTime)
 
   handleMouseMove: (event) =>
     position = event.pageX - $(event.target).offset().left

@@ -49,6 +49,7 @@ class ChromeCast
   renderButton: =>
     @button = $(@buttonHtml)
     @button.on 'click', =>
+      @active = true
       chrome.cast.requestSession(@onRequestSessionSuccess, @onLaunchError)
 
     @castButton = @button.find('.chromecast-button')

@@ -250,6 +250,7 @@ PodigeePodcastPlayer = (function() {
     this.bindButtons = bind(this.bindButtons, this);
     this.adjustPlaySpeed = bind(this.adjustPlaySpeed, this);
     this.triggerError = bind(this.triggerError, this);
+    this.triggerEnded = bind(this.triggerEnded, this);
     this.triggerLoaded = bind(this.triggerLoaded, this);
     this.triggerPlaying = bind(this.triggerPlaying, this);
     this.triggerLoading = bind(this.triggerLoading, this);
@@ -260,8 +261,11 @@ PodigeePodcastPlayer = (function() {
     this.initPlayer = bind(this.initPlayer, this);
     this.renderTheme = bind(this.renderTheme, this);
     this.getConfiguration();
-    this.renderTheme();
-    this.initPlayer();
+    this.renderTheme().done((function(_this) {
+      return function() {
+        return _this.initPlayer();
+      };
+    })(this));
   }
 
   PodigeePodcastPlayer.prototype.defaultOptions = {
@@ -308,8 +312,16 @@ PodigeePodcastPlayer = (function() {
   };
 
   PodigeePodcastPlayer.prototype.renderTheme = function() {
-    this.theme = new Theme(this.elemClass, this.episode);
-    return this.elem = this.theme.render();
+    var rendered;
+    rendered = $.Deferred();
+    this.theme = new Theme(this.elemClass, this.episode, this.options.themeHtml, this.options.themeCss);
+    this.theme.loaded.done((function(_this) {
+      return function() {
+        _this.elem = _this.theme.render();
+        return rendered.resolve();
+      };
+    })(this));
+    return rendered.promise();
   };
 
   PodigeePodcastPlayer.prototype.initPlayer = function() {
@@ -323,7 +335,8 @@ PodigeePodcastPlayer = (function() {
     this.initProgressBar();
     this.bindButtons();
     this.bindPlayerEvents();
-    return this.initializeExtensions();
+    this.initializeExtensions();
+    return window.setTimeout(this.sendHeightChange, 0);
   };
 
   PodigeePodcastPlayer.prototype.initProgressBar = function() {
@@ -360,6 +373,12 @@ PodigeePodcastPlayer = (function() {
     return this.progressBar.hideBuffering();
   };
 
+  PodigeePodcastPlayer.prototype.triggerEnded = function() {
+    this.player.media.setCurrentTime(0);
+    this.progressBar.updateTime();
+    return this.togglePlayState(this);
+  };
+
   PodigeePodcastPlayer.prototype.triggerError = function() {
     return this.progressBar.hideBuffering();
   };
@@ -394,7 +413,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.bindButtons = function() {
     this.theme.playPauseElement.click((function(_this) {
       return function() {
-        if (_this.extensions.ChromeCast) {
+        if (_this.extensions.ChromeCast && _this.extensions.ChromeCast.active) {
           _this.extensions.ChromeCast.togglePlayState();
         } else {
           if (_this.player.media.paused) {
@@ -429,7 +448,7 @@ PodigeePodcastPlayer = (function() {
   };
 
   PodigeePodcastPlayer.prototype.bindPlayerEvents = function() {
-    return $(this.player.media).on('timeupdate', this.updateTime).on('play', this.triggerPlaying).on('playing', this.triggerPlaying).on('seeking', this.triggerLoading).on('seeked', this.triggerLoaded).on('waiting', this.triggerLoading).on('loadeddata', this.triggerLoaded).on('canplay', this.triggerLoaded).on('error', this.triggerError);
+    return $(this.player.media).on('timeupdate', this.updateTime).on('play', this.triggerPlaying).on('playing', this.triggerPlaying).on('seeking', this.triggerLoading).on('seeked', this.triggerLoaded).on('waiting', this.triggerLoading).on('loadeddata', this.triggerLoaded).on('canplay', this.triggerLoaded).on('ended', this.triggerEnded).on('error', this.triggerError);
   };
 
   PodigeePodcastPlayer.prototype.renderPanel = function(extension) {
@@ -459,11 +478,14 @@ PodigeePodcastPlayer = (function() {
   };
 
   PodigeePodcastPlayer.prototype.sendHeightChange = function() {
-    var resizeData;
+    var newHeight, paddingBottom, paddingTop, resizeData;
+    paddingTop = parseInt(this.elem.css('padding-top'), 10);
+    paddingBottom = parseInt(this.elem.css('padding-bottom'), 10);
+    newHeight = this.elem.height() + paddingTop + paddingBottom;
     resizeData = JSON.stringify({
       id: this.options.id,
       listenTo: 'resizePlayer',
-      height: this.elem.height() + 2 * parseInt(this.elem.css('padding-top'), 10)
+      height: newHeight
     });
     return window.parent.postMessage(resizeData, '*');
   };
@@ -506,7 +528,6 @@ Iframe = (function() {
     this.iframe.style.border = '0';
     this.iframe.style.overflowY = 'hidden';
     this.iframe.style.transition = 'height 100ms linear';
-    this.iframe.height = '173px';
     this.iframe.width = '100%';
     return this.iframe;
   };
@@ -710,6 +731,7 @@ ChromeCast = (function() {
     this.button = $(this.buttonHtml);
     this.button.on('click', (function(_this) {
       return function() {
+        _this.active = true;
         return chrome.cast.requestSession(_this.onRequestSessionSuccess, _this.onLaunchError);
       };
     })(this));
@@ -1089,7 +1111,6 @@ ProgressBar = (function() {
     this.switchTimeDisplay = bind(this.switchTimeDisplay, this);
     this.findElements();
     this.bindEvents();
-    this.adjustWidth();
     this.initLoadingAnimation();
   }
 
@@ -1123,12 +1144,6 @@ ProgressBar = (function() {
     newStart = this.player.buffered.start(0) * this.timeRailFactor();
     newWidth = this.player.buffered.end(0) * this.timeRailFactor();
     return this.loadedElement.css('margin-left', newStart).width(newWidth);
-  };
-
-  ProgressBar.prototype.adjustWidth = function() {
-    var newWidth;
-    newWidth = this.elem.width() - this.timeElement.width();
-    return this.railElement.width(newWidth);
   };
 
   ProgressBar.prototype.findElements = function() {
@@ -1165,7 +1180,7 @@ ProgressBar = (function() {
       pixelPerSecond = this.player.duration / this.barWidth();
       newTime = pixelPerSecond * position;
       if (newTime !== this.player.currentTime) {
-        return this.player.currentTime = newTime;
+        return this.player.setCurrentTime(newTime);
       }
     }
   };
@@ -1221,21 +1236,66 @@ sightglass = require('../../vendor/javascripts/sightglass.js');
 rivets = require('../../vendor/javascripts/rivets.min.js');
 
 Theme = (function() {
-  function Theme(renderTo, context, html) {
+  function Theme(renderTo, context, html1, css) {
+    this.context = context;
+    this.html = html1;
+    this.css = css;
     this.addPanel = bind(this.addPanel, this);
     this.addButton = bind(this.addButton, this);
+    this.loadCustomCss = bind(this.loadCustomCss, this);
+    this.loadCustomHtml = bind(this.loadCustomHtml, this);
     this.render = bind(this.render, this);
     this.renderTo = $(renderTo);
-    this.html = html || this.defaultHtml;
-    this.context = context;
+    this.loadCustomHtml();
+    this.loadCustomCss();
   }
 
   Theme.prototype.render = function() {
-    this.elem = $(this.defaultHtml);
+    this.elem = $(this.html);
     rivets.bind(this.elem, this.context);
     this.renderTo.replaceWith(this.elem);
     this.findElements();
     return this.elem;
+  };
+
+  Theme.prototype.loadCustomHtml = function() {
+    var loaded, self;
+    loaded = $.Deferred();
+    self = this;
+    if (!this.html) {
+      this.html = this.defaultHtml;
+      loaded.resolve();
+    } else if (this.html.match('^/.*\.html$')) {
+      $.get(this.html).done((function(_this) {
+        return function(html) {
+          self.html = html;
+          return loaded.resolve();
+        };
+      })(this));
+      this.html = null;
+    } else {
+      if (this.html == null) {
+        this.html = this.defaultHtml;
+      }
+      loaded.resolve();
+    }
+    return this.loaded = loaded.promise();
+  };
+
+  Theme.prototype.loadCustomCss = function() {
+    var link;
+    if (!this.css) {
+      return;
+    }
+    if (this.css.match('^/.*\.css')) {
+      link = $('<link>').attr({
+        href: this.css,
+        rel: 'stylesheet',
+        type: 'text/css',
+        media: 'all'
+      });
+      return $('head').append(link);
+    }
   };
 
   Theme.prototype.findElements = function() {
@@ -1256,7 +1316,7 @@ Theme = (function() {
     return this.panels.append(panel);
   };
 
-  Theme.prototype.defaultHtml = "<div class=\"podcast-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio id=\"player\" rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <div class=\"progress-bar-buffering\"></div>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
+  Theme.prototype.defaultHtml = "<div class=\"podcast-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <span class=\"progress-bar-buffering\"></span>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
 
   return Theme;
 

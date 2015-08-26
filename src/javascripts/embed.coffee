@@ -19,7 +19,6 @@ class Iframe
     @iframe.style.border = '0'
     @iframe.style.overflowY = 'hidden'
     @iframe.style.transition = 'height 100ms linear'
-    @iframe.height = '173px'
     @iframe.width = '100%'
     @iframe
 

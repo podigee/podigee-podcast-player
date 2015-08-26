@@ -3,19 +3,50 @@ sightglass = require('../../vendor/javascripts/sightglass.js')
 rivets = require('../../vendor/javascripts/rivets.min.js')
 
 class Theme
-  constructor: (renderTo, context, html) ->
+  constructor: (renderTo, @context, @html, @css) ->
     @renderTo = $(renderTo)
-    @html = html || @defaultHtml
-    @context = context
+    @loadCustomHtml()
+    @loadCustomCss()
 
   render: =>
-    @elem = $(@defaultHtml)
+    @elem = $(@html)
     rivets.bind(@elem, @context)
     @renderTo.replaceWith(@elem)
 
     @findElements()
 
     return @elem
+
+  loadCustomHtml: () =>
+    loaded = $.Deferred()
+
+    self = this
+    if !@html
+      @html = @defaultHtml
+      loaded.resolve()
+    else if @html.match('^/.*\.html$')
+      $.get(@html).done (html) =>
+        self.html = html
+        loaded.resolve()
+      @html = null
+    else
+      @html ?= @defaultHtml
+      loaded.resolve()
+
+    @loaded = loaded.promise()
+
+  loadCustomCss: =>
+    return unless @css
+
+    if @css.match('^/.*\.css')
+      link = $('<link>').attr
+        href: @css
+        rel: 'stylesheet'
+        type: 'text/css'
+        media: 'all'
+
+      $('head').append(link)
+
 
   findElements: ->
     @progressBarElement = @elem.find('.progress-bar')
@@ -41,12 +72,12 @@ class Theme
         <div class="title">{ title }</div>
         <div class="description">{ subtitle }</div>
       </div>
-      <audio id="player" rv-src="playlist.mp3" preload="metadata"></audio>
+      <audio rv-src="playlist.mp3" preload="metadata"></audio>
       <div class="progress-bar">
         <div class="progress-bar-time-played" title="Switch display mode"></div>
         <div class="progress-bar-rail">
           <span class="progress-bar-loaded"></span>
-          <div class="progress-bar-buffering"></div>
+          <span class="progress-bar-buffering"></span>
           <span class="progress-bar-played"></span>
         </div>
       </div>
