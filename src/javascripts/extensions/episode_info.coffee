@@ -11,6 +11,8 @@ class EpisodeInfo
     @episode = @app.episode
     return unless @episode
 
+    return unless @episode.description
+
     @renderPanel()
     @renderButton()
 

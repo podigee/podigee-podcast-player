@@ -300,7 +300,7 @@ PodigeePodcastPlayer = (function() {
     var configuration, frameOptions;
     frameOptions = Utils.locationToOptions(window.location.search);
     configuration = window.parent[frameOptions.configuration];
-    this.podcast = configuration.podcast;
+    this.podcast = configuration.podcast || {};
     this.getFeed();
     this.episode = configuration.episode;
     this.getProductionData();
@@ -796,6 +796,9 @@ EpisodeInfo = (function() {
     if (!this.episode) {
       return;
     }
+    if (!this.episode.description) {
+      return;
+    }
     this.renderPanel();
     this.renderButton();
     this.app.renderPanel(this);
@@ -1253,7 +1256,7 @@ Theme = (function() {
     return this.panels.append(panel);
   };
 
-  Theme.prototype.defaultHtml = "<div class=\"video-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio id=\"player\" rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <div class=\"progress-bar-buffering\"></div>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
+  Theme.prototype.defaultHtml = "<div class=\"podcast-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio id=\"player\" rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <div class=\"progress-bar-buffering\"></div>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"buttons\">\n  </div>\n  <div class=\"panels\">\n  </div>\n</div>";
 
   return Theme;
 

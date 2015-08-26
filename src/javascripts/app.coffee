@@ -49,7 +49,7 @@ class PodigeePodcastPlayer
     frameOptions = Utils.locationToOptions(window.location.search)
     configuration = window.parent[frameOptions.configuration]
 
-    @podcast = configuration.podcast
+    @podcast = configuration.podcast || {}
     @getFeed()
 
     @episode = configuration.episode

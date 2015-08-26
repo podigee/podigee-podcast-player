@@ -35,7 +35,7 @@ class Theme
 
   defaultHtml:
     """
-    <div class="video-player">
+    <div class="podcast-player">
       <div class="info">
         <img rv-src="logo_url" />
         <div class="title">{ title }</div>
