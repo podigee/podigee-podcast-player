@@ -1,6 +1,6 @@
-$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
-sightglass = require('../../vendor/javascripts/sightglass.js')
-rivets = require('../../vendor/javascripts/rivets.min.js')
+$ = require('jquery')
+sightglass = require('sightglass')
+rivets = require('rivets')
 
 class Theme
   constructor: (renderTo, @context, @html, @css) ->
@@ -90,10 +90,8 @@ class Theme
         <span class="speed-toggle" title="Playback speed">1x</span>
       </div>
 
-      <div class="buttons">
-      </div>
-      <div class="panels">
-      </div>
+      <div class="buttons"></div>
+      <div class="panels"></div>
     </div>
     """
 

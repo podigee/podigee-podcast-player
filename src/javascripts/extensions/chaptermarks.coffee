@@ -1,6 +1,7 @@
-$ = require('../../../vendor/javascripts/jquery.1.11.0.min.js')
-sightglass = require('../../../vendor/javascripts/sightglass.js')
-rivets = require('../../../vendor/javascripts/rivets.min.js')
+$ = require('jquery')
+sightglass = require('sightglass')
+rivets = require('rivets')
+
 Utils = require('../utils.coffee')
 
 class ChapterMark

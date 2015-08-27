@@ -1,7 +1,7 @@
 {
-  "name": "podiplay",
+  "name": "podigee-podcast-player",
   "title": "Podigee Podcast Player",
-  "homepage": "https://podigee.github.io/podiplay",
+  "homepage": "https://podigee.github.io/podigee-podcast-player",
   "version": "0.0.1",
   "contributors": [
     {
@@ -12,10 +12,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/podigee/podiplay.git"
+    "url": "https://github.com/podigee/podigee-podcast-player.git"
   },
   "bugs": {
-    "url": "https://github.com/podigee/podiplay/issues"
+    "url": "https://github.com/podigee/podigee-podcast-player/issues"
   },
   "licenses": [
     {
@@ -44,7 +44,13 @@
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "gulp-watch": "^0.6.9",
-    "source-map": "^0.4.4"
+    "source-map": "^0.4.4",
+
+    "jquery": "^1.11.0",
+    "lodash": "^3.10.1",
+    "peaks.js": "^0.4.5",
+    "rivets": "^0.8.0",
+    "sightglass": "^0.2.4"
   },
   "engines": {
     "node": ">=0.10.0"

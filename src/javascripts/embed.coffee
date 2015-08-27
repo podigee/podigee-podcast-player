@@ -1,4 +1,5 @@
-$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
+$ = require('jquery')
+
 IframeResizer = require('./iframe_resizer.coffee')
 
 class Iframe

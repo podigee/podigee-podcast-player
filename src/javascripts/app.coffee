@@ -1,5 +1,6 @@
-$ = require('../../vendor/javascripts/jquery.1.11.0.min.js')
-_ = require('../../vendor/javascripts/lodash-3.10.1.js')
+$ = require('jquery')
+_ = require('lodash')
+
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
