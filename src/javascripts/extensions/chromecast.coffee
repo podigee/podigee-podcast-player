@@ -58,7 +58,7 @@ class ChromeCast
   buttonHtml:
     """
     <span class="chromecast-ui">
-      <img class="chromecast-button" title="Play on chromecast" src="/samples/chromcast.png"/>
+      <img class="chromecast-button" title="Play on chromecast" src="images/chromcast.png"/>
       <span class="chromecast-receiver"></span>
     </span>
     """

@@ -59,6 +59,7 @@ class PodigeePodcastPlayer
 
     @extensionOptions = configuration.extensions || {}
 
+    @scrip
     @options = _.extend(@defaultOptions, configuration.options, frameOptions)
 
   renderTheme: =>

@@ -43827,6 +43827,7 @@ PodigeePodcastPlayer = (function() {
     this.episode = configuration.episode;
     this.getProductionData();
     this.extensionOptions = configuration.extensions || {};
+    this.scrip;
     return this.options = _.extend(this.defaultOptions, configuration.options, frameOptions);
   };
 
@@ -44030,10 +44031,12 @@ IframeResizer = require('./iframe_resizer.coffee');
 
 Iframe = (function() {
   function Iframe(elem1) {
+    var scriptPath;
     this.elem = elem1;
     this.id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     this.dataVariableName = $(this.elem).data('configuration');
-    this.url = "podigee-podcast-player.html?configuration=" + this.dataVariableName + "&id=" + this.id;
+    scriptPath = $(this.elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '');
+    this.url = scriptPath + "/podigee-podcast-player.html?configuration=" + this.dataVariableName + "&id=" + this.id;
     this.buildIframe();
     this.setupListeners();
     this.replaceElem();
@@ -44324,7 +44327,7 @@ ChromeCast = (function() {
     return this.castReceiver = this.button.find('.chromecast-receiver');
   };
 
-  ChromeCast.prototype.buttonHtml = "<span class=\"chromecast-ui\">\n  <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"/samples/chromcast.png\"/>\n  <span class=\"chromecast-receiver\"></span>\n</span>";
+  ChromeCast.prototype.buttonHtml = "<span class=\"chromecast-ui\">\n  <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"images/chromcast.png\"/>\n  <span class=\"chromecast-receiver\"></span>\n</span>";
 
   ChromeCast.prototype.onRequestSessionSuccess = function(event) {
     var request;

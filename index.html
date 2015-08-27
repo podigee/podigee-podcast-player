@@ -1,98 +1,93 @@
 <!doctype html>
 <html>
   <head>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="build/stylesheets/player.css"></script>
-    <link rel="stylesheet" href="build/stylesheets/app.css"></script>
-    <link rel="stylesheet" href="src/lib/stylesheets/font-awesome.min.css"></script>
-    <script src="src/lib/javascripts/jquery.1.11.0.min.js"></script>
-    <script src="src/lib/javascripts/mediaelement.js"></script>
-    <script src="src/lib/javascripts/handlebars-v1.3.0.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
-    <script>
-      $.getJSON('samples/audio_production.json').done(function(data) {
-        window.production_data = data.data
-      })
-    </script>
+    <style>
+      body { font-family: Helvetica Neue, Helvetica, Arial, sans-serif;}
+      .wrapper { margin: 0 auto; width: 80%; }
+    </style>
   </head>
   <body>
-    <header>
-      <h1><a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a> Podcast Player</h1>
-    </header>
+    <div class="wrapper">
+      <h1>The Podigee Podcast Player</h1>
 
-    <audio id="player"></audio>
+      <h2>Single file player</h2>
+      <p>Given only information for a single episode with no extended metadata, the PPP acts as a simple audio player.</p>
 
-    <div class="explain">
-      <p>This is a work in progress. It is lacking organization of code as well as some essential features.</p>
-      <p>We are developing the player to be used on our Podcast Publishing Platform <a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a>. Use in other areas is highly encouraged though!</p>
-      <p>Technically it is based on the excellent <a href="https://developer.mozilla.org/en/docs/Web/API/HTMLMediaElement">HTML5 Media Element API</a> and <a href="http://mediaelementjs.com/">mediaelement.js</a> (e.g. for flash fallback).</p>
-      <p>Find a list of current as well as future features below. If you have ideas or wishes regarding features or capabilities, or would like to contribute, please get in touch:</p>
-      <p class="mail-address"><a href="mailto:hello@podigee.com">hello@podigee.com</a></p>
-      <h2>Current capabilities</h2>
-      <ul>
-        <li>HTML5 first</li>
-        <li>play/pause, fast-forward/-backward</li>
-        <li>playback speed</li>
-        <li>drag to seek</li>
-        <li>click to jump</li>
-        <li>loading animation</li>
-        <li>show time played/time left</li>
-        <li>display logo/title/description</li>
-        <li>chapter mark list</li>
-        <li>experimental <a href="http://chromecast.com" target="_blank">Chromecast</a> support</li>
-        <li>experimental themeing support</li>
-        <li>embedding</li>
-      </ul>
-
-      <h2>Capabilities to come</h2>
-      <ul>
-        <li>flash fallback</li>
-        <li>cross browser compatibility</li>
-        <li>browser feature detection</li>
-        <li>jump to timestamp from URL</li>
-        <li>playlist support</li>
-        <li>fully configurable/themable</li>
-        <li>plugin support</li>
-      </ul>
-
-      <h2>License</h2>
-      <p>The code is released under the <a href="https://github.com/podigee/podiplay/blob/master/LICENSE">MIT license</a>.
-    </div>
-
-    <footer>
-      &copy; <a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a> 2014
-    </footer>
-
-    <script src="build/javascripts/app.js"></script>
-    <script src="build/javascripts/theme.js"></script>
-    <script src="build/javascripts/chaptermark.js"></script>
-    <script src="build/javascripts/chromecast.js"></script>
-    <script>
-      player = new PodiPlay('#player',
-        {
-          showChaptermarks: false,
-          showMoreInfo: false
-        },
-        {
-          playlist: {mp3: 'http://cdn.files.podigee.com/tmp_media/auphonic-example.mp3'},
-          chaptermarks: [
-            {title: "First Chaptermark", start: '00:00:10', image: 'samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
-            {title: "Second Chaptermark with a lot of text and stuff to make it go out of the container and so on and so on", start: '00:00:20', image: '', href: ''},
-            {title: "Third Chaptermark", start: '00:00:30', image: '', href: ''},
-            {title: "Fourth Chaptermark", start: '00:00:40', image: '', href: ''},
-            {title: "Fifth Chaptermark", start: '00:00:50', image: '', href: ''},
-            {title: "Sixth Chaptermark", start: '00:01:00', image: '', href: ''},
-            {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
-            {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
-            {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
-            {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
-          ],
-          logo_url: "http://cdn.files.podigee.com/podcast_images/udr3KQKmR3yIogJjjefz_podigee-logo-big.png",
-          title: "Podigee Player Test",
-          subtitle: "We are testing a new podcast player.",
-          description: "This is a longer text describing the episode. orem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa. Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum. Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae, tellus. Sed odio est, auctor ac, sollicitudin in, consequat vitae, orci. Fusce id felis. Vivamus sollicitudin metus eget eros.",
+      <script>
+        window.singlePlayer = {
+          episode: {
+            playlist: {mp3: "/podigee-podcast-player/samples/auphonic-example.mp3"},
+            logo_url: "/podigee-podcast-player/samples/podigee-logo-256.png",
+            title: "Simple Episode Player",
+            subtitle: "Plays a single episode and only has basic metadata."
+          }
         }
-      )
-    </script>
+      </script>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="singlePlayer"></script>
+
+      <h2>Player with custom theme</h2>
+      <p>The simple player with a custom theme applied.</p>
+
+      <script>
+        window.customThemePlayer = {
+          options: {
+            themeHtml: "/podigee-podcast-player/samples/custom.html",
+            themeCss: "/podigee-podcast-player/samples/custom.css"
+          },
+          extensions: {
+            Waveform: {
+              color: "rgba(100, 149, 237, 0.3)"
+            }
+          },
+          episode: {
+            playlist: {mp3: '/podigee-podcast-player/samples/auphonic-example.mp3'},
+            logo_url: "/podigee-podcast-player/samples/podigee-logo-256.png",
+            title: "Nice, I have a custom theme!",
+            subtitle: "Pretty awesome, hmm?",
+          }
+        }
+      </script>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
+
+      <h2>Player with full metadata.</h2>
+      <p>The player will all metadata, playlist and waveform. Pretty overloaded isn't it? :)</p>
+
+      <script>
+        window.fullMetadata = {
+          options: {
+          },
+          extensions: {
+            Waveform: {
+              color: "rgba(100, 149, 237, 0.9)"
+            }
+          },
+          podcast: {
+            //feed: '//podigee-podcast-player/samples/feed.xml',
+            feed: 'https://dark-space-hoerspiel.podigee.io/feed/aac',
+          },
+          episode: {
+            playlist: {mp3: '/podigee-podcast-player/samples/auphonic-example.mp3'},
+            productionDataUrl: '/podigee-podcast-player/samples/audio_production.json',
+            chaptermarks: [
+              {title: "First Chaptermark", start: '00:00:10', image: '/podigee-podcast-player/samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
+              {title: "Second Chaptermark with a lot of text and stuff to make it go out of the container and so on and so on", start: '00:00:20', image: '', href: ''},
+              {title: "Third Chaptermark", start: '00:00:30', image: '', href: ''},
+              {title: "Fourth Chaptermark", start: '00:00:40', image: '', href: ''},
+              {title: "Fifth Chaptermark", start: '00:00:50', image: '', href: ''},
+              {title: "Sixth Chaptermark", start: '00:01:00', image: '', href: ''},
+              {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
+              {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
+              {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
+              {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
+            ],
+            logo_url: "/podigee-podcast-player/samples/podigee-logo-256.png",
+            title: "Woah, I'm in an IFRAME! The second time!",
+            subtitle: "We are testing a new podcast player.",
+            description: "This is a longer text describing the episode. orem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa. Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum. Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae, tellus. Sed odio est, auctor ac, sollicitudin in, consequat vitae, orci. Fusce id felis. Vivamus sollicitudin metus eget eros.",
+          }
+        }
+      </script>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="fullMetadata"></script>
+    </div>
   </body>
 </html>
