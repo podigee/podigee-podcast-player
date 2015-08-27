@@ -222,6 +222,17 @@
     }
   }
 
+  .waveform {
+    height: 50px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 100%;
+
+    .zoom-container {
+      display: none;
+    }
+  }
+
   .chaptermarks,
   .playlist {
     background: #fff;

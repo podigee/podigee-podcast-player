@@ -49,7 +49,9 @@ class Theme
 
 
   findElements: ->
+    @audioElement = @elem.find('audio')
     @progressBarElement = @elem.find('.progress-bar')
+    @waveformElement = @elem.find('.waveform')
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
@@ -90,6 +92,7 @@ class Theme
         <span class="speed-toggle" title="Playback speed">1x</span>
       </div>
 
+      <div class="waveform"></div>
       <div class="buttons"></div>
       <div class="panels"></div>
     </div>

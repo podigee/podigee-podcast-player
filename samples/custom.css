@@ -41,6 +41,25 @@
   z-index: 0;
 }
 
+.custom-podcast-player .waveform {
+  height: 50px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.custom-podcast-player .waveform .overview-container {
+  height: 200%;
+  width: 100%;
+}
+
+.custom-podcast-player .waveform .zoom-container {
+  height: 0;
+  width: 100%;
+}
+
 .custom-podcast-player .progress-bar .progress-bar-time-player {
   display: none;
   width: 0;
@@ -56,7 +75,7 @@
 
 .custom-podcast-player .progress-bar .progress-bar-played,
 .custom-podcast-player .progress-bar .progress-bar-loaded {
-  background-color: cornflowerblue;
+  background-color: rgba(100, 149, 237, 0.5);
   display: block;
   height: 100%;
   position: absolute;

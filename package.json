@@ -17,12 +17,10 @@
   "bugs": {
     "url": "https://github.com/podigee/podigee-podcast-player/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
-    }
-  ],
+  "license": {
+    "type": "MIT",
+    "url": "http://opensource.org/licenses/MIT"
+  },
   "keywords": [
     "podcasting",
     "podigee",
@@ -48,7 +46,7 @@
 
     "jquery": "^1.11.0",
     "lodash": "^3.10.1",
-    "peaks.js": "^0.4.5",
+    "peaks.js": "bbcrd/peaks.js#9baf3b0",
     "rivets": "^0.8.0",
     "sightglass": "^0.2.4"
   },

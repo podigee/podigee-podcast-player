@@ -8,13 +8,15 @@
   </head>
   <body>
     <div class="wrapper">
+      <h1>The Podigee Podcast Player</h1>
+
       <h2>Single file player</h2>
-      <p>Given only information for a single episode with no extended metadata, the player acts as a simple audio player.</p>
+      <p>Given only information for a single episode with no extended metadata, the PPP acts as a simple audio player.</p>
 
       <script>
         window.singlePlayer = {
           episode: {
-            playlist: {mp3: '/samples/auphonic-example.mp3'},
+            playlist: {mp3: "/samples/auphonic-example.mp3"},
             logo_url: "/samples/podigee-logo-256.png",
             title: "Simple Episode Player",
             subtitle: "Plays a single episode and only has basic metadata."
@@ -32,24 +34,32 @@
             themeHtml: "/samples/custom.html",
             themeCss: "/samples/custom.css"
           },
+          extensions: {
+            Waveform: {
+              color: "rgba(100, 149, 237, 0.3)"
+            }
+          },
           episode: {
             playlist: {mp3: '/samples/auphonic-example.mp3'},
             logo_url: "/samples/podigee-logo-256.png",
             title: "Nice, I have a custom theme!",
-            subtitle: "Yes, you can apply a custom themes.",
+            subtitle: "Pretty awesome, hmm?",
           }
         }
       </script>
       <script class="podigee-podcast-player" src="javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
 
       <h2>Player with full metadata.</h2>
-      <p>The simple player with a custom theme applied.</p>
+      <p>The player will all metadata, playlist and waveform. Pretty overloaded isn't it? :)</p>
 
       <script>
         window.fullMetadata = {
           options: {
-            showChaptermarks: false,
-            showMoreInfo: false
+          },
+          extensions: {
+            Waveform: {
+              color: "rgba(100, 149, 237, 0.9)"
+            }
           },
           podcast: {
             //feed: '/samples/feed.xml',

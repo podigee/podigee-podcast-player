@@ -12,6 +12,7 @@ ChapterMarks = require('./extensions/chaptermarks.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
 ChromeCast = require('./extensions/chromecast.coffee')
+Waveform = require('./extensions/Waveform.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
@@ -55,6 +56,8 @@ class PodigeePodcastPlayer
 
     @episode = configuration.episode
     @getProductionData()
+
+    @extensionOptions = configuration.extensions || {}
 
     @options = _.extend(@defaultOptions, configuration.options, frameOptions)
 
@@ -184,7 +187,7 @@ class PodigeePodcastPlayer
 
   initializeExtensions: () =>
     self = this
-    [ChapterMarks, EpisodeInfo, Playlist, ChromeCast].forEach (extension) =>
+    [ChapterMarks, EpisodeInfo, Playlist, ChromeCast, Waveform].forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->
