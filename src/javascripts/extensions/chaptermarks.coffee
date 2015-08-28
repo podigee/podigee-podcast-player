@@ -1,4 +1,5 @@
 $ = require('jquery')
+_ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
@@ -34,10 +35,15 @@ class ChapterMarks
     @chaptermarks = @app.episode.chaptermarks
     return unless @chaptermarks && @chaptermarks.length
 
+    @options = _.extend(@defaultOptions, @app.extensionOptions.ChapterMarks)
+
     @renderPanel()
     @renderButton()
 
     @app.renderPanel(this)
+
+  defaultOptions:
+    showOnStart: false
 
   click: (event) =>
     time = event.data.start
@@ -50,7 +56,7 @@ class ChapterMarks
 
   renderPanel: =>
     @panel = $(@panelHtml)
-    @panel.hide()
+    @panel.hide() unless @
     @chaptermarks.forEach((item, index, array) =>
       chaptermark = new ChapterMark(item, @click).render()
       @panel.find('ul').append(chaptermark)
@@ -63,7 +69,11 @@ class ChapterMarks
 
   panelHtml:
     """
-    <div class="chaptermarks"><ul></ul></div>
+    <div class="chaptermarks">
+      <h3>Chaptermarks</h3>
+
+      <ul></ul>
+    </div>
     """
 
 module.exports = ChapterMarks

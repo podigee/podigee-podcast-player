@@ -43793,7 +43793,8 @@ PodigeePodcastPlayer = (function() {
     backwardSeconds: 10,
     forwardSeconds: 30,
     showChaptermarks: false,
-    showMoreInfo: false
+    showMoreInfo: false,
+    theme: 'default'
   };
 
   PodigeePodcastPlayer.prototype.extensions = {};
@@ -43827,14 +43828,13 @@ PodigeePodcastPlayer = (function() {
     this.episode = configuration.episode;
     this.getProductionData();
     this.extensionOptions = configuration.extensions || {};
-    this.scrip;
     return this.options = _.extend(this.defaultOptions, configuration.options, frameOptions);
   };
 
   PodigeePodcastPlayer.prototype.renderTheme = function() {
     var rendered;
     rendered = $.Deferred();
-    this.theme = new Theme(this.elemClass, this.episode, this.options.themeHtml, this.options.themeCss);
+    this.theme = new Theme(this);
     this.theme.loaded.done((function(_this) {
       return function() {
         _this.elem = _this.theme.render();
@@ -44059,6 +44059,7 @@ Iframe = (function() {
   };
 
   Iframe.prototype.replaceElem = function() {
+    $(this.iframe).addClass($(this.elem).attr('class'));
     return this.elem.parentNode.replaceChild(this.iframe, this.elem);
   };
 
@@ -44106,6 +44107,9 @@ Waveform = (function() {
   function Waveform(app) {
     this.app = app;
     this.render = bind(this.render, this);
+    if (!this.app.episode.waveform) {
+      return;
+    }
     if (!this.app.theme.waveformElement.length) {
       return;
     }
@@ -44129,6 +44133,9 @@ Waveform = (function() {
     height = this.elem.height() * 2;
     transparent = 'rgba(0, 0, 0, 0)';
     return Peaks.init({
+      dataUri: {
+        json: this.options.data
+      },
       container: this.elem[0],
       mediaElement: this.audio[0],
       height: height,
@@ -44156,10 +44163,12 @@ module.exports = Waveform;
 
 
 },{"lodash":3,"peaks.js":17}],36:[function(require,module,exports){
-var $, ChapterMark, ChapterMarks, Utils, rivets, sightglass,
+var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+_ = require('lodash');
 
 sightglass = require('sightglass');
 
@@ -44202,10 +44211,15 @@ ChapterMarks = (function() {
     if (!(this.chaptermarks && this.chaptermarks.length)) {
       return;
     }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.ChapterMarks);
     this.renderPanel();
     this.renderButton();
     this.app.renderPanel(this);
   }
+
+  ChapterMarks.prototype.defaultOptions = {
+    showOnStart: false
+  };
 
   ChapterMarks.prototype.click = function(event) {
     var time;
@@ -44224,7 +44238,9 @@ ChapterMarks = (function() {
 
   ChapterMarks.prototype.renderPanel = function() {
     this.panel = $(this.panelHtml);
-    this.panel.hide();
+    if (!this) {
+      this.panel.hide();
+    }
     return this.chaptermarks.forEach((function(_this) {
       return function(item, index, array) {
         var chaptermark;
@@ -44236,7 +44252,7 @@ ChapterMarks = (function() {
 
   ChapterMarks.prototype.buttonHtml = "<i class=\"fa fa-list chaptermarks-button\" title=\"Show chaptermarks\"></i>";
 
-  ChapterMarks.prototype.panelHtml = "<div class=\"chaptermarks\"><ul></ul></div>";
+  ChapterMarks.prototype.panelHtml = "<div class=\"chaptermarks\">\n  <h3>Chaptermarks</h3>\n\n  <ul></ul>\n</div>";
 
   return ChapterMarks;
 
@@ -44246,7 +44262,7 @@ module.exports = ChapterMarks;
 
 
 
-},{"../utils.coffee":45,"jquery":2,"rivets":31,"sightglass":32}],37:[function(require,module,exports){
+},{"../utils.coffee":45,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],37:[function(require,module,exports){
 var $, ChromeCast,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44824,16 +44840,17 @@ sightglass = require('sightglass');
 rivets = require('rivets');
 
 Theme = (function() {
-  function Theme(renderTo, context, html1, css) {
-    this.context = context;
-    this.html = html1;
-    this.css = css;
+  function Theme(app) {
+    this.app = app;
     this.addPanel = bind(this.addPanel, this);
     this.addButton = bind(this.addButton, this);
     this.loadCustomCss = bind(this.loadCustomCss, this);
     this.loadCustomHtml = bind(this.loadCustomHtml, this);
     this.render = bind(this.render, this);
-    this.renderTo = $(renderTo);
+    this.context = this.app.episode;
+    this.themeName = this.app.options.theme;
+    this.html = this.app.options.themeHtml;
+    this.css = this.app.options.themeCss;
     this.loadCustomHtml();
     this.loadCustomCss();
   }
@@ -44841,7 +44858,7 @@ Theme = (function() {
   Theme.prototype.render = function() {
     this.elem = $(this.html);
     rivets.bind(this.elem, this.context);
-    this.renderTo.replaceWith(this.elem);
+    $(this.app.elemClass).replaceWith(this.elem);
     this.findElements();
     return this.elem;
   };
@@ -44850,10 +44867,10 @@ Theme = (function() {
     var loaded, self;
     loaded = $.Deferred();
     self = this;
-    if (!this.html) {
-      this.html = this.defaultHtml;
-      loaded.resolve();
-    } else if (this.html.match('^/.*\.html$')) {
+    if (this.html == null) {
+      this.html = "themes/" + this.themeName + "/index.html";
+    }
+    if (this.html.match('^.*\.html$')) {
       $.get(this.html).done((function(_this) {
         return function(html) {
           self.html = html;
@@ -44872,18 +44889,16 @@ Theme = (function() {
 
   Theme.prototype.loadCustomCss = function() {
     var link;
-    if (!this.css) {
-      return;
+    if (this.css == null) {
+      this.css = "themes/" + this.themeName + "/index.css";
     }
-    if (this.css.match('^/.*\.css')) {
-      link = $('<link>').attr({
-        href: this.css,
-        rel: 'stylesheet',
-        type: 'text/css',
-        media: 'all'
-      });
-      return $('head').append(link);
-    }
+    link = $('<link>').attr({
+      href: this.css,
+      rel: 'stylesheet',
+      type: 'text/css',
+      media: 'all'
+    });
+    return $('head').append(link);
   };
 
   Theme.prototype.findElements = function() {
@@ -44905,8 +44920,6 @@ Theme = (function() {
   Theme.prototype.addPanel = function(panel) {
     return this.panels.append(panel);
   };
-
-  Theme.prototype.defaultHtml = "<div class=\"podcast-player\">\n  <div class=\"info\">\n    <img rv-src=\"logo_url\" />\n    <div class=\"title\">{ title }</div>\n    <div class=\"description\">{ subtitle }</div>\n  </div>\n  <audio rv-src=\"playlist.mp3\" preload=\"metadata\"></audio>\n  <div class=\"progress-bar\">\n    <div class=\"progress-bar-time-played\" title=\"Switch display mode\"></div>\n    <div class=\"progress-bar-rail\">\n      <span class=\"progress-bar-loaded\"></span>\n      <span class=\"progress-bar-buffering\"></span>\n      <span class=\"progress-bar-played\"></span>\n    </div>\n  </div>\n\n  <div class=\"controls\">\n    <i class=\"fa fa-backward backward-button\" title=\"Backward 10s\"></i>\n    <i class=\"fa fa-play play-button\" title=\"Play/Pause\"></i>\n    <i class=\"fa fa-forward forward-button\" title=\"Forward 30s\"></i>\n\n    <span class=\"speed-toggle\" title=\"Playback speed\">1x</span>\n  </div>\n\n  <div class=\"waveform\"></div>\n  <div class=\"buttons\"></div>\n  <div class=\"panels\"></div>\n</div>";
 
   return Theme;
 

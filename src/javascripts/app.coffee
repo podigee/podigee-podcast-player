@@ -31,6 +31,7 @@ class PodigeePodcastPlayer
     forwardSeconds: 30
     showChaptermarks: false
     showMoreInfo: false
+    theme: 'default'
   }
 
   extensions: {}
@@ -59,12 +60,11 @@ class PodigeePodcastPlayer
 
     @extensionOptions = configuration.extensions || {}
 
-    @scrip
     @options = _.extend(@defaultOptions, configuration.options, frameOptions)
 
   renderTheme: =>
     rendered = $.Deferred()
-    @theme = new Theme(@elemClass, @episode, @options.themeHtml, @options.themeCss)
+    @theme = new Theme(this)
     @theme.loaded.done =>
       @elem = @theme.render()
       rendered.resolve()

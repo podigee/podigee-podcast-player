@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     coffee = require('gulp-coffee'),
     watch = require('gulp-watch'),
     uglify = require('gulp-uglify'),
@@ -18,7 +18,11 @@ var paths = {
   javascripts: ['./src/javascripts/**/*.coffee'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
   images: ['./src/images/**'],
-  fonts: ['./vendor/fonts/**']
+  fonts: ['./vendor/fonts/**'],
+  themes: {
+    html: ['./src/themes/**/index.html'],
+    css: ['./src/themes/**/index.scss']
+  }
 };
 
 gulp.task('stylesheets', function() {
@@ -62,7 +66,18 @@ gulp.task('fonts', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('default', ['stylesheets', 'javascripts', 'html', 'images', 'fonts'])
+gulp.task('themes', function() {
+  gulp.src(paths.themes.html)
+    .pipe(gulp.dest('./build/themes'))
+    .pipe(connect.reload())
+
+  gulp.src(paths.themes.css)
+    .pipe(sass({style: 'compressed'}))
+    .pipe(gulp.dest('./build/themes'))
+    .pipe(connect.reload())
+})
+
+gulp.task('default', ['stylesheets', 'javascripts', 'html', 'images', 'fonts', 'themes'])
 
 gulp.task('watch', function() {
   // Watch .scss files
@@ -73,6 +88,9 @@ gulp.task('watch', function() {
   gulp.watch(paths.html, ['html'])
   // Watch images files
   gulp.watch(paths.images, ['images'])
+  // Watch theme files
+  gulp.watch(paths.themes.html, ['themes'])
+  gulp.watch(paths.themes.css, ['themes'])
 })
 
 gulp.task('connect', function() {

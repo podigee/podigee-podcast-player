@@ -1,0 +1,217 @@
+.podcast-player {
+  background-color: #f6f6f6;
+  color: #222;
+  font-family: Helvetica;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 100%; }
+  .podcast-player, .podcast-player *, .podcast-player *:before, .podcast-player *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; }
+  .podcast-player .info {
+    position: relative;
+    overflow: hidden; }
+    .podcast-player .info img {
+      border: 1px solid #ccc;
+      float: left;
+      width: 60px; }
+    .podcast-player .info div {
+      margin-left: 70px; }
+    .podcast-player .info .description {
+      font-size: 12px;
+      height: 42px; }
+    .podcast-player .info .fa-spinner {
+      color: cornflowerblue;
+      display: none;
+      font-size: 50px;
+      left: 7px;
+      position: absolute;
+      top: 5px;
+      z-index: 100; }
+  .podcast-player .controls {
+    font-size: 36px;
+    margin: 5px 0;
+    text-align: center; }
+    .podcast-player .controls .backward-button, .podcast-player .controls .forward-button {
+      font-size: 24px;
+      position: relative;
+      top: -4px; }
+    .podcast-player .controls .backward-button {
+      margin-right: 10px; }
+    .podcast-player .controls .forward-button {
+      margin-left: 10px; }
+    .podcast-player .controls .speed-toggle {
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 10px;
+      position: absolute;
+      right: 10px; }
+  .podcast-player .progress-bar {
+    overflow: hidden; }
+    .podcast-player .progress-bar .progress-bar-time-played {
+      cursor: pointer;
+      float: left;
+      font-size: 14px;
+      min-height: 14px;
+      margin: 5px 0 0;
+      text-align: left;
+      width: 70px; }
+    .podcast-player .progress-bar .progress-bar-rail {
+      background-color: #ddd;
+      min-height: 10px;
+      margin: 9px 0 0;
+      overflow: hidden;
+      position: relative; }
+  .podcast-player .progress-bar-played,
+  .podcast-player .progress-bar-loaded {
+    background-color: cornflowerblue;
+    display: block;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    width: 0; }
+  .podcast-player .progress-bar-loaded {
+    background-color: #aaa; }
+  .podcast-player .progress-bar-buffering {
+    background-color: rgba(255, 255, 255, 0.4);
+    display: none;
+    height: 10px;
+    overflow: hidden;
+    width: 100%; }
+  .podcast-player .progress-bar-buffering-line {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    background-color: rgba(0, 0, 0, 0.2);
+    float: left;
+    height: 120px;
+    margin-right: 24px;
+    margin-top: -28px;
+    transform: rotate(45deg);
+    width: 14px; }
+  .podcast-player .progress-bar-buffering-bar {
+    -moz-animation-duration: 1.3s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: noTrespassingAnimationG;
+    -moz-animation-timing-function: linear;
+    -ms-animation-duration: 1.3s;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-name: noTrespassingAnimationG;
+    -ms-animation-timing-function: linear;
+    -o-animation-duration: 1.3s;
+    -o-animation-iteration-count: infinite;
+    -o-animation-name: noTrespassingAnimationG;
+    -o-animation-timing-function: linear;
+    -webkit-animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: noTrespassingAnimationG;
+    -webkit-animation-timing-function: linear;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    animation-name: noTrespassingAnimationG;
+    animation-timing-function: linear;
+    width: 120%; }
+
+@-moz-keyframes noTrespassingAnimationG {
+  0% {
+    margin-left: -38px; }
+  100% {
+    margin-left: 0px; } }
+
+@-webkit-keyframes noTrespassingAnimationG {
+  0% {
+    margin-left: -38px; }
+  100% {
+    margin-left: 0px; } }
+
+@-ms-keyframes noTrespassingAnimationG {
+  .podcast-player 0% {
+    margin-left: -38px; }
+  .podcast-player 100% {
+    margin-left: 0px; } }
+
+@-o-keyframes noTrespassingAnimationG {
+  0% {
+    margin-left: -38px; }
+  100% {
+    margin-left: 0px; } }
+
+@keyframes noTrespassingAnimationG {
+  0% {
+    margin-left: -38px; }
+  100% {
+    margin-left: 0px; } }
+  .podcast-player .buttons {
+    height: 18px; }
+    .podcast-player .buttons i {
+      text-align: center;
+      width: 15px; }
+    .podcast-player .buttons img {
+      height: 14px; }
+  .podcast-player .waveform {
+    height: 50px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 100%; }
+    .podcast-player .waveform .zoom-container {
+      display: none; }
+  .podcast-player .chaptermarks,
+  .podcast-player .playlist {
+    background: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: scroll; }
+    .podcast-player .chaptermarks ul,
+    .podcast-player .playlist ul {
+      display: block;
+      margin: 0;
+      padding: 0; }
+      .podcast-player .chaptermarks ul li,
+      .podcast-player .playlist ul li {
+        background: none;
+        height: 25px;
+        list-style: none;
+        padding: 5px;
+        position: relative; }
+        .podcast-player .chaptermarks ul li + li,
+        .podcast-player .playlist ul li + li {
+          border-top: 1px solid #222; }
+        .podcast-player .chaptermarks ul li:hover,
+        .podcast-player .playlist ul li:hover {
+          background-color: #f6f6f6;
+          cursor: pointer; }
+        .podcast-player .chaptermarks ul li img,
+        .podcast-player .playlist ul li img {
+          left: 5px;
+          position: absolute;
+          top: 5px;
+          width: 15px; }
+        .podcast-player .chaptermarks ul li span,
+        .podcast-player .playlist ul li span {
+          display: block;
+          height: 100%;
+          margin: 0 20px;
+          overflow: hidden; }
+        .podcast-player .chaptermarks ul li a,
+        .podcast-player .playlist ul li a {
+          right: 5px;
+          position: absolute;
+          top: 5px; }
+  .podcast-player .more-info {
+    background: #fff;
+    font-size: 12px;
+    margin-top: 10px;
+    padding: 5px; }
+  .podcast-player .chromecast-ui {
+    font-size: 10px; }
+  @media screen and (max-width: 480px) {
+    .podcast-player .info img {
+      margin-bottom: 10px;
+      width: 100%; }
+    .podcast-player .info div {
+      margin-left: 0; } }

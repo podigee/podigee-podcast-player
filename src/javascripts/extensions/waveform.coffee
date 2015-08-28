@@ -7,6 +7,7 @@ class Waveform
     type: 'progress'
 
   constructor: (@app) ->
+    return unless @app.episode.waveform
     return unless @app.theme.waveformElement.length
 
     @elem = @app.theme.waveformElement
@@ -28,6 +29,9 @@ class Waveform
     height = @elem.height() * 2
     transparent = 'rgba(0, 0, 0, 0)'
     Peaks.init
+      dataUri: {
+        json: @options.data
+      }
       container: @elem[0]
       mediaElement: @audio[0]
       height: height

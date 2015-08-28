@@ -29,6 +29,7 @@ class Iframe
     IframeResizer.listen('resizePlayer', $(@iframe))
 
   replaceElem: ->
+    $(@iframe).addClass($(@elem).attr('class'))
     @elem.parentNode.replaceChild(@iframe, @elem)
 
 

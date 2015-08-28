@@ -1,0 +1,250 @@
+.columns-podcast-player {
+  $image_width: 300px;
+
+  font-family: Helvetica;
+  height: $image_width + 60;
+
+  h3 {
+    font-weight: 300;
+    margin: 0 0 18px;
+  }
+
+  .left {
+    float: left;
+    min-height: $image_width;
+    width: $image_width;
+
+    .info-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      bottom: 60px;
+      color: rgb(255, 255, 255);
+      font-size: 14px;
+      padding: 12px;
+      position: absolute;
+      text-align: center;
+      width: $image_width;
+
+      .title {
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        font-weight: 200;
+      }
+    }
+
+    img {
+      margin-bottom: -4px;
+      width: 100%;
+    }
+
+    i {
+      color: #fff;
+      display: block;
+      float: left;
+      font-size: 26px;
+      height: 50px;
+      text-align: center;
+      padding: 12px 0;
+      width: $image_width / 3;
+    }
+
+    .play-button {
+      background-color: rgb(57, 67, 79);
+    }
+
+    .backward-button,
+    .forward-button {
+      background-color: rgb(65, 79, 93);
+    }
+  }
+
+  .right {
+    background-color: rgb(245, 245, 245);
+    overflow: hidden;
+    padding: 12px;
+    height: $image_width + 60;
+
+    .chaptermarks {
+      $chapter_image_width: 30px;
+
+      font-weight: 200;
+      height: 100%;
+      overflow: hidden;
+
+      ul {
+        display: block;
+        height: $image_width;
+        list-style: none;
+        margin: 0;
+        overflow-y: scroll;
+        padding: 0;
+      }
+
+      li {
+        border-top: 1px solid #ddd;
+        clear: both;
+        cursor: pointer;
+        line-height: $chapter_image_width - 5;
+        overflow: hidden;
+
+        &:first-child {
+          border-top: none;
+        }
+
+        img {
+          float: left;
+          width: $chapter_image_width;
+        }
+
+        span,
+        a {
+          float: left;
+          margin-top: 5px;
+          margin-left: $chapter_image_width + 10;
+        }
+
+        img + span,
+        a {
+          margin-left: $chapter_image_width - 20;
+        }
+      }
+    }
+  }
+
+  $progress_bar_height: 12px;
+  .progress-bar {
+    overflow: hidden;
+    position: relative;
+
+    .progress-bar-time-played {
+      display: none;
+    }
+
+    .progress-bar-rail {
+      background-color: #ddd;
+      min-height: $progress_bar_height;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: rgb(233, 55, 62);
+    display: block;
+    height: $progress_bar_height;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-loaded {
+    background-color: rgb(184, 20, 26);
+  }
+
+  // loading animation
+  .progress-bar-buffering {
+    background-color:rgba(255,255,255,0.4);
+    display: none;
+    height: $progress_bar_height;
+    overflow:hidden;
+    position: absolute;
+    top: 0;
+    width:100%;
+  }
+
+  .progress-bar-buffering-line {
+    -moz-transform:rotate(45deg);
+    -ms-transform:rotate(45deg);
+    -o-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    background-color:rgba(0,0,0,0.2);
+    float:left;
+    height:120px;
+    margin-right:24px;
+    margin-top:-28px;
+    transform:rotate(45deg);
+    width:14px;
+  }
+
+  .progress-bar-buffering-bar {
+    -moz-animation-duration:1.3s;
+    -moz-animation-iteration-count:infinite;
+    -moz-animation-name:noTrespassingAnimationG;
+    -moz-animation-timing-function:linear;
+    -ms-animation-duration:1.3s;
+    -ms-animation-iteration-count:infinite;
+    -ms-animation-name:noTrespassingAnimationG;
+    -ms-animation-timing-function:linear;
+    -o-animation-duration:1.3s;
+    -o-animation-iteration-count:infinite;
+    -o-animation-name:noTrespassingAnimationG;
+    -o-animation-timing-function:linear;
+    -webkit-animation-duration:1.3s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-name:noTrespassingAnimationG;
+    -webkit-animation-timing-function:linear;
+    animation-duration:1.3s;
+    animation-iteration-count:infinite;
+    animation-name:noTrespassingAnimationG;
+    animation-timing-function:linear;
+    width:120%;
+  }
+
+  @-moz-keyframes noTrespassingAnimationG{
+    0%{
+      margin-left:-38px;
+    }
+
+    100%{
+      margin-left:0px;
+    }
+
+  }
+
+  @-webkit-keyframes noTrespassingAnimationG{
+    0%{
+      margin-left:-38px;
+    }
+
+    100%{
+      margin-left:0px;
+    }
+
+  }
+
+  @-ms-keyframes noTrespassingAnimationG{
+    0%{
+      margin-left:-38px;
+    }
+
+    100%{
+      margin-left:0px;
+    }
+
+  }
+
+  @-o-keyframes noTrespassingAnimationG{
+    0%{
+      margin-left:-38px;
+    }
+
+    100%{
+      margin-left:0px;
+    }
+
+  }
+
+  @keyframes noTrespassingAnimationG{
+    0%{
+      margin-left:-38px;
+    }
+
+    100%{
+      margin-left:0px;
+    }
+
+  }
+}

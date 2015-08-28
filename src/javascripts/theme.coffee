@@ -3,15 +3,18 @@ sightglass = require('sightglass')
 rivets = require('rivets')
 
 class Theme
-  constructor: (renderTo, @context, @html, @css) ->
-    @renderTo = $(renderTo)
+  constructor: (@app) ->
+    @context = @app.episode
+    @themeName = @app.options.theme
+    @html = @app.options.themeHtml
+    @css = @app.options.themeCss
     @loadCustomHtml()
     @loadCustomCss()
 
   render: =>
     @elem = $(@html)
     rivets.bind(@elem, @context)
-    @renderTo.replaceWith(@elem)
+    $(@app.elemClass).replaceWith(@elem)
 
     @findElements()
 
@@ -21,10 +24,9 @@ class Theme
     loaded = $.Deferred()
 
     self = this
-    if !@html
-      @html = @defaultHtml
-      loaded.resolve()
-    else if @html.match('^/.*\.html$')
+    @html ?= "themes/#{@themeName}/index.html"
+
+    if @html.match('^.*\.html$')
       $.get(@html).done (html) =>
         self.html = html
         loaded.resolve()
@@ -36,17 +38,15 @@ class Theme
     @loaded = loaded.promise()
 
   loadCustomCss: =>
-    return unless @css
+    @css ?= "themes/#{@themeName}/index.css"
 
-    if @css.match('^/.*\.css')
-      link = $('<link>').attr
-        href: @css
-        rel: 'stylesheet'
-        type: 'text/css'
-        media: 'all'
+    link = $('<link>').attr
+      href: @css
+      rel: 'stylesheet'
+      type: 'text/css'
+      media: 'all'
 
-      $('head').append(link)
-
+    $('head').append(link)
 
   findElements: ->
     @audioElement = @elem.find('audio')
@@ -65,37 +65,5 @@ class Theme
 
   addPanel: (panel) =>
     @panels.append(panel)
-
-  defaultHtml:
-    """
-    <div class="podcast-player">
-      <div class="info">
-        <img rv-src="logo_url" />
-        <div class="title">{ title }</div>
-        <div class="description">{ subtitle }</div>
-      </div>
-      <audio rv-src="playlist.mp3" preload="metadata"></audio>
-      <div class="progress-bar">
-        <div class="progress-bar-time-played" title="Switch display mode"></div>
-        <div class="progress-bar-rail">
-          <span class="progress-bar-loaded"></span>
-          <span class="progress-bar-buffering"></span>
-          <span class="progress-bar-played"></span>
-        </div>
-      </div>
-
-      <div class="controls">
-        <i class="fa fa-backward backward-button" title="Backward 10s"></i>
-        <i class="fa fa-play play-button" title="Play/Pause"></i>
-        <i class="fa fa-forward forward-button" title="Forward 30s"></i>
-
-        <span class="speed-toggle" title="Playback speed">1x</span>
-      </div>
-
-      <div class="waveform"></div>
-      <div class="buttons"></div>
-      <div class="panels"></div>
-    </div>
-    """
 
 module.exports = Theme
