@@ -44553,10 +44553,12 @@ module.exports = EpisodeInfo;
 
 
 },{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
-var $, Playlist, PlaylistItem, rivets, sightglass,
+var $, Playlist, PlaylistItem, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+_ = require('lodash');
 
 sightglass = require('sightglass');
 
@@ -44577,7 +44579,7 @@ PlaylistItem = (function() {
     return this.elem;
   };
 
-  PlaylistItem.prototype.defaultHtml = "<li>\n  <img rv-src=\"image\" rv-if=\"image\" />\n  <span>{ title }</span>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>\n</li>";
+  PlaylistItem.prototype.defaultHtml = "<li>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\"><i class=\"fa fa-link\"></i></a>\n  <span>{ title }</span>\n</li>";
 
   return PlaylistItem;
 
@@ -44598,14 +44600,22 @@ Playlist = (function() {
     if (!this.feed) {
       return;
     }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Playlist);
     this.feed.promise.done((function(_this) {
       return function() {
         _this.renderPanel();
         _this.renderButton();
-        return _this.app.renderPanel(_this);
+        _this.app.renderPanel(_this);
+        if (_this.options.showOnStart) {
+          return _this.app.togglePanel(_this.panel);
+        }
       };
     })(this));
   }
+
+  Playlist.prototype.defaultOptions = {
+    showOnStart: false
+  };
 
   Playlist.prototype.click = function(event) {
     var item;
@@ -44628,9 +44638,8 @@ Playlist = (function() {
   Playlist.prototype.renderPanel = function() {
     var list;
     this.panel = $(this.panelHtml);
-    this.panel.hide();
     list = this.panel.find('ul');
-    return $(this.feed.items).each((function(_this) {
+    $(this.feed.items).each((function(_this) {
       return function(index, feedItem) {
         var item, playlistItem;
         item = $(feedItem);
@@ -44639,17 +44648,19 @@ Playlist = (function() {
           subtitle: item.find('subtitle').html(),
           href: item.find('link').html(),
           enclosure: item.find('enclosure').attr('url'),
-          description: item.find('description').html()
+          description: item.find('description').html(),
+          cover_url: item.find
         };
         playlistItem = new PlaylistItem(item, _this.click).render();
         return list.append(playlistItem);
       };
     })(this));
+    return this.panel.hide();
   };
 
   Playlist.prototype.buttonHtml = "<button class=\"fa fa-bookmark playlist-button\" title=\"Show playlist\"></button>";
 
-  Playlist.prototype.panelHtml = "<div class=\"playlist\"><ul></ul></div>";
+  Playlist.prototype.panelHtml = "<div class=\"playlist\">\n  <h3>Playlist</h3>\n\n  <ul></ul>\n</div>";
 
   return Playlist;
 
@@ -44659,7 +44670,7 @@ module.exports = Playlist;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],41:[function(require,module,exports){
+},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],41:[function(require,module,exports){
 var $, Feed;
 
 $ = require('jquery');

@@ -1,4 +1,5 @@
 $ = require('jquery')
+_ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
@@ -19,9 +20,8 @@ class PlaylistItem
   defaultHtml:
     """
     <li>
-      <img rv-src="image" rv-if="image" />
+      <a rv-if="href" rv-href="href" target="_blank"><i class="fa fa-link"></i></a>
       <span>{ title }</span>
-      <a rv-if="href" rv-href="href" target="_blank"><i class="fa fa-external-link"></i></a>
     </li>
     """
 
@@ -34,11 +34,17 @@ class Playlist
     @feed = @app.podcast.feed
     return unless @feed
 
+    @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
+
     @feed.promise.done =>
       @renderPanel()
       @renderButton()
 
       @app.renderPanel(this)
+      @app.togglePanel(@panel) if @options.showOnStart
+
+  defaultOptions:
+    showOnStart: false
 
   click: (event) =>
     item = event.data
@@ -54,7 +60,6 @@ class Playlist
 
   renderPanel: =>
     @panel = $(@panelHtml)
-    @panel.hide()
 
     list = @panel.find('ul')
     $(@feed.items).each((index, feedItem) =>
@@ -65,10 +70,13 @@ class Playlist
         href: item.find('link').html(),
         enclosure: item.find('enclosure').attr('url'),
         description: item.find('description').html()
+        cover_url: item.find
       }
       playlistItem = new PlaylistItem(item, @click).render()
       list.append(playlistItem)
     )
+
+    @panel.hide()
 
   buttonHtml:
     """
@@ -77,7 +85,11 @@ class Playlist
 
   panelHtml:
     """
-    <div class="playlist"><ul></ul></div>
+    <div class="playlist">
+      <h3>Playlist</h3>
+
+      <ul></ul>
+    </div>
     """
 
 module.exports = Playlist
