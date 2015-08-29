@@ -2,7 +2,7 @@
 <html>
   <head>
     <style>
-      body { font-family: Helvetica Neue, Helvetica, Arial, sans-serif; }
+      body { font-family: Helvetica Neue, Helvetica, Arial, sans-serif; overflow-y: scroll; }
       .wrapper { margin: 0 auto; width: 80%; }
       .with-shadow { border-radius: 3px; box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5); }
     </style>
@@ -14,7 +14,7 @@
       <h2>Single file player</h2>
       <p>Given only information for a single episode with no extended metadata, the PPP acts as a simple audio player.</p>
 
-      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="http://dark-space-hoerspiel.podigee.iodev:4000/2-der-flug-der-draaken-2/embed.json"></script>
+      <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="http://dark-space-hoerspiel.podigee.iodev:4000/2-der-flug-der-draaken-2/embed.json"></script>-->
 
       <h2>Player with custom theme</h2>
       <p>The simple player with a custom theme applied.</p>
@@ -22,16 +22,25 @@
       <script>
         window.customThemePlayer = {
           options: {
-            theme: 'columns'
+            theme: 'default'
           },
           extensions: {
             ChapterMarks: {
+              showOnStart: false
+            },
+            EpisodeInfo: {
+              showOnStart: false
+            },
+            Playlist: {
               showOnStart: true
             },
             Waveform: {
               color: "rgba(100, 149, 237, 0.3)",
               data: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.waveform.json",
             }
+          },
+          podcast: {
+            feed: 'http://podcast.languageminingcompany.com/feed/aac',
           },
           episode: {
             media: {
@@ -40,29 +49,25 @@
               ogg: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.ogg?v=1403097429&source=web_download&dl=1",
               opus: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.opus?v=1403097429&source=web_download&dl=1"
             },
-            logo_url: "https://cdn.podigee.com/uploads/u4/14147784764aa8.jpg",
+            cover_url: "https://cdn.podigee.com/uploads/u4/14147784764aa8.jpg",
             title: "Dark Space 2046",
             subtitle: "Der Flug der Draken",
+            description: "<p>Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf. Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu.</p>",
             chaptermarks: [
-              {title: "First Chaptermark", start: '00:00:10', image: '/samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
-              {title: "Second Chaptermark with a lot of text and stuff to make it go out of the container and so on and so on", start: '00:00:20', image: '', href: ''},
-              {title: "Third Chaptermark", start: '00:00:30', image: '', href: ''},
-              {title: "Fourth Chaptermark", start: '00:00:40', image: '', href: ''},
-              {title: "Fifth Chaptermark", start: '00:00:50', image: '', href: ''},
-              {title: "Sixth Chaptermark", start: '00:01:00', image: '', href: ''},
-              {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
-              {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
-              {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
-              {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''},
-              {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
-              {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
-              {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
-              {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
+              {title: "5 Minutes", start: '00:05:00', image: '/samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
+              {title: "10 Minutes", start: '00:10:00', image: 'https://cdn.podigee.com/uploads/u4/14147784764aa8.jpg', href: ''},
+              {title: "15 Minutes", start: '00:15:00', image: '', href: ''},
+              {title: "20 Minutes", start: '00:20:00', image: '', href: ''},
+              {title: "25 Minutes", start: '00:25:00', image: '', href: ''},
+              {title: "30 Minutes", start: '00:30:00', image: '', href: ''},
+              {title: "35 Minutes", start: '00:35:00', image: '', href: ''},
+              {title: "40 Minutes", start: '00:40:00', image: '', href: ''},
+              {title: "45 Minutes", start: '00:45:00', image: '', href: ''}
             ],
           }
         }
       </script>
-      <script class="podigee-podcast-player with-shadow" src="build/javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
 
       <h2>Player with full metadata.</h2>
       <p>The player will all metadata, playlist and waveform. Pretty overloaded isn't it? :)</p>
@@ -95,7 +100,7 @@
               {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
               {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
             ],
-            logo_url: "/samples/podigee-logo-256.png",
+            cover_url: "/samples/podigee-logo-256.png",
             title: "Woah, I'm in an IFRAME! The second time!",
             subtitle: "We are testing a new podcast player.",
             description: "This is a longer text describing the episode. orem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa. Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum. Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae, tellus. Sed odio est, auctor ac, sollicitudin in, consequat vitae, orci. Fusce id felis. Vivamus sollicitudin metus eget eros.",
