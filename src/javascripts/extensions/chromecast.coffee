@@ -57,10 +57,10 @@ class ChromeCast
 
   buttonHtml:
     """
-    <span class="chromecast-ui">
+    <button class="chromecast-ui">
       <img class="chromecast-button" title="Play on chromecast" src="images/chromcast.png"/>
       <span class="chromecast-receiver"></span>
-    </span>
+    </button>
     """
 
   onRequestSessionSuccess: (event) =>

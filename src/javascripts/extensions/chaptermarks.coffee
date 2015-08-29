@@ -19,10 +19,11 @@ class ChapterMark
 
   defaultHtml:
     """
-    <li rv-data-start="start">
-      <img rv-src="image" rv-if="image"/>
-      <span>{ title }</span>
-      <a rv-if="href" rv-href="href" target="_blank"><i class="fa fa-external-link"></i></a>
+    <li rv-data-start="start" class="chaptermark">
+      <img rv-src="image" rv-if="image" class="chaptermark-image"/>
+      <span class="chaptermark-start">{ start }</span>
+      <span class="chaptermark-title">{ title }</span>
+      <a rv-if="href" rv-href="href" target="_blank" class="chaptermark-href"><i class="fa fa-link"></i></a>
     </li>
     """
 
@@ -39,6 +40,7 @@ class ChapterMarks
 
     @renderPanel()
     @renderButton()
+    @attachEvents()
 
     @app.renderPanel(this)
 
@@ -58,13 +60,36 @@ class ChapterMarks
     @panel = $(@panelHtml)
     @panel.hide() unless @options.showOnStart
     @chaptermarks.forEach((item, index, array) =>
-      chaptermark = new ChapterMark(item, @click).render()
-      @panel.find('ul').append(chaptermark)
+      item.elem = new ChapterMark(item, @click).render()
+
+      @panel.find('ul').append(item.elem)
     )
+
+  attachEvents: =>
+    $(@app.player.media).on('timeupdate', @setActiveMark)
+
+  setActiveMark: () =>
+    time = @app.player.media.currentTime
+    if time <= Utils.hhmmssToSeconds(@chaptermarks[0].start)
+      @deactivateAll()
+      @activateMark(@chaptermarks[0])
+    else
+      _(@chaptermarks).findLast (mark) =>
+        markTime = Utils.hhmmssToSeconds(mark.start)
+        return unless time >= markTime
+
+        @deactivateAll()
+        @activateMark(mark)
+
+  activateMark: (mark) =>
+    mark.elem.addClass('active')
+
+  deactivateAll: =>
+    @panel.find('li').removeClass('active')
 
   buttonHtml:
     """
-    <i class="fa fa-list chaptermarks-button" title="Show chaptermarks"></i>
+    <button class="fa fa-list chaptermarks-button" title="Show chaptermarks"></button>
     """
 
   panelHtml:

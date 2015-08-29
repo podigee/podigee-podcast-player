@@ -43846,6 +43846,7 @@ PodigeePodcastPlayer = (function() {
   };
 
   PodigeePodcastPlayer.prototype.togglePlayState = function(elem) {
+    this.elem.toggleClass('playing');
     this.theme.playPauseElement.toggleClass('fa-play');
     return this.theme.playPauseElement.toggleClass('fa-pause');
   };
@@ -43961,7 +43962,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ChapterMarks, EpisodeInfo, Playlist, ChromeCast, Waveform].forEach((function(_this) {
+    return [ChapterMarks, EpisodeInfo, Playlist, Waveform].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
       };
@@ -44053,7 +44054,7 @@ Configuration = (function() {
 
   Configuration.prototype.defaultOptions = {
     currentPlaybackRate: 1,
-    playbackRates: [1.0, 1.5, 2.0],
+    playbackRates: [0.5, 1.0, 1.5, 2.0],
     timeMode: 'countup',
     backwardSeconds: 10,
     forwardSeconds: 30,
@@ -44238,7 +44239,7 @@ ChapterMark = (function() {
     return this.elem;
   };
 
-  ChapterMark.prototype.defaultHtml = "<li rv-data-start=\"start\">\n  <img rv-src=\"image\" rv-if=\"image\"/>\n  <span>{ title }</span>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\"><i class=\"fa fa-external-link\"></i></a>\n</li>";
+  ChapterMark.prototype.defaultHtml = "<li rv-data-start=\"start\" class=\"chaptermark\">\n  <img rv-src=\"image\" rv-if=\"image\" class=\"chaptermark-image\"/>\n  <span class=\"chaptermark-start\">{ start }</span>\n  <span class=\"chaptermark-title\">{ title }</span>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\" class=\"chaptermark-href\"><i class=\"fa fa-link\"></i></a>\n</li>";
 
   return ChapterMark;
 
@@ -44252,6 +44253,10 @@ ChapterMarks = (function() {
 
   function ChapterMarks(app) {
     this.app = app;
+    this.deactivateAll = bind(this.deactivateAll, this);
+    this.activateMark = bind(this.activateMark, this);
+    this.setActiveMark = bind(this.setActiveMark, this);
+    this.attachEvents = bind(this.attachEvents, this);
     this.renderPanel = bind(this.renderPanel, this);
     this.renderButton = bind(this.renderButton, this);
     this.click = bind(this.click, this);
@@ -44262,6 +44267,7 @@ ChapterMarks = (function() {
     this.options = _.extend(this.defaultOptions, this.app.extensionOptions.ChapterMarks);
     this.renderPanel();
     this.renderButton();
+    this.attachEvents();
     this.app.renderPanel(this);
   }
 
@@ -44291,14 +44297,46 @@ ChapterMarks = (function() {
     }
     return this.chaptermarks.forEach((function(_this) {
       return function(item, index, array) {
-        var chaptermark;
-        chaptermark = new ChapterMark(item, _this.click).render();
-        return _this.panel.find('ul').append(chaptermark);
+        item.elem = new ChapterMark(item, _this.click).render();
+        return _this.panel.find('ul').append(item.elem);
       };
     })(this));
   };
 
-  ChapterMarks.prototype.buttonHtml = "<i class=\"fa fa-list chaptermarks-button\" title=\"Show chaptermarks\"></i>";
+  ChapterMarks.prototype.attachEvents = function() {
+    return $(this.app.player.media).on('timeupdate', this.setActiveMark);
+  };
+
+  ChapterMarks.prototype.setActiveMark = function() {
+    var time;
+    time = this.app.player.media.currentTime;
+    if (time <= Utils.hhmmssToSeconds(this.chaptermarks[0].start)) {
+      this.deactivateAll();
+      return this.activateMark(this.chaptermarks[0]);
+    } else {
+      return _(this.chaptermarks).findLast((function(_this) {
+        return function(mark) {
+          var markTime;
+          markTime = Utils.hhmmssToSeconds(mark.start);
+          if (!(time >= markTime)) {
+            return;
+          }
+          _this.deactivateAll();
+          return _this.activateMark(mark);
+        };
+      })(this));
+    }
+  };
+
+  ChapterMarks.prototype.activateMark = function(mark) {
+    return mark.elem.addClass('active');
+  };
+
+  ChapterMarks.prototype.deactivateAll = function() {
+    return this.panel.find('li').removeClass('active');
+  };
+
+  ChapterMarks.prototype.buttonHtml = "<button class=\"fa fa-list chaptermarks-button\" title=\"Show chaptermarks\"></button>";
 
   ChapterMarks.prototype.panelHtml = "<div class=\"chaptermarks\">\n  <h3>Chaptermarks</h3>\n\n  <ul></ul>\n</div>";
 
@@ -44391,7 +44429,7 @@ ChromeCast = (function() {
     return this.castReceiver = this.button.find('.chromecast-receiver');
   };
 
-  ChromeCast.prototype.buttonHtml = "<span class=\"chromecast-ui\">\n  <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"images/chromcast.png\"/>\n  <span class=\"chromecast-receiver\"></span>\n</span>";
+  ChromeCast.prototype.buttonHtml = "<button class=\"chromecast-ui\">\n  <img class=\"chromecast-button\" title=\"Play on chromecast\" src=\"images/chromcast.png\"/>\n  <span class=\"chromecast-receiver\"></span>\n</button>";
 
   ChromeCast.prototype.onRequestSessionSuccess = function(event) {
     var request;
@@ -44493,7 +44531,7 @@ EpisodeInfo = (function() {
     return this.panel.hide();
   };
 
-  EpisodeInfo.prototype.buttonHtml = "<i class=\"fa fa-info episode-info-button\" title=\"Show more info\"></i>";
+  EpisodeInfo.prototype.buttonHtml = "<button class=\"fa fa-info episode-info-button\" title=\"Show more info\"></button>";
 
   EpisodeInfo.prototype.panelHtml = "<div class=\"episode-info\">\n  <h1 class=\"episode-title\">{ title }</h1>\n  <p class=\"episode-subtitle\">{ subtitle }</p>\n  <p class=\"episode-description\">{ description }</p>\n</div>";
 
@@ -44600,7 +44638,7 @@ Playlist = (function() {
     })(this));
   };
 
-  Playlist.prototype.buttonHtml = "<i class=\"fa fa-bookmark playlist-button\" title=\"Show playlist\"></i>";
+  Playlist.prototype.buttonHtml = "<button class=\"fa fa-bookmark playlist-button\" title=\"Show playlist\"></button>";
 
   Playlist.prototype.panelHtml = "<div class=\"playlist\"><ul></ul></div>";
 

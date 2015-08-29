@@ -30,7 +30,7 @@ class EpisodeInfo
 
   buttonHtml:
     """
-    <i class="fa fa-info episode-info-button" title="Show more info"></i>
+    <button class="fa fa-info episode-info-button" title="Show more info"></button>
     """
 
   panelHtml:

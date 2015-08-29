@@ -68,6 +68,7 @@ class PodigeePodcastPlayer
     )
 
   togglePlayState: (elem) =>
+    @elem.toggleClass('playing')
     @theme.playPauseElement.toggleClass('fa-play')
     @theme.playPauseElement.toggleClass('fa-pause')
 
@@ -163,7 +164,7 @@ class PodigeePodcastPlayer
 
   initializeExtensions: () =>
     self = this
-    [ChapterMarks, EpisodeInfo, Playlist, ChromeCast, Waveform].forEach (extension) =>
+    [ChapterMarks, EpisodeInfo, Playlist, Waveform].forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->

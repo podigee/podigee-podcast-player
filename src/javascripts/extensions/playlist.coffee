@@ -72,7 +72,7 @@ class Playlist
 
   buttonHtml:
     """
-    <i class="fa fa-bookmark playlist-button" title="Show playlist"></i>
+    <button class="fa fa-bookmark playlist-button" title="Show playlist"></button>
     """
 
   panelHtml:

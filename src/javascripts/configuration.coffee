@@ -36,7 +36,7 @@ class Configuration
 
   defaultOptions: {
     currentPlaybackRate: 1
-    playbackRates: [1.0, 1.5, 2.0]
+    playbackRates: [0.5, 1.0, 1.5, 2.0]
     timeMode: 'countup'
     backwardSeconds: 10
     forwardSeconds: 30
