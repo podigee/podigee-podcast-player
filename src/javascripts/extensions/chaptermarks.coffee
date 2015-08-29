@@ -56,7 +56,7 @@ class ChapterMarks
 
   renderPanel: =>
     @panel = $(@panelHtml)
-    @panel.hide() unless @
+    @panel.hide() unless @options.showOnStart
     @chaptermarks.forEach((item, index, array) =>
       chaptermark = new ChapterMark(item, @click).render()
       @panel.find('ul').append(chaptermark)

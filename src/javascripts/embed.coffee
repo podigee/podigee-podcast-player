@@ -5,7 +5,7 @@ IframeResizer = require('./iframe_resizer.coffee')
 class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-    @dataVariableName = $(@elem).data('configuration')
+    @dataVariableName = encodeURI($(@elem).data('configuration'))
 
     scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
     @url = "#{scriptPath}/podigee-podcast-player.html?configuration=#{@dataVariableName}&id=#{@id}"
@@ -36,7 +36,7 @@ class Iframe
 class Embed
   constructor: ->
     players = []
-    elems = $('.podigee-podcast-player')
+    elems = $('script.podigee-podcast-player')
 
     return if elems.length == 0
 

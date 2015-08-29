@@ -14,19 +14,7 @@
       <h2>Single file player</h2>
       <p>Given only information for a single episode with no extended metadata, the PPP acts as a simple audio player.</p>
 
-      <script>
-        window.singlePlayer = {
-          options: {
-          },
-          episode: {
-            media: {mp3: "/samples/auphonic-example.mp3"},
-            logo_url: "/samples/podigee-logo-256.png",
-            title: "Simple Episode Player",
-            subtitle: "Plays a single episode and only has basic metadata."
-          }
-        }
-      </script>
-      <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="singlePlayer"></script>-->
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="http://dark-space-hoerspiel.podigee.iodev:4000/2-der-flug-der-draaken-2/embed.json"></script>
 
       <h2>Player with custom theme</h2>
       <p>The simple player with a custom theme applied.</p>

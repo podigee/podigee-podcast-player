@@ -1,12 +1,12 @@
 $ = require('jquery')
 _ = require('lodash')
 
+Configuration = require('./configuration.coffee')
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
 Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
-Utils = require('./utils.coffee')
 
 ChapterMarks = require('./extensions/chaptermarks.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
@@ -16,23 +16,9 @@ Waveform = require('./extensions/Waveform.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
-    @getConfiguration()
-
-    @renderTheme().done =>
-      @initPlayer()
-
-  # options
-
-  defaultOptions: {
-    currentPlaybackRate: 1
-    playbackRates: [1.0, 1.5, 2.0]
-    timeMode: 'countup'
-    backwardSeconds: 10
-    forwardSeconds: 30
-    showChaptermarks: false
-    showMoreInfo: false
-    theme: 'default'
-  }
+    @getConfiguration().loaded.done =>
+      @renderTheme().done =>
+        @initPlayer()
 
   extensions: {}
 
@@ -49,18 +35,7 @@ class PodigeePodcastPlayer
       self.episode.productionData = data.data
 
   getConfiguration: () ->
-    frameOptions = Utils.locationToOptions(window.location.search)
-    configuration = window.parent[frameOptions.configuration]
-
-    @podcast = configuration.podcast || {}
-    @getFeed()
-
-    @episode = configuration.episode
-    @getProductionData()
-
-    @extensionOptions = configuration.extensions || {}
-
-    @options = _.extend(@defaultOptions, configuration.options, frameOptions)
+    new Configuration(this)
 
   renderTheme: =>
     rendered = $.Deferred()

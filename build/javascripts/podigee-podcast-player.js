@@ -43729,12 +43729,14 @@ module.exports = {
 }).call(this);
 
 },{}],33:[function(require,module,exports){
-var $, ChapterMarks, ChromeCast, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Theme, Utils, Waveform, _,
+var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Theme, Waveform, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
 
 _ = require('lodash');
+
+Configuration = require('./configuration.coffee');
 
 Theme = require('./theme.coffee');
 
@@ -43745,8 +43747,6 @@ ProgressBar = require('./progress_bar.coffee');
 Embed = require('./embed.coffee');
 
 Feed = require('./feed.coffee');
-
-Utils = require('./utils.coffee');
 
 ChapterMarks = require('./extensions/chaptermarks.coffee');
 
@@ -43778,24 +43778,14 @@ PodigeePodcastPlayer = (function() {
     this.init = bind(this.init, this);
     this.initPlayer = bind(this.initPlayer, this);
     this.renderTheme = bind(this.renderTheme, this);
-    this.getConfiguration();
-    this.renderTheme().done((function(_this) {
+    this.getConfiguration().loaded.done((function(_this) {
       return function() {
-        return _this.initPlayer();
+        return _this.renderTheme().done(function() {
+          return _this.initPlayer();
+        });
       };
     })(this));
   }
-
-  PodigeePodcastPlayer.prototype.defaultOptions = {
-    currentPlaybackRate: 1,
-    playbackRates: [1.0, 1.5, 2.0],
-    timeMode: 'countup',
-    backwardSeconds: 10,
-    forwardSeconds: 30,
-    showChaptermarks: false,
-    showMoreInfo: false,
-    theme: 'default'
-  };
 
   PodigeePodcastPlayer.prototype.extensions = {};
 
@@ -43820,15 +43810,7 @@ PodigeePodcastPlayer = (function() {
   };
 
   PodigeePodcastPlayer.prototype.getConfiguration = function() {
-    var configuration, frameOptions;
-    frameOptions = Utils.locationToOptions(window.location.search);
-    configuration = window.parent[frameOptions.configuration];
-    this.podcast = configuration.podcast || {};
-    this.getFeed();
-    this.episode = configuration.episode;
-    this.getProductionData();
-    this.extensionOptions = configuration.extensions || {};
-    return this.options = _.extend(this.defaultOptions, configuration.options, frameOptions);
+    return new Configuration(this);
   };
 
   PodigeePodcastPlayer.prototype.renderTheme = function() {
@@ -44022,7 +44004,73 @@ if (!window.inEmbed) {
 
 
 
-},{"./embed.coffee":34,"./extensions/Waveform.coffee":35,"./extensions/chaptermarks.coffee":36,"./extensions/chromecast.coffee":37,"./extensions/episode_info.coffee":38,"./extensions/playlist.coffee":39,"./feed.coffee":40,"./player.coffee":42,"./progress_bar.coffee":43,"./theme.coffee":44,"./utils.coffee":45,"jquery":2,"lodash":3}],34:[function(require,module,exports){
+},{"./configuration.coffee":34,"./embed.coffee":35,"./extensions/Waveform.coffee":36,"./extensions/chaptermarks.coffee":37,"./extensions/chromecast.coffee":38,"./extensions/episode_info.coffee":39,"./extensions/playlist.coffee":40,"./feed.coffee":41,"./player.coffee":43,"./progress_bar.coffee":44,"./theme.coffee":45,"jquery":2,"lodash":3}],34:[function(require,module,exports){
+var $, Configuration, Utils, _,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+$ = require('jquery');
+
+_ = require('lodash');
+
+Utils = require('./utils.coffee');
+
+Configuration = (function() {
+  function Configuration(app) {
+    this.app = app;
+    this.setConfigurations = bind(this.setConfigurations, this);
+    this.fetchJsonConfiguration = bind(this.fetchJsonConfiguration, this);
+    this.loader = $.Deferred();
+    this.loaded = this.loader.promise();
+    this.frameOptions = Utils.locationToOptions(window.location.search);
+    if (this.frameOptions.configuration.match('^.*.json$')) {
+      this.fetchJsonConfiguration();
+    } else {
+      this.configuration = window.parent[this.frameOptions.configuration];
+      this.setConfigurations();
+    }
+  }
+
+  Configuration.prototype.fetchJsonConfiguration = function() {
+    var self;
+    self = this;
+    return $.getJSON(this.frameOptions.configuration).done((function(_this) {
+      return function(data) {
+        self.configuration = data;
+        return self.setConfigurations();
+      };
+    })(this));
+  };
+
+  Configuration.prototype.setConfigurations = function() {
+    this.app.podcast = this.configuration.podcast || {};
+    this.app.getFeed();
+    this.app.episode = this.configuration.episode;
+    this.app.getProductionData();
+    this.app.extensionOptions = this.configuration.extensions || {};
+    this.app.options = _.extend(this.defaultOptions, this.configuration.options, this.frameOptions);
+    return this.loader.resolve();
+  };
+
+  Configuration.prototype.defaultOptions = {
+    currentPlaybackRate: 1,
+    playbackRates: [1.0, 1.5, 2.0],
+    timeMode: 'countup',
+    backwardSeconds: 10,
+    forwardSeconds: 30,
+    showChaptermarks: false,
+    showMoreInfo: false,
+    theme: 'default'
+  };
+
+  return Configuration;
+
+})();
+
+module.exports = Configuration;
+
+
+
+},{"./utils.coffee":46,"jquery":2,"lodash":3}],35:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer;
 
 $ = require('jquery');
@@ -44034,7 +44082,7 @@ Iframe = (function() {
     var scriptPath;
     this.elem = elem1;
     this.id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    this.dataVariableName = $(this.elem).data('configuration');
+    this.dataVariableName = encodeURI($(this.elem).data('configuration'));
     scriptPath = $(this.elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '');
     this.url = scriptPath + "/podigee-podcast-player.html?configuration=" + this.dataVariableName + "&id=" + this.id;
     this.buildIframe();
@@ -44071,7 +44119,7 @@ Embed = (function() {
   function Embed() {
     var elem, elems, i, len, players;
     players = [];
-    elems = $('.podigee-podcast-player');
+    elems = $('script.podigee-podcast-player');
     if (elems.length === 0) {
       return;
     }
@@ -44090,7 +44138,7 @@ module.exports = Embed;
 
 
 
-},{"./iframe_resizer.coffee":41,"jquery":2}],35:[function(require,module,exports){
+},{"./iframe_resizer.coffee":42,"jquery":2}],36:[function(require,module,exports){
 var Peaks, Waveform, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44162,7 +44210,7 @@ module.exports = Waveform;
 
 
 
-},{"lodash":3,"peaks.js":17}],36:[function(require,module,exports){
+},{"lodash":3,"peaks.js":17}],37:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44238,7 +44286,7 @@ ChapterMarks = (function() {
 
   ChapterMarks.prototype.renderPanel = function() {
     this.panel = $(this.panelHtml);
-    if (!this) {
+    if (!this.options.showOnStart) {
       this.panel.hide();
     }
     return this.chaptermarks.forEach((function(_this) {
@@ -44262,7 +44310,7 @@ module.exports = ChapterMarks;
 
 
 
-},{"../utils.coffee":45,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],37:[function(require,module,exports){
+},{"../utils.coffee":46,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],38:[function(require,module,exports){
 var $, ChromeCast,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44398,7 +44446,7 @@ module.exports = ChromeCast;
 
 
 
-},{"jquery":2}],38:[function(require,module,exports){
+},{"jquery":2}],39:[function(require,module,exports){
 var $, EpisodeInfo, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44457,7 +44505,7 @@ module.exports = EpisodeInfo;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],39:[function(require,module,exports){
+},{"jquery":2,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
 var $, Playlist, PlaylistItem, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44564,7 +44612,7 @@ module.exports = Playlist;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
+},{"jquery":2,"rivets":31,"sightglass":32}],41:[function(require,module,exports){
 var $, Feed;
 
 $ = require('jquery');
@@ -44593,7 +44641,7 @@ module.exports = Feed;
 
 
 
-},{"jquery":2}],41:[function(require,module,exports){
+},{"jquery":2}],42:[function(require,module,exports){
 var IframeResizer;
 
 IframeResizer = (function() {
@@ -44636,7 +44684,7 @@ module.exports = IframeResizer;
 
 
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var MediaElement, Player,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44692,7 +44740,7 @@ module.exports = Player;
 
 
 
-},{"../../vendor/javascripts/mediaelement.js":46}],43:[function(require,module,exports){
+},{"../../vendor/javascripts/mediaelement.js":47}],44:[function(require,module,exports){
 var $, ProgressBar, Utils,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44829,7 +44877,7 @@ module.exports = ProgressBar;
 
 
 
-},{"./utils.coffee":45,"jquery":2}],44:[function(require,module,exports){
+},{"./utils.coffee":46,"jquery":2}],45:[function(require,module,exports){
 var $, Theme, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44929,7 +44977,7 @@ module.exports = Theme;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],45:[function(require,module,exports){
+},{"jquery":2,"rivets":31,"sightglass":32}],46:[function(require,module,exports){
 var Utils;
 
 Utils = (function() {
@@ -44985,7 +45033,7 @@ module.exports = Utils;
 
 
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 /*!
 * MediaElement.js
 * HTML5 <video> and <audio> shim and player
