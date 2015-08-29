@@ -1,4 +1,5 @@
 $ = require('jquery')
+_ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
@@ -13,10 +14,15 @@ class EpisodeInfo
 
     return unless @episode.description
 
+    @options = _.extend(@defaultOptions, @app.extensionOptions.EpisodeInfo)
+
     @renderPanel()
     @renderButton()
 
     @app.renderPanel(this)
+
+  defaultOptions:
+    showOnStart: false
 
   renderButton: =>
     @button = $(@buttonHtml)
@@ -26,7 +32,7 @@ class EpisodeInfo
   renderPanel: =>
     @panel = $(@panelHtml)
     rivets.bind(@panel, @episode)
-    @panel.hide()
+    @panel.hide() unless @options.showOnStart
 
   buttonHtml:
     """
@@ -38,7 +44,7 @@ class EpisodeInfo
     <div class="episode-info">
       <h1 class="episode-title">{ title }</h1>
       <p class="episode-subtitle">{ subtitle }</p>
-      <p class="episode-description">{ description }</p>
+      <p class="episode-description" rv-html="description"></p>
     </div>
     """
 

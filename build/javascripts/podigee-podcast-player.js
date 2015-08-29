@@ -44485,10 +44485,12 @@ module.exports = ChromeCast;
 
 
 },{"jquery":2}],39:[function(require,module,exports){
-var $, EpisodeInfo, rivets, sightglass,
+var $, EpisodeInfo, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+_ = require('lodash');
 
 sightglass = require('sightglass');
 
@@ -44511,10 +44513,15 @@ EpisodeInfo = (function() {
     if (!this.episode.description) {
       return;
     }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.EpisodeInfo);
     this.renderPanel();
     this.renderButton();
     this.app.renderPanel(this);
   }
+
+  EpisodeInfo.prototype.defaultOptions = {
+    showOnStart: false
+  };
 
   EpisodeInfo.prototype.renderButton = function() {
     this.button = $(this.buttonHtml);
@@ -44528,12 +44535,14 @@ EpisodeInfo = (function() {
   EpisodeInfo.prototype.renderPanel = function() {
     this.panel = $(this.panelHtml);
     rivets.bind(this.panel, this.episode);
-    return this.panel.hide();
+    if (!this.options.showOnStart) {
+      return this.panel.hide();
+    }
   };
 
   EpisodeInfo.prototype.buttonHtml = "<button class=\"fa fa-info episode-info-button\" title=\"Show more info\"></button>";
 
-  EpisodeInfo.prototype.panelHtml = "<div class=\"episode-info\">\n  <h1 class=\"episode-title\">{ title }</h1>\n  <p class=\"episode-subtitle\">{ subtitle }</p>\n  <p class=\"episode-description\">{ description }</p>\n</div>";
+  EpisodeInfo.prototype.panelHtml = "<div class=\"episode-info\">\n  <h1 class=\"episode-title\">{ title }</h1>\n  <p class=\"episode-subtitle\">{ subtitle }</p>\n  <p class=\"episode-description\" rv-html=\"description\"></p>\n</div>";
 
   return EpisodeInfo;
 
@@ -44543,7 +44552,7 @@ module.exports = EpisodeInfo;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
+},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
 var $, Playlist, PlaylistItem, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
