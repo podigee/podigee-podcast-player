@@ -65,7 +65,8 @@
     padding: 12px;
     height: $image_width + 60;
 
-    .chaptermarks {
+    .chaptermarks,
+    .playlist {
       $chapter_image_width: 30px;
 
       font-weight: 200;

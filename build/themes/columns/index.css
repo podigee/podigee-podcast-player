@@ -43,35 +43,44 @@
     overflow: hidden;
     padding: 12px;
     height: 360px; }
-    .columns-podcast-player .right .chaptermarks {
+    .columns-podcast-player .right .chaptermarks,
+    .columns-podcast-player .right .playlist {
       font-weight: 200;
       height: 100%;
       overflow: hidden; }
-      .columns-podcast-player .right .chaptermarks ul {
+      .columns-podcast-player .right .chaptermarks ul,
+      .columns-podcast-player .right .playlist ul {
         display: block;
         height: 300px;
         list-style: none;
         margin: 0;
         overflow-y: scroll;
         padding: 0; }
-      .columns-podcast-player .right .chaptermarks li {
+      .columns-podcast-player .right .chaptermarks li,
+      .columns-podcast-player .right .playlist li {
         border-top: 1px solid #ddd;
         clear: both;
         cursor: pointer;
         line-height: 25px;
         overflow: hidden; }
-        .columns-podcast-player .right .chaptermarks li:first-child {
+        .columns-podcast-player .right .chaptermarks li:first-child,
+        .columns-podcast-player .right .playlist li:first-child {
           border-top: none; }
-        .columns-podcast-player .right .chaptermarks li img {
+        .columns-podcast-player .right .chaptermarks li img,
+        .columns-podcast-player .right .playlist li img {
           float: left;
           width: 30px; }
         .columns-podcast-player .right .chaptermarks li span,
-        .columns-podcast-player .right .chaptermarks li a {
+        .columns-podcast-player .right .chaptermarks li a,
+        .columns-podcast-player .right .playlist li span,
+        .columns-podcast-player .right .playlist li a {
           float: left;
           margin-top: 5px;
           margin-left: 40px; }
         .columns-podcast-player .right .chaptermarks li img + span,
-        .columns-podcast-player .right .chaptermarks li a {
+        .columns-podcast-player .right .chaptermarks li a,
+        .columns-podcast-player .right .playlist li img + span,
+        .columns-podcast-player .right .playlist li a {
           margin-left: 10px; }
   .columns-podcast-player .progress-bar {
     overflow: hidden;

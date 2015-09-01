@@ -44156,9 +44156,6 @@ Waveform = (function() {
   function Waveform(app) {
     this.app = app;
     this.render = bind(this.render, this);
-    if (!this.app.episode.waveform) {
-      return;
-    }
     if (!this.app.theme.waveformElement.length) {
       return;
     }

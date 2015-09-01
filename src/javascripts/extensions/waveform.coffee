@@ -7,7 +7,6 @@ class Waveform
     type: 'progress'
 
   constructor: (@app) ->
-    return unless @app.episode.waveform
     return unless @app.theme.waveformElement.length
 
     @elem = @app.theme.waveformElement
