@@ -1,6 +1,7 @@
 $ = require('jquery')
 _ = require('lodash')
 Utils = require('./utils.coffee')
+rivets = require('rivets')
 
 class Configuration
   constructor: (@app) ->
@@ -14,6 +15,8 @@ class Configuration
     else
       @configuration = window.parent[@frameOptions.configuration]
       @setConfigurations()
+
+    @configureTemplating()
 
   fetchJsonConfiguration: =>
     self = this
@@ -45,4 +48,8 @@ class Configuration
     theme: 'default'
   }
 
+  configureTemplating: =>
+    rivets.configure(
+      prefix: 'pp'
+    )
 module.exports = Configuration

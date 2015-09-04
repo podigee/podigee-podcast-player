@@ -44,7 +44,7 @@ class EpisodeInfo
     <div class="episode-info">
       <h1 class="episode-title">{ title }</h1>
       <p class="episode-subtitle">{ subtitle }</p>
-      <p class="episode-description" rv-html="description"></p>
+      <p class="episode-description" pp-html="description"></p>
     </div>
     """
 

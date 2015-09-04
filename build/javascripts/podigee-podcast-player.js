@@ -44008,7 +44008,7 @@ if (!window.inEmbed) {
 
 
 },{"./configuration.coffee":34,"./embed.coffee":35,"./extensions/chaptermarks.coffee":36,"./extensions/chromecast.coffee":37,"./extensions/episode_info.coffee":38,"./extensions/playlist.coffee":39,"./extensions/transcript.coffee":40,"./extensions/waveform.coffee":41,"./feed.coffee":42,"./player.coffee":44,"./progress_bar.coffee":45,"./theme.coffee":46,"jquery":2,"lodash":3}],34:[function(require,module,exports){
-var $, Configuration, Utils, _,
+var $, Configuration, Utils, _, rivets,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
@@ -44017,9 +44017,12 @@ _ = require('lodash');
 
 Utils = require('./utils.coffee');
 
+rivets = require('rivets');
+
 Configuration = (function() {
   function Configuration(app) {
     this.app = app;
+    this.configureTemplating = bind(this.configureTemplating, this);
     this.setConfigurations = bind(this.setConfigurations, this);
     this.fetchJsonConfiguration = bind(this.fetchJsonConfiguration, this);
     this.loader = $.Deferred();
@@ -44031,6 +44034,7 @@ Configuration = (function() {
       this.configuration = window.parent[this.frameOptions.configuration];
       this.setConfigurations();
     }
+    this.configureTemplating();
   }
 
   Configuration.prototype.fetchJsonConfiguration = function() {
@@ -44065,6 +44069,12 @@ Configuration = (function() {
     theme: 'default'
   };
 
+  Configuration.prototype.configureTemplating = function() {
+    return rivets.configure({
+      prefix: 'pp'
+    });
+  };
+
   return Configuration;
 
 })();
@@ -44073,7 +44083,7 @@ module.exports = Configuration;
 
 
 
-},{"./utils.coffee":47,"jquery":2,"lodash":3}],35:[function(require,module,exports){
+},{"./utils.coffee":47,"jquery":2,"lodash":3,"rivets":31}],35:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer;
 
 $ = require('jquery');
@@ -44169,7 +44179,7 @@ ChapterMark = (function() {
     return this.elem;
   };
 
-  ChapterMark.prototype.defaultHtml = "<li rv-data-start=\"start\" class=\"chaptermark\">\n  <img rv-src=\"image\" rv-if=\"image\" class=\"chaptermark-image\"/>\n  <span class=\"chaptermark-start\">{ start }</span>\n  <span class=\"chaptermark-title\">{ title }</span>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\" class=\"chaptermark-href\"><i class=\"fa fa-link\"></i></a>\n</li>";
+  ChapterMark.prototype.defaultHtml = "<li pp-data-start=\"start\" class=\"chaptermark\">\n  <img pp-src=\"image\" pp-if=\"image\" class=\"chaptermark-image\"/>\n  <span class=\"chaptermark-start\">{ start }</span>\n  <span class=\"chaptermark-title\">{ title }</span>\n  <a pp-if=\"href\" pp-href=\"href\" target=\"_blank\" class=\"chaptermark-href\"><i class=\"fa fa-link\"></i></a>\n</li>";
 
   return ChapterMark;
 
@@ -44472,7 +44482,7 @@ EpisodeInfo = (function() {
 
   EpisodeInfo.prototype.buttonHtml = "<button class=\"fa fa-info episode-info-button\" title=\"Show more info\"></button>";
 
-  EpisodeInfo.prototype.panelHtml = "<div class=\"episode-info\">\n  <h1 class=\"episode-title\">{ title }</h1>\n  <p class=\"episode-subtitle\">{ subtitle }</p>\n  <p class=\"episode-description\" rv-html=\"description\"></p>\n</div>";
+  EpisodeInfo.prototype.panelHtml = "<div class=\"episode-info\">\n  <h1 class=\"episode-title\">{ title }</h1>\n  <p class=\"episode-subtitle\">{ subtitle }</p>\n  <p class=\"episode-description\" pp-html=\"description\"></p>\n</div>";
 
   return EpisodeInfo;
 
@@ -44509,7 +44519,7 @@ PlaylistItem = (function() {
     return this.elem;
   };
 
-  PlaylistItem.prototype.defaultHtml = "<li>\n  <a rv-if=\"href\" rv-href=\"href\" target=\"_blank\"><i class=\"fa fa-link\"></i></a>\n  <span>{ title }</span>\n</li>";
+  PlaylistItem.prototype.defaultHtml = "<li>\n  <a pp-if=\"href\" pp-href=\"href\" target=\"_blank\"><i class=\"fa fa-link\"></i></a>\n  <span>{ title }</span>\n</li>";
 
   return PlaylistItem;
 
@@ -44631,7 +44641,7 @@ TranscriptLine = (function() {
     return this.line;
   };
 
-  TranscriptLine.prototype.defaultHtml = "<li class=\"transcript-line\" rv-data-timestamp=\"timestamp\">\n  <span class=\"transcript-line-timestamp\" rv-if=\"time\">{ time }</span>\n  <span class=\"transcript-line-speaker\" rv-if=\"speaker\">{ speaker }</span>\n  <span class=\"transcript-line-separator\" rv-if=\"text\">-</span>\n  <span class=\"transcript-line-text\" rv-if=\"text\">{ text }</span>\n</li>";
+  TranscriptLine.prototype.defaultHtml = "<li class=\"transcript-line\" pp-data-timestamp=\"timestamp\">\n  <span class=\"transcript-line-timestamp\" pp-if=\"time\">{ time }</span>\n  <span class=\"transcript-line-speaker\" pp-if=\"speaker\">{ speaker }</span>\n  <span class=\"transcript-line-separator\" pp-if=\"text\">-</span>\n  <span class=\"transcript-line-text\" pp-if=\"text\">{ text }</span>\n</li>";
 
   return TranscriptLine;
 
@@ -44778,7 +44788,7 @@ Transcript = (function() {
 
   Transcript.prototype.buttonHtml = "<button class=\"fa fa-pencil transcript-button\" title=\"Show transcript\"></button>";
 
-  Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n  <ul class=\"transcript-text\" rv-html=\"transcript\"></pre>\n</div>";
+  Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n  <ul class=\"transcript-text\" pp-html=\"transcript\"></pre>\n</div>";
 
   return Transcript;
 

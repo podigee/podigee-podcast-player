@@ -19,11 +19,11 @@ class ChapterMark
 
   defaultHtml:
     """
-    <li rv-data-start="start" class="chaptermark">
-      <img rv-src="image" rv-if="image" class="chaptermark-image"/>
+    <li pp-data-start="start" class="chaptermark">
+      <img pp-src="image" pp-if="image" class="chaptermark-image"/>
       <span class="chaptermark-start">{ start }</span>
       <span class="chaptermark-title">{ title }</span>
-      <a rv-if="href" rv-href="href" target="_blank" class="chaptermark-href"><i class="fa fa-link"></i></a>
+      <a pp-if="href" pp-href="href" target="_blank" class="chaptermark-href"><i class="fa fa-link"></i></a>
     </li>
     """
 

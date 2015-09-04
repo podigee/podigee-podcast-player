@@ -20,7 +20,7 @@ class PlaylistItem
   defaultHtml:
     """
     <li>
-      <a rv-if="href" rv-href="href" target="_blank"><i class="fa fa-link"></i></a>
+      <a pp-if="href" pp-href="href" target="_blank"><i class="fa fa-link"></i></a>
       <span>{ title }</span>
     </li>
     """

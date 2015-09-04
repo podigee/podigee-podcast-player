@@ -20,11 +20,11 @@ class TranscriptLine
 
   defaultHtml:
     """
-      <li class="transcript-line" rv-data-timestamp="timestamp">
-        <span class="transcript-line-timestamp" rv-if="time">{ time }</span>
-        <span class="transcript-line-speaker" rv-if="speaker">{ speaker }</span>
-        <span class="transcript-line-separator" rv-if="text">-</span>
-        <span class="transcript-line-text" rv-if="text">{ text }</span>
+      <li class="transcript-line" pp-data-timestamp="timestamp">
+        <span class="transcript-line-timestamp" pp-if="time">{ time }</span>
+        <span class="transcript-line-speaker" pp-if="speaker">{ speaker }</span>
+        <span class="transcript-line-separator" pp-if="text">-</span>
+        <span class="transcript-line-text" pp-if="text">{ text }</span>
       </li>
     """
 
@@ -121,7 +121,7 @@ class Transcript
     <div class="transcript">
       <h3>Transcript</h3>
 
-      <ul class="transcript-text" rv-html="transcript"></pre>
+      <ul class="transcript-text" pp-html="transcript"></pre>
     </div>
     """
 
