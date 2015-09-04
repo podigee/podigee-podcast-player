@@ -6,14 +6,18 @@ rivets = require('rivets')
 Utils = require('../utils.coffee')
 
 class ChapterMark
-  constructor: (context, callback) ->
-    @context = context
+  constructor: (data, callback) ->
+    @data = data
+    @cleanData()
     @callback = callback
+
+  cleanData: =>
+    @data.start = @data.start.split('.')[0]
 
   render: =>
     @elem = $(@defaultHtml)
-    rivets.bind(@elem, @context)
-    @elem.on('click', 'img, span', @context, @callback)
+    rivets.bind(@elem, @data)
+    @elem.on('click', 'img, span', @data, @callback)
 
     return @elem
 

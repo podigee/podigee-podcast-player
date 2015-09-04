@@ -44166,16 +44166,22 @@ rivets = require('rivets');
 Utils = require('../utils.coffee');
 
 ChapterMark = (function() {
-  function ChapterMark(context, callback) {
+  function ChapterMark(data, callback) {
     this.render = bind(this.render, this);
-    this.context = context;
+    this.cleanData = bind(this.cleanData, this);
+    this.data = data;
+    this.cleanData();
     this.callback = callback;
   }
 
+  ChapterMark.prototype.cleanData = function() {
+    return this.data.start = this.data.start.split('.')[0];
+  };
+
   ChapterMark.prototype.render = function() {
     this.elem = $(this.defaultHtml);
-    rivets.bind(this.elem, this.context);
-    this.elem.on('click', 'img, span', this.context, this.callback);
+    rivets.bind(this.elem, this.data);
+    this.elem.on('click', 'img, span', this.data, this.callback);
     return this.elem;
   };
 
