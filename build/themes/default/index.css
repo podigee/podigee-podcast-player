@@ -174,3 +174,15 @@
     .podcast-player .episode-info .episode-subtitle {
       font-size: 18px;
       font-weight: 300; }
+  .podcast-player .transcript .transcript-text {
+    height: 240px;
+    list-style: none;
+    overflow-y: scroll;
+    padding: 0 12px 0 0;
+    width: 100%; }
+    .podcast-player .transcript .transcript-text li {
+      font-size: 1.2em;
+      line-height: 1.4em;
+      margin-bottom: 8px; }
+      .podcast-player .transcript .transcript-text li.active > * {
+        background-color: #fff9a9; }

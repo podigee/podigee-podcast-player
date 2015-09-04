@@ -270,4 +270,24 @@
       font-weight: 300;
     }
   }
+
+  .transcript {
+    .transcript-text {
+      height: 240px;
+      list-style: none;
+      overflow-y: scroll;
+      padding: 0 12px 0 0;
+      width: 100%;
+
+      li {
+        font-size: 1.2em;
+        line-height: 1.4em;
+        margin-bottom: 8px;
+
+        &.active > * {
+          background-color: rgb(255, 249, 169);
+        }
+      }
+    }
+  }
 }

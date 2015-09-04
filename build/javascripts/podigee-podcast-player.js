@@ -44601,7 +44601,7 @@ module.exports = Playlist;
 
 
 },{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
-var $, Transcript, Utils, _, rivets, sightglass,
+var $, Transcript, TranscriptLine, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
@@ -44614,6 +44614,29 @@ rivets = require('rivets');
 
 Utils = require('../utils.coffee');
 
+TranscriptLine = (function() {
+  function TranscriptLine(time, speaker, text, timestamp) {
+    this.render = bind(this.render, this);
+    this.data = {
+      speaker: speaker,
+      text: text,
+      time: time,
+      timestamp: timestamp
+    };
+  }
+
+  TranscriptLine.prototype.render = function() {
+    this.line = $(this.defaultHtml);
+    rivets.bind(this.line, this.data);
+    return this.line;
+  };
+
+  TranscriptLine.prototype.defaultHtml = "<li class=\"transcript-line\" rv-data-timestamp=\"timestamp\">\n  <span class=\"transcript-line-timestamp\" rv-if=\"time\">{ time }</span>\n  <span class=\"transcript-line-speaker\" rv-if=\"speaker\">{ speaker }</span>\n  <span class=\"transcript-line-separator\" rv-if=\"text\">-</span>\n  <span class=\"transcript-line-text\" rv-if=\"text\">{ text }</span>\n</li>";
+
+  return TranscriptLine;
+
+})();
+
 Transcript = (function() {
   Transcript.extension = {
     name: 'Transcript',
@@ -44624,14 +44647,118 @@ Transcript = (function() {
     this.app = app;
     this.renderPanel = bind(this.renderPanel, this);
     this.renderButton = bind(this.renderButton, this);
+    this.setActiveLine = bind(this.setActiveLine, this);
+    this.deactivateAll = bind(this.deactivateAll, this);
+    this.activateLine = bind(this.activateLine, this);
+    this.bindEvents = bind(this.bindEvents, this);
+    this.parseTimScript = bind(this.parseTimScript, this);
+    this.processTranscript = bind(this.processTranscript, this);
+    this.load = bind(this.load, this);
     this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Transcript);
-    this.renderPanel();
-    this.renderButton();
-    this.app.renderPanel(this);
+    if (!this.options.data) {
+      return;
+    }
+    this.load().done((function(_this) {
+      return function() {
+        _this.renderPanel();
+        _this.renderButton();
+        _this.app.renderPanel(_this);
+        if (_this.options.showOnStart) {
+          _this.app.togglePanel(_this.panel);
+        }
+        return _this.bindEvents();
+      };
+    })(this));
   }
 
   Transcript.prototype.defaultOptions = {
     showOnStart: false
+  };
+
+  Transcript.prototype.data = {
+    transcript: ''
+  };
+
+  Transcript.prototype.load = function() {
+    return $.get(this.options.data).done((function(_this) {
+      return function(transcript) {
+        return _this.processTranscript(transcript);
+      };
+    })(this));
+  };
+
+  Transcript.prototype.processTranscript = function(rawTranscript) {
+    var parsedTranscript;
+    parsedTranscript = this.parseTimScript(rawTranscript);
+    return this.data.transcript = parsedTranscript.join('');
+  };
+
+  Transcript.prototype.parseTimScript = function(raw) {
+    var splitLines;
+    splitLines = raw.split("\n");
+    return splitLines.map((function(_this) {
+      return function(line) {
+        var meta, speaker, text, time, timestamp, tl;
+        if (line === "") {
+          return;
+        }
+        meta = line.match(/^\[(.*) (.*)\]/);
+        time = meta[1];
+        timestamp = Utils.hhmmssToSeconds(time);
+        speaker = meta[2];
+        text = line.match(/\] (.*)/);
+        if (text) {
+          text = text[1];
+        }
+        tl = new TranscriptLine(time, speaker, text, timestamp);
+        return tl.render().prop('outerHTML');
+      };
+    })(this));
+  };
+
+  Transcript.prototype.bindEvents = function() {
+    $(this.app.player.media).on('timeupdate', this.setActiveLine);
+    return this.panel.find('li').click((function(_this) {
+      return function(event) {
+        return _this.app.player.media.currentTime = event.currentTarget.dataset.timestamp;
+      };
+    })(this));
+  };
+
+  Transcript.prototype.activateLine = function(line) {
+    var $line;
+    $line = $(line);
+    if ($line.hasClass('active')) {
+      return;
+    }
+    $line.addClass('active');
+    return this.panel.find('ul').scrollTop(line.offsetTop - 50);
+  };
+
+  Transcript.prototype.deactivateAll = function(currentLine) {
+    return $(currentLine).siblings().removeClass('active');
+  };
+
+  Transcript.prototype.setActiveLine = function() {
+    var currentTime, lines;
+    currentTime = this.app.player.media.currentTime;
+    lines = this.panel.find('li');
+    if (currentTime <= parseInt(lines.first().data('timestamp'), 10)) {
+      this.activateLine(lines[0]);
+      return this.deactivateAll(lines[0]);
+    } else {
+      return _(lines).findLast((function(_this) {
+        return function(line) {
+          var lineTime;
+          lineTime = parseInt(line.dataset.timestamp, 10);
+          if (!(currentTime >= lineTime)) {
+            return;
+          }
+          _this.activateLine(line);
+          return _this.deactivateAll(line);
+        };
+      })(this));
+    }
   };
 
   Transcript.prototype.renderButton = function() {
@@ -44645,14 +44772,13 @@ Transcript = (function() {
 
   Transcript.prototype.renderPanel = function() {
     this.panel = $(this.panelHtml);
-    if (!this.options.showOnStart) {
-      return this.panel.hide();
-    }
+    rivets.bind(this.panel, this.data);
+    return this.panel.hide();
   };
 
   Transcript.prototype.buttonHtml = "<button class=\"fa fa-pencil transcript-button\" title=\"Show transcript\"></button>";
 
-  Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n</div>";
+  Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n  <ul class=\"transcript-text\" rv-html=\"transcript\"></pre>\n</div>";
 
   return Transcript;
 
