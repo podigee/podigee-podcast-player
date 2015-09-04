@@ -28,7 +28,10 @@
       margin-bottom: 3px; }
     .podcast-player .episode-basic-info .episode-subtitle {
       color: #7a7a7a;
-      font-size: 16px; }
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
   .podcast-player .episode-cover {
     float: right;
     height: 90px; }
