@@ -9,10 +9,10 @@ Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
 
 ChapterMarks = require('./extensions/chaptermarks.coffee')
+ChromeCast = require('./extensions/chromecast.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
-ChromeCast = require('./extensions/chromecast.coffee')
-Waveform = require('./extensions/Waveform.coffee')
+Waveform = require('./extensions/waveform.coffee')
 
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
