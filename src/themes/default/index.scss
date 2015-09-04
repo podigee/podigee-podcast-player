@@ -149,18 +149,16 @@
   }
 
   .buttons {
-    float: right;
-    height: 18px;
-    width: 30px;
+    position: absolute;
+    right: 90px;
+    top: 68px;
 
     button {
       color: $dark_gray;
-      display: block;
-      float: right;
-      font-size: 18px;
-      height: 30px;
+      display: inline-block;
+      font-size: 16px;
       text-align: center;
-      width: 30px;
+      width: 26px;
     }
 
     img {

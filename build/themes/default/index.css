@@ -89,17 +89,15 @@
   .podcast-player .progress-bar-loaded {
     background-color: #c8c8c8; }
   .podcast-player .buttons {
-    float: right;
-    height: 18px;
-    width: 30px; }
+    position: absolute;
+    right: 90px;
+    top: 68px; }
     .podcast-player .buttons button {
       color: #c8c8c8;
-      display: block;
-      float: right;
-      font-size: 18px;
-      height: 30px;
+      display: inline-block;
+      font-size: 16px;
       text-align: center;
-      width: 30px; }
+      width: 26px; }
     .podcast-player .buttons img {
       height: 14px; }
   .podcast-player .panels {
