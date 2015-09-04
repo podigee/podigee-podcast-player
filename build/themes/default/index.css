@@ -102,65 +102,65 @@
       width: 30px; }
     .podcast-player .buttons img {
       height: 14px; }
-  .podcast-player .panels h3 {
-    margin: 12px 0; }
-  .podcast-player .chaptermarks,
-  .podcast-player .playlist {
+  .podcast-player .panels {
     color: #7a7a7a;
     font-size: 14px;
     font-weight: 300;
-    line-height: 18px;
-    max-height: 300px;
-    overflow: hidden;
-    padding: 0 0 0 12px;
-    position: relative; }
-    .podcast-player .chaptermarks ul,
-    .podcast-player .playlist ul {
-      display: block;
-      height: 200px;
-      margin: 0;
-      padding: 0;
-      overflow-y: scroll; }
-      .podcast-player .chaptermarks ul li,
-      .podcast-player .playlist ul li {
-        background-color: none;
-        cursor: pointer;
-        line-height: 30px;
-        list-style: none;
-        position: relative; }
-        .podcast-player .chaptermarks ul li + li,
-        .podcast-player .playlist ul li + li {
-          border-top: 1px solid #e6e6e6; }
-        .podcast-player .chaptermarks ul li:hover,
-        .podcast-player .playlist ul li:hover {
-          background-color: #e6e6e6; }
-        .podcast-player .chaptermarks ul li.active,
-        .podcast-player .playlist ul li.active {
-          background-color: #edf9f8; }
-        .podcast-player .chaptermarks ul li img,
-        .podcast-player .playlist ul li img {
-          float: left;
-          width: 30px; }
-        .podcast-player .chaptermarks ul li span,
-        .podcast-player .playlist ul li span {
-          display: inline;
-          height: 100%;
-          margin: 0 0 0 10px;
-          overflow: hidden; }
-        .podcast-player .chaptermarks ul li .chaptermark-start,
-        .podcast-player .playlist ul li .chaptermark-start {
-          float: left;
-          margin-left: 40px; }
-        .podcast-player .chaptermarks ul li .chaptermark-image + .chaptermark-start,
-        .podcast-player .playlist ul li .chaptermark-image + .chaptermark-start {
-          margin-left: 10px; }
-        .podcast-player .chaptermarks ul li a,
-        .podcast-player .playlist ul li a {
-          color: #329c92;
-          font-size: 16px;
-          right: 5px;
-          position: absolute;
-          top: 5px; }
+    line-height: 18px; }
+    .podcast-player .panels > div {
+      max-height: 300px;
+      overflow: hidden;
+      padding: 0 0 0 12px;
+      position: relative; }
+    .podcast-player .panels h3 {
+      margin: 12px 0; }
+  .podcast-player .chaptermarks ul,
+  .podcast-player .playlist ul {
+    display: block;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll; }
+    .podcast-player .chaptermarks ul li,
+    .podcast-player .playlist ul li {
+      background-color: none;
+      cursor: pointer;
+      line-height: 30px;
+      list-style: none;
+      position: relative; }
+      .podcast-player .chaptermarks ul li + li,
+      .podcast-player .playlist ul li + li {
+        border-top: 1px solid #e6e6e6; }
+      .podcast-player .chaptermarks ul li:hover,
+      .podcast-player .playlist ul li:hover {
+        background-color: #e6e6e6; }
+      .podcast-player .chaptermarks ul li.active,
+      .podcast-player .playlist ul li.active {
+        background-color: #edf9f8; }
+      .podcast-player .chaptermarks ul li img,
+      .podcast-player .playlist ul li img {
+        float: left;
+        width: 30px; }
+      .podcast-player .chaptermarks ul li span,
+      .podcast-player .playlist ul li span {
+        display: inline;
+        height: 100%;
+        margin: 0 0 0 10px;
+        overflow: hidden; }
+      .podcast-player .chaptermarks ul li .chaptermark-start,
+      .podcast-player .playlist ul li .chaptermark-start {
+        float: left;
+        margin-left: 40px; }
+      .podcast-player .chaptermarks ul li .chaptermark-image + .chaptermark-start,
+      .podcast-player .playlist ul li .chaptermark-image + .chaptermark-start {
+        margin-left: 10px; }
+      .podcast-player .chaptermarks ul li a,
+      .podcast-player .playlist ul li a {
+        color: #329c92;
+        font-size: 16px;
+        right: 5px;
+        position: absolute;
+        top: 5px; }
   .podcast-player .playlist ul li span {
     margin-left: 0; }
   .podcast-player .playlist ul li a {

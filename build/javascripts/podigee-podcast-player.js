@@ -43729,7 +43729,7 @@ module.exports = {
 }).call(this);
 
 },{}],33:[function(require,module,exports){
-var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Theme, Waveform, _,
+var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Theme, Transcript, Waveform, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
@@ -43750,13 +43750,15 @@ Feed = require('./feed.coffee');
 
 ChapterMarks = require('./extensions/chaptermarks.coffee');
 
+ChromeCast = require('./extensions/chromecast.coffee');
+
 EpisodeInfo = require('./extensions/episode_info.coffee');
 
 Playlist = require('./extensions/playlist.coffee');
 
-ChromeCast = require('./extensions/chromecast.coffee');
+Transcript = require('./extensions/transcript.coffee');
 
-Waveform = require('./extensions/Waveform.coffee');
+Waveform = require('./extensions/waveform.coffee');
 
 PodigeePodcastPlayer = (function() {
   function PodigeePodcastPlayer(elemClass) {
@@ -43962,7 +43964,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ChapterMarks, EpisodeInfo, Playlist, Waveform].forEach((function(_this) {
+    return [ChapterMarks, EpisodeInfo, Playlist, Waveform, Transcript].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
       };
@@ -44005,7 +44007,7 @@ if (!window.inEmbed) {
 
 
 
-},{"./configuration.coffee":34,"./embed.coffee":35,"./extensions/Waveform.coffee":36,"./extensions/chaptermarks.coffee":37,"./extensions/chromecast.coffee":38,"./extensions/episode_info.coffee":39,"./extensions/playlist.coffee":40,"./feed.coffee":41,"./player.coffee":43,"./progress_bar.coffee":44,"./theme.coffee":45,"jquery":2,"lodash":3}],34:[function(require,module,exports){
+},{"./configuration.coffee":34,"./embed.coffee":35,"./extensions/chaptermarks.coffee":36,"./extensions/chromecast.coffee":37,"./extensions/episode_info.coffee":38,"./extensions/playlist.coffee":39,"./extensions/transcript.coffee":40,"./extensions/waveform.coffee":41,"./feed.coffee":42,"./player.coffee":44,"./progress_bar.coffee":45,"./theme.coffee":46,"jquery":2,"lodash":3}],34:[function(require,module,exports){
 var $, Configuration, Utils, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44071,7 +44073,7 @@ module.exports = Configuration;
 
 
 
-},{"./utils.coffee":46,"jquery":2,"lodash":3}],35:[function(require,module,exports){
+},{"./utils.coffee":47,"jquery":2,"lodash":3}],35:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer;
 
 $ = require('jquery');
@@ -44139,76 +44141,7 @@ module.exports = Embed;
 
 
 
-},{"./iframe_resizer.coffee":42,"jquery":2}],36:[function(require,module,exports){
-var Peaks, Waveform, _,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-_ = require('lodash');
-
-Peaks = require('peaks.js');
-
-Waveform = (function() {
-  Waveform.extension = {
-    name: 'Waveform',
-    type: 'progress'
-  };
-
-  function Waveform(app) {
-    this.app = app;
-    this.render = bind(this.render, this);
-    if (!this.app.theme.waveformElement.length) {
-      return;
-    }
-    this.elem = this.app.theme.waveformElement;
-    this.audio = this.app.theme.audioElement;
-    if (!this.app.extensionOptions.Waveform) {
-      this.elem.hide();
-      return;
-    }
-    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Waveform);
-    this.render();
-  }
-
-  Waveform.prototype.defaultOptions = {
-    color: "rgba(100, 149, 237, 0.8)",
-    playheadColor: "rgba(0, 0, 0, 0.1)"
-  };
-
-  Waveform.prototype.render = function() {
-    var height, transparent;
-    height = this.elem.height() * 2;
-    transparent = 'rgba(0, 0, 0, 0)';
-    return Peaks.init({
-      dataUri: {
-        json: this.options.data
-      },
-      container: this.elem[0],
-      mediaElement: this.audio[0],
-      height: height,
-      template: "<div class=\"waveform\">\n  <div class=\"zoom-container\"></div>\n  <div class=\"overview-container\"></div>\n</div>",
-      inMarkerColor: transparent,
-      outMarkerColor: transparent,
-      zoomWaveformColor: this.options.color,
-      overviewWaveformColor: this.options.color,
-      overviewHighlightRectangleColor: transparent,
-      segmentColor: transparent,
-      playheadColor: this.options.playheadColor,
-      playheadTextColor: transparent,
-      pointMarkerColor: transparent,
-      axisGridlineColor: transparent,
-      axisLabelColor: transparent
-    });
-  };
-
-  return Waveform;
-
-})();
-
-module.exports = Waveform;
-
-
-
-},{"lodash":3,"peaks.js":17}],37:[function(require,module,exports){
+},{"./iframe_resizer.coffee":43,"jquery":2}],36:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44345,7 +44278,7 @@ module.exports = ChapterMarks;
 
 
 
-},{"../utils.coffee":46,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],38:[function(require,module,exports){
+},{"../utils.coffee":47,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],37:[function(require,module,exports){
 var $, ChromeCast,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44481,7 +44414,7 @@ module.exports = ChromeCast;
 
 
 
-},{"jquery":2}],39:[function(require,module,exports){
+},{"jquery":2}],38:[function(require,module,exports){
 var $, EpisodeInfo, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44549,7 +44482,7 @@ module.exports = EpisodeInfo;
 
 
 
-},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
+},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],39:[function(require,module,exports){
 var $, Playlist, PlaylistItem, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44667,7 +44600,138 @@ module.exports = Playlist;
 
 
 
-},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],41:[function(require,module,exports){
+},{"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],40:[function(require,module,exports){
+var $, Transcript, Utils, _, rivets, sightglass,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+$ = require('jquery');
+
+_ = require('lodash');
+
+sightglass = require('sightglass');
+
+rivets = require('rivets');
+
+Utils = require('../utils.coffee');
+
+Transcript = (function() {
+  Transcript.extension = {
+    name: 'Transcript',
+    type: 'panel'
+  };
+
+  function Transcript(app) {
+    this.app = app;
+    this.renderPanel = bind(this.renderPanel, this);
+    this.renderButton = bind(this.renderButton, this);
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Transcript);
+    this.renderPanel();
+    this.renderButton();
+    this.app.renderPanel(this);
+  }
+
+  Transcript.prototype.defaultOptions = {
+    showOnStart: false
+  };
+
+  Transcript.prototype.renderButton = function() {
+    this.button = $(this.buttonHtml);
+    return this.button.on('click', (function(_this) {
+      return function() {
+        return _this.app.togglePanel(_this.panel);
+      };
+    })(this));
+  };
+
+  Transcript.prototype.renderPanel = function() {
+    this.panel = $(this.panelHtml);
+    if (!this.options.showOnStart) {
+      return this.panel.hide();
+    }
+  };
+
+  Transcript.prototype.buttonHtml = "<button class=\"fa fa-pencil transcript-button\" title=\"Show transcript\"></button>";
+
+  Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n</div>";
+
+  return Transcript;
+
+})();
+
+module.exports = Transcript;
+
+
+
+},{"../utils.coffee":47,"jquery":2,"lodash":3,"rivets":31,"sightglass":32}],41:[function(require,module,exports){
+var Peaks, Waveform, _,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+_ = require('lodash');
+
+Peaks = require('peaks.js');
+
+Waveform = (function() {
+  Waveform.extension = {
+    name: 'Waveform',
+    type: 'progress'
+  };
+
+  function Waveform(app) {
+    this.app = app;
+    this.render = bind(this.render, this);
+    if (!this.app.theme.waveformElement.length) {
+      return;
+    }
+    this.elem = this.app.theme.waveformElement;
+    this.audio = this.app.theme.audioElement;
+    if (!this.app.extensionOptions.Waveform) {
+      this.elem.hide();
+      return;
+    }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Waveform);
+    this.render();
+  }
+
+  Waveform.prototype.defaultOptions = {
+    color: "rgba(100, 149, 237, 0.8)",
+    playheadColor: "rgba(0, 0, 0, 0.1)"
+  };
+
+  Waveform.prototype.render = function() {
+    var height, transparent;
+    height = this.elem.height() * 2;
+    transparent = 'rgba(0, 0, 0, 0)';
+    return Peaks.init({
+      dataUri: {
+        json: this.options.data
+      },
+      container: this.elem[0],
+      mediaElement: this.audio[0],
+      height: height,
+      template: "<div class=\"waveform\">\n  <div class=\"zoom-container\"></div>\n  <div class=\"overview-container\"></div>\n</div>",
+      inMarkerColor: transparent,
+      outMarkerColor: transparent,
+      zoomWaveformColor: this.options.color,
+      overviewWaveformColor: this.options.color,
+      overviewHighlightRectangleColor: transparent,
+      segmentColor: transparent,
+      playheadColor: this.options.playheadColor,
+      playheadTextColor: transparent,
+      pointMarkerColor: transparent,
+      axisGridlineColor: transparent,
+      axisLabelColor: transparent
+    });
+  };
+
+  return Waveform;
+
+})();
+
+module.exports = Waveform;
+
+
+
+},{"lodash":3,"peaks.js":17}],42:[function(require,module,exports){
 var $, Feed;
 
 $ = require('jquery');
@@ -44696,7 +44760,7 @@ module.exports = Feed;
 
 
 
-},{"jquery":2}],42:[function(require,module,exports){
+},{"jquery":2}],43:[function(require,module,exports){
 var IframeResizer;
 
 IframeResizer = (function() {
@@ -44739,7 +44803,7 @@ module.exports = IframeResizer;
 
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var MediaElement, Player,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44795,7 +44859,7 @@ module.exports = Player;
 
 
 
-},{"../../vendor/javascripts/mediaelement.js":47}],44:[function(require,module,exports){
+},{"../../vendor/javascripts/mediaelement.js":48}],45:[function(require,module,exports){
 var $, ProgressBar, Utils,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -44932,7 +44996,7 @@ module.exports = ProgressBar;
 
 
 
-},{"./utils.coffee":46,"jquery":2}],45:[function(require,module,exports){
+},{"./utils.coffee":47,"jquery":2}],46:[function(require,module,exports){
 var $, Theme, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -45032,7 +45096,7 @@ module.exports = Theme;
 
 
 
-},{"jquery":2,"rivets":31,"sightglass":32}],46:[function(require,module,exports){
+},{"jquery":2,"rivets":31,"sightglass":32}],47:[function(require,module,exports){
 var Utils;
 
 Utils = (function() {
@@ -45088,7 +45152,7 @@ module.exports = Utils;
 
 
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 /*!
 * MediaElement.js
 * HTML5 <video> and <audio> shim and player

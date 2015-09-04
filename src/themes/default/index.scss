@@ -169,6 +169,18 @@
   }
 
   .panels {
+    color: $default_color;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+
+    & > div {
+      max-height: 300px;
+      overflow: hidden;
+      padding: 0 0 0 $default_padding;
+      position: relative;
+    }
+
     h3 {
       margin: 12px 0;
     }
@@ -176,15 +188,6 @@
 
   .chaptermarks,
   .playlist {
-    color: $default_color;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 18px;
-    max-height: 300px;
-    overflow: hidden;
-    padding: 0 0 0 $default_padding;
-    position: relative;
-
     ul {
       display: block;
       height: 200px;
