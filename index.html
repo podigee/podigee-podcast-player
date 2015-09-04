@@ -11,103 +11,71 @@
     <div class="wrapper">
       <h1>The Podigee Podcast Player</h1>
 
-      <h2>Single file player</h2>
-      <p>Given only information for a single episode with no extended metadata, the PPP acts as a simple audio player.</p>
-
-      <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="http://dark-space-hoerspiel.podigee.iodev:4000/2-der-flug-der-draaken-2/embed.json"></script>-->
-
-      <h2>Player with custom theme</h2>
-      <p>The simple player with a custom theme applied.</p>
-
       <script>
-        window.customThemePlayer = {
-          options: {
-            theme: 'default'
+        window.playerConfiguration = {
+          "options": {
+            "theme": "default"
           },
-          extensions: {
-            ChapterMarks: {
-              showOnStart: false
+          "extensions": {
+            "ChapterMarks": {
+              "showOnStart": false
             },
-            EpisodeInfo: {
-              showOnStart: false
+            "EpisodeInfo": {
+              "showOnStart": false
             },
-            Playlist: {
-              showOnStart: true
+            "Playlist": {
+              "showOnStart": false
             },
-            Waveform: {
-              color: "rgba(100, 149, 237, 0.3)",
-              data: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.waveform.json",
+            "Transcript": {
+              "showOnStart": false,
+              "data": "https://cdn.podigee.com/ppp/samples/transcript.txt"
+            },
+            "Waveform": {
+              "color": "rgba(100, 149, 237, 0.3)",
+              "data": "https://cdn.podigee.com/ppp/samples/waveform.json",
             }
           },
-          podcast: {
-            feed: 'http://podcast.languageminingcompany.com/feed/aac',
+          "podcast": {
+            "feed": "https://cdn.podigee.com/ppp/samples/feed.xml",
           },
-          episode: {
-            media: {
-              mp3: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.mp3?v=1403097429&source=web_download&dl=1",
-              m4a: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.m4a?v=1403097429&source=web_download&dl=1",
-              ogg: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.ogg?v=1403097429&source=web_download&dl=1",
-              opus: "https://cdn.podigee.com/media/podcast_156_dark_space_2046_episode_1_der_flug_der_draaken_cd1.opus?v=1403097429&source=web_download&dl=1"
+          "episode": {
+            "media": {
+              "mp3": "https://cdn.podigee.com/ppp/samples/media.mp3",
+              "m4a": "https://cdn.podigee.com/ppp/samples/media.m4a",
+              "ogg": "https://cdn.podigee.com/ppp/samples/media.ogg",
+              "opus": "https://cdn.podigee.com/ppp/samples/media.opus"
             },
-            cover_url: "https://cdn.podigee.com/uploads/u4/14147784764aa8.jpg",
-            title: "Dark Space 2046",
-            subtitle: "Der Flug der Draken",
-            description: "<p>Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf. Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu. Um die eigenen, essentiellen Interessen im nahen Weltraum zu schützen, legt die Bundesdeutsche Regierung ein beispielhaftes (geheimes) Weltraum-Programm auf.Nachdem zwei Spionagesatelliten der USA über chinesischem Weltraum zerstört wurden, spitzt sich die weltpolitische Lage weiter zu.</p>",
-            chaptermarks: [
-              {title: "5 Minutes", start: '00:05:00', image: '/samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
-              {title: "10 Minutes", start: '00:10:00', image: 'https://cdn.podigee.com/uploads/u4/14147784764aa8.jpg', href: ''},
-              {title: "15 Minutes", start: '00:15:00', image: '', href: ''},
-              {title: "20 Minutes", start: '00:20:00', image: '', href: ''},
-              {title: "25 Minutes", start: '00:25:00', image: '', href: ''},
-              {title: "30 Minutes", start: '00:30:00', image: '', href: ''},
-              {title: "35 Minutes", start: '00:35:00', image: '', href: ''},
-              {title: "40 Minutes", start: '00:40:00', image: '', href: ''},
-              {title: "45 Minutes", start: '00:45:00', image: '', href: ''}
-            ],
+            "cover_url": "https://cdn.podigee.com/ppp/samples/cover.jpg",
+            "title": "FG009 Wirtschaftspolitischer Journalismus",
+            "subtitle": "Wie Henrik Müller in Dortmund wirtschaftspolitischen Journalismus lehrt und erforscht. Und was guten Wirtschaftsjournalismus ausmacht.",
+            "description": "Raus aus der prallen journalistischen Praxis, rein in die Gremien-Universität. Henrik Müller hat diesen ungewöhnlichen Schritt gewagt: 2013 übernahm der damalige stellvertretende Chefredakteur des \"manager magazin\" den Lehrstuhl für wirtschaftspolitischen Journalismus am Institut für Journalistik der Technischen Universität Dortmund. Dort baut er seitdem die neuen Bachelor- und Master-Studiengänge für wirtschaftspolitischen Journalismus auf. Wie er diesen Wechsel zwischen den  Welten erlebt hat, was er seinen Studierenden vermitteln will und woran er forscht, erzählt der immer noch sehr umtriebige Autor (\"Wirtschaftsirrtümer: 50 Denkfehler, die uns Kopf und Kragen kosten\") und Spiegel-Online-Kolumnist in dieser anregenden Episode. Dabei geht es darum, was Wirtschaftsjournalismus leisten soll und muss, was Studierende erst mühsam über Lobbyismus lernen müssen und was eigentlich \"gute Geschichten\" sind.",
+            "chaptermarks": [
+              {"start": "00:00:00.000", "title": "Intro"},
+              {"start": "00:00:41.018", "title": "Begrüßung"},
+              {"start": "00:01:30.542", "title": "Vorstellung"},
+              {"start": "00:05:48.377", "title": "Aufgaben des Wirtschaftsjournalismus"},
+              {"start": "00:10:29.462", "title": "Neuer Studiengang"},
+              {"start": "00:13:50.076", "title": "Wechsel von der Wirtschaft in die Wissenschaft"},
+              {"start": "00:20:13.397", "title": "Inhalte des Studiums"},
+              {"start": "00:25:37.755", "title": "Herdentrieb im Journalismus und gute Geschichten"},
+              {"start": "00:32:40.790", "title": "Onlinejournalismus"},
+              {"start": "00:36:12.318", "title": "Herausforderungen und Chancen für junge Journalisten"},
+              {"start": "00:41:01.342", "title": "Multimediale Ausbildung"},
+              {"start": "00:43:11.011", "title": "Datenjournalismus"},
+              {"start": "00:46:34.093", "title": "Politischer Wirtschaftsjournalismus"},
+              {"start": "00:50:28.321", "title": "Kooperationspartner und praktisches Studium"},
+              {"start": "00:56:02.258", "title": "Lobbyismus"},
+              {"start": "00:58:07.342", "title": "Spannungsfeld PR"},
+              {"start": "01:00:44.639", "title": "Wirtschaftsirrtümer"},
+              {"start": "01:04:09.361", "title": "Forschungsprojekte"},
+              {"start": "01:14:56.559", "title": "Andere Studiengänge in Europa"},
+              {"start": "01:20:54.085", "title": "Ausklang"}
+            ]
           }
         }
       </script>
-      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="customThemePlayer"></script>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
 
-      <h2>Player with full metadata.</h2>
-      <p>The player will all metadata, playlist and waveform. Pretty overloaded isn't it? :)</p>
-
-      <script>
-        window.fullMetadata = {
-          options: {
-          },
-          extensions: {
-            Waveform: {
-              color: "rgba(100, 149, 237, 0.9)"
-            }
-          },
-          podcast: {
-            //feed: '//samples/feed.xml',
-            feed: 'https://dark-space-hoerspiel.podigee.io/feed/aac',
-          },
-          episode: {
-            media: {mp3: '/samples/auphonic-example.mp3'},
-            productionDataUrl: '/samples/audio_production.json',
-            chaptermarks: [
-              {title: "First Chaptermark", start: '00:00:10', image: '/samples/podigee-logo-256.png', href: 'https://www.podigee.com'},
-              {title: "Second Chaptermark with a lot of text and stuff to make it go out of the container and so on and so on", start: '00:00:20', image: '', href: ''},
-              {title: "Third Chaptermark", start: '00:00:30', image: '', href: ''},
-              {title: "Fourth Chaptermark", start: '00:00:40', image: '', href: ''},
-              {title: "Fifth Chaptermark", start: '00:00:50', image: '', href: ''},
-              {title: "Sixth Chaptermark", start: '00:01:00', image: '', href: ''},
-              {title: "Seventh Chaptermark", start: '00:01:10', image: '', href: ''},
-              {title: "Eighth Chaptermark", start: '00:01:20', image: '', href: ''},
-              {title: "Nineth Chaptermark", start: '00:01:30', image: '', href: ''},
-              {title: "Tenth Chaptermark", start: '00:01:40', image: '', href: ''}
-            ],
-            cover_url: "/samples/podigee-logo-256.png",
-            title: "Woah, I'm in an IFRAME! The second time!",
-            subtitle: "We are testing a new podcast player.",
-            description: "This is a longer text describing the episode. orem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursus. Morbi ut mi. Nullam enim leo, egestas id, condimentum at, laoreet mattis, massa. Sed eleifend nonummy diam. Praesent mauris ante, elementum et, bibendum at, posuere sit amet, nibh. Duis tincidunt lectus quis dui viverra vestibulum. Suspendisse vulputate aliquam dui. Nulla elementum dui ut augue. Aliquam vehicula mi at mauris. Maecenas placerat, nisl at consequat rhoncus, sem nunc gravida justo, quis eleifend arcu velit quis lacus. Morbi magna magna, tincidunt a, mattis non, imperdiet vitae, tellus. Sed odio est, auctor ac, sollicitudin in, consequat vitae, orci. Fusce id felis. Vivamus sollicitudin metus eget eros.",
-          }
-        }
-      </script>
-      <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="fullMetadata"></script>-->
     </div>
   </body>
 </html>
