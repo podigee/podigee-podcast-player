@@ -1,0 +1,50 @@
+body {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  overflow-y: scroll;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.logo {
+  display: block;
+  margin: 40px auto;
+  width: 50%;
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    width: 80%;
+  }
+
+}
+
+@media (max-width: 1023px) {
+  .wrapper {
+    width: 80%;
+  }
+}
+
+@media (max-width: 767px) {
+  .wrapper {
+    width: 80%;
+  }
+
+  .logo {
+    display: block;
+    margin: 40px auto;
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 100%;
+  }
+
+  .wrapper p {
+    padding: 0 12px;
+  }
+}

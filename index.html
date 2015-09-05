@@ -1,15 +1,21 @@
 <!doctype html>
 <html>
   <head>
-    <style>
-      body { font-family: Helvetica Neue, Helvetica, Arial, sans-serif; overflow-y: scroll; }
-      .wrapper { margin: 0 auto; width: 80%; }
-      .with-shadow { border-radius: 3px; box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5); }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="The Podigee Podcast Player is a HTML5 audio player specially crafted for listening to podcasts.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="example/normalize.css">
+    <link rel="stylesheet" href="example/styles.css">
   </head>
   <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
     <div class="wrapper">
-      <h1>The Podigee Podcast Player</h1>
+      <img src="https://cdn.podigee.com/ppp/podigee-podcast-player.png" alt="The Podigee Podcast Player Logo" class="logo">
 
       <script>
         window.playerConfiguration = {
@@ -29,10 +35,6 @@
             "Transcript": {
               "showOnStart": false,
               "data": "https://cdn.podigee.com/ppp/samples/transcript.txt"
-            },
-            "Waveform": {
-              "color": "rgba(100, 149, 237, 0.3)",
-              "data": "https://cdn.podigee.com/ppp/samples/waveform.json",
             }
           },
           "podcast": {
@@ -75,6 +77,10 @@
         }
       </script>
       <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+
+      <p>
+        Integer facilisis massa vel risus elementum convallis. Nullam elementum eros eros, vel ornare ante dapibus a. Nullam pharetra odio dui, in tempor lorem fringilla sed. Suspendisse sed accumsan quam. Quisque tincidunt felis mi, in pretium tellus fringilla sit amet. Duis placerat mi non sapien eleifend varius. Suspendisse ac ante purus. Duis ac neque eget lorem ultrices ultricies. Maecenas eget tellus sed libero dignissim sollicitudin at sit amet tortor. Fusce convallis, lorem et feugiat vulputate, risus arcu pulvinar neque, et egestas tellus risus et dui. Fusce elementum, ligula non pharetra bibendum, nibh mi hendrerit dolor, vel consectetur arcu turpis et nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam auctor mattis velit tempus faucibus. Fusce lacus erat, ultricies vitae diam sit amet, luctus ultrices arcu. Phasellus condimentum enim et est finibus, at convallis odio bibendum. Proin id diam ac quam maximus rutrum.
+      </p>
 
     </div>
   </body>
