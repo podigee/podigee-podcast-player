@@ -2,6 +2,44 @@
 
 The Podigee Podcast Player is a state of the art web audio player specially crafted for listening to podcasts.
 
+[Demo](https://podigee.github.com/podigee-podcast-player "Podigee Podcast Player Demo")
+
+## Features
+
+The PPP at it's core is an **embeddable HTML5 audio player**. It supports **theming**, **extensions** and **unicorns**.
+
+## Themes
+
+The player is completely themeable, you can even change the markup! It comes with a responsive default theme.
+
+## Extensions
+
+The player is extensible and ships with the following default extensions:
+
+### Chaptermarks
+
+If the podcaster supplies chaptermarks for an episode listeners can will see where in the episode they currently are and jump to a chaptermark with a click or tap.
+
+### Episodeinfo
+
+Displays the episode title and description for the episode.
+
+### Playlist
+
+Displays a list of podcast episodes based on as standard podcast RSS feed.
+
+### Transcript
+
+Displays the transcript of an episode, highlights the currently spoken words and allows the listener to search and jump to certain passages by clicking or tapping.
+
+### Waveform
+
+Given [the right waveform input data](https://github.com/bbcrd/audiowaveform) the player can render a nice waveform whereever the theme has foreseen a place for it (Note: the default theme will not display it).
+
+### Chromecast (experimental)
+
+Allows the listener to play the podcast episode on a Chromecast device. This is currently not enabled by default, because it's still in testing and requires a little polishing work.
+
 ## Usage
 
 ```javascript
@@ -74,7 +112,7 @@ window.playerConfiguration = {
 
 ## Who
 
-We are [Podigee](https://www.podigee.com), an awesome Podcast Hosting Platform.
+We are [Podigee](https://www.podigee.com "The Podcast Hosting Platform"), an awesome Podcast Hosting Platform.
 
 ## Contribute
 
