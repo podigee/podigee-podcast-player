@@ -13,7 +13,7 @@ class PlaylistItem
     rivets.bind(@elem, @context)
 
     @elem.data('item', @context)
-    @elem.on('click', 'img, span', @context, @callback)
+    @elem.on('click', @context, @callback)
 
     return @elem
 

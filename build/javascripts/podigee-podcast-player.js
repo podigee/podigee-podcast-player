@@ -43040,7 +43040,7 @@ ChapterMark = (function() {
   ChapterMark.prototype.render = function() {
     this.elem = $(this.defaultHtml);
     rivets.bind(this.elem, this.data);
-    this.elem.on('click', 'img, span', this.data, this.callback);
+    this.elem.on('click', this.data, this.callback);
     return this.elem;
   };
 
@@ -43380,7 +43380,7 @@ PlaylistItem = (function() {
     this.elem = $(this.defaultHtml);
     rivets.bind(this.elem, this.context);
     this.elem.data('item', this.context);
-    this.elem.on('click', 'img, span', this.context, this.callback);
+    this.elem.on('click', this.context, this.callback);
     return this.elem;
   };
 

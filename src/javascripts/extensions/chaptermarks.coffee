@@ -17,7 +17,7 @@ class ChapterMark
   render: =>
     @elem = $(@defaultHtml)
     rivets.bind(@elem, @data)
-    @elem.on('click', 'img, span', @data, @callback)
+    @elem.on('click', @data, @callback)
 
     return @elem
 
