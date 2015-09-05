@@ -17,6 +17,7 @@ class Theme
     $(@app.elemClass).replaceWith(@elem)
 
     @findElements()
+    @bindCoverLoad()
 
     return @elem
 
@@ -56,9 +57,14 @@ class Theme
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
     @speedElement = @elem.find('.speed-toggle')
+    @coverImage = @elem.find('.cover-image')
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
+
+  bindCoverLoad: =>
+    @coverImage.on 'load', =>
+      @app.sendHeightChange()
 
   addButton: (button) =>
     @buttons.append(button)

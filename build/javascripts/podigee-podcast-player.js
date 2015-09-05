@@ -44012,6 +44012,7 @@ Theme = (function() {
     this.app = app;
     this.addPanel = bind(this.addPanel, this);
     this.addButton = bind(this.addButton, this);
+    this.bindCoverLoad = bind(this.bindCoverLoad, this);
     this.loadCustomCss = bind(this.loadCustomCss, this);
     this.loadCustomHtml = bind(this.loadCustomHtml, this);
     this.render = bind(this.render, this);
@@ -44028,6 +44029,7 @@ Theme = (function() {
     rivets.bind(this.elem, this.context);
     $(this.app.elemClass).replaceWith(this.elem);
     this.findElements();
+    this.bindCoverLoad();
     return this.elem;
   };
 
@@ -44077,8 +44079,17 @@ Theme = (function() {
     this.backwardElement = this.elem.find('.backward-button');
     this.forwardElement = this.elem.find('.forward-button');
     this.speedElement = this.elem.find('.speed-toggle');
+    this.coverImage = this.elem.find('.cover-image');
     this.buttons = this.elem.find('.buttons');
     return this.panels = this.elem.find('.panels');
+  };
+
+  Theme.prototype.bindCoverLoad = function() {
+    return this.coverImage.on('load', (function(_this) {
+      return function() {
+        return _this.app.sendHeightChange();
+      };
+    })(this));
   };
 
   Theme.prototype.addButton = function(button) {

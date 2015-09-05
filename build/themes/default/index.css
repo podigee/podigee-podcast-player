@@ -5,8 +5,6 @@
   overflow: hidden;
   position: relative;
   width: 100%; }
-  .podcast-player .pause-button .controls-advanced {
-    display: block; }
   .podcast-player, .podcast-player *, .podcast-player *:before, .podcast-player *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -25,18 +23,22 @@
       color: #f57150;
       font-size: 18px;
       font-weight: 600;
-      margin-bottom: 3px; }
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
     .podcast-player .episode-basic-info .episode-subtitle {
       color: #7a7a7a;
       font-size: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
-  .podcast-player .episode-cover {
+  .podcast-player .cover-image {
     float: right;
     height: 90px; }
   .podcast-player .controls {
-    float: left; }
+    float: left;
+    height: 90px; }
     .podcast-player .controls button {
       font-size: 36px; }
     .podcast-player .controls .play-button {
@@ -85,7 +87,7 @@
   .podcast-player .progress-bar-loaded {
     background-color: #329c92;
     display: block;
-    height: 10px;
+    height: 100%;
     position: absolute;
     top: 0;
     width: 0; }
@@ -109,83 +111,116 @@
     font-weight: 300;
     line-height: 18px; }
     .podcast-player .panels > div {
-      max-height: 300px;
+      max-height: 400px;
       overflow: hidden;
       padding: 0 0 0 12px;
       position: relative; }
     .podcast-player .panels h3 {
       margin: 12px 0; }
-  .podcast-player .chaptermarks ul,
-  .podcast-player .playlist ul {
+  .podcast-player .panels .chaptermarks ul,
+  .podcast-player .panels .playlist ul {
     display: block;
-    height: 200px;
+    height: 300px;
     margin: 0;
     padding: 0;
     overflow-y: scroll; }
-    .podcast-player .chaptermarks ul li,
-    .podcast-player .playlist ul li {
+    .podcast-player .panels .chaptermarks ul li,
+    .podcast-player .panels .playlist ul li {
       background-color: none;
       cursor: pointer;
       line-height: 30px;
       list-style: none;
       position: relative; }
-      .podcast-player .chaptermarks ul li + li,
-      .podcast-player .playlist ul li + li {
+      .podcast-player .panels .chaptermarks ul li + li,
+      .podcast-player .panels .playlist ul li + li {
         border-top: 1px solid #e6e6e6; }
-      .podcast-player .chaptermarks ul li:hover,
-      .podcast-player .playlist ul li:hover {
+      .podcast-player .panels .chaptermarks ul li:hover,
+      .podcast-player .panels .playlist ul li:hover {
         background-color: #e6e6e6; }
-      .podcast-player .chaptermarks ul li.active,
-      .podcast-player .playlist ul li.active {
+      .podcast-player .panels .chaptermarks ul li.active,
+      .podcast-player .panels .playlist ul li.active {
         background-color: #edf9f8; }
-      .podcast-player .chaptermarks ul li img,
-      .podcast-player .playlist ul li img {
+      .podcast-player .panels .chaptermarks ul li img,
+      .podcast-player .panels .playlist ul li img {
         float: left;
         width: 30px; }
-      .podcast-player .chaptermarks ul li span,
-      .podcast-player .playlist ul li span {
+      .podcast-player .panels .chaptermarks ul li span,
+      .podcast-player .panels .playlist ul li span {
         display: inline;
         height: 100%;
         margin: 0 0 0 10px;
         overflow: hidden; }
-      .podcast-player .chaptermarks ul li .chaptermark-start,
-      .podcast-player .playlist ul li .chaptermark-start {
+      .podcast-player .panels .chaptermarks ul li .chaptermark-start,
+      .podcast-player .panels .playlist ul li .chaptermark-start {
         float: left;
-        margin-left: 40px; }
-      .podcast-player .chaptermarks ul li .chaptermark-image + .chaptermark-start,
-      .podcast-player .playlist ul li .chaptermark-image + .chaptermark-start {
+        margin-left: 0; }
+      .podcast-player .panels .chaptermarks ul li .chaptermark-image + .chaptermark-start,
+      .podcast-player .panels .playlist ul li .chaptermark-image + .chaptermark-start {
         margin-left: 10px; }
-      .podcast-player .chaptermarks ul li a,
-      .podcast-player .playlist ul li a {
+      .podcast-player .panels .chaptermarks ul li a,
+      .podcast-player .panels .playlist ul li a {
         color: #329c92;
         font-size: 16px;
         right: 5px;
         position: absolute;
         top: 5px; }
-  .podcast-player .playlist ul li span {
+  .podcast-player .panels .playlist ul li span {
     margin-left: 0; }
-  .podcast-player .playlist ul li a {
+  .podcast-player .panels .playlist ul li a {
     padding: 0 5px;
     position: static; }
-  .podcast-player .episode-info {
+  .podcast-player .panels .episode-info {
     font-size: 16px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: scroll;
     padding: 0 12px; }
-    .podcast-player .episode-info .episode-title {
+    .podcast-player .panels .episode-info .episode-title {
       font-size: 22px; }
-    .podcast-player .episode-info .episode-subtitle {
+    .podcast-player .panels .episode-info .episode-subtitle {
       font-size: 18px;
       font-weight: 300; }
-  .podcast-player .transcript .transcript-text {
-    height: 240px;
+  .podcast-player .panels .transcript .transcript-text {
+    height: 340px;
     list-style: none;
     overflow-y: scroll;
     padding: 0 12px 0 0;
     width: 100%; }
-    .podcast-player .transcript .transcript-text li {
+    .podcast-player .panels .transcript .transcript-text li {
       font-size: 1.2em;
       line-height: 1.4em;
       margin-bottom: 8px; }
-      .podcast-player .transcript .transcript-text li.active > * {
+      .podcast-player .panels .transcript .transcript-text li.active > * {
         background-color: #fff9a9; }
+  @media (max-width: 768px) {
+    .podcast-player .cover-image {
+      border: 12px solid #f6f6f6;
+      border-bottom: 0;
+      display: block;
+      float: none;
+      height: auto;
+      width: 100%; }
+    .podcast-player .episode-basic-info .episode-title {
+      font-size: 16px; }
+    .podcast-player .episode-basic-info .episode-subtitle {
+      font-size: 14px; }
+    .podcast-player .controls {
+      height: 115px;
+      position: relative; }
+    .podcast-player .controls .controls-advanced {
+      bottom: 0px;
+      left: 8px;
+      top: auto;
+      width: 150px; }
+      .podcast-player .controls .controls-advanced button {
+        font-size: 24px; }
+    .podcast-player .buttons {
+      margin-top: 25px;
+      position: static;
+      text-align: right; }
+      .podcast-player .buttons button {
+        font-size: 24px;
+        width: 35px; }
+    .podcast-player .progress-bar .progress-bar-rail {
+      min-height: 20px; }
+    .podcast-player.playing .progress-bar .progress-bar-time-played {
+      display: none; } }

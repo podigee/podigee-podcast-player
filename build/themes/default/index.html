@@ -1,6 +1,8 @@
 <div class="podcast-player">
   <audio pp-src="media.mp3" preload="metadata"></audio>
 
+  <img class="cover-image" pp-src="cover_url" />
+
   <div class="controls">
     <button class="fa fa-play play-button"></button>
 
@@ -11,13 +13,11 @@
     </div>
   </div>
 
-  <img class="episode-cover" pp-src="cover_url" />
-  <div class="buttons"></div>
-
   <div class="episode-basic-info">
     <div class="episode-title">{ title }</div>
     <div class="episode-subtitle">{ subtitle }</div>
   </div>
+  <div class="buttons"></div>
 
   <div class="progress-bar">
     <div class="progress-bar-time-played" title="Switch display mode">00:00:00</div>

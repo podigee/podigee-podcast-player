@@ -1,9 +1,7 @@
 .podcast-player {
   $default_padding: 12px;
+  $background_color: #f6f6f6;
   $default_color: rgb(122, 122, 122);
-    .pause-button .controls-advanced {
-      display: block;
-    }
   $light_gray: rgb(230, 230, 230);
   $dark_gray: rgb(200, 200, 200);
   $orange: rgb(245, 113, 80);
@@ -15,7 +13,7 @@
     box-sizing: border-box;
   }
 
-  background-color: #f6f6f6;
+  background-color: $background_color;
   color: #222;
   font-family: Helvetica;
   overflow: hidden;
@@ -40,6 +38,9 @@
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .episode-subtitle {
@@ -51,13 +52,14 @@
     }
   }
 
-  .episode-cover {
+  .cover-image {
     float: right;
     height: 90px;
   }
 
   .controls {
     float: left;
+    height: 90px;
 
     button {
       font-size: 36px;
@@ -86,16 +88,6 @@
       button {
         color: $dark_gray;
         font-size: 14px;
-      }
-
-      .backward-button,
-      .forward-button {
-      }
-
-      .backward-button {
-      }
-
-      .forward-button {
       }
 
       .speed-toggle {
@@ -141,7 +133,7 @@
   .progress-bar-loaded {
     background-color: $highlight;
     display: block;
-    height: 10px;
+    height: 100%;
     position: absolute;
     top: 0;
     width: 0;
@@ -176,7 +168,7 @@
     line-height: 18px;
 
     & > div {
-      max-height: 300px;
+      max-height: 400px;
       overflow: hidden;
       padding: 0 0 0 $default_padding;
       position: relative;
@@ -187,110 +179,171 @@
     }
   }
 
-  .chaptermarks,
-  .playlist {
-    ul {
-      display: block;
-      height: 200px;
-      margin: 0;
-      padding: 0;
-      overflow-y: scroll;
+  .panels {
+    .chaptermarks,
+    .playlist {
+      ul {
+        display: block;
+        height: 300px;
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
 
-      li {
-        background-color: none;
-        cursor: pointer;
-        line-height: 30px;
+        li {
+          background-color: none;
+          cursor: pointer;
+          line-height: 30px;
+          list-style: none;
+          position: relative;
+
+          &+li {
+            border-top: 1px solid $light_gray;
+          }
+
+          &:hover {
+            background-color: $light_gray;
+          }
+
+          &.active {
+            background-color: lighten($highlight, 55%);
+          }
+
+          img {
+            float: left;
+            width: 30px;
+          }
+
+          span {
+            display: inline;
+            height: 100%;
+            margin: 0 0 0 10px;
+            overflow: hidden;
+          }
+
+          .chaptermark-start {
+            float: left;
+            margin-left: 0;
+          }
+
+          .chaptermark-image + .chaptermark-start {
+            margin-left: 10px;
+          }
+
+          a {
+            color: $highlight;
+            font-size: 16px;
+            right: 5px;
+            position: absolute;
+            top: 5px;
+          }
+        }
+      }
+    }
+
+    .playlist ul li {
+      span {
+        margin-left: 0;
+      }
+
+      a {
+        padding: 0 5px;
+        position: static;
+      }
+    }
+
+    .episode-info {
+      font-size: 16px;
+      max-height: 400px;
+      overflow-y: scroll;
+      padding: 0 12px;
+
+      .episode-title {
+        font-size: 22px;
+      }
+
+      .episode-subtitle {
+        font-size: 18px;
+        font-weight: 300;
+      }
+    }
+
+    .transcript {
+      .transcript-text {
+        height: 340px;
         list-style: none;
-        position: relative;
+        overflow-y: scroll;
+        padding: 0 12px 0 0;
+        width: 100%;
 
-        &+li {
-          border-top: 1px solid $light_gray;
-        }
+        li {
+          font-size: 1.2em;
+          line-height: 1.4em;
+          margin-bottom: 8px;
 
-        &:hover {
-          background-color: $light_gray;
-        }
-
-        &.active {
-          background-color: lighten($highlight, 55%);
-        }
-
-        img {
-          float: left;
-          width: 30px;
-        }
-
-        span {
-          display: inline;
-          height: 100%;
-          margin: 0 0 0 10px;
-          overflow: hidden;
-        }
-
-        .chaptermark-start {
-          float: left;
-          margin-left: 40px;
-        }
-
-        .chaptermark-image + .chaptermark-start {
-          margin-left: 10px;
-        }
-
-        a {
-          color: $highlight;
-          font-size: 16px;
-          right: 5px;
-          position: absolute;
-          top: 5px;
+          &.active > * {
+            background-color: rgb(255, 249, 169);
+          }
         }
       }
     }
   }
 
-  .playlist ul li {
-    span {
-      margin-left: 0;
-    }
-
-    a {
-      padding: 0 5px;
-      position: static;
-    }
-  }
-
-  .episode-info {
-    font-size: 16px;
-    max-height: 300px;
-    overflow-y: scroll;
-    padding: 0 12px;
-
-    .episode-title {
-      font-size: 22px;
-    }
-
-    .episode-subtitle {
-      font-size: 18px;
-      font-weight: 300;
-    }
-  }
-
-  .transcript {
-    .transcript-text {
-      height: 240px;
-      list-style: none;
-      overflow-y: scroll;
-      padding: 0 12px 0 0;
+  @media (max-width: 768px) {
+    .cover-image {
+      border: 12px solid $background_color;
+      border-bottom: 0;
+      display: block;
+      float: none;
+      height: auto;
       width: 100%;
+    }
 
-      li {
-        font-size: 1.2em;
-        line-height: 1.4em;
-        margin-bottom: 8px;
-
-        &.active > * {
-          background-color: rgb(255, 249, 169);
-        }
+    .episode-basic-info {
+      .episode-title {
+        font-size: 16px;
       }
+
+      .episode-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    .controls {
+      height: 115px;
+      position: relative;
+    }
+
+    .controls .controls-advanced {
+      bottom: 0px;
+      left: 8px;
+      top: auto;
+      width: 150px;
+
+      button {
+        font-size: 24px;
+      }
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: static;
+      text-align: right;
+
+      button {
+        font-size: 24px;
+        width: 35px;
+      }
+    }
+
+    .progress-bar {
+      .progress-bar-rail {
+        min-height: 20px;
+      }
+    }
+
+    &.playing .progress-bar .progress-bar-time-played {
+      display: none;
     }
   }
 }
+
