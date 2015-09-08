@@ -42630,10 +42630,6 @@ PodigeePodcastPlayer = (function() {
     this.adjustPlaySpeed = bind(this.adjustPlaySpeed, this);
     this.triggerError = bind(this.triggerError, this);
     this.triggerEnded = bind(this.triggerEnded, this);
-    this.triggerLoaded = bind(this.triggerLoaded, this);
-    this.triggerPlaying = bind(this.triggerPlaying, this);
-    this.triggerLoading = bind(this.triggerLoading, this);
-    this.updateLoaded = bind(this.updateLoaded, this);
     this.updateTime = bind(this.updateTime, this);
     this.togglePlayState = bind(this.togglePlayState, this);
     this.init = bind(this.init, this);
@@ -42695,15 +42691,10 @@ PodigeePodcastPlayer = (function() {
 
   PodigeePodcastPlayer.prototype.init = function(player) {
     this.player = player;
-    this.initProgressBar();
     this.bindButtons();
     this.bindPlayerEvents();
     this.initializeExtensions();
     return window.setTimeout(this.sendHeightChange, 0);
-  };
-
-  PodigeePodcastPlayer.prototype.initProgressBar = function() {
-    return this.progressBar = new ProgressBar(this.theme.progressBarElement, this.player.media, this.options.timeMode);
   };
 
   PodigeePodcastPlayer.prototype.togglePlayState = function(elem) {
@@ -42712,39 +42703,24 @@ PodigeePodcastPlayer = (function() {
     return this.theme.playPauseElement.toggleClass('fa-pause');
   };
 
+  PodigeePodcastPlayer.prototype.bindPlayerEvents = function() {
+    return $(this.player.media).on('timeupdate', this.updateTime).on('ended', this.triggerEnded).on('error', this.triggerError);
+  };
+
   PodigeePodcastPlayer.prototype.updateTime = function() {
     var timeString;
-    timeString = this.progressBar.updateTime();
+    timeString = this.extensions.ProgressBar.updateTime();
     return this.adjustPlaySpeed(timeString);
   };
 
-  PodigeePodcastPlayer.prototype.updateLoaded = function() {
-    return this.progressBar.updateLoaded();
-  };
-
-  PodigeePodcastPlayer.prototype.triggerLoading = function() {
-    this.updateLoaded();
-    return this.progressBar.showBuffering();
-  };
-
-  PodigeePodcastPlayer.prototype.triggerPlaying = function() {
-    this.updateLoaded();
-    return this.progressBar.hideBuffering();
-  };
-
-  PodigeePodcastPlayer.prototype.triggerLoaded = function() {
-    this.updateLoaded();
-    return this.progressBar.hideBuffering();
-  };
-
   PodigeePodcastPlayer.prototype.triggerEnded = function() {
-    this.player.media.setCurrentTime(0);
-    this.progressBar.updateTime();
+    this.player.media.currentTime = 0;
+    this.extensions.ProgressBar.updateTime();
     return this.togglePlayState(this);
   };
 
   PodigeePodcastPlayer.prototype.triggerError = function() {
-    return this.progressBar.hideBuffering();
+    return this.extensions.ProgressBar.hideBuffering();
   };
 
   PodigeePodcastPlayer.prototype.tempPlayBackSpeed = null;
@@ -42811,10 +42787,6 @@ PodigeePodcastPlayer = (function() {
     return this.theme.speedElement.text(this.options.currentPlaybackRate + "x");
   };
 
-  PodigeePodcastPlayer.prototype.bindPlayerEvents = function() {
-    return $(this.player.media).on('timeupdate', this.updateTime).on('play', this.triggerPlaying).on('playing', this.triggerPlaying).on('seeking', this.triggerLoading).on('seeked', this.triggerLoaded).on('waiting', this.triggerLoading).on('loadeddata', this.triggerLoaded).on('canplay', this.triggerLoaded).on('ended', this.triggerEnded).on('error', this.triggerError);
-  };
-
   PodigeePodcastPlayer.prototype.renderPanel = function(extension) {
     this.theme.addButton(extension.button);
     return this.theme.addPanel(extension.panel);
@@ -42823,7 +42795,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ChapterMarks, EpisodeInfo, Playlist, Waveform, Transcript].forEach((function(_this) {
+    return [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Waveform, Transcript].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
       };
@@ -43818,6 +43790,7 @@ Player = (function() {
     this.jumpBackward = bind(this.jumpBackward, this);
     self = this;
     self.media = elem;
+    self.media.preload = "metadata";
     callback(self);
   }
 
@@ -43861,21 +43834,32 @@ $ = require('jquery');
 Utils = require('./utils.coffee');
 
 ProgressBar = (function() {
-  function ProgressBar(elem1, player, timeMode) {
-    this.elem = elem1;
-    this.player = player;
-    this.timeMode = timeMode;
+  ProgressBar.extension = {
+    name: 'ProgressBar',
+    type: 'progress'
+  };
+
+  function ProgressBar(app) {
+    this.app = app;
     this.updatePlayed = bind(this.updatePlayed, this);
     this.timeRailFactor = bind(this.timeRailFactor, this);
     this.barWidth = bind(this.barWidth, this);
-    this.handleMouseMove = bind(this.handleMouseMove, this);
+    this.handleDrop = bind(this.handleDrop, this);
+    this.handleDrag = bind(this.handleDrag, this);
     this.jumpToPosition = bind(this.jumpToPosition, this);
+    this.triggerLoaded = bind(this.triggerLoaded, this);
+    this.triggerPlaying = bind(this.triggerPlaying, this);
+    this.triggerLoading = bind(this.triggerLoading, this);
     this.updateLoaded = bind(this.updateLoaded, this);
     this.updateTime = bind(this.updateTime, this);
     this.switchTimeDisplay = bind(this.switchTimeDisplay, this);
+    if (!this.app.theme.progressBarElement.length) {
+      return;
+    }
+    this.elem = this.app.theme.progressBarElement;
+    this.player = this.app.player.media;
     this.findElements();
     this.bindEvents();
-    this.initLoadingAnimation();
   }
 
   ProgressBar.prototype.showBuffering = function() {
@@ -43901,13 +43885,12 @@ ProgressBar = (function() {
   };
 
   ProgressBar.prototype.updateLoaded = function(buffered) {
-    var newStart, newWidth;
-    if (!this.player.buffered.length) {
+    var newWidth;
+    if (!this.player.seekable.length) {
       return;
     }
-    newStart = this.player.buffered.start(0) * this.timeRailFactor();
-    newWidth = this.player.buffered.end(0) * this.timeRailFactor();
-    return this.loadedElement.css('margin-left', newStart).width(newWidth);
+    newWidth = this.player.seekable.end(this.player.seekable.length - 1) * this.timeRailFactor();
+    return this.loadedElement.css('margin-left', 0).width(newWidth);
   };
 
   ProgressBar.prototype.findElements = function() {
@@ -43918,21 +43901,40 @@ ProgressBar = (function() {
     return this.bufferingElement = this.elem.find('.progress-bar-buffering');
   };
 
+  ProgressBar.prototype.triggerLoading = function() {
+    this.updateLoaded();
+    return this.showBuffering();
+  };
+
+  ProgressBar.prototype.triggerPlaying = function() {
+    this.updateLoaded();
+    return this.hideBuffering();
+  };
+
+  ProgressBar.prototype.triggerLoaded = function() {
+    this.updateLoaded();
+    return this.hideBuffering();
+  };
+
   ProgressBar.prototype.bindEvents = function() {
     this.timeElement.click((function(_this) {
       return function() {
         return _this.switchTimeDisplay();
       };
     })(this));
+    $(this.player).on('timeupdate', this.updateTime).on('play', this.triggerPlaying).on('playing', this.triggerPlaying).on('waiting', this.triggerLoading).on('loadeddata', this.triggerLoaded).on('progress', this.updateLoaded);
     return this.railElement.on('mousedown', (function(_this) {
       return function(event) {
-        _this.handleMouseMove(event);
-        $(_this).on('mousemove', function(event) {
-          return _this.handleMouseMove(event);
+        var currentTarget, target;
+        currentTarget = event.currentTarget;
+        target = event.target;
+        $(currentTarget).on('mousemove', function(event) {
+          return _this.handleDrag(event);
         });
-        return $(_this).on('mouseup', function(event) {
-          $(_this).off('mousemove');
-          return $(_this).off('mouseup');
+        return $(target).on('mouseup', function(event) {
+          $(currentTarget).off('mousemove');
+          $(target).off('mouseup');
+          return _this.handleDrop(event);
         });
       };
     })(this));
@@ -43944,27 +43946,21 @@ ProgressBar = (function() {
       pixelPerSecond = this.player.duration / this.barWidth();
       newTime = pixelPerSecond * position;
       if (newTime !== this.player.currentTime) {
-        return this.player.setCurrentTime(newTime);
+        return this.player.currentTime = newTime;
       }
     }
   };
 
-  ProgressBar.prototype.handleMouseMove = function(event) {
+  ProgressBar.prototype.handleDrag = function(event) {
     var position;
-    position = event.pageX - $(event.target).offset().left;
-    return this.jumpToPosition(position);
+    position = Utils.calculateCursorPosition(event);
+    return this.playedElement.width(position + 'px');
   };
 
-  ProgressBar.prototype.initLoadingAnimation = function() {
-    var bar, elem, i, j, line, numberOfLines, ref;
-    elem = this.elem.find('.progress-bar-buffering');
-    bar = $('<div>').addClass('progress-bar-buffering-bar');
-    line = $('<div>').addClass('progress-bar-buffering-line');
-    numberOfLines = elem.width() / 100 * 3;
-    for (i = j = 0, ref = numberOfLines; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-      bar.append(line.clone());
-    }
-    return elem.append(bar);
+  ProgressBar.prototype.handleDrop = function(event) {
+    var position;
+    position = Utils.calculateCursorPosition(event);
+    return this.jumpToPosition(position);
   };
 
   ProgressBar.prototype.barWidth = function() {
@@ -44146,6 +44142,10 @@ Utils = (function() {
     } else {
       return number;
     }
+  };
+
+  Utils.calculateCursorPosition = function(event) {
+    return event.pageX - event.target.offsetLeft;
   };
 
   return Utils;

@@ -53,20 +53,12 @@ class PodigeePodcastPlayer
 
   init: (player) =>
     @player = player
-    @initProgressBar()
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
     window.setTimeout @sendHeightChange, 0
 
   # initialize elements
-
-  initProgressBar: ->
-    @progressBar = new ProgressBar(
-      @theme.progressBarElement,
-      @player.media,
-      @options.timeMode,
-    )
 
   togglePlayState: (elem) =>
     @elem.toggleClass('playing')
@@ -75,32 +67,22 @@ class PodigeePodcastPlayer
 
   # event handlers
 
+  bindPlayerEvents: () ->
+    $(@player.media).on('timeupdate', @updateTime)
+      .on('ended', @triggerEnded)
+      .on('error', @triggerError)
+
   updateTime: () =>
-    timeString = @progressBar.updateTime()
+    timeString = @extensions.ProgressBar.updateTime()
     @adjustPlaySpeed(timeString)
 
-  updateLoaded: () =>
-    @progressBar.updateLoaded()
-
-  triggerLoading: =>
-    @updateLoaded()
-    @progressBar.showBuffering()
-
-  triggerPlaying: =>
-    @updateLoaded()
-    @progressBar.hideBuffering()
-
-  triggerLoaded: =>
-    @updateLoaded()
-    @progressBar.hideBuffering()
-
   triggerEnded: =>
-    @player.media.setCurrentTime(0)
-    @progressBar.updateTime()
+    @player.media.currentTime = 0
+    @extensions.ProgressBar.updateTime()
     @togglePlayState(this)
 
   triggerError: =>
-    @progressBar.hideBuffering()
+    @extensions.ProgressBar.hideBuffering()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
@@ -146,26 +128,13 @@ class PodigeePodcastPlayer
   updateSpeedDisplay: () ->
     @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
-  bindPlayerEvents: () ->
-    $(@player.media).on('timeupdate', @updateTime)
-      .on('play', @triggerPlaying)
-      .on('playing', @triggerPlaying)
-      .on('seeking', @triggerLoading)
-      .on('seeked', @triggerLoaded)
-      .on('waiting', @triggerLoading)
-      .on('loadeddata', @triggerLoaded)
-      .on('canplay', @triggerLoaded)
-      .on('ended', @triggerEnded)
-      .on('error', @triggerError)
-      #.on('progress', @triggerLoading)
-
   renderPanel: (extension) =>
     @theme.addButton(extension.button)
     @theme.addPanel(extension.panel)
 
   initializeExtensions: () =>
     self = this
-    [ChapterMarks, EpisodeInfo, Playlist, Waveform, Transcript].forEach (extension) =>
+    [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Waveform, Transcript].forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->

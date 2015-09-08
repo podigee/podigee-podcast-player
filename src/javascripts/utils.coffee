@@ -38,4 +38,7 @@ class Utils
     else
       number
 
+  @calculateCursorPosition: (event) ->
+    event.pageX - event.target.offsetLeft
+
 module.exports = Utils
