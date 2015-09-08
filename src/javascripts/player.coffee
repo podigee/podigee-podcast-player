@@ -1,12 +1,8 @@
-MediaElement = require('../../vendor/javascripts/mediaelement.js')
-
 class Player
   constructor: (elem, @options, callback) ->
     self = this
-    new MediaElement(elem, {success: (media, elem) =>
-      self.media = media
-      callback(self)
-    })
+    self.media = elem
+    callback(self)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @options.backwardSeconds
