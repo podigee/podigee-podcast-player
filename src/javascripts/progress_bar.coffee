@@ -48,7 +48,6 @@ class ProgressBar
   updateLoaded: (buffered) =>
     return unless @player.seekable.length
 
-    #newStart = @player.buffered.start(0) * @timeRailFactor()
     newWidth = @player.seekable.end(@player.seekable.length - 1) * @timeRailFactor()
     @loadedElement.css('margin-left', 0).width(newWidth)
 
