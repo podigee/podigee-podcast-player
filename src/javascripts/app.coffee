@@ -140,7 +140,11 @@ class PodigeePodcastPlayer
     duration: 300
     step: @sendHeightChange
 
+  activePanel: null
   togglePanel: (elem) =>
+    if @activePanel
+      @activePanel.slideToggle(@animationOptions())
+    @activePanel = elem
     elem.slideToggle(@animationOptions())
 
   sendHeightChange: =>
