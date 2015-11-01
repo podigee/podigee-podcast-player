@@ -23439,22 +23439,40 @@ Configuration = (function() {
     this.configureTemplating = bind(this.configureTemplating, this);
     this.setConfigurations = bind(this.setConfigurations, this);
     this.fetchJsonConfiguration = bind(this.fetchJsonConfiguration, this);
+    this.receiveConfiguration = bind(this.receiveConfiguration, this);
     this.loader = $.Deferred();
     this.loaded = this.loader.promise();
     this.frameOptions = Utils.locationToOptions(window.location.search);
-    if (this.frameOptions.configuration.match('^.*.json$')) {
-      this.fetchJsonConfiguration();
-    } else {
-      this.configuration = window.parent[this.frameOptions.configuration];
-      this.setConfigurations();
-    }
+    this.receiveConfiguration();
     this.configureTemplating();
   }
 
+  Configuration.prototype.receiveConfiguration = function() {
+    return $(window).on('message', (function(_this) {
+      return function(event) {
+        var data, error;
+        if (!event.originalEvent.data) {
+          return;
+        }
+        data = event.originalEvent.data;
+        try {
+          _this.configuration = JSON.parse(data);
+          return _this.setConfigurations();
+        } catch (error) {
+          _this.configuration = data;
+          return _this.fetchJsonConfiguration();
+        }
+      };
+    })(this));
+  };
+
   Configuration.prototype.fetchJsonConfiguration = function() {
     var self;
+    if (this.configuration.constructor !== String) {
+      return;
+    }
     self = this;
-    return $.getJSON(this.frameOptions.configuration).done((function(_this) {
+    return $.getJSON(this.configuration).done((function(_this) {
       return function(data) {
         self.configuration = data;
         return self.setConfigurations();
@@ -23498,23 +23516,29 @@ module.exports = Configuration;
 
 
 },{"./utils.coffee":18,"jquery":1,"lodash":2,"rivets":3}],7:[function(require,module,exports){
-var $, Embed, Iframe, IframeResizer;
+var $, Embed, Iframe, IframeResizer, _;
 
 $ = require('jquery');
+
+_ = require('lodash');
 
 IframeResizer = require('./iframe_resizer.coffee');
 
 Iframe = (function() {
   function Iframe(elem1) {
-    var scriptPath;
+    var config, scriptPath;
     this.elem = elem1;
     this.id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    this.dataVariableName = encodeURI($(this.elem).data('configuration'));
+    config = $(this.elem).data('configuration');
+    this.configuration = window[config] || config;
     scriptPath = $(this.elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '');
-    this.url = scriptPath + "/podigee-podcast-player.html?configuration=" + this.dataVariableName + "&id=" + this.id;
+    this.url = scriptPath + "/podigee-podcast-player.html?id=" + this.id;
     this.buildIframe();
     this.setupListeners();
     this.replaceElem();
+    if (this.configuration) {
+      this.injectConfiguration();
+    }
   }
 
   Iframe.prototype.buildIframe = function() {
@@ -23536,6 +23560,16 @@ Iframe = (function() {
   Iframe.prototype.replaceElem = function() {
     $(this.iframe).addClass($(this.elem).attr('class'));
     return this.elem.parentNode.replaceChild(this.iframe, this.elem);
+  };
+
+  Iframe.prototype.injectConfiguration = function() {
+    return _.delay(((function(_this) {
+      return function() {
+        var config;
+        config = _this.configuration.constructor === String ? _this.configuration : JSON.stringify(_this.configuration);
+        return _this.iframe.contentWindow.postMessage(config, '*');
+      };
+    })(this)), 1000);
   };
 
   return Iframe;
@@ -23565,7 +23599,7 @@ module.exports = Embed;
 
 
 
-},{"./iframe_resizer.coffee":14,"jquery":1}],8:[function(require,module,exports){
+},{"./iframe_resizer.coffee":14,"jquery":1,"lodash":2}],8:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 

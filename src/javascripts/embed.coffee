@@ -1,18 +1,21 @@
 $ = require('jquery')
+_ = require('lodash')
 
 IframeResizer = require('./iframe_resizer.coffee')
 
 class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-    @dataVariableName = encodeURI($(@elem).data('configuration'))
+    config = $(@elem).data('configuration')
+    @configuration = window[config] || config
 
     scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
-    @url = "#{scriptPath}/podigee-podcast-player.html?configuration=#{@dataVariableName}&id=#{@id}"
+    @url = "#{scriptPath}/podigee-podcast-player.html?id=#{@id}"
 
     @buildIframe()
     @setupListeners()
     @replaceElem()
+    @injectConfiguration() if @configuration
 
   buildIframe: ->
     @iframe = document.createElement('iframe')
@@ -32,6 +35,14 @@ class Iframe
     $(@iframe).addClass($(@elem).attr('class'))
     @elem.parentNode.replaceChild(@iframe, @elem)
 
+  injectConfiguration: ->
+    _.delay (=>
+      config = if @configuration.constructor == String
+        @configuration
+      else
+        JSON.stringify(@configuration)
+      @iframe.contentWindow.postMessage(config, '*')
+    ), 1000
 
 class Embed
   constructor: ->

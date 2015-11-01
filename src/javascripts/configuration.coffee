@@ -10,17 +10,25 @@ class Configuration
 
     @frameOptions = Utils.locationToOptions(window.location.search)
 
-    if @frameOptions.configuration.match('^.*.json$')
-      @fetchJsonConfiguration()
-    else
-      @configuration = window.parent[@frameOptions.configuration]
-      @setConfigurations()
+    @receiveConfiguration()
 
     @configureTemplating()
 
+  receiveConfiguration: =>
+    $(window).on 'message', (event) =>
+      return unless event.originalEvent.data
+      data = event.originalEvent.data
+      try
+        @configuration = JSON.parse(data)
+        @setConfigurations()
+      catch
+        @configuration = data
+        @fetchJsonConfiguration()
+
   fetchJsonConfiguration: =>
+    return unless @configuration.constructor == String
     self = this
-    $.getJSON(@frameOptions.configuration).done (data) =>
+    $.getJSON(@configuration).done (data) =>
       self.configuration = data
       self.setConfigurations()
 
