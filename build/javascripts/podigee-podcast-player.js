@@ -23476,7 +23476,13 @@ Configuration = (function() {
       return;
     }
     self = this;
-    return $.getJSON(this.configuration).done((function(_this) {
+    return $.ajax({
+      dataType: 'json',
+      headers: {
+        "Accept": "application/json"
+      },
+      url: this.configuration
+    }).done((function(_this) {
       return function(data) {
         self.configuration = data;
         return self.setConfigurations();

@@ -28,7 +28,13 @@ class Configuration
   fetchJsonConfiguration: =>
     return unless @configuration.constructor == String
     self = this
-    $.getJSON(@configuration).done (data) =>
+    $.ajax(
+      dataType: 'json'
+      headers: {
+        "Accept": "application/json"
+      }
+      url: @configuration
+    ).done (data) =>
       self.configuration = data
       self.setConfigurations()
 
