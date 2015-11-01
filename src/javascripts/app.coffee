@@ -142,10 +142,13 @@ class PodigeePodcastPlayer
 
   activePanel: null
   togglePanel: (elem) =>
-    if @activePanel
-      @activePanel.slideToggle(@animationOptions())
-    @activePanel = elem
-    elem.slideToggle(@animationOptions())
+    @activePanel.slideToggle(@animationOptions()) if @activePanel
+
+    if @activePanel == elem
+      @activePanel = null
+    else
+      @activePanel = elem
+      elem.slideToggle(@animationOptions())
 
   sendHeightChange: =>
     paddingTop = parseInt(@elem.css('padding-top'), 10)

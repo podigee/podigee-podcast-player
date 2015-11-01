@@ -23392,8 +23392,12 @@ PodigeePodcastPlayer = (function() {
     if (this.activePanel) {
       this.activePanel.slideToggle(this.animationOptions());
     }
-    this.activePanel = elem;
-    return elem.slideToggle(this.animationOptions());
+    if (this.activePanel === elem) {
+      return this.activePanel = null;
+    } else {
+      this.activePanel = elem;
+      return elem.slideToggle(this.animationOptions());
+    }
   };
 
   PodigeePodcastPlayer.prototype.sendHeightChange = function() {
