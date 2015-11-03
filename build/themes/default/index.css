@@ -226,9 +226,11 @@
     padding: 0 12px 0 0;
     width: 100%; }
     .podcast-player .panels .transcript .transcript-text li {
+      cursor: pointer;
       font-size: 1.2em;
       line-height: 1.4em;
       margin-bottom: 8px; }
+      .podcast-player .panels .transcript .transcript-text li:hover > *,
       .podcast-player .panels .transcript .transcript-text li.active > * {
         background-color: #fff9a9; }
   @media (max-width: 768px) {

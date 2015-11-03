@@ -337,10 +337,12 @@
         width: 100%;
 
         li {
+          cursor: pointer;
           font-size: 1.2em;
           line-height: 1.4em;
           margin-bottom: 8px;
 
+          &:hover > *,
           &.active > * {
             background-color: rgb(255, 249, 169);
           }
