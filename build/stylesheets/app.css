@@ -10,3 +10,48 @@ body {
 .video-player {
   margin: 0;
   width: 100%; }
+
+.share-social-links {
+  list-style: none;
+  padding: 0;
+  text-align: center; }
+  .share-social-links li {
+    display: inline-block; }
+  .share-social-links .icon-link, .share-social-links a {
+    content: '';
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+  .share-social-links a {
+    color: transparent;
+    font-size: 1px;
+    letter-spacing: -1px;
+    text-decoration: none; }
+  .share-social-links a:before {
+    border-radius: 3px;
+    color: #fff;
+    font-size: 2rem;
+    letter-spacing: normal; }
+  .share-social-links .share-link-facebook:before {
+    background: #3b5998;
+    content: '\f09a';
+    padding: 8px 14px; }
+  .share-social-links .share-link-googleplus:before {
+    background: #dd4b39;
+    content: '\f0d5';
+    padding: 8px 9px; }
+  .share-social-links .share-link-twitter:before {
+    background: #00aced;
+    content: '\f099';
+    padding: 8px 9px; }
+  .share-social-links .share-link-whatsapp:before {
+    background: #43d854;
+    content: '\f232';
+    padding: 8px 10px; }
+  .share-social-links .share-link-email:before {
+    background: #999999;
+    content: '\f003';
+    padding: 8px 8px; }

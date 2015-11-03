@@ -23167,7 +23167,7 @@ return jQuery;
 }).call(this);
 
 },{}],5:[function(require,module,exports){
-var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Theme, Transcript, _,
+var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Share, Theme, Transcript, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
@@ -23193,6 +23193,8 @@ ChromeCast = require('./extensions/chromecast.coffee');
 EpisodeInfo = require('./extensions/episode_info.coffee');
 
 Playlist = require('./extensions/playlist.coffee');
+
+Share = require('./extensions/share.coffee');
 
 Transcript = require('./extensions/transcript.coffee');
 
@@ -23372,7 +23374,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Transcript].forEach((function(_this) {
+    return [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Share, Transcript].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
       };
@@ -23425,7 +23427,7 @@ if (!window.inEmbed) {
 
 
 
-},{"./configuration.coffee":6,"./embed.coffee":7,"./extensions/chaptermarks.coffee":8,"./extensions/chromecast.coffee":9,"./extensions/episode_info.coffee":10,"./extensions/playlist.coffee":11,"./extensions/transcript.coffee":12,"./feed.coffee":13,"./player.coffee":15,"./progress_bar.coffee":16,"./theme.coffee":17,"jquery":1,"lodash":2}],6:[function(require,module,exports){
+},{"./configuration.coffee":6,"./embed.coffee":7,"./extensions/chaptermarks.coffee":8,"./extensions/chromecast.coffee":9,"./extensions/episode_info.coffee":10,"./extensions/playlist.coffee":11,"./extensions/share.coffee":12,"./extensions/transcript.coffee":13,"./feed.coffee":14,"./player.coffee":16,"./progress_bar.coffee":17,"./theme.coffee":18,"jquery":1,"lodash":2}],6:[function(require,module,exports){
 var $, Configuration, Utils, _, rivets,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23525,7 +23527,7 @@ module.exports = Configuration;
 
 
 
-},{"./utils.coffee":18,"jquery":1,"lodash":2,"rivets":3}],7:[function(require,module,exports){
+},{"./utils.coffee":19,"jquery":1,"lodash":2,"rivets":3}],7:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer, _;
 
 $ = require('jquery');
@@ -23609,7 +23611,7 @@ module.exports = Embed;
 
 
 
-},{"./iframe_resizer.coffee":14,"jquery":1,"lodash":2}],8:[function(require,module,exports){
+},{"./iframe_resizer.coffee":15,"jquery":1,"lodash":2}],8:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23752,7 +23754,7 @@ module.exports = ChapterMarks;
 
 
 
-},{"../utils.coffee":18,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],9:[function(require,module,exports){
+},{"../utils.coffee":19,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],9:[function(require,module,exports){
 var $, ChromeCast,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24075,6 +24077,100 @@ module.exports = Playlist;
 
 
 },{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],12:[function(require,module,exports){
+var $, Share, _, rivets, sightglass,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+$ = require('jquery');
+
+_ = require('lodash');
+
+sightglass = require('sightglass');
+
+rivets = require('rivets');
+
+Share = (function() {
+  Share.extension = {
+    name: 'Share',
+    type: 'panel'
+  };
+
+  function Share(app) {
+    this.app = app;
+    this.copyUrlAction = bind(this.copyUrlAction, this);
+    this.bindEvents = bind(this.bindEvents, this);
+    this.renderPanel = bind(this.renderPanel, this);
+    this.renderButton = bind(this.renderButton, this);
+    this.prepareSocialLinks = bind(this.prepareSocialLinks, this);
+    this.episode = this.app.episode;
+    if (!this.episode) {
+      return;
+    }
+    if (!this.episode.url) {
+      return;
+    }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Share);
+    this.prepareSocialLinks();
+    this.renderPanel();
+    this.renderButton();
+    this.app.renderPanel(this);
+  }
+
+  Share.prototype.defaultOptions = {
+    showOnStart: false
+  };
+
+  Share.prototype.prepareSocialLinks = function() {
+    var title, url;
+    url = encodeURI(this.episode.url);
+    title = encodeURI(this.episode.title);
+    return this.episode.shareLinks = {
+      email: "mailto:?subject=Podcast: " + title + "&body=" + url,
+      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + url + "&t=" + title,
+      googleplus: "https://plus.google.com/share?url=" + url,
+      twitter: "https://twitter.com/intent/tweet?url=" + url + "i&text=" + title,
+      whatsapp: "whatsapp://send?text=" + title + ": " + url
+    };
+  };
+
+  Share.prototype.renderButton = function() {
+    this.button = $(this.buttonHtml);
+    return this.button.on('click', (function(_this) {
+      return function() {
+        return _this.app.togglePanel(_this.panel);
+      };
+    })(this));
+  };
+
+  Share.prototype.renderPanel = function() {
+    this.panel = $(this.panelHtml);
+    rivets.bind(this.panel, this.episode);
+    if (!this.options.showOnStart) {
+      this.panel.hide();
+    }
+    return this.bindEvents();
+  };
+
+  Share.prototype.bindEvents = function() {
+    return this.panel.find('.share-copy-url').on('focus', this.copyUrlAction);
+  };
+
+  Share.prototype.copyUrlAction = function(event) {
+    return event.target.select();
+  };
+
+  Share.prototype.buttonHtml = "<button class=\"fa fa-share-alt episode-share-button\" title=\"Share episode URL\"></button>";
+
+  Share.prototype.panelHtml = "<div class=\"share\">\n  <h1 class=\"share-title\">Share episode</h1>\n  <ul class=\"share-social-links\">\n    <li><a pp-href=\"shareLinks.facebook\" class=\"share-link-facebook\" target=\"_blank\">Facebook</a></li>\n    <li><a pp-href=\"shareLinks.googleplus\" class=\"share-link-googleplus\" target=\"_blank\">Google+</a></li>\n    <li><a pp-href=\"shareLinks.twitter\" class=\"share-link-twitter\" target=\"_blank\">Twitter</a></li>\n    <li><a pp-href=\"shareLinks.whatsapp\" class=\"share-link-whatsapp\" target=\"_blank\">Whatsapp</a></li>\n    <li><a pp-href=\"shareLinks.email\" class=\"share-link-email\" target=\"_blank\">Email</a></li>\n  </ul>\n  <p>\n    <h3>Copy address</h3>\n    <input class=\"share-copy-url\" pp-value=\"url\">\n  </p>\n</div>";
+
+  return Share;
+
+})();
+
+module.exports = Share;
+
+
+
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],13:[function(require,module,exports){
 var $, Transcript, TranscriptLine, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24262,7 +24358,7 @@ module.exports = Transcript;
 
 
 
-},{"../utils.coffee":18,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],13:[function(require,module,exports){
+},{"../utils.coffee":19,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],14:[function(require,module,exports){
 var $, Feed;
 
 $ = require('jquery');
@@ -24291,7 +24387,7 @@ module.exports = Feed;
 
 
 
-},{"jquery":1}],14:[function(require,module,exports){
+},{"jquery":1}],15:[function(require,module,exports){
 var IframeResizer;
 
 IframeResizer = (function() {
@@ -24334,7 +24430,7 @@ module.exports = IframeResizer;
 
 
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var Player,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24383,7 +24479,7 @@ module.exports = Player;
 
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var $, ProgressBar, Utils,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24543,7 +24639,7 @@ module.exports = ProgressBar;
 
 
 
-},{"./utils.coffee":18,"jquery":1}],17:[function(require,module,exports){
+},{"./utils.coffee":19,"jquery":1}],18:[function(require,module,exports){
 var $, Theme, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24654,7 +24750,7 @@ module.exports = Theme;
 
 
 
-},{"jquery":1,"rivets":3,"sightglass":4}],18:[function(require,module,exports){
+},{"jquery":1,"rivets":3,"sightglass":4}],19:[function(require,module,exports){
 var Utils;
 
 Utils = (function() {

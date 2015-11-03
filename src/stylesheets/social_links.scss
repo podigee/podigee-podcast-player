@@ -1,0 +1,65 @@
+.share-social-links {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+
+  li {
+    display: inline-block;
+  }
+
+  .icon-link {
+    content: '';
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    @extend .icon-link;
+
+    color: transparent;
+    font-size: 1px;
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+
+  a:before {
+    border-radius: 3px;
+    color: #fff;
+    font-size: 2rem;
+    letter-spacing: normal;
+  }
+
+  .share-link-facebook:before {
+    background: rgb(59, 89, 152);
+    content: '\f09a';
+    padding: 8px 14px;
+  }
+
+  .share-link-googleplus:before {
+    background: rgb(221, 75, 57);
+    content: '\f0d5';
+    padding: 8px 9px;
+  }
+
+  .share-link-twitter:before {
+    background: rgb(0, 172, 237);
+    content: '\f099';
+    padding: 8px 9px;
+  }
+
+  .share-link-whatsapp:before {
+    background: rgb(67, 216, 84);
+    content: '\f232';
+    padding: 8px 10px;
+  }
+
+  .share-link-email:before {
+    background: rgb(153, 153, 153);
+    content: '\f003';
+    padding: 8px 8px;
+  }
+}
