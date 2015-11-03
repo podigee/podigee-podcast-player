@@ -1,29 +1,35 @@
-.share-social-links {
+.panels .share-social-links {
   list-style: none;
   padding: 0;
   text-align: center;
 
   li {
     display: inline-block;
-  }
+    padding: 0 5px;
 
-  .icon-link {
-    content: '';
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    &:hover a:after {
+      background: rgba(0, 0, 0, 0.2);
+      bottom: -8px;
+      content: '';
+      display: block;
+      height: 5px;
+      position: absolute;
+      width: 100%;
+    }
   }
 
   a {
-    @extend .icon-link;
+    @extend .icon;
 
     color: transparent;
     font-size: 1px;
     letter-spacing: -1px;
+    position: relative;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   a:before {

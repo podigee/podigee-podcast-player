@@ -9,6 +9,11 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box; }
+  .podcast-player a {
+    color: #f57150;
+    text-decoration: none; }
+    .podcast-player a:hover {
+      text-decoration: underline; }
   .podcast-player button {
     background: transparent;
     border: none;

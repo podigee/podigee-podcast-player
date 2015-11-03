@@ -10,6 +10,7 @@ Feed = require('./feed.coffee')
 
 ChapterMarks = require('./extensions/chaptermarks.coffee')
 ChromeCast = require('./extensions/chromecast.coffee')
+Download = require('./extensions/download.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
 Share = require('./extensions/share.coffee')
@@ -134,7 +135,7 @@ class PodigeePodcastPlayer
 
   initializeExtensions: () =>
     self = this
-    [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Share, Transcript].forEach (extension) =>
+    [ProgressBar, ChapterMarks, Download, EpisodeInfo, Playlist, Share, Transcript].forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->

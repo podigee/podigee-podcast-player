@@ -20,6 +20,15 @@
   position: relative;
   width: 100%;
 
+  a {
+    color: $orange;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   button {
     background: transparent;
     border: none;

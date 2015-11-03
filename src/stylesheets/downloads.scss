@@ -1,0 +1,30 @@
+.panels .download {
+  .download-icon {
+    @extend .icon;
+
+    display: block;
+    font-size: 3rem;
+    text-align: center;
+
+    &:before {
+      //background: rgb(59, 89, 152);
+      content: '\f0ed';
+      padding: 8px 14px;
+    }
+  }
+
+  .download-links {
+    padding: 0;
+    text-align: center;
+
+    li {
+      display: inline-block;
+      font-size: 18px;
+      padding: 0 10px;
+    }
+
+    li + li {
+      border-left: 1px solid;
+    }
+  }
+}

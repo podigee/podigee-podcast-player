@@ -23167,7 +23167,7 @@ return jQuery;
 }).call(this);
 
 },{}],5:[function(require,module,exports){
-var $, ChapterMarks, ChromeCast, Configuration, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Share, Theme, Transcript, _,
+var $, ChapterMarks, ChromeCast, Configuration, Download, Embed, EpisodeInfo, Feed, Player, Playlist, PodigeePodcastPlayer, ProgressBar, Share, Theme, Transcript, _,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
@@ -23189,6 +23189,8 @@ Feed = require('./feed.coffee');
 ChapterMarks = require('./extensions/chaptermarks.coffee');
 
 ChromeCast = require('./extensions/chromecast.coffee');
+
+Download = require('./extensions/download.coffee');
 
 EpisodeInfo = require('./extensions/episode_info.coffee');
 
@@ -23374,7 +23376,7 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
-    return [ProgressBar, ChapterMarks, EpisodeInfo, Playlist, Share, Transcript].forEach((function(_this) {
+    return [ProgressBar, ChapterMarks, Download, EpisodeInfo, Playlist, Share, Transcript].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
       };
@@ -23427,7 +23429,7 @@ if (!window.inEmbed) {
 
 
 
-},{"./configuration.coffee":6,"./embed.coffee":7,"./extensions/chaptermarks.coffee":8,"./extensions/chromecast.coffee":9,"./extensions/episode_info.coffee":10,"./extensions/playlist.coffee":11,"./extensions/share.coffee":12,"./extensions/transcript.coffee":13,"./feed.coffee":14,"./player.coffee":16,"./progress_bar.coffee":17,"./theme.coffee":18,"jquery":1,"lodash":2}],6:[function(require,module,exports){
+},{"./configuration.coffee":6,"./embed.coffee":7,"./extensions/chaptermarks.coffee":8,"./extensions/chromecast.coffee":9,"./extensions/download.coffee":10,"./extensions/episode_info.coffee":11,"./extensions/playlist.coffee":12,"./extensions/share.coffee":13,"./extensions/transcript.coffee":14,"./feed.coffee":15,"./player.coffee":17,"./progress_bar.coffee":18,"./theme.coffee":19,"jquery":1,"lodash":2}],6:[function(require,module,exports){
 var $, Configuration, Utils, _, rivets,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23527,7 +23529,7 @@ module.exports = Configuration;
 
 
 
-},{"./utils.coffee":19,"jquery":1,"lodash":2,"rivets":3}],7:[function(require,module,exports){
+},{"./utils.coffee":20,"jquery":1,"lodash":2,"rivets":3}],7:[function(require,module,exports){
 var $, Embed, Iframe, IframeResizer, _;
 
 $ = require('jquery');
@@ -23611,7 +23613,7 @@ module.exports = Embed;
 
 
 
-},{"./iframe_resizer.coffee":15,"jquery":1,"lodash":2}],8:[function(require,module,exports){
+},{"./iframe_resizer.coffee":16,"jquery":1,"lodash":2}],8:[function(require,module,exports){
 var $, ChapterMark, ChapterMarks, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23754,7 +23756,7 @@ module.exports = ChapterMarks;
 
 
 
-},{"../utils.coffee":19,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],9:[function(require,module,exports){
+},{"../utils.coffee":20,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],9:[function(require,module,exports){
 var $, ChromeCast,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23891,6 +23893,93 @@ module.exports = ChromeCast;
 
 
 },{"jquery":1}],10:[function(require,module,exports){
+var $, Download, _, rivets, sightglass,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+$ = require('jquery');
+
+_ = require('lodash');
+
+sightglass = require('sightglass');
+
+rivets = require('rivets');
+
+Download = (function() {
+  Download.extension = {
+    name: 'Download',
+    type: 'panel'
+  };
+
+  function Download(app) {
+    this.app = app;
+    this.renderPanel = bind(this.renderPanel, this);
+    this.renderButton = bind(this.renderButton, this);
+    this.prepareDownloadLinks = bind(this.prepareDownloadLinks, this);
+    this.episode = this.app.episode;
+    if (!this.episode) {
+      return;
+    }
+    if (!this.episode.media) {
+      return;
+    }
+    this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Download);
+    this.prepareDownloadLinks();
+    this.renderPanel();
+    this.renderButton();
+    this.app.renderPanel(this);
+  }
+
+  Download.prototype.defaultOptions = {
+    showOnStart: false
+  };
+
+  Download.prototype.prepareDownloadLinks = function() {
+    return this.episode.downloadLinks = _.map(this.episode.media, (function(_this) {
+      return function(value, key, object) {
+        var filename, newObject, url;
+        url = value.replace(/source=\w*/g, 'source=webplayer-download');
+        filename = value.substring(value.lastIndexOf('/') + 1).split('?')[0];
+        newObject = {
+          cssClass: "download-link download-link-" + key,
+          filename: filename,
+          type: key,
+          url: url
+        };
+        return newObject;
+      };
+    })(this));
+  };
+
+  Download.prototype.renderButton = function() {
+    this.button = $(this.buttonHtml);
+    return this.button.on('click', (function(_this) {
+      return function() {
+        return _this.app.togglePanel(_this.panel);
+      };
+    })(this));
+  };
+
+  Download.prototype.renderPanel = function() {
+    this.panel = $(this.panelHtml);
+    rivets.bind(this.panel, this.episode);
+    if (!this.options.showOnStart) {
+      return this.panel.hide();
+    }
+  };
+
+  Download.prototype.buttonHtml = "<button class=\"fa fa-cloud-download episode-download-button\" title=\"Download episode\"></button>";
+
+  Download.prototype.panelHtml = "<div class=\"download\">\n  <h1 class=\"download-title\">Download episode</h1>\n  <div class=\"download-icon\"></div>\n  <ul class=\"download-links\">\n    <li pp-each-link=\"downloadLinks\">\n      <a pp-href=\"link.url\" pp-download=\"link.filename\" pp-class=\"link.cssClass\" target=\"_blank\">{ link.type }</a>\n    </li>\n  </ul>\n</div>";
+
+  return Download;
+
+})();
+
+module.exports = Download;
+
+
+
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],11:[function(require,module,exports){
 var $, EpisodeInfo, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -23958,7 +24047,7 @@ module.exports = EpisodeInfo;
 
 
 
-},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],11:[function(require,module,exports){
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],12:[function(require,module,exports){
 var $, Playlist, PlaylistItem, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24076,7 +24165,7 @@ module.exports = Playlist;
 
 
 
-},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],12:[function(require,module,exports){
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],13:[function(require,module,exports){
 var $, Share, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24170,7 +24259,7 @@ module.exports = Share;
 
 
 
-},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],13:[function(require,module,exports){
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],14:[function(require,module,exports){
 var $, Transcript, TranscriptLine, Utils, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24358,7 +24447,7 @@ module.exports = Transcript;
 
 
 
-},{"../utils.coffee":19,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],14:[function(require,module,exports){
+},{"../utils.coffee":20,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],15:[function(require,module,exports){
 var $, Feed;
 
 $ = require('jquery');
@@ -24387,7 +24476,7 @@ module.exports = Feed;
 
 
 
-},{"jquery":1}],15:[function(require,module,exports){
+},{"jquery":1}],16:[function(require,module,exports){
 var IframeResizer;
 
 IframeResizer = (function() {
@@ -24430,7 +24519,7 @@ module.exports = IframeResizer;
 
 
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var Player,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24479,7 +24568,7 @@ module.exports = Player;
 
 
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var $, ProgressBar, Utils,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24639,7 +24728,7 @@ module.exports = ProgressBar;
 
 
 
-},{"./utils.coffee":19,"jquery":1}],18:[function(require,module,exports){
+},{"./utils.coffee":20,"jquery":1}],19:[function(require,module,exports){
 var $, Theme, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24750,7 +24839,7 @@ module.exports = Theme;
 
 
 
-},{"jquery":1,"rivets":3,"sightglass":4}],19:[function(require,module,exports){
+},{"jquery":1,"rivets":3,"sightglass":4}],20:[function(require,module,exports){
 var Utils;
 
 Utils = (function() {
