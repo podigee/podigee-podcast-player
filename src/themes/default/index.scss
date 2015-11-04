@@ -1,12 +1,6 @@
-.podcast-player {
-  $default_padding: 12px;
-  $background_color: #f6f6f6;
-  $default_color: rgb(122, 122, 122);
-  $light_gray: rgb(230, 230, 230);
-  $dark_gray: rgb(200, 200, 200);
-  $orange: rgb(245, 113, 80);
-  $highlight: rgb(50, 156, 146);
+@import 'variables';
 
+.podcast-player {
   &, *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -21,7 +15,7 @@
   width: 100%;
 
   a {
-    color: $orange;
+    color: $highlight1;
     text-decoration: none;
 
     &:hover {
@@ -43,7 +37,7 @@
     overflow: hidden;
 
     .episode-title {
-      color: $orange;
+      color: $highlight1;
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 3px;
@@ -64,6 +58,7 @@
   .cover-image {
     float: right;
     height: 90px;
+    padding: 5px;
   }
 
   .controls {
@@ -99,6 +94,10 @@
         font-size: 14px;
       }
 
+      button:hover {
+        color: $highlight1;
+      }
+
       .speed-toggle {
         cursor: pointer;
       }
@@ -126,6 +125,10 @@
       width: 70px;
     }
 
+    .progress-bar-time-played:hover {
+      color: $highlight1;
+    }
+
     .progress-bar-rail {
       background-color: $light_gray;
       cursor: ew-resize;
@@ -141,7 +144,7 @@
 
   .progress-bar-played,
   .progress-bar-loaded {
-    background-color: $highlight;
+    background-color: $highlight2;
     display: block;
     height: 100%;
     position: absolute;
@@ -204,7 +207,7 @@
 
     button:hover,
     button.button-active {
-      color: $orange;
+      color: $highlight1;
     }
 
     img {
@@ -245,6 +248,7 @@
           cursor: pointer;
           line-height: 30px;
           list-style: none;
+          padding: 0 5px;
           position: relative;
 
           &+li {
@@ -256,7 +260,7 @@
           }
 
           &.active {
-            background-color: lighten($highlight, 55%);
+            background-color: lighten($highlight2, 55%);
           }
 
           img {
@@ -281,7 +285,7 @@
           }
 
           a {
-            color: $highlight;
+            color: $highlight2;
             font-size: 16px;
             right: 5px;
             position: absolute;
@@ -349,7 +353,7 @@
 
           &:hover > *,
           &.active > * {
-            background-color: rgb(255, 249, 169);
+            background-color: $transcript-highlight;
           }
         }
       }

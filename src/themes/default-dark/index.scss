@@ -1,0 +1,24 @@
+@import 'variables';
+@import '../default/index';
+
+.podcast-player {
+  .panels {
+    .chaptermarks ul li.active,
+    .chaptermarks ul li:hover,
+    .playlist ul li.active,
+    .playlist ul li:hover {
+      color: $background_color;
+    }
+
+    .share .share-copy-url {
+      color: $default_color;
+    }
+
+    .transcript .transcript-text li {
+      &:hover > *,
+      &.active > * {
+        color: $background_color;
+      }
+    }
+  }
+}
