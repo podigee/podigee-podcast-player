@@ -202,6 +202,11 @@
       width: 26px;
     }
 
+    button:hover,
+    button.button-active {
+      color: $orange;
+    }
+
     img {
       height: 14px;
     }

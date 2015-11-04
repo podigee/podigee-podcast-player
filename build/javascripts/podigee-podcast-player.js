@@ -24743,6 +24743,7 @@ Theme = (function() {
     this.app = app;
     this.addPanel = bind(this.addPanel, this);
     this.addButton = bind(this.addButton, this);
+    this.changeActiveButton = bind(this.changeActiveButton, this);
     this.bindCoverLoad = bind(this.bindCoverLoad, this);
     this.loadCustomCss = bind(this.loadCustomCss, this);
     this.loadCustomHtml = bind(this.loadCustomHtml, this);
@@ -24823,8 +24824,20 @@ Theme = (function() {
     })(this));
   };
 
+  Theme.prototype.changeActiveButton = function(event) {
+    var button;
+    button = $(event.target);
+    if (button.hasClass('button-active')) {
+      button.removeClass('button-active');
+      return;
+    }
+    this.buttons.find('.button-active').removeClass('button-active');
+    return button.addClass('button-active');
+  };
+
   Theme.prototype.addButton = function(button) {
-    return this.buttons.append(button);
+    this.buttons.append(button);
+    return button.on('click', this.changeActiveButton);
   };
 
   Theme.prototype.addPanel = function(panel) {

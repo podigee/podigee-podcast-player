@@ -132,6 +132,9 @@
       font-size: 16px;
       text-align: center;
       width: 26px; }
+    .podcast-player .buttons button:hover,
+    .podcast-player .buttons button.button-active {
+      color: #f57150; }
     .podcast-player .buttons img {
       height: 14px; }
   .podcast-player .panels {

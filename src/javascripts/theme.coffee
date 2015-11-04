@@ -66,8 +66,18 @@ class Theme
     @coverImage.on 'load', =>
       @app.sendHeightChange()
 
+  changeActiveButton: (event) =>
+    button = $(event.target)
+    if button.hasClass('button-active')
+      button.removeClass('button-active')
+      return
+
+    @buttons.find('.button-active').removeClass('button-active')
+    button.addClass('button-active')
+
   addButton: (button) =>
     @buttons.append(button)
+    button.on 'click', @changeActiveButton
 
   addPanel: (panel) =>
     @panels.append(panel)
