@@ -113,7 +113,7 @@ class Transcript
 
   buttonHtml:
     """
-    <button class="fa fa-pencil transcript-button" title="Show transcript"></button>
+    <button class="fa fa-align-justify transcript-button" title="Show transcript"></button>
     """
 
   panelHtml:

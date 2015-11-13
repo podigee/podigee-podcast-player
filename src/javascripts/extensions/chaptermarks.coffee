@@ -93,7 +93,7 @@ class ChapterMarks
 
   buttonHtml:
     """
-    <button class="fa fa-list chaptermarks-button" title="Show chaptermarks"></button>
+    <button class="fa fa-bookmark chaptermarks-button" title="Show chaptermarks"></button>
     """
 
   panelHtml:

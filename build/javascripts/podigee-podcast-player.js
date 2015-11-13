@@ -23744,7 +23744,7 @@ ChapterMarks = (function() {
     return this.panel.find('li').removeClass('active');
   };
 
-  ChapterMarks.prototype.buttonHtml = "<button class=\"fa fa-list chaptermarks-button\" title=\"Show chaptermarks\"></button>";
+  ChapterMarks.prototype.buttonHtml = "<button class=\"fa fa-bookmark chaptermarks-button\" title=\"Show chaptermarks\"></button>";
 
   ChapterMarks.prototype.panelHtml = "<div class=\"chaptermarks\">\n  <h3>Chaptermarks</h3>\n\n  <ul></ul>\n</div>";
 
@@ -24153,7 +24153,7 @@ Playlist = (function() {
     return this.panel.hide();
   };
 
-  Playlist.prototype.buttonHtml = "<button class=\"fa fa-bookmark playlist-button\" title=\"Show playlist\"></button>";
+  Playlist.prototype.buttonHtml = "<button class=\"fa fa-list playlist-button\" title=\"Show playlist\"></button>";
 
   Playlist.prototype.panelHtml = "<div class=\"playlist\">\n  <h3>Playlist</h3>\n\n  <ul></ul>\n</div>";
 
@@ -24435,7 +24435,7 @@ Transcript = (function() {
     return this.panel.hide();
   };
 
-  Transcript.prototype.buttonHtml = "<button class=\"fa fa-pencil transcript-button\" title=\"Show transcript\"></button>";
+  Transcript.prototype.buttonHtml = "<button class=\"fa fa-align-justify transcript-button\" title=\"Show transcript\"></button>";
 
   Transcript.prototype.panelHtml = "<div class=\"transcript\">\n  <h3>Transcript</h3>\n\n  <ul class=\"transcript-text\" pp-html=\"transcript\"></pre>\n</div>";
 
