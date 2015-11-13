@@ -1,6 +1,22 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 200;
   overflow-y: scroll;
+}
+
+h1, h2, h3 {
+  clear: both;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.7em;
 }
 
 .wrapper {
@@ -11,12 +27,62 @@ body {
 .logo {
   display: block;
   margin: 40px auto;
-  width: 50%;
+  width: 300px;
+}
+
+.page-title {
+  font-weight: 200;
+  text-align: center;
+}
+
+.page-title em {
+  font-weight: 500;
+  font-style: normal;
+}
+
+.page-title a {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  text-decoration: none;
+}
+
+.page-title a:hover {
+  border-bottom-color: #000;
+  border-bottom-width: 2px;
+}
+
+.icon-list {
+  clear: both;
+  font-size: 1.3em;
+  margin-left: -15px;
+  overflow: hidden;
+}
+
+.icon-list > div {
+  float: left;
+  height: 200px;
+  line-height: 1.5em;
+  padding: 0 15px;
+  width: 25%;
+}
+
+.icon-list em {
+  color: #ccc;
+  font-size: 0.8em;
+}
+
+.icon-list i {
+  font-size: 1.4em;
+  margin-right: 10px;
+  position: relative;
+  text-align: center;
+  top: 4px;
 }
 
 @media (min-width: 1024px) {
   .wrapper {
-    width: 80%;
+    padding: 0 20px;
+    width: 100%;
   }
 
 }
@@ -24,6 +90,10 @@ body {
 @media (max-width: 1023px) {
   .wrapper {
     width: 80%;
+  }
+
+  .icon-list > div {
+    width: 50%;
   }
 }
 
@@ -36,6 +106,10 @@ body {
     display: block;
     margin: 40px auto;
     width: 80%;
+  }
+
+  .icon-list > div {
+    width: 100%;
   }
 }
 

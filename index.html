@@ -6,6 +6,7 @@
     <meta name="description" content="The Podigee Podcast Player is a HTML5 audio player specially crafted for listening to podcasts.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="example/normalize.css">
     <link rel="stylesheet" href="example/styles.css">
   </head>
@@ -16,6 +17,8 @@
 
     <div class="wrapper">
       <img src="https://cdn.podigee.com/ppp/podigee-podcast-player.png" alt="The Podigee Podcast Player Logo" class="logo">
+
+      <h1 class="page-title">A modern <em>web player</em>. For <em>podcasts</em>. From <em><a href="https://www.podigee.com" title="Podigee - The Podcast Publishing Platform">Podigee</a></em>.</h1>
 
       <script>
         window.playerConfiguration = {
@@ -78,10 +81,63 @@
         }
       </script>
       <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
-      <!--<script class="podigee-podcast-player" src="http://localhost:8080/build/javascripts/podigee-podcast-player.js" data-configuration="http://dark-space-hoerspiel.podigee.iodev:4000/1-der-flug-der-draaken-1/embed"></script>-->
-      <p>
-        Integer facilisis massa vel risus elementum convallis. Nullam elementum eros eros, vel ornare ante dapibus a. Nullam pharetra odio dui, in tempor lorem fringilla sed. Suspendisse sed accumsan quam. Quisque tincidunt felis mi, in pretium tellus fringilla sit amet. Duis placerat mi non sapien eleifend varius. Suspendisse ac ante purus. Duis ac neque eget lorem ultrices ultricies. Maecenas eget tellus sed libero dignissim sollicitudin at sit amet tortor. Fusce convallis, lorem et feugiat vulputate, risus arcu pulvinar neque, et egestas tellus risus et dui. Fusce elementum, ligula non pharetra bibendum, nibh mi hendrerit dolor, vel consectetur arcu turpis et nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam auctor mattis velit tempus faucibus. Fusce lacus erat, ultricies vitae diam sit amet, luctus ultrices arcu. Phasellus condimentum enim et est finibus, at convallis odio bibendum. Proin id diam ac quam maximus rutrum.
-      </p>
+      <div>
+        <div class="features icon-list">
+          <div>
+            <h3><i class="fa fa-html5"></i>HTML5 only</h3>
+            <p>&hellip; allows playback on all kinds of devices from Smartphone to Desktop.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-image"></i>Themeable</h3>
+            <p>&hellip; to show your own style or choose from premade themes.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-puzzle-piece"></i>Extensible</h3>
+            <p>&hellip; to keep up with the ever evolving podcast industry.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-arrows-alt"></i>Responsive</h3>
+            <p>&hellip; making it look good on all screen sizes from small to large.</p>
+          </div>
+        </div>
+
+        <h2>Extensions</h2>
+
+        <div class="extensions icon-list">
+          <div>
+            <h3><i class="fa fa-bookmark"></i>Chaptermarks</h3>
+            <p>&hellip; let the listener jump directly to a specific part of the episode.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-chrome"></i>Chromecast <em>(experimental)</em></h3>
+            <p>&hellip; makes your podcast ready for the big screen.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-cloud-download"></i>Downloads</h3>
+            <p>&hellip; allow downloading the episode to the device.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-info"></i>Episode information</h3>
+            <p>&hellip; shows further information like shownotes.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-list"></i>Playlist</h3>
+            <p>&hellip; lets the listener explore your podcast's back catalog.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-share-alt"></i>Sharing</h3>
+            <p>&hellip; makes sharing an episode easy as cake.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-align-justify"></i>Transcripts</h3>
+            <p>&hellip; enable easier finding, citing and sharing.</p>
+          </div>
+          <div>
+            <h3><i class="fa fa-signal"></i>Waveform <em>(experimental)</em></h3>
+            <p>&hellip; as a stylistic or functional element. Definitely an eyecatcher.</p>
+          </div>
+        </div>
+      </div>
 
     </div>
   </body>
