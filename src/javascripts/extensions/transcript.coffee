@@ -36,7 +36,10 @@ class Transcript
   constructor: (@app) ->
     @options = _.extend(@defaultOptions, @app.extensionOptions.Transcript)
 
-    return unless @options.data
+    return unless @app.episode
+    return unless @app.episode.transcript
+
+    @transcript = @app.episode.transcript
 
     @load().done =>
       @renderPanel()
@@ -53,7 +56,7 @@ class Transcript
     transcript: ''
 
   load: =>
-    $.get(@options.data).done (transcript) =>
+    $.get(@transcript).done (transcript) =>
       @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>
