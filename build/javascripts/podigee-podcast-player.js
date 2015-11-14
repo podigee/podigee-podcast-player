@@ -23376,6 +23376,9 @@ PodigeePodcastPlayer = (function() {
   PodigeePodcastPlayer.prototype.initializeExtensions = function() {
     var self;
     self = this;
+    this.extensions = {};
+    this.theme.removeButtons();
+    this.theme.removePanels();
     return [ProgressBar, ChapterMarks, Download, EpisodeInfo, Playlist, Share, Transcript].forEach((function(_this) {
       return function(extension) {
         return self.extensions[extension.extension.name] = new extension(self);
@@ -23937,6 +23940,9 @@ Download = (function() {
     return this.episode.downloadLinks = _.map(this.episode.media, (function(_this) {
       return function(value, key, object) {
         var filename, newObject, url;
+        if (!value) {
+          return;
+        }
         url = value.replace(/source=\w*/g, 'source=webplayer-download');
         filename = value.substring(value.lastIndexOf('/') + 1).split('?')[0];
         newObject = {
@@ -24118,7 +24124,14 @@ Playlist = (function() {
     this.app.episode.title = item.title;
     this.app.episode.subtitle = item.subtitle;
     this.app.episode.description = item.description;
-    return this.app.episode.playlist.mp3 = item.enclosure;
+    this.app.episode.media.mp3 = item.enclosure;
+    this.app.episode.media.m4a = null;
+    this.app.episode.media.ogg = null;
+    this.app.episode.media.opus = null;
+    this.app.episode.url = item.link;
+    this.app.episode.transcript = null;
+    this.app.episode.chaptermarks = null;
+    return this.app.initializeExtensions();
   };
 
   Playlist.prototype.renderButton = function() {
@@ -24136,17 +24149,8 @@ Playlist = (function() {
     list = this.panel.find('ul');
     $(this.feed.items).each((function(_this) {
       return function(index, feedItem) {
-        var item, playlistItem;
-        item = $(feedItem);
-        item = {
-          title: item.find('title').html(),
-          subtitle: item.find('subtitle').html(),
-          href: item.find('link').html(),
-          enclosure: item.find('enclosure').attr('url'),
-          description: item.find('description').html(),
-          cover_url: item.find
-        };
-        playlistItem = new PlaylistItem(item, _this.click).render();
+        var playlistItem;
+        playlistItem = new PlaylistItem(feedItem, _this.click).render();
         return list.append(playlistItem);
       };
     })(this));
@@ -24314,9 +24318,13 @@ Transcript = (function() {
     this.processTranscript = bind(this.processTranscript, this);
     this.load = bind(this.load, this);
     this.options = _.extend(this.defaultOptions, this.app.extensionOptions.Transcript);
-    if (!this.options.data) {
+    if (!this.app.episode) {
       return;
     }
+    if (!this.app.episode.transcript) {
+      return;
+    }
+    this.transcript = this.app.episode.transcript;
     this.load().done((function(_this) {
       return function() {
         _this.renderPanel();
@@ -24339,7 +24347,7 @@ Transcript = (function() {
   };
 
   Transcript.prototype.load = function() {
-    return $.get(this.options.data).done((function(_this) {
+    return $.get(this.transcript).done((function(_this) {
       return function(transcript) {
         return _this.processTranscript(transcript);
       };
@@ -24448,9 +24456,34 @@ module.exports = Transcript;
 
 
 },{"../utils.coffee":20,"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],15:[function(require,module,exports){
-var $, Feed;
+var $, Feed, FeedItem,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+FeedItem = (function() {
+  function FeedItem(xml) {
+    this.xml = xml;
+    this.extract = bind(this.extract, this);
+    this.parse = bind(this.parse, this);
+    this.parse();
+  }
+
+  FeedItem.prototype.parse = function() {
+    this.title = this.extract('title').html();
+    this.subtitle = this.extract('subtitle').html();
+    this.href = this.extract('link').html();
+    this.enclosure = this.extract('enclosure').attr('url');
+    return this.description = this.extract('description').html();
+  };
+
+  FeedItem.prototype.extract = function(elemName) {
+    return $(this.xml).find(elemName);
+  };
+
+  return FeedItem;
+
+})();
 
 Feed = (function() {
   function Feed(feedUrl) {
@@ -24463,7 +24496,9 @@ Feed = (function() {
     self = this;
     this.promise = $.get(this.feedUrl, function(data) {
       self.feed = $(data);
-      return self.items = self.feed.find('item');
+      return self.items = self.feed.find('item').map(function(_, item) {
+        return new FeedItem(item);
+      });
     });
     return self;
   };
@@ -24729,10 +24764,12 @@ module.exports = ProgressBar;
 
 
 },{"./utils.coffee":20,"jquery":1}],19:[function(require,module,exports){
-var $, Theme, rivets, sightglass,
+var $, Theme, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+_ = require('lodash');
 
 sightglass = require('sightglass');
 
@@ -24743,6 +24780,8 @@ Theme = (function() {
     this.app = app;
     this.addPanel = bind(this.addPanel, this);
     this.addButton = bind(this.addButton, this);
+    this.removePanels = bind(this.removePanels, this);
+    this.removeButtons = bind(this.removeButtons, this);
     this.changeActiveButton = bind(this.changeActiveButton, this);
     this.bindCoverLoad = bind(this.bindCoverLoad, this);
     this.loadCustomCss = bind(this.loadCustomCss, this);
@@ -24835,6 +24874,14 @@ Theme = (function() {
     return button.addClass('button-active');
   };
 
+  Theme.prototype.removeButtons = function() {
+    return this.buttons.empty();
+  };
+
+  Theme.prototype.removePanels = function() {
+    return this.panels.empty();
+  };
+
   Theme.prototype.addButton = function(button) {
     this.buttons.append(button);
     return button.on('click', this.changeActiveButton);
@@ -24852,7 +24899,7 @@ module.exports = Theme;
 
 
 
-},{"jquery":1,"rivets":3,"sightglass":4}],20:[function(require,module,exports){
+},{"jquery":1,"lodash":2,"rivets":3,"sightglass":4}],20:[function(require,module,exports){
 var Utils;
 
 Utils = (function() {

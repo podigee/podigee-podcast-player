@@ -1,4 +1,5 @@
 $ = require('jquery')
+_ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
@@ -74,6 +75,12 @@ class Theme
 
     @buttons.find('.button-active').removeClass('button-active')
     button.addClass('button-active')
+
+  removeButtons: () =>
+    @buttons.empty()
+
+  removePanels: () =>
+    @panels.empty()
 
   addButton: (button) =>
     @buttons.append(button)

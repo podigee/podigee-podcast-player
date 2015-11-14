@@ -135,6 +135,9 @@ class PodigeePodcastPlayer
 
   initializeExtensions: () =>
     self = this
+    @extensions = {}
+    @theme.removeButtons()
+    @theme.removePanels()
     [ProgressBar, ChapterMarks, Download, EpisodeInfo, Playlist, Share, Transcript].forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 

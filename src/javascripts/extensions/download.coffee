@@ -27,6 +27,7 @@ class Download
 
   prepareDownloadLinks: =>
     @episode.downloadLinks = _.map(@episode.media, (value, key, object)=>
+      return unless value
       url = value.replace(/source=\w*/g, 'source=webplayer-download')
       filename= value.substring(value.lastIndexOf('/')+1).split('?')[0]
       newObject =

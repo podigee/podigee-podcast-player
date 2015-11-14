@@ -51,7 +51,16 @@ class Playlist
     @app.episode.title = item.title
     @app.episode.subtitle = item.subtitle
     @app.episode.description = item.description
-    @app.episode.playlist.mp3 = item.enclosure
+    @app.episode.media.mp3 = item.enclosure
+    @app.episode.media.m4a = null
+    @app.episode.media.ogg = null
+    @app.episode.media.opus = null
+    @app.episode.url = item.link
+
+    @app.episode.transcript = null
+    @app.episode.chaptermarks = null
+
+    @app.initializeExtensions()
 
   renderButton: =>
     @button = $(@buttonHtml)
@@ -62,19 +71,9 @@ class Playlist
     @panel = $(@panelHtml)
 
     list = @panel.find('ul')
-    $(@feed.items).each((index, feedItem) =>
-      item = $(feedItem)
-      item = {
-        title: item.find('title').html(),
-        subtitle: item.find('subtitle').html(),
-        href: item.find('link').html(),
-        enclosure: item.find('enclosure').attr('url'),
-        description: item.find('description').html()
-        cover_url: item.find
-      }
-      playlistItem = new PlaylistItem(item, @click).render()
+    $(@feed.items).each (index, feedItem) =>
+      playlistItem = new PlaylistItem(feedItem, @click).render()
       list.append(playlistItem)
-    )
 
     @panel.hide()
 
