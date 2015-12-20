@@ -9,6 +9,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     connect = require('gulp-connect');
     gzip = require('gulp-gzip');
+    fs = require('fs');
+    s3 = require('gulp-s3');
 
 var dest = './dist';
 var paths = {
@@ -24,6 +26,15 @@ var paths = {
     css: ['./src/themes/**/*.scss']
   }
 };
+
+gulp.task('upload', function() {
+  awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
+  return gulp.src('build/**')
+    .pipe(s3(awsCredentials, {
+      uploadPath: "/podigee-podcast-player/",
+      headers: {'x-amz-acl': 'public-read'}
+    }))
+})
 
 gulp.task('stylesheets', function() {
   return gulp.src(paths.main_stylesheet)
