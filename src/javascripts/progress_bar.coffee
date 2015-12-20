@@ -1,4 +1,6 @@
 $ = require('jquery')
+sightglass = require('sightglass')
+rivets = require('rivets')
 
 Utils = require('./utils.coffee')
 
@@ -13,6 +15,7 @@ class ProgressBar
     @elem = @app.theme.progressBarElement
     @player = @app.player.media
 
+    @render()
     @findElements()
     @bindEvents()
 
@@ -52,6 +55,27 @@ class ProgressBar
     @loadedElement.css('margin-left', 0).width(newWidth)
 
   #private
+
+  context: () ->
+    {}
+
+  render: () ->
+    html = $(@template)
+    rivets.bind(html, @context)
+    @elem.replaceWith(html)
+    @elem = html
+
+  template:
+    """
+    <div class="progress-bar">
+      <div class="progress-bar-time-played" title="Switch display mode">00:00:00</div>
+      <div class="progress-bar-rail">
+        <span class="progress-bar-loaded"></span>
+        <span class="progress-bar-buffering"></span>
+        <span class="progress-bar-played"></span>
+      </div>
+    </div>
+    """
 
   findElements: () ->
     @timeElement = @elem.find('.progress-bar-time-played')

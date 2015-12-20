@@ -52,7 +52,7 @@ class Theme
 
   findElements: ->
     @audioElement = @elem.find('audio')
-    @progressBarElement = @elem.find('.progress-bar')
+    @progressBarElement = @elem.find('progressbar')
     @waveformElement = @elem.find('.waveform')
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')

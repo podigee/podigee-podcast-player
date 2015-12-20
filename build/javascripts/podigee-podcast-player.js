@@ -24604,10 +24604,14 @@ module.exports = Player;
 
 
 },{}],18:[function(require,module,exports){
-var $, ProgressBar, Utils,
+var $, ProgressBar, Utils, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 $ = require('jquery');
+
+sightglass = require('sightglass');
+
+rivets = require('rivets');
 
 Utils = require('./utils.coffee');
 
@@ -24636,6 +24640,7 @@ ProgressBar = (function() {
     }
     this.elem = this.app.theme.progressBarElement;
     this.player = this.app.player.media;
+    this.render();
     this.findElements();
     this.bindEvents();
   }
@@ -24670,6 +24675,20 @@ ProgressBar = (function() {
     newWidth = this.player.seekable.end(this.player.seekable.length - 1) * this.timeRailFactor();
     return this.loadedElement.css('margin-left', 0).width(newWidth);
   };
+
+  ProgressBar.prototype.context = function() {
+    return {};
+  };
+
+  ProgressBar.prototype.render = function() {
+    var html;
+    html = $(this.template);
+    rivets.bind(html, this.context);
+    this.elem.replaceWith(html);
+    return this.elem = html;
+  };
+
+  ProgressBar.prototype.template = "<div class=\"progress-bar\">\n  <div class=\"progress-bar-time-played\" title=\"Switch display mode\">00:00:00</div>\n  <div class=\"progress-bar-rail\">\n    <span class=\"progress-bar-loaded\"></span>\n    <span class=\"progress-bar-buffering\"></span>\n    <span class=\"progress-bar-played\"></span>\n  </div>\n</div>";
 
   ProgressBar.prototype.findElements = function() {
     this.timeElement = this.elem.find('.progress-bar-time-played');
@@ -24763,7 +24782,7 @@ module.exports = ProgressBar;
 
 
 
-},{"./utils.coffee":20,"jquery":1}],19:[function(require,module,exports){
+},{"./utils.coffee":20,"jquery":1,"rivets":3,"sightglass":4}],19:[function(require,module,exports){
 var $, Theme, _, rivets, sightglass,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -24844,7 +24863,7 @@ Theme = (function() {
 
   Theme.prototype.findElements = function() {
     this.audioElement = this.elem.find('audio');
-    this.progressBarElement = this.elem.find('.progress-bar');
+    this.progressBarElement = this.elem.find('progressbar');
     this.waveformElement = this.elem.find('.waveform');
     this.playPauseElement = this.elem.find('.play-button');
     this.backwardElement = this.elem.find('.backward-button');
