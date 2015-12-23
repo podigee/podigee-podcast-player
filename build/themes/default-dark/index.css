@@ -19,6 +19,8 @@
     border: none;
     cursor: pointer;
     outline: none; }
+  .podcast-player .main-player {
+    position: relative; }
   .podcast-player .episode-basic-info {
     max-height: 90px;
     padding: 23px 12px 0;
@@ -57,19 +59,19 @@
       width: 70px; }
       .podcast-player .controls .play-button.fa-pause {
         padding-left: 1px; }
-    .podcast-player .controls .controls-advanced {
-      display: none;
-      left: 155px;
-      position: absolute;
-      top: 66px; }
-      .podcast-player .controls .controls-advanced button {
-        color: #c8c8c8;
-        font-size: 14px; }
-      .podcast-player .controls .controls-advanced button:hover {
-        color: #f57150; }
-      .podcast-player .controls .controls-advanced .speed-toggle {
-        cursor: pointer; }
-  .podcast-player.playing .controls .controls-advanced {
+  .podcast-player .controls-advanced {
+    bottom: 13px;
+    display: none;
+    left: 155px;
+    position: absolute; }
+    .podcast-player .controls-advanced button {
+      color: #c8c8c8;
+      font-size: 14px; }
+    .podcast-player .controls-advanced button:hover {
+      color: #f57150; }
+    .podcast-player .controls-advanced .speed-toggle {
+      cursor: pointer; }
+  .podcast-player.playing .controls-advanced {
     display: block; }
   .podcast-player .progress-bar {
     clear: both;
@@ -257,19 +259,20 @@
     .podcast-player .controls {
       height: 115px;
       position: relative; }
-    .podcast-player .controls .controls-advanced {
-      bottom: 0px;
-      left: 8px;
-      top: auto;
-      width: 150px; }
-      .podcast-player .controls .controls-advanced button {
-        font-size: 24px; }
+    .podcast-player .controls-advanced {
+      bottom: 20px;
+      left: 0;
+      top: auto; }
+      .podcast-player .controls-advanced button {
+        font-size: 24px;
+        padding: 0 8px; }
     .podcast-player .buttons {
       margin-top: 25px;
       position: static;
       text-align: right; }
       .podcast-player .buttons button {
         font-size: 24px;
+        padding: 0 8px;
         width: 35px; }
     .podcast-player .progress-bar .progress-bar-rail {
       min-height: 20px; }

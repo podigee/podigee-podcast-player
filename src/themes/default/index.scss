@@ -30,6 +30,10 @@
     outline: none;
   }
 
+  .main-player {
+    position: relative;
+  }
+
   .episode-basic-info {
     max-height: 90px;
     padding: 23px $default_padding 0;
@@ -82,29 +86,29 @@
         padding-left: 1px;
       }
     }
+  }
 
-    .controls-advanced {
-      display: none;
-      left: 155px;
-      position: absolute;
-      top: 66px;
+  .controls-advanced {
+    bottom: 13px;
+    display: none;
+    left: 155px;
+    position: absolute;
 
-      button {
-        color: $dark_gray;
-        font-size: 14px;
-      }
+    button {
+      color: $dark_gray;
+      font-size: 14px;
+    }
 
-      button:hover {
-        color: $highlight1;
-      }
+    button:hover {
+      color: $highlight1;
+    }
 
-      .speed-toggle {
-        cursor: pointer;
-      }
+    .speed-toggle {
+      cursor: pointer;
     }
   }
 
-  &.playing .controls .controls-advanced {
+  &.playing .controls-advanced {
     display: block;
   }
 
@@ -384,14 +388,14 @@
       position: relative;
     }
 
-    .controls .controls-advanced {
-      bottom: 0px;
-      left: 8px;
+    .controls-advanced {
+      bottom: 20px;
+      left: 0;
       top: auto;
-      width: 150px;
 
       button {
         font-size: 24px;
+        padding: 0 8px;
       }
     }
 
@@ -402,6 +406,7 @@
 
       button {
         font-size: 24px;
+        padding: 0 8px;
         width: 35px;
       }
     }
