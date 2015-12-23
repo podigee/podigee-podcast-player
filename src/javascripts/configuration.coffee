@@ -40,7 +40,6 @@ class Configuration
 
   setConfigurations: =>
     @app.podcast = @configuration.podcast || {}
-    @app.getFeed()
 
     @app.episode = @configuration.episode
     @app.getProductionData()

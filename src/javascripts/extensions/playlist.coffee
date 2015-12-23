@@ -34,7 +34,7 @@ class Playlist
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
-    @feed = @app.podcast.feed
+    @feed = @app.getFeed()
     return unless @feed
 
     @feed.promise.done =>
