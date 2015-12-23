@@ -37,10 +37,11 @@ class ChapterMarks
     type: 'panel'
 
   constructor: (@app) ->
+    @options = _.extend(@defaultOptions, @app.extensionOptions.ChapterMarks)
+    return if @options.disabled
+
     @chaptermarks = @app.episode.chaptermarks
     return unless @chaptermarks && @chaptermarks.length
-
-    @options = _.extend(@defaultOptions, @app.extensionOptions.ChapterMarks)
 
     @renderPanel()
     @renderButton()

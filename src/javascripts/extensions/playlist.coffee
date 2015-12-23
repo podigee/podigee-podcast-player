@@ -31,10 +31,11 @@ class Playlist
     type: 'panel'
 
   constructor: (@app) ->
+    @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
+    return if @options.disabled
+
     @feed = @app.podcast.feed
     return unless @feed
-
-    @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
 
     @feed.promise.done =>
       @renderPanel()
@@ -45,6 +46,7 @@ class Playlist
 
   defaultOptions:
     showOnStart: false
+    disabled: false
 
   click: (event) =>
     item = event.data

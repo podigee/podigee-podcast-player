@@ -36,6 +36,7 @@ class Transcript
   constructor: (@app) ->
     @options = _.extend(@defaultOptions, @app.extensionOptions.Transcript)
 
+    return if @options.disabled
     return unless @app.episode
     return unless @app.episode.transcript
 

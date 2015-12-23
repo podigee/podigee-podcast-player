@@ -9,11 +9,12 @@ class Download
     type: 'panel'
 
   constructor: (@app) ->
+    @options = _.extend(@defaultOptions, @app.extensionOptions.Download)
+    return if @options.disabled
+
     @episode = @app.episode
     return unless @episode
     return unless @episode.media
-
-    @options = _.extend(@defaultOptions, @app.extensionOptions.Download)
 
     @prepareDownloadLinks()
 

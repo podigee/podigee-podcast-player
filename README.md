@@ -55,7 +55,8 @@ window.playerConfiguration = {
       "showOnStart": false
     },
     "Playlist": {
-      "showOnStart": false
+      "showOnStart": false,
+      "disabled": true
     },
     "Transcript": {
       "showOnStart": false,

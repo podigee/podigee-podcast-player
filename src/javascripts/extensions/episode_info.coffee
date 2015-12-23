@@ -9,12 +9,12 @@ class EpisodeInfo
     type: 'panel'
 
   constructor: (@app) ->
+    @options = _.extend(@defaultOptions, @app.extensionOptions.EpisodeInfo)
+    return if @options.disabled
+
     @episode = @app.episode
     return unless @episode
-
     return unless @episode.description
-
-    @options = _.extend(@defaultOptions, @app.extensionOptions.EpisodeInfo)
 
     @renderPanel()
     @renderButton()

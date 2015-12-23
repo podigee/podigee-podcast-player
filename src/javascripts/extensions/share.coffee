@@ -16,6 +16,8 @@ class Share
 
     @options = _.extend(@defaultOptions, @app.extensionOptions.Share)
 
+    return if @options.disabled
+
     @prepareSocialLinks()
 
     @renderPanel()
