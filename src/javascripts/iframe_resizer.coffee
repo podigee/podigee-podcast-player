@@ -1,8 +1,10 @@
+$ = require('jquery')
+
 class IframeResizer
   @listen: (listenTo, iframe, offset = {}, callback) ->
-    window.addEventListener('message', ((event) =>
+    $(window).on 'message', (event) =>
       try
-        resizeData = JSON.parse(event.data)
+        resizeData = JSON.parse(event.data || event.originalEvent.data)
       catch
         return
 
@@ -19,6 +21,5 @@ class IframeResizer
       iframe.width(width)
 
       callback(iframe) if callback?
-    ), false)
 
 module.exports = IframeResizer
