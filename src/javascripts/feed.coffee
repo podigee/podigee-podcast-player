@@ -15,12 +15,16 @@ class FeedItem
     $(@xml).find(elemName)
 
 class Feed
-  constructor: (@feedUrl) ->
+  constructor: (app) ->
+    @feedUrl = app.podcast.feed
+    @externalData = app.externalData
     @fetch()
 
   fetch: () ->
     self = this
-    @promise = $.get @feedUrl, (data) ->
+
+    @promise = @externalData.get(@feedUrl)
+    @promise.done (data) ->
       self.feed = $(data)
       self.items = self.feed.find('item').map (_, item) -> new FeedItem(item)
 

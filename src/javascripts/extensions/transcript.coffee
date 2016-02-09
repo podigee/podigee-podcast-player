@@ -57,7 +57,8 @@ class Transcript
     transcript: ''
 
   load: =>
-    $.get(@transcript).done (transcript) =>
+    promise = @app.externalData.get(@transcript)
+    promise.done (transcript) =>
       @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>

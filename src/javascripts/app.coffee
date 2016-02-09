@@ -7,6 +7,7 @@ Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
 Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
+ExternalData = require('./external_data.coffee')
 
 ChapterMarks = require('./extensions/chaptermarks.coffee')
 ChromeCast = require('./extensions/chromecast.coffee')
@@ -19,6 +20,7 @@ Transcript = require('./extensions/transcript.coffee')
 class PodigeePodcastPlayer
   constructor: (@elemClass) ->
     @getConfiguration().loaded.done =>
+      @externalData = new ExternalData(this)
       @renderTheme().done =>
         @initPlayer()
 
@@ -27,7 +29,7 @@ class PodigeePodcastPlayer
   getFeed: () ->
     return unless @podcast.feed
 
-    @podcast.feed = new Feed(@podcast.feed)
+    @podcast.feed = new Feed(this)
 
   getProductionData: () ->
     return unless @episode.productionDataUrl

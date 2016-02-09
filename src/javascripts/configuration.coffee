@@ -59,6 +59,7 @@ class Configuration
     showChaptermarks: false
     showMoreInfo: false
     theme: 'default'
+    sslProxy: null
   }
 
   configureTemplating: =>
