@@ -8,14 +8,14 @@
   }
 
   background: linear-gradient(to bottom, rgb(84, 84, 84) 0%, rgb(38, 38, 38) 100%);
-  color: $default_color;
+  color: $default-color;
   font-family: Helvetica, Arial, sans-serif;
   overflow: hidden;
   position: relative;
   width: 100%;
 
   a {
-    color: $default_color;
+    color: $default-color;
     text-decoration: none;
 
     &:hover {
@@ -40,9 +40,9 @@
     }
 
     .play-button {
-      border: 3px solid $light_gray;
+      border: 3px solid $light-grey;
       border-radius: 100px;
-      color: $dark_gray;
+      color: $dark-grey;
       height: 70px;
       margin: 10px 0 0 10px;
       padding: 2px 0 0 9px;
@@ -53,8 +53,8 @@
       }
 
       &:hover {
-        color: $default_color;
-        border-color: $default_color;;
+        color: $default-color;
+        border-color: $default-color;;
       }
     }
 
@@ -65,7 +65,7 @@
       top: 66px;
 
       button {
-        color: $dark_gray;
+        color: $dark-grey;
         font-size: 14px;
       }
 
@@ -88,7 +88,7 @@
   .episode-basic-info {
     float: left;
     max-height: 90px;
-    padding: 5px $default_padding 0;
+    padding: 5px $default-padding 0;
     position: relative;
     overflow: hidden;
     width: calc(100% - 170px);
@@ -117,7 +117,7 @@
     padding: 0 5px;
 
     .progress-bar-time-played {
-      color: $dark_gray;
+      color: $dark-grey;
       cursor: pointer;
       float: left;
       font-size: 12px;
@@ -127,11 +127,11 @@
     }
 
     .progress-bar-time-played:hover {
-      color: $default_color;
+      color: $default-color;
     }
 
     .progress-bar-rail {
-      background-color: $light_gray;
+      background-color: $light-grey;
       cursor: ew-resize;
       min-height: 10px;
       overflow: hidden;
@@ -151,7 +151,7 @@
   }
 
   .progress-bar-loaded {
-    background-color: $dark_gray;
+    background-color: $dark-grey;
   }
 
   .progress-bar-buffering {
@@ -194,7 +194,7 @@
     top: 68px;
 
     button {
-      color: $dark_gray;
+      color: $dark-grey;
       display: inline-block;
       font-size: 16px;
       text-align: center;
@@ -203,7 +203,7 @@
 
     button:hover,
     button.button-active {
-      color: $default_color;
+      color: $default-color;
     }
 
     img {
@@ -212,7 +212,7 @@
   }
 
   .panels {
-    color: $default_color;
+    color: $default-color;
     font-size: 14px;
     font-weight: 300;
     line-height: 18px;
@@ -220,7 +220,7 @@
     & > div {
       max-height: 400px;
       overflow: hidden;
-      padding: 0 0 0 $default_padding;
+      padding: 0 0 0 $default-padding;
       position: relative;
     }
 
@@ -248,17 +248,17 @@
           position: relative;
 
           & + li {
-            border-top: 1px solid $light_gray;
+            border-top: 1px solid $light-grey;
           }
 
           &:hover {
-            background-color: $light_gray;
-            color: $background_color;
+            background-color: $light-grey;
+            color: $background-color;
           }
 
           &.active {
             background-color: lighten($highlight2, 55%);
-            color: $background_color;
+            color: $background-color;
           }
 
           img {
@@ -327,7 +327,7 @@
         background: transparent;
         border: 1px solid #ccc;
         border-radius: 3px;
-        color: $default_color;
+        color: $default-color;
         font-size: 20px;
         outline: none;
         padding: 4px;
@@ -353,7 +353,7 @@
           &:hover > *,
           &.active > * {
             background-color: $transcript-highlight;
-            color: $background_color;
+            color: $background-color;
           }
         }
       }

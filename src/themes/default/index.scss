@@ -7,7 +7,7 @@
     box-sizing: border-box;
   }
 
-  background-color: $background_color;
+  background-color: $background-color;
   color: #222;
   font-family: Helvetica;
   overflow: hidden;
@@ -36,7 +36,7 @@
 
   .episode-basic-info {
     max-height: 90px;
-    padding: 23px $default_padding 0;
+    padding: 23px $default-padding 0;
     position: relative;
     overflow: hidden;
 
@@ -51,7 +51,7 @@
     }
 
     .episode-subtitle {
-      color: $default_color;
+      color: $default-color;
       font-size: 16px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -74,9 +74,9 @@
     }
 
     .play-button {
-      border: 3px solid $light_gray;
+      border: 3px solid $light-grey;
       border-radius: 100px;
-      color: $dark_gray;
+      color: $dark-grey;
       height: 70px;
       margin: 10px 0 0 10px;
       padding: 2px 0 0 9px;
@@ -95,7 +95,7 @@
     position: absolute;
 
     button {
-      color: $dark_gray;
+      color: $dark-grey;
       font-size: 14px;
     }
 
@@ -117,7 +117,7 @@
     overflow: hidden;
 
     .progress-bar-time-played {
-      color: $dark_gray;
+      color: $dark-grey;
       cursor: pointer;
       display: none;
       font-size: 14px;
@@ -133,7 +133,7 @@
     }
 
     .progress-bar-rail {
-      background-color: $light_gray;
+      background-color: $light-grey;
       cursor: ew-resize;
       min-height: 10px;
       overflow: hidden;
@@ -156,7 +156,7 @@
   }
 
   .progress-bar-loaded {
-    background-color: $dark_gray;
+    background-color: $dark-grey;
   }
 
   .progress-bar-buffering {
@@ -201,7 +201,7 @@
     top: 68px;
 
     button {
-      color: $dark_gray;
+      color: $dark-grey;
       display: inline-block;
       font-size: 16px;
       text-align: center;
@@ -219,7 +219,7 @@
   }
 
   .panels {
-    color: $default_color;
+    color: $default-color;
     font-size: 14px;
     font-weight: 300;
     line-height: 18px;
@@ -227,7 +227,7 @@
     & > div {
       max-height: 400px;
       overflow: hidden;
-      padding: 0 0 0 $default_padding;
+      padding: 0 0 0 $default-padding;
       position: relative;
     }
 
@@ -255,11 +255,11 @@
           position: relative;
 
           &+li {
-            border-top: 1px solid $light_gray;
+            border-top: 1px solid $light-grey;
           }
 
           &:hover {
-            background-color: $light_gray;
+            background-color: $light-grey;
           }
 
           &.active {
@@ -365,7 +365,7 @@
 
   @media (max-width: $mobile-breakpoint) {
     .cover-image {
-      border: 12px solid $background_color;
+      border: 12px solid $background-color;
       border-bottom: 0;
       display: block;
       float: none;

@@ -7,17 +7,17 @@
     .chaptermarks ul li:hover,
     .playlist ul li.active,
     .playlist ul li:hover {
-      color: $background_color;
+      color: $background-color;
     }
 
     .share .share-copy-url {
-      color: $default_color;
+      color: $default-color;
     }
 
     .transcript .transcript-text li {
       &:hover > *,
       &.active > * {
-        color: $background_color;
+        color: $background-color;
       }
     }
   }

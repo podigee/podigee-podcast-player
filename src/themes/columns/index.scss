@@ -1,8 +1,8 @@
 .columns-podcast-player {
-  $image_width: 300px;
+  $image-width: 300px;
 
   font-family: Helvetica;
-  height: $image_width + 60;
+  height: $image-width + 60;
 
   h3 {
     font-weight: 300;
@@ -11,8 +11,8 @@
 
   .left {
     float: left;
-    min-height: $image_width;
-    width: $image_width;
+    min-height: $image-width;
+    width: $image-width;
 
     .info-overlay {
       background-color: rgba(0, 0, 0, 0.5);
@@ -22,7 +22,7 @@
       padding: 12px;
       position: absolute;
       text-align: center;
-      width: $image_width;
+      width: $image-width;
 
       .title {
         margin-bottom: 5px;
@@ -46,7 +46,7 @@
       height: 50px;
       text-align: center;
       padding: 12px 0;
-      width: $image_width / 3;
+      width: $image-width / 3;
     }
 
     .play-button {
@@ -63,11 +63,11 @@
     background-color: rgb(245, 245, 245);
     overflow: hidden;
     padding: 12px;
-    height: $image_width + 60;
+    height: $image-width + 60;
 
     .chaptermarks,
     .playlist {
-      $chapter_image_width: 30px;
+      $chapter-image-width: 30px;
 
       font-weight: 200;
       height: 100%;
@@ -75,7 +75,7 @@
 
       ul {
         display: block;
-        height: $image_width;
+        height: $image-width;
         list-style: none;
         margin: 0;
         overflow-y: scroll;
@@ -86,7 +86,7 @@
         border-top: 1px solid #ddd;
         clear: both;
         cursor: pointer;
-        line-height: $chapter_image_width - 5;
+        line-height: $chapter-image-width - 5;
         overflow: hidden;
 
         &:first-child {
@@ -95,25 +95,25 @@
 
         img {
           float: left;
-          width: $chapter_image_width;
+          width: $chapter-image-width;
         }
 
         span,
         a {
           float: left;
           margin-top: 5px;
-          margin-left: $chapter_image_width + 10;
+          margin-left: $chapter-image-width + 10;
         }
 
         img + span,
         a {
-          margin-left: $chapter_image_width - 20;
+          margin-left: $chapter-image-width - 20;
         }
       }
     }
   }
 
-  $progress_bar_height: 12px;
+  $progress-bar-height: 12px;
   .progress-bar {
     overflow: hidden;
     position: relative;
@@ -124,7 +124,7 @@
 
     .progress-bar-rail {
       background-color: #ddd;
-      min-height: $progress_bar_height;
+      min-height: $progress-bar-height;
       margin: 0;
       overflow: hidden;
       position: relative;
@@ -135,7 +135,7 @@
   .progress-bar-loaded {
     background-color: rgb(233, 55, 62);
     display: block;
-    height: $progress_bar_height;
+    height: $progress-bar-height;
     position: absolute;
     top: 0;
     width: 0;
@@ -149,7 +149,7 @@
   .progress-bar-buffering {
     background-color:rgba(255,255,255,0.4);
     display: none;
-    height: $progress_bar_height;
+    height: $progress-bar-height;
     overflow:hidden;
     position: absolute;
     top: 0;
