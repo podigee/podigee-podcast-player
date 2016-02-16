@@ -363,7 +363,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $mobile-breakpoint) {
     .cover-image {
       border: 12px solid $background_color;
       border-bottom: 0;
