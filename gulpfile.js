@@ -31,7 +31,7 @@ gulp.task('upload', function() {
   awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
   return gulp.src('build/**')
     .pipe(s3(awsCredentials, {
-      uploadPath: "/podigee-podcast-player/",
+      uploadPath: "/podcast-player/",
       headers: {'x-amz-acl': 'public-read'}
     }))
 })
@@ -51,7 +51,7 @@ gulp.task('javascripts', function() {
       transform: ['coffeeify'],
       extensions: ['.coffee']
     }))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(gzip())
@@ -106,6 +106,7 @@ gulp.task('watch', function() {
 
 gulp.task('connect', function() {
   connect.server({
+    host: '0.0.0.0',
     root: [__dirname],
     livereload: true
   });
