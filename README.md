@@ -40,6 +40,10 @@ Given [the right waveform input data](https://github.com/bbcrd/audiowaveform) th
 
 Allows the listener to play the podcast episode on a Chromecast device. This is currently not enabled by default, because it's still in testing and requires a little polishing work.
 
+## Compatibility
+
+We aim to always support the latest 2-3 versions of modern browsers. Internet Explorer is fully supported from version 11 on. Version 9 is not officially supported, but basic playback should work fine there too.
+
 ## Usage
 
 ```javascript
