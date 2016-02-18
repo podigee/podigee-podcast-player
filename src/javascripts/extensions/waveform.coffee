@@ -16,6 +16,10 @@ class Waveform
       @elem.hide()
       return
 
+    unless @app.episode.waveform
+      @elem.hide()
+      return
+
     @options = _.extend(@defaultOptions, @app.extensionOptions.Waveform)
 
     @render()
@@ -28,9 +32,7 @@ class Waveform
     height = @elem.height() * 2
     transparent = 'rgba(0, 0, 0, 0)'
     Peaks.init
-      dataUri: {
-        json: @options.data
-      }
+      #dataUri: { json: @app.episode.waveform }
       container: @elem[0]
       mediaElement: @audio[0]
       height: height
