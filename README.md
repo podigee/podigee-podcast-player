@@ -112,7 +112,7 @@ window.playerConfiguration = {
 ```
 
 ```html
-<script class="podigee-podcast-player" src="cdn.podigee.com/ppp/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+<script class="podigee-podcast-player" src="cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
 ```
 
 ## Who
