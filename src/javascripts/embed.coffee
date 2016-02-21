@@ -8,6 +8,7 @@ class Iframe
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     config = $(@elem).data('configuration')
     @configuration = window[config] || config
+    @configuration.options.parentLocation = window.location
 
     scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
     @url = "#{scriptPath}/podigee-podcast-player.html?id=#{@id}"

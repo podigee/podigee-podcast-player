@@ -32,11 +32,12 @@ class Utils
     hours = parseInt(parts[0], 10)
     result = seconds + minutes * 60 + hours * 60 * 60
 
-  @padNumber: (number) ->
-    if number < 10
-      "0#{number}"
-    else
-      number
+  @padNumber: (number, length=2) ->
+    number = number.toString()
+    while number.length < length
+      number = "0#{number}"
+
+    number
 
   @calculateCursorPosition: (event) ->
     event.pageX - event.target.offsetLeft

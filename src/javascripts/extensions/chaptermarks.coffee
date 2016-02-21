@@ -74,7 +74,7 @@ class ChapterMarks
     $(@app.player.media).on('timeupdate', @setActiveMark)
 
   setActiveMark: () =>
-    time = @app.player.media.currentTime
+    time = @app.player.currentTimeInSeconds
     if time <= Utils.hhmmssToSeconds(@chaptermarks[0].start)
       @deactivateAll()
       @activateMark(@chaptermarks[0])

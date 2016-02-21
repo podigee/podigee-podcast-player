@@ -1,9 +1,17 @@
+$ = require('jquery')
+_ = require('lodash')
+
+Utils = require('./utils.coffee')
+
 class Player
   constructor: (@app, elem) ->
     self = this
     self.media = elem
     self.media.preload = "metadata"
     @options = @app.options
+    @attachEvents()
+    @setInitialTime()
+    @setCurrentTime()
     @app.init(self)
 
   jumpBackward: (seconds) =>
@@ -21,7 +29,28 @@ class Player
 
     @setPlaySpeed(@options.playbackRates[nextRateIndex])
 
+  attachEvents: =>
+    $(@media).on('timeupdate', @setCurrentTime)
+
+  setInitialTime: =>
+    @media.currentTime = @timeHash()
+
+  setCurrentTime: =>
+    @currentTimeInSeconds = @media.currentTime
+    @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+
   setPlaySpeed: (speed) =>
     @media.playbackRate = @options.currentPlaybackRate = speed
+
+  # private
+
+  timeHash: =>
+    hash = @app.options.parentLocation.hash[1..-1].split('&')
+    timeHash = _(hash).find (h) -> _(h).startsWith('t')
+
+    if timeHash
+      timeHash.split('=')[1]
+    else
+      0
 
 module.exports = Player
