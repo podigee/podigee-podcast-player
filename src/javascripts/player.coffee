@@ -45,11 +45,14 @@ class Player
   # private
 
   timeHash: =>
-    hash = @app.options.parentLocation.hash[1..-1].split('&')
-    timeHash = _(hash).find (h) -> _(h).startsWith('t')
+    if hash = @app.options.parentLocationHash
+      hash = hash[1..-1].split('&')
+      timeHash = _(hash).find (h) -> _(h).startsWith('t')
 
-    if timeHash
-      timeHash.split('=')[1]
+      if timeHash
+        timeHash.split('=')[1]
+      else
+        0
     else
       0
 

@@ -47,6 +47,7 @@ class Configuration
     @app.extensionOptions = @configuration.extensions || {}
 
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
+    @app.options.parentLocationHash = @configuration.parentLocationHash
 
     @loader.resolve()
 
