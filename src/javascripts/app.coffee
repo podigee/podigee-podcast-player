@@ -53,7 +53,7 @@ class PodigeePodcastPlayer
 
   initPlayer: =>
     mediaElem = @elem.find('audio')[0]
-    new Player(mediaElem, @options, @init)
+    new Player(this, mediaElem, @options, @init)
 
   init: (player) =>
     @player = player

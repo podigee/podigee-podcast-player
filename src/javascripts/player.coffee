@@ -1,9 +1,10 @@
 class Player
-  constructor: (elem, @options, callback) ->
+  constructor: (@app, elem) ->
     self = this
     self.media = elem
     self.media.preload = "metadata"
-    callback(self)
+    @options = @app.options
+    @app.init(self)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @options.backwardSeconds
