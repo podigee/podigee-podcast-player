@@ -18,24 +18,24 @@ class Configuration
     $(window).on 'message', (event) =>
       return unless event.originalEvent.data
       data = event.originalEvent.data
-      try
-        @configuration = JSON.parse(data)
-        @setConfigurations()
-      catch
-        @configuration = data
+      @configuration = JSON.parse(data)
+
+      if @configuration.json_config
         @fetchJsonConfiguration()
+      else
+        @setConfigurations()
 
   fetchJsonConfiguration: =>
-    return unless @configuration.constructor == String
+    return unless @configuration.json_config && @configuration.json_config.length
     self = this
     $.ajax(
       dataType: 'json'
       headers: {
         "Accept": "application/json"
       }
-      url: @configuration
+      url: @configuration.json_config
     ).done (data) =>
-      self.configuration = data
+      self.configuration = _.extend(self.configuration, data)
       self.setConfigurations()
 
   setConfigurations: =>

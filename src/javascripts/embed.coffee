@@ -7,7 +7,9 @@ class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     config = $(@elem).data('configuration')
-    @configuration = window[config] || config
+    @configuration = window[config] || {}
+    if _.isEmpty(@configuration)
+      @configuration.json_config = config
     @configuration.parentLocationHash = window.location.hash
 
     scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
