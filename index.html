@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="example/normalize.css">
     <link rel="stylesheet" href="example/styles.css">
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   </head>
   <body>
     <!--[if lt IE 8]>
@@ -35,6 +37,9 @@
             },
             "Playlist": {
               "showOnStart": false
+            },
+            "Share": {
+              "showOnStart": true
             },
             "Transcript": {
               "showOnStart": false
@@ -84,8 +89,19 @@
             ]
           }
         }
+
+        <!--window.playerConfiguration2 = $.extend({}, playerConfiguration, {options: {theme: 'default-dark'}})-->
+        <!--window.playerConfiguration3 = $.extend({}, playerConfiguration, {options: {theme: 'minimal'}})-->
       </script>
-      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+      <p>
+        <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+      </p>
+      <!--<p>-->
+        <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration2"></script>-->
+      <!--</p>-->
+      <!--<p>-->
+        <!--<script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration3"></script>-->
+      <!--</p>-->
       <div>
         <div class="features icon-list">
           <div>
