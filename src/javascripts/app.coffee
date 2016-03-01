@@ -16,9 +16,18 @@ EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
-Waveform = require('./extensions/waveform.coffee')
 
 class PodigeePodcastPlayer
+  @defaultExtensions: [
+    ProgressBar,
+    ChapterMarks,
+    Download,
+    EpisodeInfo,
+    Playlist,
+    Share,
+    Transcript
+  ]
+
   constructor: (@elemClass) ->
     @getConfiguration().loaded.done =>
       @externalData = new ExternalData(this)
@@ -141,7 +150,7 @@ class PodigeePodcastPlayer
     @extensions = {}
     @theme.removeButtons()
     @theme.removePanels()
-    [ProgressBar, ChapterMarks, Download, EpisodeInfo, Playlist, Share, Transcript, Waveform].forEach (extension) =>
+    PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
 
   animationOptions: ->
