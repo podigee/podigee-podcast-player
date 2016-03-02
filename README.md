@@ -4,6 +4,16 @@ The Podigee Podcast Player is a state of the art web audio player specially craf
 
 [Demo](https://podigee.github.com/podigee-podcast-player "Podigee Podcast Player Demo")
 
+- [Features](#features)
+- [Themes](#themes)
+- [Extensions](#extensions)
+- [Compatibility](#compatibility)
+- [Usage](#usage)
+- [Configuration options](#configuration-options)
+- [Who did this?](#who)
+- [Contribute](#contribute)
+- [License](#license)
+
 ## Features
 
 The PPP at it's core is an **embeddable HTML5 audio player**. It supports **theming**, **extensions** and **unicorns**.
@@ -15,6 +25,10 @@ The player is completely themeable, you can even change the markup! It comes wit
 ## Extensions
 
 The player is extensible and ships with the following default extensions:
+
+### Sharing
+
+This holds sharing options for different social networks, direct link sharing and the embed code.
 
 ### Chaptermarks
 
@@ -32,7 +46,7 @@ Displays a list of podcast episodes based on as standard podcast RSS feed.
 
 Displays the transcript of an episode, highlights the currently spoken words and allows the listener to search and jump to certain passages by clicking or tapping.
 
-### Waveform
+### Waveform (experimental)
 
 Given [the right waveform input data](https://github.com/bbcrd/audiowaveform) the player can render a nice waveform whereever the theme has foreseen a place for it (Note: the default theme will not display it).
 
@@ -84,7 +98,9 @@ window.playerConfiguration = {
     "coverUrl": "https://cdn.podigee.com/ppp/samples/cover.jpg",
     "title": "FG009 Wirtschaftspolitischer Journalismus",
     "subtitle": "Wie Henrik Müller in Dortmund wirtschaftspolitischen Journalismus lehrt und erforscht. Und was guten Wirtschaftsjournalismus ausmacht.",
-    description: "Raus aus der prallen journalistischen Praxis, rein in die Gremien-Universität. Henrik Müller hat diesen ungewöhnlichen Schritt gewagt: 2013 übernahm der damalige stellvertretende Chefredakteur des "manager magazin" den Lehrstuhl für wirtschaftspolitischen Journalismus am Institut für Journalistik der Technischen Universität Dortmund. Dort baut er seitdem die neuen Bachelor- und Master-Studiengänge für wirtschaftspolitischen Journalismus auf. Wie er diesen Wechsel zwischen den  Welten erlebt hat, was er seinen Studierenden vermitteln will und woran er forscht, erzählt der immer noch sehr umtriebige Autor ("Wirtschaftsirrtümer: 50 Denkfehler, die uns Kopf und Kragen kosten") und Spiegel-Online-Kolumnist in dieser anregenden Episode. Dabei geht es darum, was Wirtschaftsjournalismus leisten soll und muss, was Studierende erst mühsam über Lobbyismus lernen müssen und was eigentlich "gute Geschichten" sind.",
+    "url": "http://forschergeist.de/podcast/fg009-wirtschaftspolitischer-journalismus/",
+    "embedCode": "<script class=\"podigee-podcast-player\" src=\"https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js\" data-configuration=\"https://podigee.github.io/podigee-podcast-player/example/config.json\"><\/script>",
+    "description": "Raus aus der prallen journalistischen Praxis, rein in die Gremien-Universität. Henrik Müller hat diesen ungewöhnlichen Schritt gewagt: 2013 übernahm der damalige stellvertretende Chefredakteur des "manager magazin" den Lehrstuhl für wirtschaftspolitischen Journalismus am Institut für Journalistik der Technischen Universität Dortmund. Dort baut er seitdem die neuen Bachelor- und Master-Studiengänge für wirtschaftspolitischen Journalismus auf. Wie er diesen Wechsel zwischen den  Welten erlebt hat, was er seinen Studierenden vermitteln will und woran er forscht, erzählt der immer noch sehr umtriebige Autor ("Wirtschaftsirrtümer: 50 Denkfehler, die uns Kopf und Kragen kosten") und Spiegel-Online-Kolumnist in dieser anregenden Episode. Dabei geht es darum, was Wirtschaftsjournalismus leisten soll und muss, was Studierende erst mühsam über Lobbyismus lernen müssen und was eigentlich "gute Geschichten" sind.",
     "chaptermarks": [
       {"start": "00:00:00.000", "title": "Intro"},
       {"start": "00:00:41.018", "title": "Begrüßung"},
@@ -114,6 +130,62 @@ window.playerConfiguration = {
 ```html
 <script class="podigee-podcast-player" src="cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
 ```
+
+## Configuration options
+
+The configuration passed into the player either as a Javascript Object or as a JSON file has the following options:
+
+### General options
+
+`options.theme` - The name of the theme to use (defaults to `default`)
+
+### Podcast
+
+`podcast` - An object containing information about the podcast
+
+`podcast.feed` - The podcast's feed address
+
+### Episode
+
+`episode` - An object containing information about the episode
+
+`episode.title` - The episode title
+
+`episode.subtitle` - The episode subtitle
+
+`episode.description` - The episode description / shownotes
+
+`episode.coverUrl` - An URL pointing to the episode cover
+
+`episode.url` - An URL pointing the episode webpage
+
+`episode.embedCode` - This overrides the default embed code (normally you don't need this)
+
+`episode.media` - An object containing media files for an episode (see below)
+
+`episode.chaptermarks` - An object containing chaptermark information (see below)
+
+### Episode media
+
+This is an object containing one or more mappings of audio format to url. For example:
+
+`episode.media.mp3` - The URL to play the MP3 version of the episode
+
+### Chaptermarks
+
+This is an object containing zero or more chaptermarks in the following format:
+
+`episode.chaptermarks[0].start` - Starting time of the chapter
+
+`episode.chaptermarks[0].title` - Title of the chapter
+
+`episode.chaptermarks[0].image` - URL to a chapter image
+
+`episode.chaptermarks[0].href` - URL to an external page
+
+### Extension options
+
+`extensions` - An object containing configuration for different extensions
 
 ## Who
 
