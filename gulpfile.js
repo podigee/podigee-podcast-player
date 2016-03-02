@@ -121,7 +121,7 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('upload', function() {
+gulp.task('upload', ['default'], function() {
   awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
   return gulp.src('build/**')
     .pipe(s3(awsCredentials, {
@@ -130,7 +130,7 @@ gulp.task('upload', function() {
     }))
 })
 
-gulp.task('deploy', ['default', 'upload'])
+gulp.task('deploy', ['upload'])
 
 // Serve
 gulp.task('serve', ['connect', 'watch']);
