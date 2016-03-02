@@ -42,6 +42,10 @@ class Configuration
     @app.podcast = @configuration.podcast || {}
 
     @app.episode = @configuration.episode
+    if @app.episode.cover_url?
+      console.warn('Please use episode.coverUrl instead of episode.cover_url in player configuration')
+      @app.episode.coverUrl ?= @configuration.episode.cover_url
+
     @app.getProductionData()
 
     @app.extensionOptions = @configuration.extensions || {}
