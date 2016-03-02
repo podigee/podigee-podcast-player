@@ -10,7 +10,6 @@ Feed = require('./feed.coffee')
 ExternalData = require('./external_data.coffee')
 
 ChapterMarks = require('./extensions/chaptermarks.coffee')
-ChromeCast = require('./extensions/chromecast.coffee')
 Download = require('./extensions/download.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
@@ -25,7 +24,7 @@ class PodigeePodcastPlayer
     EpisodeInfo,
     Playlist,
     Share,
-    Transcript
+    Transcript,
   ]
 
   constructor: (@elemClass) ->

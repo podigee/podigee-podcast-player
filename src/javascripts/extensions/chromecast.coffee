@@ -6,20 +6,21 @@ class ChromeCast
     type: 'player'
 
   constructor: (@app) ->
-    window.__onGCastApiAvailable = (loaded, errorInfo) =>
+    window['__onGCastApiAvailable'] = (loaded, errorInfo) =>
       if loaded
         @player = @app.player.media
         @initializeCastApi()
-        @renderButton()
-
-        @app.theme.addButton(@button)
       else
         console.debug(errorInfo)
+
+    $.getScript ChromeCast.scriptUrl
 
   togglePlayState: () ->
     if @paused() then @play() else @pause()
 
   #private
+
+  @scriptUrl: 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js'
 
   initializeCastApi: () ->
     sessionRequest = new chrome.cast.SessionRequest(
@@ -39,7 +40,9 @@ class ChromeCast
     @onRequestSessionSuccess(session)
 
   receiverListener: (event) =>
-    #console.debug('receiverListener:', event)
+    if event == chrome.cast.ReceiverAvailability.AVAILABLE
+      @renderButton()
+      @app.theme.addButton(@button)
 
   initializeUI: () =>
     elem = @app.elem.find('.chromecast-ui')
