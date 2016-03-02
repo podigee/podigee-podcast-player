@@ -34,9 +34,15 @@ class Configuration
         "Accept": "application/json"
       }
       url: @configuration.json_config
-    ).done (data) =>
+    ).done((data) =>
       self.configuration = _.extend(self.configuration, data)
       self.setConfigurations()
+    ).error((xhr, status, trace) -> 
+      console.debug("[podigee podcast player] Error while fetching player configuration:")
+      console.debug("xhr:", xhr)
+      console.debug("status:", status)
+      console.debug("trace:", trace)
+    )
 
   setConfigurations: =>
     @app.podcast = @configuration.podcast || {}
@@ -46,6 +52,7 @@ class Configuration
       console.warn('Please use episode.coverUrl instead of episode.cover_url in player configuration')
       @app.episode.coverUrl ?= @configuration.episode.cover_url
 
+    @app.episode.embedCode ?= @configuration.embedCode
     @app.getProductionData()
 
     @app.extensionOptions = @configuration.extensions || {}

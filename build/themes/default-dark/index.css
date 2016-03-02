@@ -221,10 +221,12 @@
       font-weight: 300; }
   .podcast-player .panels .share {
     padding: 12px; }
-    .podcast-player .panels .share .share-copy-url {
+    .podcast-player .panels .share .share-copy-url,
+    .podcast-player .panels .share .share-embed-code {
       background: transparent;
       border: 1px solid #ccc;
       border-radius: 3px;
+      color: #4d4d4d;
       font-size: 20px;
       outline: none;
       padding: 4px;

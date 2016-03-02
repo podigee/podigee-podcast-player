@@ -328,10 +328,12 @@
     .share {
       padding: 12px;
 
-      .share-copy-url {
+      .share-copy-url,
+      .share-embed-code {
         background: transparent;
         border: 1px solid #ccc;
         border-radius: 3px;
+        color: rgb(77, 77, 77);
         font-size: 20px;
         outline: none;
         padding: 4px;

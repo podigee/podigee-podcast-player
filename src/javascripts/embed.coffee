@@ -11,6 +11,7 @@ class Iframe
     if _.isEmpty(@configuration)
       @configuration.json_config = config
     @configuration.parentLocationHash = window.location.hash
+    @configuration.embedCode = @elem.outerHTML
 
     scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
     @url = "#{scriptPath}/podigee-podcast-player.html?id=#{@id}"

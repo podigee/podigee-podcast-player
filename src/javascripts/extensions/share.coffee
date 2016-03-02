@@ -49,6 +49,7 @@ class Share
     @context.currentTimeInSeconds = @app.player.currentTimeInSeconds
     @context.showUrlWithTime ?= false
     @context.updateContext = @updateContext
+    @context.embedCode = @app.episode.embedCode
 
   updateContext: =>
     @buildContext()
@@ -78,6 +79,7 @@ class Share
 
   bindEvents: () =>
     @panel.find('.share-copy-url').on 'focus', @copyUrlAction
+    @panel.find('.share-embed-code').on 'focus', @copyUrlAction
     @panel.find("[name='enable-start-at']").on 'change', @toggleStartAt
 
   copyUrlAction: (event) =>
@@ -107,6 +109,10 @@ class Share
         <input type="checkbox" pp-checked="showUrlWithTime" pp-on-change="updateContext">
         Start at
         <input type="text" pp-value="currentTime" disabled>
+      </p>
+      <p>
+        <h3>Embed player</h3>
+        <input class="share-embed-code" pp-value="embedCode">
       </p>
     </div>
     """
