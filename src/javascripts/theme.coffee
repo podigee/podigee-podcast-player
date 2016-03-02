@@ -65,7 +65,7 @@ class Theme
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
-      @app.sendHeightChange()
+      @app.sendSizeChange()
 
   changeActiveButton: (event) =>
     button = $(event.target)

@@ -68,7 +68,7 @@ class PodigeePodcastPlayer
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
-    window.setTimeout @sendHeightChange, 0
+    window.setTimeout @sendSizeChange, 0
     @bindWindowResizing()
 
   # initialize elements
@@ -155,7 +155,7 @@ class PodigeePodcastPlayer
 
   animationOptions: ->
     duration: 300
-    step: @sendHeightChange
+    step: _.debounce(@sendSizeChange, 50)
 
   activePanel: null
   togglePanel: (elem) =>
@@ -168,9 +168,9 @@ class PodigeePodcastPlayer
       elem.slideToggle(@animationOptions())
 
   bindWindowResizing: =>
-    $(window).on('resize', _.debounce(@sendHeightChange, 250));
+    $(window).on('resize', _.debounce(@sendSizeChange, 250))
 
-  sendHeightChange: =>
+  sendSizeChange: =>
     paddingTop = parseInt(@elem.css('padding-top'), 10)
     paddingBottom = parseInt(@elem.css('padding-bottom'), 10)
     newHeight = @elem.height() + paddingTop + paddingBottom
