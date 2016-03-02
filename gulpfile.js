@@ -27,20 +27,17 @@ var paths = {
   }
 };
 
-gulp.task('upload', function() {
-  awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
-  return gulp.src('build/**')
-    .pipe(s3(awsCredentials, {
-      uploadPath: "/podcast-player/",
-      headers: {'x-amz-acl': 'public-read'}
-    }))
-})
-
 gulp.task('stylesheets', function() {
   return gulp.src(paths.main_stylesheet)
     .pipe(sass({style: 'compressed'}))
     .pipe(gulp.dest('./build/stylesheets'))
     .pipe(gzip())
+    .pipe(gulp.dest('./build/stylesheets'))
+})
+
+gulp.task('stylesheets-dev', function() {
+  return gulp.src(paths.main_stylesheet)
+    .pipe(sass())
     .pipe(gulp.dest('./build/stylesheets'))
     .pipe(connect.reload())
 })
@@ -55,6 +52,16 @@ gulp.task('javascripts', function() {
     .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(gzip())
+    .pipe(gulp.dest('./build/javascripts'))
+})
+
+gulp.task('javascripts-dev', function() {
+  gulp.src(paths.main_javascript, {read: false})
+    .pipe(browserify({
+      transform: ['coffeeify'],
+      extensions: ['.coffee']
+    }))
+    .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(connect.reload())
 })
@@ -88,18 +95,20 @@ gulp.task('themes', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('default', ['stylesheets', 'javascripts', 'html', 'images', 'fonts', 'themes'])
+gulp.task('default', [
+  'stylesheets',
+  'javascripts',
+  'html',
+  'images',
+  'fonts',
+  'themes'
+])
 
 gulp.task('watch', function() {
-  // Watch .scss files
-  gulp.watch(paths.stylesheets, ['stylesheets'])
-  // Watch .js files
-  gulp.watch(paths.javascripts, ['javascripts'])
-  // Watch .html files
+  gulp.watch(paths.stylesheets, ['stylesheets-dev'])
+  gulp.watch(paths.javascripts, ['javascripts-dev'])
   gulp.watch(paths.html, ['html'])
-  // Watch images files
   gulp.watch(paths.images, ['images'])
-  // Watch theme files
   gulp.watch(paths.themes.html, ['themes'])
   gulp.watch(paths.themes.css, ['themes'])
 })
@@ -112,5 +121,16 @@ gulp.task('connect', function() {
   });
 });
 
+gulp.task('upload', function() {
+  awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
+  return gulp.src('build/**')
+    .pipe(s3(awsCredentials, {
+      uploadPath: "/podcast-player/",
+      headers: {'x-amz-acl': 'public-read'}
+    }))
+})
+
+gulp.task('deploy', ['default', 'upload'])
+
 // Serve
-gulp.task('serve', ['default', 'connect', 'watch']);
+gulp.task('serve', ['connect', 'watch']);
