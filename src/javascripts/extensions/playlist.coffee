@@ -3,6 +3,8 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Extension = require('../extension.coffee')
+
 class PlaylistItem
   constructor: (context, callback) ->
     @context = context
@@ -25,7 +27,7 @@ class PlaylistItem
     </li>
     """
 
-class Playlist
+class Playlist extends Extension
   @extension:
     name: 'Playlist'
     type: 'panel'
@@ -41,8 +43,7 @@ class Playlist
       @renderPanel()
       @renderButton()
 
-      @app.renderPanel(this)
-      @app.togglePanel(@panel) if @options.showOnStart
+      @app.theme.addExtension(this)
 
   defaultOptions:
     showOnStart: false
@@ -63,11 +64,6 @@ class Playlist
     @app.episode.chaptermarks = null
 
     @app.initializeExtensions()
-
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
 
   renderPanel: =>
     @panel = $(@panelHtml)

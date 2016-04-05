@@ -1,6 +1,8 @@
 $ = require('jquery')
 
-class ChromeCast
+Extension = require('../extension.coffee')
+
+class ChromeCast extends Extension
   @extension:
     name: 'ChromeCast'
     type: 'player'

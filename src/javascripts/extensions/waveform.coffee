@@ -1,7 +1,9 @@
 _ = require('lodash')
 Peaks = require('peaks.js')
 
-class Waveform
+Extension = require('../extension.coffee')
+
+class Waveform extends Extension
   @extension:
     name: 'Waveform'
     type: 'progress'

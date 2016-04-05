@@ -86,7 +86,25 @@ class Theme
     @buttons.append(button)
     button.on 'click', @changeActiveButton
 
-  addPanel: (panel) =>
-    @panels.append(panel)
+  addExtension: (extension) =>
+    @addButton(extension.button)
+    @panels.append(extension.panel)
+
+    if extension.name() == @app.options.startPanel
+      extension.button.trigger('click')
+
+  animationOptions: ->
+    duration: 300
+    step: _.debounce(@app.sendSizeChange, 50)
+
+  activePanel: null
+  togglePanel: (elem) =>
+    @activePanel.slideToggle(@animationOptions()) if @activePanel
+
+    if @activePanel == elem
+      @activePanel = null
+    else
+      @activePanel = elem
+      elem.slideToggle(@animationOptions())
 
 module.exports = Theme

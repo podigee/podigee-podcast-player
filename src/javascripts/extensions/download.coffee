@@ -3,7 +3,9 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
-class Download
+Extension = require('../extension.coffee')
+
+class Download extends Extension
   @extension:
     name: 'Download'
     type: 'panel'
@@ -21,7 +23,7 @@ class Download
     @renderPanel()
     @renderButton()
 
-    @app.renderPanel(this)
+    @app.theme.addExtension(this)
 
   defaultOptions:
     showOnStart: false
@@ -39,15 +41,10 @@ class Download
       newObject
     )
 
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
-
   renderPanel: =>
     @panel = $(@panelHtml)
     rivets.bind(@panel, @episode)
-    @panel.hide() unless @options.showOnStart
+    @panel.hide()
 
   buttonHtml:
     """

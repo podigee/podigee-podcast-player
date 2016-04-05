@@ -3,6 +3,7 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
 
 class TranscriptLine
@@ -28,7 +29,7 @@ class TranscriptLine
       </li>
     """
 
-class Transcript
+class Transcript extends Extension
   @extension:
     name: 'Transcript'
     type: 'panel'
@@ -46,8 +47,7 @@ class Transcript
       @renderPanel()
       @renderButton()
 
-      @app.renderPanel(this)
-      @app.togglePanel(@panel) if @options.showOnStart
+      @app.theme.addExtension(this)
       @bindEvents()
 
   defaultOptions:
@@ -105,11 +105,6 @@ class Transcript
 
         @activateLine(line)
         @deactivateAll(line)
-
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
 
   renderPanel: =>
     @panel = $(@panelHtml)

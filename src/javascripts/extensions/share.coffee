@@ -4,7 +4,9 @@ sightglass = require('sightglass')
 rivets = require('rivets')
 Uri = require('urijs')
 
-class Share
+Extension = require('../extension.coffee')
+
+class Share extends Extension
   @extension:
     name: 'Share'
     type: 'panel'
@@ -25,7 +27,7 @@ class Share
     @renderButton()
     @attachEvents()
 
-    @app.renderPanel(this)
+    @app.theme.addExtension(this)
 
   defaultOptions:
     showOnStart: false
@@ -62,15 +64,10 @@ class Share
     else
       @episode.url
 
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
-
   renderPanel: =>
     @panel = $(@panelHtml)
     rivets.bind(@panel, @context)
-    @panel.hide() unless @options.showOnStart
+    @panel.hide()
 
     @bindEvents()
 

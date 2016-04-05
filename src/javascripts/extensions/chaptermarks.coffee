@@ -4,6 +4,7 @@ sightglass = require('sightglass')
 rivets = require('rivets')
 
 Utils = require('../utils.coffee')
+Extension = require('../extension.coffee')
 
 class ChapterMark
   constructor: (data, callback) ->
@@ -31,7 +32,7 @@ class ChapterMark
     </li>
     """
 
-class ChapterMarks
+class ChapterMarks extends Extension
   @extension:
     name: 'ChapterMarks'
     type: 'panel'
@@ -47,7 +48,7 @@ class ChapterMarks
     @renderButton()
     @attachEvents()
 
-    @app.renderPanel(this)
+    @app.theme.addExtension(this)
 
   defaultOptions:
     showOnStart: false
@@ -56,14 +57,9 @@ class ChapterMarks
     time = event.data.start
     @app.player.media.currentTime = Utils.hhmmssToSeconds(time)
 
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
-
   renderPanel: =>
     @panel = $(@panelHtml)
-    @panel.hide() unless @options.showOnStart
+    @panel.hide()
     @chaptermarks.forEach((item, index, array) =>
       item.elem = new ChapterMark(item, @click).render()
 

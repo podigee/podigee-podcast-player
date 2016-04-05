@@ -141,10 +141,6 @@ class PodigeePodcastPlayer
   updateSpeedDisplay: () ->
     @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
-  renderPanel: (extension) =>
-    @theme.addButton(extension.button)
-    @theme.addPanel(extension.panel)
-
   initializeExtensions: () =>
     self = this
     @extensions = {}
@@ -152,20 +148,6 @@ class PodigeePodcastPlayer
     @theme.removePanels()
     PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
-
-  animationOptions: ->
-    duration: 300
-    step: _.debounce(@sendSizeChange, 50)
-
-  activePanel: null
-  togglePanel: (elem) =>
-    @activePanel.slideToggle(@animationOptions()) if @activePanel
-
-    if @activePanel == elem
-      @activePanel = null
-    else
-      @activePanel = elem
-      elem.slideToggle(@animationOptions())
 
   bindWindowResizing: =>
     $(window).on('resize', _.debounce(@sendSizeChange, 250))

@@ -3,7 +3,9 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
-class EpisodeInfo
+Extension = require('../extension.coffee')
+
+class EpisodeInfo extends Extension
   @extension:
     name: 'EpisodeInfo'
     type: 'panel'
@@ -19,20 +21,15 @@ class EpisodeInfo
     @renderPanel()
     @renderButton()
 
-    @app.renderPanel(this)
+    @app.theme.addExtension(this)
 
   defaultOptions:
     showOnStart: false
 
-  renderButton: =>
-    @button = $(@buttonHtml)
-    @button.on 'click', =>
-      @app.togglePanel(@panel)
-
   renderPanel: =>
     @panel = $(@panelHtml)
     rivets.bind(@panel, @episode)
-    @panel.hide() unless @options.showOnStart
+    @panel.hide()
 
   buttonHtml:
     """
