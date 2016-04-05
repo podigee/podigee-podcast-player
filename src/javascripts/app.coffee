@@ -163,6 +163,9 @@ class PodigeePodcastPlayer
     })
     window.parent.postMessage(resizeData, '*')
 
+  isInIframeMode: ->
+    @options.iframeMode == 'iframe'
+
 unless window.inEmbed
   new Embed()
 else

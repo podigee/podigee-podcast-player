@@ -77,6 +77,9 @@ class Configuration
     showMoreInfo: false
     theme: 'default'
     sslProxy: null
+    # Can be 'script' or 'iframe' depending on how the player is embedded
+    # Using a <iframe> tag is considered the default
+    iframeMode: 'iframe'
   }
 
   configureTemplating: =>

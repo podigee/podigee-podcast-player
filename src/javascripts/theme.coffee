@@ -62,7 +62,7 @@ class Theme
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
-    @panels.hide()
+    @panels.hide() unless @app.isInIframeMode()
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
@@ -94,24 +94,30 @@ class Theme
     if extension.name() == @app.options.startPanel
       extension.button.trigger('click')
 
+    if !@app.options.startPanel && @app.isInIframeMode()
+      @buttons.hide()
+      @panels.hide()
+
   animationOptions: ->
     duration: 300
     step: _.debounce(@app.sendSizeChange, 50)
 
   activePanel: null
   togglePanel: (elem) =>
-    if @activePanel
-      @activePanel.slideToggle(@animationOptions())
+    if @activePanel?
+      if @activePanel == elem
+        if !@app.isInIframeMode()
+          @activePanel.slideToggle(@animationOptions())
+          @panels.slideToggle(@animationOptions())
+          @activePanel = null
+      else
+        @activePanel.slideToggle(@animationOptions())
+        elem.slideToggle(@animationOptions())
+        @activePanel = elem
     else
-      @panels.slideToggle(@animationOptions())
-
-    if @activePanel == elem
-      @activePanel = null
-    else
-      @activePanel = elem
+      unless @app.isInIframeMode()
+        @panels.slideToggle(@animationOptions())
       elem.slideToggle(@animationOptions())
-
-    unless @activePanel?
-      @panels.slideToggle(@animationOptions())
+      @activePanel = elem
 
 module.exports = Theme
