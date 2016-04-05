@@ -10,7 +10,12 @@ class Configuration
 
     @frameOptions = Utils.locationToOptions(window.location.search)
 
-    @receiveConfiguration()
+    if @frameOptions.configuration
+      @configuration =
+        json_config: @frameOptions.configuration
+      @fetchJsonConfiguration()
+    else
+      @receiveConfiguration()
 
     @configureTemplating()
 
