@@ -62,6 +62,7 @@ class Theme
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
+    @panels.hide()
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
@@ -99,12 +100,18 @@ class Theme
 
   activePanel: null
   togglePanel: (elem) =>
-    @activePanel.slideToggle(@animationOptions()) if @activePanel
+    if @activePanel
+      @activePanel.slideToggle(@animationOptions())
+    else
+      @panels.slideToggle(@animationOptions())
 
     if @activePanel == elem
       @activePanel = null
     else
       @activePanel = elem
       elem.slideToggle(@animationOptions())
+
+    unless @activePanel?
+      @panels.slideToggle(@animationOptions())
 
 module.exports = Theme

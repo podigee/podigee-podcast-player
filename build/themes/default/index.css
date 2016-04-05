@@ -148,9 +148,10 @@
     color: #7a7a7a;
     font-size: 14px;
     font-weight: 300;
+    height: 400px;
     line-height: 18px; }
     .podcast-player .panels > div {
-      max-height: 400px;
+      height: 100%;
       overflow: hidden;
       padding: 0 0 0 12px;
       position: relative; }
@@ -159,7 +160,7 @@
   .podcast-player .panels .chaptermarks ul,
   .podcast-player .panels .playlist ul {
     display: block;
-    height: 300px;
+    height: calc(100% - 54px);
     margin: 0;
     padding: 0;
     overflow-y: scroll; }
@@ -211,8 +212,8 @@
     position: static; }
   .podcast-player .panels .episode-info {
     font-size: 16px;
-    max-height: 400px;
-    overflow-y: scroll;
+    height: calc(100% - 12px);
+    overflow-y: auto;
     padding: 0 12px; }
     .podcast-player .panels .episode-info .episode-title {
       font-size: 22px; }
@@ -233,9 +234,9 @@
       text-align: center;
       width: 100%; }
   .podcast-player .panels .transcript .transcript-text {
-    height: 340px;
+    height: calc(100% - 54px);
     list-style: none;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 0 12px 0 0;
     width: 100%; }
     .podcast-player .panels .transcript .transcript-text li {

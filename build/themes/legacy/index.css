@@ -145,9 +145,10 @@
     color: #fff;
     font-size: 14px;
     font-weight: 300;
+    height: 400px;
     line-height: 18px; }
     .podcast-player .panels > div {
-      max-height: 400px;
+      height: 100%;
       overflow: hidden;
       padding: 0 0 0 12px;
       position: relative; }
@@ -156,7 +157,7 @@
   .podcast-player .panels .chaptermarks ul,
   .podcast-player .panels .playlist ul {
     display: block;
-    height: 300px;
+    height: calc(100% - 54px);
     margin: 0;
     padding: 0;
     overflow-y: scroll; }
@@ -210,7 +211,7 @@
     position: static; }
   .podcast-player .panels .episode-info {
     font-size: 16px;
-    max-height: 400px;
+    height: calc(100% - 12px);
     overflow-y: scroll;
     padding: 0 12px; }
     .podcast-player .panels .episode-info .episode-title {
@@ -220,7 +221,8 @@
       font-weight: 300; }
   .podcast-player .panels .share {
     padding: 12px; }
-    .podcast-player .panels .share .share-copy-url {
+    .podcast-player .panels .share .share-copy-url,
+    .podcast-player .panels .share .share-embed-code {
       background: transparent;
       border: 1px solid #ccc;
       border-radius: 3px;
@@ -231,7 +233,7 @@
       text-align: center;
       width: 100%; }
   .podcast-player .panels .transcript .transcript-text {
-    height: 340px;
+    height: calc(100% - 54px);
     list-style: none;
     overflow-y: scroll;
     padding: 0 12px 0 0;
