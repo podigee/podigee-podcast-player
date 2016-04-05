@@ -63,21 +63,17 @@ We aim to always support the latest 2-3 versions of modern browsers. Internet Ex
 ```javascript
 window.playerConfiguration = {
   "options": {
-    "theme": "default"
+    "theme": "default",
+    "sslProxy": "https://example.com/ssl-proxy/",
+    "startPanel": "Playlist"
   },
   "extensions": {
-    "ChapterMarks": {
-      "showOnStart": false
-    },
-    "EpisodeInfo": {
-      "showOnStart": false
-    },
+    "ChapterMarks": {},
+    "EpisodeInfo": {},
     "Playlist": {
-      "showOnStart": false,
       "disabled": true
     },
     "Transcript": {
-      "showOnStart": false,
       "data": "https://cdn.podigee.com/ppp/samples/transcript.txt"
     },
     "Waveform": {
@@ -138,6 +134,8 @@ The configuration passed into the player either as a Javascript Object or as a J
 ### General options
 
 `options.theme` - The name of the theme to use (defaults to `default`)
+`options.startPanel` - The name of the panel which should be opened on start
+`options.sslProxy` - URI of an application capable of proxying non-SSL requests
 
 ### Podcast
 

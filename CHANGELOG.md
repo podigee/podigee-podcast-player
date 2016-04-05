@@ -1,5 +1,22 @@
 # Changelog
 
+## 2016-04-05
+
+### Added
+
+- Player now chooses a suitable format for playing ([47077](https://github.com/podigee/podigee-podcast-player/commit/470771230adf31a175f877b0420e6b9bf16cd158))
+- iframe only mode ([2776f](https://github.com/podigee/podigee-podcast-player/commit/2776f6066752cf28be73d02e4316270ec3895e8b))
+- introduced `startPanel` configuration to choose panel shown by default more easily
+
+### Changed
+
+- removed `showOnStart` configuration option for each extension
+- refactored extension rendering
+
+### Fixed
+
+- Race condition when panel was opened on start
+
 ## 2016-03-02
 
 ### Added
