@@ -2,9 +2,10 @@
   background-color: #1b1b1b;
   color: #222;
   font-family: Helvetica;
+  min-width: 100%;
   overflow: hidden;
   position: relative;
-  width: 100%; }
+  width: 1px; }
   .podcast-player, .podcast-player *, .podcast-player *:before, .podcast-player *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

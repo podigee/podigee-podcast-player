@@ -10,9 +10,10 @@
   background: linear-gradient(to bottom, rgb(84, 84, 84) 0%, rgb(38, 38, 38) 100%);
   color: $default-color;
   font-family: Helvetica, Arial, sans-serif;
+  min-width: 100%;
   overflow: hidden;
   position: relative;
-  width: 100%;
+  width: 1px;
 
   a {
     color: $default-color;

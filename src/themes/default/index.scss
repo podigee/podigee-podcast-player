@@ -10,9 +10,10 @@
   background-color: $background-color;
   color: #222;
   font-family: Helvetica;
+  min-width: 100%;
   overflow: hidden;
   position: relative;
-  width: 100%;
+  width: 1px;
 
   a {
     color: $highlight1;

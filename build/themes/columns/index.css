@@ -1,6 +1,8 @@
 .columns-podcast-player {
   font-family: Helvetica;
-  height: 360px; }
+  height: 360px;
+  min-width: 100%;
+  width: 1px; }
   .columns-podcast-player h3 {
     font-weight: 300;
     margin: 0 0 18px; }

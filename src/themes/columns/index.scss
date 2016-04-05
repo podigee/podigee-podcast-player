@@ -3,6 +3,8 @@
 
   font-family: Helvetica;
   height: $image-width + 60;
+  min-width: 100%;
+  width: 1px;
 
   h3 {
     font-weight: 300;
