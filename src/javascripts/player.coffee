@@ -1,6 +1,7 @@
 $ = require('jquery')
 _ = require('lodash')
 
+AudioFile = require('./audio_file.coffee')
 Utils = require('./utils.coffee')
 
 class Player
@@ -8,26 +9,54 @@ class Player
     self = this
     self.media = elem
     self.media.preload = "metadata"
-    @options = @app.options
-    @attachEvents()
+    @loadFile()
     @setInitialTime()
     @setCurrentTime()
     @app.init(self)
 
   jumpBackward: (seconds) =>
-    seconds = seconds || @options.backwardSeconds
+    seconds = seconds || @app.options.backwardSeconds
     @media.currentTime = @media.currentTime - seconds
 
   jumpForward: (seconds) =>
-    seconds = seconds || @options.forwardSeconds
+    seconds = seconds || @app.options.forwardSeconds
     @media.currentTime = @media.currentTime + seconds
 
   changePlaySpeed: () =>
-    nextRateIndex = @options.playbackRates.indexOf(@options.currentPlaybackRate) + 1
-    if nextRateIndex >= @options.playbackRates.length
+    nextRateIndex = @app.options.playbackRates.indexOf(@app.options.currentPlaybackRate) + 1
+    if nextRateIndex >= @app.options.playbackRates.length
       nextRateIndex = 0
 
-    @setPlaySpeed(@options.playbackRates[nextRateIndex])
+    @setPlaySpeed(@app.options.playbackRates[nextRateIndex])
+
+  loadFile: =>
+    files = _.map @app.episode.media, (uri, format) =>
+      new AudioFile(format, uri, @media)
+
+    files = @filterUnplayable(files)
+    files = @sortByPlayability(files)
+    files = @sortByFormat(files)
+
+    @media.src = files[0].uri
+
+  # filter out unplayable files
+  filterUnplayable: (files) ->
+    _.filter files, (file) -> file.playable != ''
+
+  # Sort files by probability of the browser to be able to play them
+  sortByPlayability: (files) ->
+    _.sortBy files, (file) ->
+      return 1 if file.playable == ''
+      return 1 if file.playable == 'maybe' && file.playable == 'probably'
+      return -1 if file.playable == 'probably'
+      return 0
+
+  # prefer bandwidth saving formats before others
+  sortByFormat: (files) ->
+    _.sortBy files, (file) ->
+      return -100 if file.playable == 'probably' && file.format == 'opus'
+      return -90 if file.playable == 'probably' && file.format == 'm4a'
+      return 0
 
   attachEvents: =>
     $(@media).on('timeupdate', @setCurrentTime)
@@ -40,7 +69,7 @@ class Player
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
 
   setPlaySpeed: (speed) =>
-    @media.playbackRate = @options.currentPlaybackRate = speed
+    @media.playbackRate = @app.options.currentPlaybackRate = speed
 
   # private
 
