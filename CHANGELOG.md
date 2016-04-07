@@ -1,5 +1,20 @@
 # Changelog
 
+## 2016-04-07
+
+### Added
+
+- Episode titles are now linked in the 'out-of-the-box' themes
+- Clammr support (https://www.clammr.com)
+
+### Changed
+
+- Embed URL is only shown when player is configured with a JSON URL
+
+### Fixed
+
+- Playlist behavior is now less error prone and can handle more than just mp3 feeds
+
 ## 2016-04-05
 
 ### Added
