@@ -41,7 +41,7 @@ class Configuration
       url: @configuration.json_config
     ).done((data) =>
       self.configuration = _.extend(self.configuration, data)
-      self.setConfigurations()
+      self.setConfigurations(true)
     ).error((xhr, status, trace) -> 
       console.debug("[podigee podcast player] Error while fetching player configuration:")
       console.debug("xhr:", xhr)
@@ -49,7 +49,7 @@ class Configuration
       console.debug("trace:", trace)
     )
 
-  setConfigurations: =>
+  setConfigurations: (viaJSON) =>
     @app.podcast = @configuration.podcast || {}
 
     @app.episode = @configuration.episode
@@ -64,6 +64,7 @@ class Configuration
 
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
+    @app.options.configViaJSON = viaJSON
 
     @loader.resolve()
 

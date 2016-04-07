@@ -73,6 +73,7 @@ class Share extends Extension
     @context.showUrlWithTime ?= false
     @context.updateContext = @updateContext
     @context.embedCode = @app.episode.embedCode
+    @context.showEmbedUrl = @app.options.configViaJSON
 
   updateContext: =>
     @buildContext()
@@ -120,19 +121,21 @@ class Share extends Extension
         <li><a pp-href="shareLinks.email" class="share-link-email" target="_blank">Email</a></li>
         <li><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="http://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
       </ul>
-      <p>
+      <div>
         <h3>Copy episode link</h3>
-        <input class="share-copy-url" pp-value="url">
-      </p>
-      <p>
+        <p>
+          <input class="share-copy-url" pp-value="url">
+        </p>
+      </div>
+      <div>
         <input type="checkbox" pp-checked="showUrlWithTime" pp-on-change="updateContext">
         Start at
-        <input type="text" pp-value="currentTime" disabled>
-      </p>
-      <p>
+        <input type="text" pp-value="currentTime" disabled="disabled">
+      </div>
+      <div pp-show="showEmbedUrl">
         <h3>Embed player</h3>
-        <input class="share-embed-code" pp-value="embedCode">
-      </p>
+        <input class="share-embed-code" pp-value="embedCode"/>
+      </div>
     </div>
     """
 
