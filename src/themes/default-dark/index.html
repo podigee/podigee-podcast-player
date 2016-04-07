@@ -9,7 +9,10 @@
     </div>
 
     <div class="episode-basic-info">
-      <div class="episode-title">{ title }</div>
+      <div class="episode-title">
+        <a pp-href="url" pp-if="url">{ title }</a>
+        <span pp-unless="url">{ title }</a>
+      </div>
       <div class="episode-subtitle">{ subtitle }</div>
     </div>
 

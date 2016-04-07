@@ -6,7 +6,10 @@
     <div class="info">
       <img pp-src="coverUrl" />
       <div class="info-overlay">
-        <div class="title">{ title }</div>
+        <div class="title">
+          <a pp-href="url" pp-if="url">{ title }</a>
+          <span pp-unless="url">{ title }</a>
+        </div>
         <div class="subtitle">{ subtitle }</div>
       </div>
     </div>
