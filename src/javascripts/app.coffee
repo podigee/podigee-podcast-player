@@ -73,10 +73,14 @@ class PodigeePodcastPlayer
 
   # initialize elements
 
-  togglePlayState: (elem) =>
-    @elem.toggleClass('playing')
-    @theme.playPauseElement.toggleClass('fa-play')
-    @theme.playPauseElement.toggleClass('fa-pause')
+  togglePlayState: () =>
+    return unless @player?
+    if @player.playing
+      @elem.addClass('playing')
+      @theme.playPauseElement.addClass('fa-pause').removeClass('fa-play')
+    else
+      @elem.removeClass('playing')
+      @theme.playPauseElement.addClass('fa-play').removeClass('fa-pause')
 
   # event handlers
 
@@ -92,7 +96,7 @@ class PodigeePodcastPlayer
   triggerEnded: =>
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
-    @togglePlayState(this)
+    @togglePlayState()
 
   triggerError: =>
     @extensions.ProgressBar.hideBuffering()
@@ -122,11 +126,7 @@ class PodigeePodcastPlayer
       if @extensions.ChromeCast && @extensions.ChromeCast.active
         @extensions.ChromeCast.togglePlayState()
       else
-        if @player.media.paused
-          @player.media.play()
-        else
-          @player.media.pause()
-      @togglePlayState(this)
+        @player.playPause()
 
     @theme.backwardElement.click =>
       @player.jumpBackward()

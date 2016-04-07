@@ -50,26 +50,29 @@ class Playlist extends Extension
     disabled: false
 
   click: (event) =>
-    item = event.data
-    @app.episode.title = item.title
-    @app.episode.subtitle = item.subtitle
-    @app.episode.description = item.description
-    @app.episode.media.mp3 = item.enclosure
-    @app.episode.media.m4a = null
-    @app.episode.media.ogg = null
-    @app.episode.media.opus = null
-    @app.episode.url = item.link
-
-    @app.episode.transcript = null
-    @app.episode.chaptermarks = null
+    @updateEpisodeData(event.data)
 
     @app.initializeExtensions()
+    @app.player.loadFile()
+
+  updateEpisodeData: (feedItem) ->
+    @app.episode.title = feedItem.title
+    @app.episode.subtitle = feedItem.subtitle
+    @app.episode.description = feedItem.description
+    @app.episode.media =
+      mp3: feedItem.enclosure.mp3
+      m4a: feedItem.enclosure.m4a
+      ogg: feedItem.enclosure.ogg
+      opus: feedItem.enclosure.opus
+    @app.episode.url = feedItem.href
+    @app.episode.transcript = null
+    @app.episode.chaptermarks = null
 
   renderPanel: =>
     @panel = $(@panelHtml)
 
     list = @panel.find('ul')
-    $(@feed.items).each (index, feedItem) =>
+    _.each @feed.items, (feedItem, index) =>
       playlistItem = new PlaylistItem(feedItem, @click).render()
       list.append(playlistItem)
 

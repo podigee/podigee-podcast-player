@@ -30,6 +30,7 @@ class Player
     @setPlaySpeed(@app.options.playbackRates[nextRateIndex])
 
   loadFile: =>
+    @pause()
     files = _.map @app.episode.media, (uri, format) =>
       new AudioFile(format, uri, @media)
 
@@ -70,6 +71,26 @@ class Player
 
   setPlaySpeed: (speed) =>
     @media.playbackRate = @app.options.currentPlaybackRate = speed
+
+  playPause: =>
+    if @media.paused
+      @play()
+    else
+      @pause()
+
+  play: () ->
+    return unless @media.paused
+    @media.play()
+    @playing = true
+    @app.togglePlayState()
+
+  pause: () ->
+    return if @media.paused
+    @media.pause()
+    @playing = false
+    @app.togglePlayState()
+
+  playing: false
 
   # private
 
