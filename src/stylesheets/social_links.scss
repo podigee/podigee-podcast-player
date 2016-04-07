@@ -5,16 +5,19 @@
 
   li {
     display: inline-block;
+    height: 48px;
     padding: 0 5px;
+    overflow: hidden;
 
     &:hover a:after {
       background: rgba(0, 0, 0, 0.2);
-      bottom: -8px;
+      bottom: -16px;
       content: '';
       display: block;
       height: 5px;
       position: absolute;
       width: 100%;
+      z-index: 10;
     }
   }
 
@@ -37,6 +40,8 @@
     color: #fff;
     font-size: 2rem;
     letter-spacing: normal;
+    top: 8px;
+    position: relative;
   }
 
   .share-link-facebook:before {
@@ -67,5 +72,19 @@
     background: rgb(153, 153, 153);
     content: '\f003';
     padding: 8px 8px;
+  }
+
+  .share-link-clammr {
+    border-radius: 3px;
+    overflow: hidden;
+
+    &:after {
+      bottom: 0px !important;
+    }
+
+    img {
+      height: 48px;
+      width: 48px;
+    }
   }
 }

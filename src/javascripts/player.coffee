@@ -12,6 +12,7 @@ class Player
     @loadFile()
     @setInitialTime()
     @setCurrentTime()
+    @attachEvents()
     @app.init(self)
 
   jumpBackward: (seconds) =>

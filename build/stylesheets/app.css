@@ -26,15 +26,18 @@ body {
   text-align: center; }
   .panels .share-social-links li {
     display: inline-block;
-    padding: 0 5px; }
+    height: 48px;
+    padding: 0 5px;
+    overflow: hidden; }
     .panels .share-social-links li:hover a:after {
       background: rgba(0, 0, 0, 0.2);
-      bottom: -8px;
+      bottom: -16px;
       content: '';
       display: block;
       height: 5px;
       position: absolute;
-      width: 100%; }
+      width: 100%;
+      z-index: 10; }
   .panels .share-social-links a {
     color: transparent;
     font-size: 1px;
@@ -47,7 +50,9 @@ body {
     border-radius: 3px;
     color: #fff;
     font-size: 2rem;
-    letter-spacing: normal; }
+    letter-spacing: normal;
+    top: 8px;
+    position: relative; }
   .panels .share-social-links .share-link-facebook:before {
     background: #3b5998;
     content: '\f09a';
@@ -68,6 +73,14 @@ body {
     background: #999999;
     content: '\f003';
     padding: 8px 8px; }
+  .panels .share-social-links .share-link-clammr {
+    border-radius: 3px;
+    overflow: hidden; }
+    .panels .share-social-links .share-link-clammr:after {
+      bottom: 0px !important; }
+    .panels .share-social-links .share-link-clammr img {
+      height: 48px;
+      width: 48px; }
 
 .panels .download .download-icon {
   display: block;
