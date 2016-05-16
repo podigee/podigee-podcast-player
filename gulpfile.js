@@ -104,6 +104,15 @@ gulp.task('default', [
   'themes'
 ])
 
+gulp.task('dev', [
+  'stylesheets-dev',
+  'javascripts-dev',
+  'html',
+  'images',
+  'fonts',
+  'themes'
+])
+
 gulp.task('watch', function() {
   gulp.watch(paths.stylesheets, ['stylesheets-dev'])
   gulp.watch(paths.javascripts, ['javascripts-dev'])
