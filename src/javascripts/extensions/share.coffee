@@ -34,7 +34,7 @@ class Share extends Extension
 
   shareLinks: (currentTimeInSeconds) =>
     url = encodeURI(@shareUrl())
-    fileUrl = encodeURI(@app.player.media.src)
+    fileUrl = @audioFileUrl()
     title = encodeURI(@episode.title)
     coverUrl = encodeURI(@episode.coverUrl)
 
@@ -47,6 +47,8 @@ class Share extends Extension
       whatsapp: "whatsapp://send?text=#{title}: #{url}"
 
   clammrUrl: (title, coverUrl, url, fileUrl, time) ->
+    return unless fileUrl
+
     startTime = if time > 24
       (time - 24) * 1000
     else
@@ -61,6 +63,10 @@ class Share extends Extension
       &extendedUrl=#{url}
       &audioStartTime=#{startTime}
     """
+
+  audioFileUrl: () ->
+    url = @app.episode.media.mp3 || @app.episode.media.m4a
+    encodeURI(url)
 
   buildContext: =>
     @context ?= {}
@@ -117,7 +123,7 @@ class Share extends Extension
         <li><a pp-href="shareLinks.twitter" class="share-link-twitter" target="_blank">Twitter</a></li>
         <li><a pp-href="shareLinks.whatsapp" class="share-link-whatsapp" target="_blank">Whatsapp</a></li>
         <li><a pp-href="shareLinks.email" class="share-link-email" target="_blank">Email</a></li>
-        <li><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="http://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
+        <li pp-if="shareLinks.clammr"><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="http://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
       </ul>
       <div>
         <h3>Copy episode link</h3>
