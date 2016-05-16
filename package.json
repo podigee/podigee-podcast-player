@@ -39,7 +39,7 @@
     "gulp-gzip": "^1.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-s3": "^0.3.0",
-    "gulp-sass": "^2.0.4",
+    "gulp-sass": "^2.3.1",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.5",
