@@ -366,7 +366,9 @@
       }
     }
   }
+}
 
+.podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
     .cover-image {
       border: 12px solid $background-color;
@@ -427,3 +429,14 @@
   }
 }
 
+.podcast-player.mode-iframe {
+  @media (max-width: $mobile-breakpoint) {
+    .cover-image {
+      display: none;
+    }
+
+    .buttons {
+      right: 0;
+    }
+  }
+}

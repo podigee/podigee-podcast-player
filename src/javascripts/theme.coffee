@@ -17,6 +17,7 @@ class Theme
     rivets.bind(@elem, @context)
     $(@app.elemClass).replaceWith(@elem)
 
+    @addEmbedModeClass()
     @findElements()
     @bindCoverLoad()
 
@@ -49,6 +50,10 @@ class Theme
       media: 'all'
 
     $('head').append(link)
+
+  addEmbedModeClass: ->
+    modeClass = "mode-#{@app.options.iframeMode}"
+    @elem.addClass(modeClass)
 
   findElements: ->
     @audioElement = @elem.find('audio')

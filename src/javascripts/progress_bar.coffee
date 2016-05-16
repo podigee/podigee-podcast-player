@@ -33,6 +33,10 @@ class ProgressBar
 
     @updateTime()
 
+  updateBarWidths: () =>
+    @updatePlayed()
+    @updateLoaded()
+
   updateTime: () =>
     time = if @timeMode == 'countup'
       prefix = ''
