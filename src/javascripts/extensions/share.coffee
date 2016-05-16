@@ -36,18 +36,17 @@ class Share extends Extension
     url = encodeURI(@shareUrl())
     fileUrl = encodeURI(@app.player.media.src)
     title = encodeURI(@episode.title)
-    description = encodeURI(@episode.description)
     coverUrl = encodeURI(@episode.coverUrl)
 
     shareLinks =
-      clammr: @clammrUrl(title, description, coverUrl, url, fileUrl, currentTimeInSeconds)
+      clammr: @clammrUrl(title, coverUrl, url, fileUrl, currentTimeInSeconds)
       email: "mailto:?subject=Podcast: #{title}&body=#{url}"
       facebook: "https://www.facebook.com/sharer/sharer.php?u=#{url}&t=#{title}"
       googleplus: "https://plus.google.com/share?url=#{url}"
       twitter: "https://twitter.com/intent/tweet?url=#{url}i&text=#{title}"
       whatsapp: "whatsapp://send?text=#{title}: #{url}"
 
-  clammrUrl: (title, description, coverUrl, url, fileUrl, time) ->
+  clammrUrl: (title, coverUrl, url, fileUrl, time) ->
     startTime = if time > 24
       (time - 24) * 1000
     else
@@ -57,7 +56,6 @@ class Share extends Extension
       ?audioUrl=#{fileUrl}
       &referralName="Podigee Podcast Player"
       &title=#{title}
-      &description=#{description}
       &imageUrl=#{coverUrl}
       &attributeUrl=#{url}
       &extendedUrl=#{url}
