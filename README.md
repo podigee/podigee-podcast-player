@@ -60,6 +60,10 @@ We aim to always support the latest 2-3 versions of modern browsers. Internet Ex
 
 ## Usage
 
+### Configuration
+
+Either put it into the same page the player should be embedded into and reference it in the embed code as shown in the *inline* example, or provide it via a JSON file to the embed code as shown in the *remote* example.
+
 ```javascript
 window.playerConfiguration = {
   "options": {
@@ -123,9 +127,37 @@ window.playerConfiguration = {
 }
 ```
 
+### Inline
+
+`data-configuration` should be set to the JS variable name you saved the configuration to.
+
 ```html
-<script class="podigee-podcast-player" src="cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+<script class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
 ```
+
+### Remote
+
+`data-configuration` should be set to a URL to a JSON configuration file as detailed above.
+
+```html
+<script class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="https://example.com/my-podcast-episode.json"></script>
+```
+
+### Simple Iframe
+
+If you can't use a `<script>` tag to embed the player, you can also use an `<iframe>` directly like this:
+
+```html
+iframe {
+  border: none;
+  height: 500px;
+  width: 100%;
+}
+
+<iframe class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/podigee-podcast-player.html?configuration=https://example.com/my-podcast-episode.json"></script>
+```
+
+Please note that with this method you need to either specify a `startPanel` to show by default and adjust the iframe height accordingly or disable all extensions to just show the player.
 
 ## Configuration options
 
