@@ -7,7 +7,11 @@ class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     config = $(@elem).data('configuration')
-    @configuration = window[config] || {}
+    @configuration = if typeof config == 'string'
+      window[config] || {}
+    else
+      config
+
     if _.isEmpty(@configuration)
       @configuration.json_config = config
     @configuration.parentLocationHash = window.location.hash
