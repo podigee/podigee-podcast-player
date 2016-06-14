@@ -1,5 +1,20 @@
 # Changelog
 
+## 2016-06-14
+
+### Fixed
+
+- Passing JSON configuration directly through the data-configuration attribute
+- Loading bar was always showing on Safari
+- clammr integration was not using https URLs
+
+## 2016-05-16
+
+### Fixed
+
+- only show clammr button if there is something to share
+- Improve responsive behaviour
+
 ## 2016-04-07
 
 ### Added
