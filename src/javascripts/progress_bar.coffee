@@ -18,6 +18,7 @@ class ProgressBar
     @render()
     @findElements()
     @bindEvents()
+    @hideBuffering()
 
   showBuffering: () ->
     @bufferingElement.show()
