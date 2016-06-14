@@ -54,7 +54,7 @@ class Share extends Extension
     else
       0
     popupUrl = """
-      http://www.clammr.com/app/clammr/crop
+      https://www.clammr.com/app/clammr/crop
       ?audioUrl=#{fileUrl}
       &referralName="Podigee Podcast Player"
       &title=#{title}
@@ -123,7 +123,7 @@ class Share extends Extension
         <li><a pp-href="shareLinks.twitter" class="share-link-twitter" target="_blank">Twitter</a></li>
         <li><a pp-href="shareLinks.whatsapp" class="share-link-whatsapp" target="_blank">Whatsapp</a></li>
         <li><a pp-href="shareLinks.email" class="share-link-email" target="_blank">Email</a></li>
-        <li pp-if="shareLinks.clammr"><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="http://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
+        <li pp-if="shareLinks.clammr"><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="https://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
       </ul>
       <div>
         <h3>Copy episode link</h3>
