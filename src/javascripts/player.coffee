@@ -40,6 +40,7 @@ class Player
     files = @sortByFormat(files)
 
     @media.src = files[0].uri
+    @setDuration()
 
   # filter out unplayable files
   filterUnplayable: (files) ->
@@ -69,6 +70,13 @@ class Player
   setCurrentTime: =>
     @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+
+  setDuration: =>
+    window.setInterval ((t) =>
+      return unless @media.readyState > 0
+      @app.episode.duration = Utils.secondsToHHMMSS(@media.duration)
+      clearInterval(t)
+    ), 500
 
   setPlaySpeed: (speed) =>
     @media.playbackRate = @app.options.currentPlaybackRate = speed
