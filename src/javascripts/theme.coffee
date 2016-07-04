@@ -9,8 +9,8 @@ class Theme
     @themeName = @app.options.theme
     @html = @app.options.themeHtml
     @css = @app.options.themeCss
-    @loadCustomHtml()
-    @loadCustomCss()
+    @loadHtml()
+    @loadCss()
 
   render: =>
     @elem = $(@html)
@@ -23,7 +23,7 @@ class Theme
 
     return @elem
 
-  loadCustomHtml: () =>
+  loadHtml: () =>
     loaded = $.Deferred()
 
     self = this
@@ -40,16 +40,22 @@ class Theme
 
     @loaded = loaded.promise()
 
-  loadCustomCss: =>
+  loadCss: =>
     @css ?= "themes/#{@themeName}/index.css"
 
-    link = $('<link>').attr
-      href: @css
-      rel: 'stylesheet'
-      type: 'text/css'
-      media: 'all'
+    if @css.match('^.*\.css')
+      style = $('<link>').attr
+        href: @css
+        rel: 'stylesheet'
+        type: 'text/css'
+        media: 'all'
+    else
+      style = $('<style>').attr
+        type: 'text/css'
+        media: 'all'
+      style.append(@css)
 
-    $('head').append(link)
+    $('head').append(style)
 
   addEmbedModeClass: ->
     modeClass = "mode-#{@app.options.iframeMode}"
