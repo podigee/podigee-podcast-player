@@ -8,8 +8,7 @@
 
     <div class="episode-basic-info">
       <div class="episode-title">
-        <a pp-if="url" pp-href="url" target="_parent">{ title }</a>
-        <span pp-unless="url">{ title }</a>
+        <span>{ title }</span>
       </div>
       <div class="episode-subtitle">{ subtitle }</div>
     </div>
@@ -19,11 +18,8 @@
       <button class="forward-button"><i class="fa fa-forward" title="Forward 30s"></i></button>
       <button class="speed-toggle" title="Playback speed">1x</button>
     </div>
-
-    <div class="buttons"></div>
+    <div class="duration">{ duration }</div>
 
     <progressbar/>
   </div>
-
-  <div class="panels"></div>
 </div>

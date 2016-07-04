@@ -42,7 +42,7 @@
 
   .episode-basic-info {
     font-weight: 300;
-    height: 100px;
+    height: 90px;
     padding: 23px $default-padding 0;
     position: relative;
     overflow: hidden;
@@ -89,7 +89,7 @@
   }
 
   .controls-advanced {
-    bottom: 13px;
+    top: 68px;
     display: none;
     left: 155px;
     position: absolute;
@@ -112,6 +112,21 @@
     display: block;
   }
 
+  .duration {
+    color: $dark-grey;
+    display: inline-block;
+    font-size: 14px;
+    opacity: 1;
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    transition: opacity 1s;
+  }
+
+  &.playing .duration {
+    opacity: 0;
+  }
+
   .progress-bar {
     clear: both;
     overflow: hidden;
@@ -124,7 +139,7 @@
       left: 92px;
       position: absolute;
       text-align: left;
-      top: 77px;
+      top: 70px;
       width: 70px;
     }
 

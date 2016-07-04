@@ -27,7 +27,7 @@
     position: relative; }
   .podcast-player .episode-basic-info {
     font-weight: 300;
-    height: 100px;
+    height: 90px;
     padding: 23px 12px 0;
     position: relative;
     overflow: hidden; }
@@ -60,7 +60,7 @@
       .podcast-player .controls .play-button.fa-pause {
         padding-left: 1px; }
   .podcast-player .controls-advanced {
-    bottom: 13px;
+    top: 68px;
     display: none;
     left: 155px;
     position: absolute; }
@@ -73,6 +73,17 @@
       cursor: pointer; }
   .podcast-player.playing .controls-advanced {
     display: block; }
+  .podcast-player .duration {
+    color: rgba(200, 200, 200, 0.5);
+    display: inline-block;
+    font-size: 14px;
+    opacity: 1;
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    transition: opacity 1s; }
+  .podcast-player.playing .duration {
+    opacity: 0; }
   .podcast-player .progress-bar {
     clear: both;
     overflow: hidden; }
@@ -84,7 +95,7 @@
       left: 92px;
       position: absolute;
       text-align: left;
-      top: 77px;
+      top: 70px;
       width: 70px; }
     .podcast-player .progress-bar .progress-bar-time-played:hover {
       color: #00aeef; }
