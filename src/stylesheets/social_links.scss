@@ -46,31 +46,33 @@
 
   .share-link-facebook:before {
     background: rgb(59, 89, 152);
-    content: '\f09a';
+    content: $icon-facebook;
     padding: 8px 14px;
   }
 
   .share-link-googleplus:before {
     background: rgb(221, 75, 57);
-    content: '\f0d5';
-    padding: 8px 9px;
+    font-size: 1.6rem;
+    content: $icon-google-plus;
+    top: 11px;
+    padding: 11px 9px;
   }
 
   .share-link-twitter:before {
     background: rgb(0, 172, 237);
-    content: '\f099';
+    content: $icon-twitter;
     padding: 8px 9px;
   }
 
   .share-link-whatsapp:before {
     background: rgb(67, 216, 84);
-    content: '\f232';
+    content: $icon-whatsapp;
     padding: 8px 10px;
   }
 
   .share-link-email:before {
     background: rgb(153, 153, 153);
-    content: '\f003';
+    content: $icon-mail_outline;
     padding: 8px 8px;
   }
 

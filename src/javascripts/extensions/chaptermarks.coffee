@@ -90,7 +90,7 @@ class ChapterMarks extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-bookmark chaptermarks-button" title="Show chaptermarks"></button>
+    <button class="chaptermarks-button" title="Show chaptermarks"></button>
     """
 
   panelHtml:

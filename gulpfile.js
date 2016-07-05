@@ -20,7 +20,7 @@ var paths = {
   javascripts: ['./src/javascripts/**/*.coffee'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
   images: ['./src/images/**'],
-  fonts: ['./vendor/fonts/**'],
+  fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
     html: ['./src/themes/**/index.html'],
     css: ['./src/themes/**/*.scss']

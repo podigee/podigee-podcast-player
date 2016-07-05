@@ -48,14 +48,14 @@ class Download extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-cloud-download episode-download-button" title="Download episode"></button>
+    <button class="download-button" title="Download episode"></button>
     """
 
   panelHtml:
     """
     <div class="download">
       <h1 class="download-title">Download episode</h1>
-      <div class="download-icon"></div>
+      <div class="icon icon-download"></div>
       <ul class="download-links">
         <li pp-each-link="downloadLinks">
           <a pp-href="link.url" pp-download="link.filename" pp-class="link.cssClass" target="_blank">{ link.type }</a>

@@ -113,7 +113,7 @@ class Transcript extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-align-justify transcript-button" title="Show transcript"></button>
+    <button class="transcript-button" title="Show transcript"></button>
     """
 
   panelHtml:

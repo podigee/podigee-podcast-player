@@ -1,0 +1,29 @@
+.chaptermarks-button {
+  @extend .icon;
+  @extend .icon-chaptermarks;
+}
+
+.download-button {
+  @extend .icon;
+  @extend .icon-download;
+}
+
+.episode-info-button {
+  @extend .icon;
+  @extend .icon-episode-info;
+}
+
+.playlist-button {
+  @extend .icon;
+  @extend .icon-playlist;
+}
+
+.share-button {
+  @extend .icon;
+  @extend .icon-share;
+}
+
+.transcript-button {
+  @extend .icon;
+  @extend .icon-transcript;
+}

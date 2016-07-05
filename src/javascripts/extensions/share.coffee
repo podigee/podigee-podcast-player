@@ -110,7 +110,7 @@ class Share extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-share-alt episode-share-button" title="Share episode URL"></button>
+    <button class="share-button" title="Share episode URL"></button>
     """
 
   panelHtml:

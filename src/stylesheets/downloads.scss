@@ -1,16 +1,8 @@
 .panels .download {
-  .download-icon {
-    @extend .icon;
-
+  .icon-download {
     display: block;
     font-size: 3rem;
     text-align: center;
-
-    &:before {
-      //background: rgb(59, 89, 152);
-      content: '\f0ed';
-      padding: 8px 14px;
-    }
   }
 
   .download-links {

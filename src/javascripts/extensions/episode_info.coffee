@@ -33,7 +33,7 @@ class EpisodeInfo extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-info episode-info-button" title="Show more info"></button>
+    <button class="episode-info-button" title="Show more info"></button>
     """
 
   panelHtml:

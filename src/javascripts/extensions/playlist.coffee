@@ -80,7 +80,7 @@ class Playlist extends Extension
 
   buttonHtml:
     """
-    <button class="fa fa-list playlist-button" title="Show playlist"></button>
+    <button class="playlist-button" title="Show playlist"></button>
     """
 
   panelHtml:
