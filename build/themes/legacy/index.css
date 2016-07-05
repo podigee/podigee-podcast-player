@@ -24,18 +24,15 @@
   .podcast-player .controls {
     float: left;
     height: 90px; }
-    .podcast-player .controls button {
-      font-size: 36px; }
     .podcast-player .controls .play-button {
       border: 3px solid #e6e6e6;
       border-radius: 100px;
       color: #c8c8c8;
+      font-size: 56px;
       height: 70px;
       margin: 10px 0 0 10px;
-      padding: 2px 0 0 9px;
+      padding: 0;
       width: 70px; }
-      .podcast-player .controls .play-button.fa-pause {
-        padding-left: 1px; }
       .podcast-player .controls .play-button:hover {
         color: #fff;
         border-color: #fff; }

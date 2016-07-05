@@ -36,22 +36,15 @@
     float: left;
     height: 90px;
 
-    button {
-      font-size: 36px;
-    }
-
     .play-button {
       border: 3px solid $light-grey;
       border-radius: 100px;
       color: $dark-grey;
+      font-size: 56px;
       height: 70px;
       margin: 10px 0 0 10px;
-      padding: 2px 0 0 9px;
+      padding: 0;
       width: 70px;
-
-      &.fa-pause {
-        padding-left: 1px;
-      }
 
       &:hover {
         color: $default-color;

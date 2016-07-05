@@ -77,10 +77,8 @@ class PodigeePodcastPlayer
     return unless @player?
     if @player.playing
       @elem.addClass('playing')
-      @theme.playPauseElement.addClass('fa-pause').removeClass('fa-play')
     else
       @elem.removeClass('playing')
-      @theme.playPauseElement.addClass('fa-play').removeClass('fa-pause')
 
   # event handlers
 

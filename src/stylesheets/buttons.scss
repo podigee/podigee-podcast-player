@@ -1,3 +1,22 @@
+.play-button {
+  @extend .icon;
+  @extend .icon-play;
+}
+
+.playing .play-button {
+  @extend .icon-pause;
+}
+
+.backward-button {
+  @extend .icon;
+  @extend .icon-backward-10;
+}
+
+.forward-button {
+  @extend .icon;
+  @extend .icon-forward-30;
+}
+
 .chaptermarks-button {
   @extend .icon;
   @extend .icon-chaptermarks;

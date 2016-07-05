@@ -4,11 +4,13 @@ $icon-cast: "\e307";
 $icon-download: "\e2c0";
 $icon-chaptermarks: "\e431";
 $icon-transcript: "\e236";
+$icon-forward-30: "\e057";
 $icon-episode-info: "\e88f";
 $icon-playlist: "\e896";
-$icon-mail_outline: "\e0e1";
+$icon-mail-outline: "\e0e1";
 $icon-pause: "\e034";
 $icon-play: "\e037";
+$icon-backward-10: "\e059";
 $icon-share: "\e80d";
 $icon-twitter: "\f099";
 $icon-facebook: "\f09a";
@@ -18,11 +20,11 @@ $icon-whatsapp: "\f232";
 
 @font-face {
     font-family: 'podigee-podcast-player';
-    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?pkxgze');
-    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?pkxgze#iefix') format('embedded-opentype'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.ttf?pkxgze') format('truetype'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.woff?pkxgze') format('woff'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.svg?pkxgze#podigee-podcast-player') format('svg');
+    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?25j0zh');
+    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?25j0zh#iefix') format('embedded-opentype'),
+        url('#{$icomoon-font-path}/podigee-podcast-player.ttf?25j0zh') format('truetype'),
+        url('#{$icomoon-font-path}/podigee-podcast-player.woff?25j0zh') format('woff'),
+        url('#{$icomoon-font-path}/podigee-podcast-player.svg?25j0zh#podigee-podcast-player') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -62,6 +64,11 @@ $icon-whatsapp: "\f232";
         content: $icon-transcript;
     }
 }
+.icon-forward-30 {
+    &:before {
+        content: $icon-forward-30;
+    }
+}
 .icon-episode-info {
     &:before {
         content: $icon-episode-info;
@@ -72,9 +79,9 @@ $icon-whatsapp: "\f232";
         content: $icon-playlist;
     }
 }
-.icon-mail_outline {
+.icon-mail-outline {
     &:before {
-        content: $icon-mail_outline;
+        content: $icon-mail-outline;
     }
 }
 .icon-pause {
@@ -85,6 +92,11 @@ $icon-whatsapp: "\f232";
 .icon-play {
     &:before {
         content: $icon-play;
+    }
+}
+.icon-backward-10 {
+    &:before {
+        content: $icon-backward-10;
     }
 }
 .icon-share {

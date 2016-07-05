@@ -6,12 +6,12 @@
 
 @font-face {
   font-family: 'podigee-podcast-player';
-  src: url("../fonts/podigee-podcast-player.eot?pkxgze");
-  src: url("../fonts/podigee-podcast-player.eot?pkxgze#iefix") format("embedded-opentype"), url("../fonts/podigee-podcast-player.ttf?pkxgze") format("truetype"), url("../fonts/podigee-podcast-player.woff?pkxgze") format("woff"), url("../fonts/podigee-podcast-player.svg?pkxgze#podigee-podcast-player") format("svg");
+  src: url("../fonts/podigee-podcast-player.eot?25j0zh");
+  src: url("../fonts/podigee-podcast-player.eot?25j0zh#iefix") format("embedded-opentype"), url("../fonts/podigee-podcast-player.ttf?25j0zh") format("truetype"), url("../fonts/podigee-podcast-player.woff?25j0zh") format("woff"), url("../fonts/podigee-podcast-player.svg?25j0zh#podigee-podcast-player") format("svg");
   font-weight: normal;
   font-style: normal; }
 
-.icon, .chaptermarks-button, .download-button, .episode-info-button, .playlist-button, .share-button, .transcript-button, .panels .share-social-links a {
+.icon, .play-button, .backward-button, .forward-button, .chaptermarks-button, .download-button, .episode-info-button, .playlist-button, .share-button, .transcript-button, .panels .share-social-links a {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'podigee-podcast-player' !important;
   speak: none;
@@ -36,20 +36,26 @@
 .icon-transcript:before, .transcript-button:before {
   content: ""; }
 
+.icon-forward-30:before, .forward-button:before {
+  content: ""; }
+
 .icon-episode-info:before, .episode-info-button:before {
   content: ""; }
 
 .icon-playlist:before, .playlist-button:before {
   content: ""; }
 
-.icon-mail_outline:before {
+.icon-mail-outline:before {
   content: ""; }
 
-.icon-pause:before {
+.icon-pause:before, .playing .play-button:before {
   content: ""; }
 
-.icon-play:before {
+.icon-play:before, .play-button:before {
   content: ""; }
+
+.icon-backward-10:before, .backward-button:before {
+  content: ""; }
 
 .icon-share:before, .share-button:before {
   content: ""; }
@@ -68,15 +74,6 @@
 
 .icon-whatsapp:before {
   content: ""; }
-
-.icon, .chaptermarks-button, .download-button, .episode-info-button, .playlist-button, .share-button, .transcript-button, .panels .share-social-links a {
-  content: '';
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
 
 body {
   margin: 0;
