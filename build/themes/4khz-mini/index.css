@@ -46,15 +46,14 @@
   .podcast-player .controls {
     float: left;
     height: auto; }
-    .podcast-player .controls button {
-      font-size: 16px; }
     .podcast-player .controls .play-button {
       border: 1px solid #e6e6e6;
       border-radius: 100px;
       color: #00aeef;
+      font-size: 26px;
       height: 30px;
       margin: 0 0 10px 10px;
-      padding: 0 0 0 5px;
+      padding: 0;
       width: 30px; }
       .podcast-player .controls .play-button.fa-pause {
         padding-left: 1px; }

@@ -68,17 +68,14 @@
     float: left;
     height: auto;
 
-    button {
-      font-size: 16px;
-    }
-
     .play-button {
       border: 1px solid $light-grey;
       border-radius: 100px;
       color: $highlight1;
+      font-size: 26px;
       height: 30px;
       margin: 0 0 10px 10px;
-      padding: 0 0 0 5px;
+      padding: 0;
       width: 30px;
 
       &.fa-pause {

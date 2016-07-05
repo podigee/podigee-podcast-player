@@ -69,22 +69,15 @@
     float: left;
     height: 90px;
 
-    button {
-      font-size: 36px;
-    }
-
     .play-button {
       border: 1px solid $light-grey;
       border-radius: 100px;
       color: $highlight1;
+      font-size: 56px;
       height: 70px;
       margin: 10px 0 0 10px;
-      padding: 2px 0 0 9px;
+      padding: 0;
       width: 70px;
-
-      &.fa-pause {
-        padding-left: 1px;
-      }
     }
   }
 
@@ -96,7 +89,7 @@
 
     button {
       color: $dark-grey;
-      font-size: 14px;
+      font-size: 18px;
     }
 
     button:hover {
@@ -105,6 +98,9 @@
 
     .speed-toggle {
       cursor: pointer;
+      font-size: 14px;
+      position: relative;
+      top: -3px;
     }
   }
 

@@ -47,18 +47,15 @@
   .podcast-player .controls {
     float: left;
     height: 90px; }
-    .podcast-player .controls button {
-      font-size: 36px; }
     .podcast-player .controls .play-button {
       border: 1px solid #e6e6e6;
       border-radius: 100px;
       color: #00aeef;
+      font-size: 56px;
       height: 70px;
       margin: 10px 0 0 10px;
-      padding: 2px 0 0 9px;
+      padding: 0;
       width: 70px; }
-      .podcast-player .controls .play-button.fa-pause {
-        padding-left: 1px; }
   .podcast-player .controls-advanced {
     top: 68px;
     display: none;
@@ -66,11 +63,14 @@
     position: absolute; }
     .podcast-player .controls-advanced button {
       color: rgba(200, 200, 200, 0.5);
-      font-size: 14px; }
+      font-size: 18px; }
     .podcast-player .controls-advanced button:hover {
       color: #00aeef; }
     .podcast-player .controls-advanced .speed-toggle {
-      cursor: pointer; }
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+      top: -3px; }
   .podcast-player.playing .controls-advanced {
     display: block; }
   .podcast-player .duration {
