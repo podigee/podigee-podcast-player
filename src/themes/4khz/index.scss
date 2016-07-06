@@ -82,7 +82,7 @@
   }
 
   .controls-advanced {
-    top: 68px;
+    top: 70px;
     opacity: 0;
     position: absolute;
     right: 75px;
@@ -91,6 +91,8 @@
     button {
       color: $dark-grey;
       font-size: 18px;
+      margin: 0;
+      padding: 0;
     }
 
     button:hover {

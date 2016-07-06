@@ -57,14 +57,16 @@
       padding: 0;
       width: 70px; }
   .podcast-player .controls-advanced {
-    top: 68px;
+    top: 70px;
     opacity: 0;
     position: absolute;
     right: 75px;
     transition: opacity .5s; }
     .podcast-player .controls-advanced button {
       color: rgba(200, 200, 200, 0.5);
-      font-size: 18px; }
+      font-size: 18px;
+      margin: 0;
+      padding: 0; }
     .podcast-player .controls-advanced button:hover {
       color: #00aeef; }
     .podcast-player .controls-advanced .speed-toggle {
