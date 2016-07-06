@@ -8,7 +8,6 @@
     box-sizing: border-box;
   }
 
-  background-color: $background-color;
   color: #222;
   font-family: Lato;
   min-width: 100%;
@@ -37,6 +36,7 @@
   }
 
   .main-player {
+    background-color: $background-color;
     position: relative;
   }
 
@@ -66,7 +66,7 @@
       color: $highlight1;
       font-size: 26px;
       height: 30px;
-      margin: 8px 0 10px 10px;
+      margin: 8px 0 8px 10px;
       padding: 0;
       width: 30px;
 
@@ -91,7 +91,6 @@
   }
 
   .progress-bar {
-    background: red;
     bottom: 0;
     clear: both;
     height: 0px;
@@ -119,7 +118,7 @@
     }
 
     .progress-bar-rail {
-      background-color: $light-grey;
+      background-color: $dark-grey;
       cursor: ew-resize;
       height: 100%;
       overflow: hidden;
@@ -146,8 +145,6 @@
   }
 
   .progress-bar-buffering {
-    background-color: red;
-
     &:after {
       animation: move 2s linear infinite;
       background-image: linear-gradient(

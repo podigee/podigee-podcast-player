@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
 .podcast-player {
-  background-color: rgba(255, 255, 255, 0.9);
   color: #222;
   font-family: Lato;
   min-width: 100%;
@@ -24,6 +23,7 @@
     cursor: pointer;
     outline: none; }
   .podcast-player .main-player {
+    background-color: rgba(255, 255, 255, 0.9);
     position: relative; }
   .podcast-player .episode-basic-info {
     font-weight: 300;
@@ -46,7 +46,7 @@
       color: #00aeef;
       font-size: 26px;
       height: 30px;
-      margin: 8px 0 10px 10px;
+      margin: 8px 0 8px 10px;
       padding: 0;
       width: 30px; }
       .podcast-player .controls .play-button.fa-pause {
@@ -60,7 +60,6 @@
   .podcast-player:hover .progress-bar {
     height: 5px; }
   .podcast-player .progress-bar {
-    background: red;
     bottom: 0;
     clear: both;
     height: 0px;
@@ -83,7 +82,7 @@
     .podcast-player .progress-bar .progress-bar-time-played:hover {
       color: #00aeef; }
     .podcast-player .progress-bar .progress-bar-rail {
-      background-color: #e6e6e6;
+      background-color: rgba(200, 200, 200, 0.5);
       cursor: ew-resize;
       height: 100%;
       overflow: hidden;
@@ -100,23 +99,21 @@
     width: 0; }
   .podcast-player .progress-bar-loaded {
     background-color: rgba(200, 200, 200, 0.5); }
-  .podcast-player .progress-bar-buffering {
-    background-color: red; }
-    .podcast-player .progress-bar-buffering:after {
-      animation: move 2s linear infinite;
-      background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
-      background-size: 50px 50px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-      content: "";
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0; }
+  .podcast-player .progress-bar-buffering:after {
+    animation: move 2s linear infinite;
+    background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    background-size: 50px 50px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    content: "";
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; }
 
 @keyframes move {
   0% {
