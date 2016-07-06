@@ -7,8 +7,12 @@
     </script>
     <script src="javascripts/podigee-podcast-player.js"></script>
     <style>
+      .podcast-player + .loading-animation {
+        display: none;
+      }
+
       .spinner {
-        margin: 10px auto;
+        margin: 0 auto;
         width: 50px;
         height: 40px;
         text-align: center;
@@ -20,7 +24,7 @@
         height: 100%;
         width: 6px;
         display: inline-block;
-        
+
         -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
         animation: sk-stretchdelay 1.2s infinite ease-in-out;
       }
