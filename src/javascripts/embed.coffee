@@ -33,11 +33,8 @@ class Iframe
     @iframe.style.border = '0'
     @iframe.style.overflowY = 'hidden'
     @iframe.style.transition = 'height 100ms linear'
-    @iframe.width = @detectWidth()
+    @iframe.width = "100%"
     @iframe
-
-  detectWidth: ->
-    $(@elem).parent().width()
 
   setupListeners: ->
     IframeResizer.listen('resizePlayer', $(@iframe))
