@@ -29,6 +29,7 @@ class Configuration
         @fetchJsonConfiguration()
       else
         @setConfigurations()
+    window.parent.postMessage('sendConfig', '*')
 
   fetchJsonConfiguration: =>
     return unless @configuration.json_config && @configuration.json_config.length

@@ -44,13 +44,15 @@ class Iframe
     @elem.parentNode.replaceChild(@iframe, @elem)
 
   injectConfiguration: ->
-    _.delay (=>
+    $(window).on 'message', (event) =>
+      eventData = event.data || event.originalEvent.data
+      return unless eventData == 'sendConfig'
+
       config = if @configuration.constructor == String
         @configuration
       else
         JSON.stringify(@configuration)
       @iframe.contentWindow.postMessage(config, '*')
-    ), 1000
 
 class Embed
   constructor: ->
