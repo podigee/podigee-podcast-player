@@ -82,11 +82,11 @@ window.playerConfiguration = {
     },
     "Waveform": {
       "color": "rgba(100, 149, 237, 0.3)",
-      "data": "https://cdn.podigee.com/ppp/samples/waveform.json",
+      "data": "https://cdn.podigee.com/ppp/samples/waveform.json"
     }
   },
   "podcast": {
-    "feed": "https://cdn.podigee.com/ppp/samples/feed.xml",
+    "feed": "https://cdn.podigee.com/ppp/samples/feed.xml"
   },
   "episode": {
     "media": {
@@ -100,7 +100,7 @@ window.playerConfiguration = {
     "subtitle": "Wie Henrik Müller in Dortmund wirtschaftspolitischen Journalismus lehrt und erforscht. Und was guten Wirtschaftsjournalismus ausmacht.",
     "url": "http://forschergeist.de/podcast/fg009-wirtschaftspolitischer-journalismus/",
     "embedCode": "<script class=\"podigee-podcast-player\" src=\"https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js\" data-configuration=\"https://podigee.github.io/podigee-podcast-player/example/config.json\"><\/script>",
-    "description": "Raus aus der prallen journalistischen Praxis, rein in die Gremien-Universität. Henrik Müller hat diesen ungewöhnlichen Schritt gewagt: 2013 übernahm der damalige stellvertretende Chefredakteur des "manager magazin" den Lehrstuhl für wirtschaftspolitischen Journalismus am Institut für Journalistik der Technischen Universität Dortmund. Dort baut er seitdem die neuen Bachelor- und Master-Studiengänge für wirtschaftspolitischen Journalismus auf. Wie er diesen Wechsel zwischen den  Welten erlebt hat, was er seinen Studierenden vermitteln will und woran er forscht, erzählt der immer noch sehr umtriebige Autor ("Wirtschaftsirrtümer: 50 Denkfehler, die uns Kopf und Kragen kosten") und Spiegel-Online-Kolumnist in dieser anregenden Episode. Dabei geht es darum, was Wirtschaftsjournalismus leisten soll und muss, was Studierende erst mühsam über Lobbyismus lernen müssen und was eigentlich "gute Geschichten" sind.",
+    "description": "Raus aus der prallen journalistischen Praxis, rein in die Gremien-Universität. Henrik Müller hat diesen ungewöhnlichen Schritt gewagt: 2013 übernahm der damalige stellvertretende Chefredakteur des \"manager magazin\" den Lehrstuhl für wirtschaftspolitischen Journalismus am Institut für Journalistik der Technischen Universität Dortmund. Dort baut er seitdem die neuen Bachelor- und Master-Studiengänge für wirtschaftspolitischen Journalismus auf. Wie er diesen Wechsel zwischen den  Welten erlebt hat, was er seinen Studierenden vermitteln will und woran er forscht, erzählt der immer noch sehr umtriebige Autor (\"Wirtschaftsirrtümer: 50 Denkfehler, die uns Kopf und Kragen kosten\") und Spiegel-Online-Kolumnist in dieser anregenden Episode. Dabei geht es darum, was Wirtschaftsjournalismus leisten soll und muss, was Studierende erst mühsam über Lobbyismus lernen müssen und was eigentlich \"gute Geschichten\" sind.",
     "chaptermarks": [
       {"start": "00:00:00.000", "title": "Intro"},
       {"start": "00:00:41.018", "title": "Begrüßung"},
