@@ -350,6 +350,27 @@
     .share {
       padding: 12px;
 
+      .share-social-links {
+        li a:before {
+          background: none;
+          color: #666;
+        }
+
+        li:hover {
+          a:before {
+            color: $default-color;
+          }
+
+          a:after {
+            display: none;
+          }
+        }
+
+        .share-link-clammr {
+          display: none;
+        }
+      }
+
       .share-copy-url,
       .share-embed-code {
         background: transparent;

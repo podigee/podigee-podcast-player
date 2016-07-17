@@ -241,6 +241,15 @@
       font-weight: 300; }
   .podcast-player .panels .share {
     padding: 12px; }
+    .podcast-player .panels .share .share-social-links li a:before {
+      background: none;
+      color: #666; }
+    .podcast-player .panels .share .share-social-links li:hover a:before {
+      color: #333; }
+    .podcast-player .panels .share .share-social-links li:hover a:after {
+      display: none; }
+    .podcast-player .panels .share .share-social-links .share-link-clammr {
+      display: none; }
     .podcast-player .panels .share .share-copy-url,
     .podcast-player .panels .share .share-embed-code {
       background: transparent;
