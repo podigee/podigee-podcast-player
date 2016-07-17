@@ -146,8 +146,9 @@
     background-position: 50px 50px; } }
   .podcast-player .buttons {
     position: absolute;
-    right: 0;
-    top: 75px; }
+    right: 75px;
+    top: 70px;
+    transition: right .5s; }
     .podcast-player .buttons button {
       color: rgba(200, 200, 200, 0.5);
       display: inline-block;
@@ -159,6 +160,8 @@
       color: #00aeef; }
     .podcast-player .buttons img {
       height: 14px; }
+  .podcast-player.playing .buttons {
+    right: 135px; }
   .podcast-player .panels {
     color: #333;
     font-size: 14px;

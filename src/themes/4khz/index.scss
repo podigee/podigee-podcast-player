@@ -212,8 +212,9 @@
 
   .buttons {
     position: absolute;
-    right: 0;
-    top: 75px;
+    right: 75px;
+    top: 70px;
+    transition: right .5s;
 
     button {
       color: $dark-grey;
@@ -231,6 +232,10 @@
     img {
       height: 14px;
     }
+  }
+
+  &.playing .buttons {
+    right: 135px;
   }
 
   .panels {
