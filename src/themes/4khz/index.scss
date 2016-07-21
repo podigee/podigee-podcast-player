@@ -322,6 +322,27 @@
       }
     }
 
+    .chaptermarks {
+      h3 {
+        color: transparent;
+      }
+
+      h3:before {
+        color: $default-color;
+        content: 'Kapitelmarken';
+      }
+    }
+
+    .download {
+      .download-title {
+        color: transparent;
+      }
+
+      .download-title:before {
+        color: $default-color;
+        content: 'Episode herunterladen';
+      }
+    }
     .playlist ul li {
       span {
         margin-left: 0;
@@ -352,6 +373,21 @@
     .share {
       padding: 12px;
 
+      .share-title,
+      h3 {
+        color: transparent;
+      }
+
+      .share-title:before {
+        color: $default-color;
+        content: 'Episode teilen';
+      }
+
+      h3:before {
+        color: $default-color;
+        content: 'Episoden-Link kopieren';
+      }
+
       .share-social-links {
         li a:before {
           background: none;
@@ -370,6 +406,7 @@
 
         .share-link-facebook:before {
           font-size: 1.8rem;
+          top: 11px;
         }
 
         .share-link-googleplus:before {

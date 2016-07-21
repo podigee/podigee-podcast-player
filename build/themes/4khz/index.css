@@ -226,6 +226,16 @@
         right: 5px;
         position: absolute;
         top: 5px; }
+  .podcast-player .panels .chaptermarks h3 {
+    color: transparent; }
+  .podcast-player .panels .chaptermarks h3:before {
+    color: #333;
+    content: 'Kapitelmarken'; }
+  .podcast-player .panels .download .download-title {
+    color: transparent; }
+  .podcast-player .panels .download .download-title:before {
+    color: #333;
+    content: 'Episode herunterladen'; }
   .podcast-player .panels .playlist ul li span {
     margin-left: 0; }
   .podcast-player .panels .playlist ul li a {
@@ -243,6 +253,15 @@
       font-weight: 300; }
   .podcast-player .panels .share {
     padding: 12px; }
+    .podcast-player .panels .share .share-title,
+    .podcast-player .panels .share h3 {
+      color: transparent; }
+    .podcast-player .panels .share .share-title:before {
+      color: #333;
+      content: 'Episode teilen'; }
+    .podcast-player .panels .share h3:before {
+      color: #333;
+      content: 'Episoden-Link kopieren'; }
     .podcast-player .panels .share .share-social-links li a:before {
       background: none;
       color: #666; }
@@ -251,7 +270,8 @@
     .podcast-player .panels .share .share-social-links li:hover a:after {
       display: none; }
     .podcast-player .panels .share .share-social-links .share-link-facebook:before {
-      font-size: 1.8rem; }
+      font-size: 1.8rem;
+      top: 11px; }
     .podcast-player .panels .share .share-social-links .share-link-googleplus:before {
       font-size: 2rem;
       top: 8px; }
