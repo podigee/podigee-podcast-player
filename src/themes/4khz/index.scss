@@ -212,7 +212,7 @@
 
   .buttons {
     position: absolute;
-    right: 75px;
+    right: 90px;
     top: 70px;
     transition: right .5s;
 
@@ -220,8 +220,10 @@
       color: $dark-grey;
       display: inline-block;
       font-size: 16px;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      width: 26px;
+      width: 22px;
     }
 
     button:hover,
@@ -364,6 +366,15 @@
           a:after {
             display: none;
           }
+        }
+
+        .share-link-facebook:before {
+          font-size: 1.8rem;
+        }
+
+        .share-link-googleplus:before {
+          font-size: 2rem;
+          top: 8px;
         }
 
         .share-link-clammr {
