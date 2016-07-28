@@ -145,7 +145,6 @@
   100% {
     background-position: 50px 50px; } }
   .podcast-player .buttons {
-    display: none;
     position: absolute;
     right: 90px;
     top: 70px;
