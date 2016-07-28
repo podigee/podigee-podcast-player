@@ -126,18 +126,18 @@ class Share extends Extension
         <li pp-if="shareLinks.clammr"><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="https://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
       </ul>
       <div>
-        <h3>Copy episode link</h3>
+        <h3 class="share-copy-title">Copy episode link</h3>
         <p>
           <input class="share-copy-url" pp-value="url">
         </p>
       </div>
       <div>
         <input type="checkbox" pp-checked="showUrlWithTime" pp-on-change="updateContext">
-        Start at
+        <span class="share-start-at">Start at</span>
         <input type="text" pp-value="currentTime" disabled="disabled">
       </div>
       <div pp-show="showEmbedUrl">
-        <h3>Embed player</h3>
+        <h3 class="share-embed-title">Embed player</h3>
         <input class="share-embed-code" pp-value="embedCode"/>
       </div>
     </div>

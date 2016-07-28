@@ -374,6 +374,7 @@
       padding: 12px;
 
       .share-title,
+      .share-start-at,
       h3 {
         color: transparent;
       }
@@ -383,9 +384,19 @@
         content: 'Episode teilen';
       }
 
-      h3:before {
+      .share-copy-title:before {
         color: $default-color;
         content: 'Episoden-Link kopieren';
+      }
+
+      .share-embed-title:before {
+        color: $default-color;
+        content: 'Episode einbinden';
+      }
+
+      .share-start-at:before {
+        color: $default-color;
+        content: 'Starten bei';
       }
 
       .share-social-links {

@@ -254,14 +254,21 @@
   .podcast-player .panels .share {
     padding: 12px; }
     .podcast-player .panels .share .share-title,
+    .podcast-player .panels .share .share-start-at,
     .podcast-player .panels .share h3 {
       color: transparent; }
     .podcast-player .panels .share .share-title:before {
       color: #333;
       content: 'Episode teilen'; }
-    .podcast-player .panels .share h3:before {
+    .podcast-player .panels .share .share-copy-title:before {
       color: #333;
       content: 'Episoden-Link kopieren'; }
+    .podcast-player .panels .share .share-embed-title:before {
+      color: #333;
+      content: 'Episode einbinden'; }
+    .podcast-player .panels .share .share-start-at:before {
+      color: #333;
+      content: 'Starten bei'; }
     .podcast-player .panels .share .share-social-links li a:before {
       background: none;
       color: #666; }
