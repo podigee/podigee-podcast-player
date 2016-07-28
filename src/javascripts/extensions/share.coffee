@@ -43,7 +43,7 @@ class Share extends Extension
       email: "mailto:?subject=Podcast: #{title}&body=#{url}"
       facebook: "https://www.facebook.com/sharer/sharer.php?u=#{url}&t=#{title}"
       googleplus: "https://plus.google.com/share?url=#{url}"
-      twitter: "https://twitter.com/intent/tweet?url=#{url}i&text=#{title}"
+      twitter: "https://twitter.com/intent/tweet?url=#{url}&text=#{title}"
       whatsapp: "whatsapp://send?text=#{title}: #{url}"
 
   clammrUrl: (title, coverUrl, url, fileUrl, time) ->
