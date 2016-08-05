@@ -23,7 +23,7 @@
     cursor: pointer;
     outline: none; }
   .podcast-player .main-player {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: transparent;
     position: relative; }
   .podcast-player .episode-basic-info {
     font-weight: 300;
@@ -33,7 +33,6 @@
     overflow: hidden; }
     .podcast-player .episode-basic-info .episode-title {
       font-size: 16px;
-      margin-bottom: 3px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
