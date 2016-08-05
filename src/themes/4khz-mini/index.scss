@@ -43,12 +43,12 @@
   .episode-basic-info {
     font-weight: 300;
     height: auto;
-    padding: 11px $default-padding 0;
+    padding: 10px $default-padding 0;
     position: relative;
     overflow: hidden;
 
     .episode-title {
-      font-size: 18px;
+      font-size: 16px;
       margin-bottom: 3px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -66,7 +66,7 @@
       color: $highlight1;
       font-size: 26px;
       height: 30px;
-      margin: 8px 0 8px 10px;
+      margin: 5px 0 5px 5px;
       padding: 0;
       width: 30px;
 
