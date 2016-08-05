@@ -1,59 +1,88 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
-<style>
-  html { box-sizing: border-box; }
-  *, *:before, *:after { box-sizing: inherit; }
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html { box-sizing: border-box; }
+      *, *:before, *:after { box-sizing: inherit; }
 
-  body {
-    font-family: Lato;
-    padding: 40px 0;
-  }
+      body {
+        font-family: Lato;
+        padding: 40px 0;
+      }
 
-  h1, h2, h3, p {
-    font-weight: 300;
-  }
+      h1, h2, h3, p {
+        font-weight: 300;
+      }
 
-  img {
-    width: 100%;
-  }
+      img {
+        width: 100%;
+      }
 
-  .container {
-    margin:0 auto 50px;
-    overflow: hidden;
-    width: 720px;
-  }
+      .container {
+        margin:0 auto 50px;
+        overflow: hidden;
+        width: 720px;
+      }
 
-  .container.wide {
-    width: 960px;
-  }
+      .container.wide {
+        width: 960px;
+      }
 
-  .left,
-  .right {
-    float: left;
-    margin: 0 0 20px;
-    width: 50%;
-  }
+      .left,
+      .right {
+        float: left;
+        margin: 0 0 20px;
+        width: 50%;
+      }
 
-  .left {
-    padding: 0 20px 0 0;
-  }
+      .left {
+        padding: 0 20px 0 0;
+      }
 
-  .right {
-    padding: 0 0 0 20px;
-  }
-</style>
+      .right {
+        padding: 0 0 0 20px;
+      }
 
-<div class="container">
-  <h1>Der interne Systemfehler</h1>
-  <img src="http://viertausendhertz.de/wp-content/uploads/2016/07/sf03.jpg">
-  <p>Dan Bull ist Youtube-Musiker der allerersten Stunde. Seit knapp zehn Jahren veröffentlicht er eine kreative Mischung aus Gameraps, politischen Kommentaren und persönlichen Geschichten – die mittlerweile weltweit über eine Million Menschen regelmäßig mitverfolgen. Sein geliebtes Hobby, das längst zum Beruf und ein großer Teil seines Lebens geworden ist, steht plötzlich vor dem Aus. Sein Gehör macht nicht mehr mit. Und niemand kann ihm helfen. Der interne Systemfehler.</p>
-  <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="https://systemfehler.podigee.io/1-sf03/embed?context=external"></script>
-</div>
+      @media (max-width: 960px) {
+        .container.wide {
+          width: 100%;
+        }
+      }
+      @media (max-width: 720px) {
+        .container {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
 
-<div class="container wide">
-  <h1>Der interne Systemfehler</h1>
-  <p class="left">
-    Dan Bull ist Youtube-Musiker der allerersten Stunde. Seit knapp zehn Jahren veröffentlicht er eine kreative Mischung aus Gameraps, politischen Kommentaren und persönlichen Geschichten – die mittlerweile weltweit über eine Million Menschen regelmäßig mitverfolgen. Sein geliebtes Hobby, das längst zum Beruf und ein großer Teil seines Lebens geworden ist, steht plötzlich vor dem Aus. Sein Gehör macht nicht mehr mit. Und niemand kann ihm helfen. Der interne Systemfehler.
-    <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="https://systemfehler.podigee.io/1-sf03/embed?context=external&theme=4khz-micro"></script>
-  </p>
-  <img class="right" src="http://viertausendhertz.de/wp-content/uploads/2016/07/sf03.jpg">
-</div>
+    <div class="container">
+      <h1>Der interne Systemfehler</h1>
+      <img src="http://viertausendhertz.de/wp-content/uploads/2016/07/sf03.jpg">
+      <p>Dan Bull ist Youtube-Musiker der allerersten Stunde. Seit knapp zehn Jahren veröffentlicht er eine kreative Mischung aus Gameraps, politischen Kommentaren und persönlichen Geschichten – die mittlerweile weltweit über eine Million Menschen regelmäßig mitverfolgen. Sein geliebtes Hobby, das längst zum Beruf und ein großer Teil seines Lebens geworden ist, steht plötzlich vor dem Aus. Sein Gehör macht nicht mehr mit. Und niemand kann ihm helfen. Der interne Systemfehler.</p>
+      <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="https://systemfehler.podigee.io/1-sf03/embed?context=external"></script>
+    </div>
+
+    <div class="container wide">
+      <h1>Der interne Systemfehler</h1>
+      <p class="left">
+        Dan Bull ist Youtube-Musiker der allerersten Stunde. Seit knapp zehn Jahren veröffentlicht er eine kreative Mischung aus Gameraps, politischen Kommentaren und persönlichen Geschichten – die mittlerweile weltweit über eine Million Menschen regelmäßig mitverfolgen. Sein geliebtes Hobby, das längst zum Beruf und ein großer Teil seines Lebens geworden ist, steht plötzlich vor dem Aus. Sein Gehör macht nicht mehr mit. Und niemand kann ihm helfen. Der interne Systemfehler.
+        <script class="podigee-podcast-player" src="build/javascripts/podigee-podcast-player.js" data-configuration="https://systemfehler.podigee.io/1-sf03/embed?context=external&theme=4khz-micro"></script>
+      </p>
+      <img class="right" src="http://viertausendhertz.de/wp-content/uploads/2016/07/sf03.jpg">
+    </div>
+
+    <div class="container wide">
+      <h1>Der interne Systemfehler</h1>
+      <p class="left">
+        Dan Bull ist Youtube-Musiker der allerersten Stunde. Seit knapp zehn Jahren veröffentlicht er eine kreative Mischung aus Gameraps, politischen Kommentaren und persönlichen Geschichten – die mittlerweile weltweit über eine Million Menschen regelmäßig mitverfolgen. Sein geliebtes Hobby, das längst zum Beruf und ein großer Teil seines Lebens geworden ist, steht plötzlich vor dem Aus. Sein Gehör macht nicht mehr mit. Und niemand kann ihm helfen. Der interne Systemfehler.
+        <script class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="https://systemfehler.podigee.io/1-sf03/embed?context=external&theme=4khz-micro"></script>
+      </p>
+      <img class="right" src="http://viertausendhertz.de/wp-content/uploads/2016/07/sf03.jpg">
+    </div>
+
+  </body>
+</html>

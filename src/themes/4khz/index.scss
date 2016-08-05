@@ -470,22 +470,13 @@
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
-    .cover-image {
-      border: 12px solid $background-color;
-      border-bottom: 0;
-      display: block;
-      float: none;
-      height: auto;
-      width: 100%;
-    }
-
     .episode-basic-info {
       .episode-title {
-        font-size: 16px;
+        font-size: 20px;
       }
 
       .episode-subtitle {
-        font-size: 14px;
+        font-size: 18px;
       }
     }
 
@@ -506,9 +497,9 @@
     }
 
     .buttons {
-      margin-top: 25px;
-      position: static;
-      text-align: right;
+      bottom: 24px;
+      right: 5px;
+      top: auto;
 
       button {
         font-size: 24px;
@@ -521,6 +512,10 @@
       .progress-bar-rail {
         min-height: 20px;
       }
+    }
+
+    .duration {
+      display: none;
     }
 
     &.playing .progress-bar .progress-bar-time-played {
