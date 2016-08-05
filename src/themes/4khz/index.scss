@@ -93,6 +93,7 @@
       font-size: 18px;
       margin: 0;
       padding: 0;
+      width: 20px;
     }
 
     button:hover {
@@ -237,7 +238,7 @@
   }
 
   &.playing .buttons {
-    right: 135px;
+    right: 145px;
   }
 
   .panels {
