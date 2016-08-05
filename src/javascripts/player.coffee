@@ -72,10 +72,12 @@ class Player
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
 
   setDuration: =>
-    window.setInterval ((t) =>
+    clear = -> window.clearInterval(interval)
+
+    interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
       @app.episode.duration = Utils.secondsToHHMMSS(@media.duration)
-      clearInterval(t)
+      clear()
     ), 500
 
   setPlaySpeed: (speed) =>
