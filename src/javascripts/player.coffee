@@ -10,10 +10,11 @@ class Player
     self.media = elem
     self.media.preload = "metadata"
     @loadFile()
-    @setInitialTime()
-    @setCurrentTime()
-    @attachEvents()
-    @app.init(self)
+    $(@media).on 'loadedmetadata', =>
+      @setInitialTime()
+      @setCurrentTime()
+      @attachEvents()
+      @app.init(self)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
