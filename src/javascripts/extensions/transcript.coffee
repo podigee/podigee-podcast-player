@@ -7,12 +7,8 @@ Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
 
 class TranscriptLine
-  constructor: (time, speaker, text, timestamp) ->
-    @data =
-      speaker: speaker
-      text: text
-      time: time
-      timestamp: timestamp
+  constructor: (data) ->
+    @data = data
 
   render: =>
     @line = $(@defaultHtml)
@@ -53,6 +49,9 @@ class Transcript extends Extension
   defaultOptions:
     showOnStart: false
 
+  transcriptFileFormat: ->
+    _.last(@transcript.split('.'))
+
   data:
     transcript: ''
 
@@ -62,7 +61,11 @@ class Transcript extends Extension
       @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>
-    parsedTranscript = @parseTimScript(rawTranscript)
+    parsedTranscript = if @transcriptFileFormat() == 'srt'
+      @parseSrt(rawTranscript)
+    else
+      @parseTimScript(rawTranscript)
+
     @data.transcript = parsedTranscript.join('')
 
   parseTimScript: (raw) =>
@@ -70,12 +73,35 @@ class Transcript extends Extension
     splitLines.map (line) =>
       return if line == ""
       meta = line.match(/^\[(.*) (.*)\]/)
-      time = meta[1]
-      timestamp = Utils.hhmmssToSeconds(time)
-      speaker = meta[2]
       text = line.match(/\] (.*)/)
-      text = text[1] if text
-      tl = new TranscriptLine(time, speaker, text, timestamp)
+      time = meta[1]
+
+      data =
+        time: time.split('.')[0]
+        timestamp: Utils.hhmmssToSeconds(time)
+        speaker: meta[2]
+        text: text[1] if text
+
+      tl = new TranscriptLine(data)
+      tl.render().prop('outerHTML')
+
+  parseSrt: (raw) ->
+    splitBy = if (raw.search("\n\r\n") > -1) then "\n\r\n" else "\n\n"
+    segments = raw.split(splitBy)
+
+    segments.map (segment) =>
+      parts = segment.split("\n")
+      return "" if parts.length < 3
+
+      times = parts[1].split(' --> ')
+
+      data =
+        id: parseInt(parts[0], 10)
+        time: times[0].split(',')[0]
+        timestamp: Utils.hhmmssToSeconds(times[0])
+        text: parts.slice(2).join("\n")
+
+      tl = new TranscriptLine(data)
       tl.render().prop('outerHTML')
 
   bindEvents: =>
