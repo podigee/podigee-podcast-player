@@ -46,3 +46,13 @@
   @extend .icon;
   @extend .icon-transcript;
 }
+
+.search-result-next {
+  @extend .icon;
+  @extend .icon-keyboard_arrow_right;
+}
+
+.search-result-prev {
+  @extend .icon;
+  @extend .icon-keyboard_arrow_left;
+}

@@ -4,10 +4,12 @@ $icon-cast: "\e307";
 $icon-download: "\e2c0";
 $icon-chaptermarks: "\e431";
 $icon-transcript: "\e236";
-$icon-forward-30: "\e057";
+$icon-forward_30: "\e057";
 $icon-episode-info: "\e88f";
+$icon-keyboard_arrow_left: "\e314";
+$icon-keyboard_arrow_right: "\e315";
 $icon-playlist: "\e896";
-$icon-mail-outline: "\e0e1";
+$icon-mail_outline: "\e0e1";
 $icon-pause: "\e034";
 $icon-play: "\e037";
 $icon-backward-10: "\e059";
@@ -19,113 +21,123 @@ $icon-google-plus: "\f0d5";
 $icon-whatsapp: "\f232";
 
 @font-face {
-    font-family: 'podigee-podcast-player';
-    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?25j0zh');
-    src:    url('#{$icomoon-font-path}/podigee-podcast-player.eot?25j0zh#iefix') format('embedded-opentype'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.ttf?25j0zh') format('truetype'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.woff?25j0zh') format('woff'),
-        url('#{$icomoon-font-path}/podigee-podcast-player.svg?25j0zh#podigee-podcast-player') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'podigee-podcast-player';
+  src:  url('#{$icomoon-font-path}/podigee-podcast-player.eot?kq1u8x');
+  src:  url('#{$icomoon-font-path}/podigee-podcast-player.eot?kq1u8x#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/podigee-podcast-player.ttf?kq1u8x') format('truetype'),
+    url('#{$icomoon-font-path}/podigee-podcast-player.woff?kq1u8x') format('woff'),
+    url('#{$icomoon-font-path}/podigee-podcast-player.svg?kq1u8x#podigee-podcast-player') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .icon {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'podigee-podcast-player' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'podigee-podcast-player' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-cast {
-    &:before {
-        content: $icon-cast;
-    }
+  &:before {
+    content: $icon-cast;
+  }
 }
 .icon-download {
-    &:before {
-        content: $icon-download;
-    }
+  &:before {
+    content: $icon-download;
+  }
 }
 .icon-chaptermarks {
-    &:before {
-        content: $icon-chaptermarks;
-    }
+  &:before {
+    content: $icon-chaptermarks;
+  }
 }
 .icon-transcript {
-    &:before {
-        content: $icon-transcript;
-    }
+  &:before {
+    content: $icon-transcript;
+  }
 }
 .icon-forward-30 {
-    &:before {
-        content: $icon-forward-30;
-    }
+  &:before {
+    content: $icon-forward_30;
+  }
 }
 .icon-episode-info {
-    &:before {
-        content: $icon-episode-info;
-    }
+  &:before {
+    content: $icon-episode-info;
+  }
+}
+.icon-keyboard_arrow_left {
+  &:before {
+    content: $icon-keyboard_arrow_left;
+  }
+}
+.icon-keyboard_arrow_right {
+  &:before {
+    content: $icon-keyboard_arrow_right;
+  }
 }
 .icon-playlist {
-    &:before {
-        content: $icon-playlist;
-    }
+  &:before {
+    content: $icon-playlist;
+  }
 }
-.icon-mail-outline {
-    &:before {
-        content: $icon-mail-outline;
-    }
+.icon-mail_outline {
+  &:before {
+    content: $icon-mail_outline;
+  }
 }
 .icon-pause {
-    &:before {
-        content: $icon-pause;
-    }
+  &:before {
+    content: $icon-pause;
+  }
 }
 .icon-play {
-    &:before {
-        content: $icon-play;
-    }
+  &:before {
+    content: $icon-play;
+  }
 }
 .icon-backward-10 {
-    &:before {
-        content: $icon-backward-10;
-    }
+  &:before {
+    content: $icon-backward-10;
+  }
 }
 .icon-share {
-    &:before {
-        content: $icon-share;
-    }
+  &:before {
+    content: $icon-share;
+  }
 }
 .icon-twitter {
-    &:before {
-        content: $icon-twitter;
-    }
+  &:before {
+    content: $icon-twitter;
+  }
 }
 .icon-facebook {
-    &:before {
-        content: $icon-facebook;
-    }
+  &:before {
+    content: $icon-facebook;
+  }
 }
 .icon-facebook-f {
-    &:before {
-        content: $icon-facebook-f;
-    }
+  &:before {
+    content: $icon-facebook-f;
+  }
 }
 .icon-google-plus {
-    &:before {
-        content: $icon-google-plus;
-    }
+  &:before {
+    content: $icon-google-plus;
+  }
 }
 .icon-whatsapp {
-    &:before {
-        content: $icon-whatsapp;
-    }
+  &:before {
+    content: $icon-whatsapp;
+  }
 }
