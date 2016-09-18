@@ -5,25 +5,8 @@ rivets = require('rivets')
 
 Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
-
-class TranscriptLine
-  constructor: (data) ->
-    @data = data
-
-  render: =>
-    @line = $(@defaultHtml)
-    rivets.bind(@line, @data)
-    @line
-
-  defaultHtml:
-    """
-      <li class="transcript-line" pp-data-timestamp="timestamp">
-        <span class="transcript-line-timestamp" pp-if="time">{ time }</span>
-        <span class="transcript-line-speaker" pp-if="speaker">{ speaker }</span>
-        <span class="transcript-line-separator" pp-if="text">-</span>
-        <span class="transcript-line-text" pp-if="text">{ text }</span>
-      </li>
-    """
+TranscriptLine = require('./transcript/line.coffee')
+Search = require('./transcript/search.coffee')
 
 class Transcript extends Extension
   @extension:
@@ -38,6 +21,8 @@ class Transcript extends Extension
     return unless @app.episode.transcript
 
     @transcript = @app.episode.transcript
+
+    @search = new Search()
 
     @load().done =>
       @renderPanel()
@@ -83,6 +68,7 @@ class Transcript extends Extension
         text: text[1] if text
 
       tl = new TranscriptLine(data)
+      @search.addLine(tl)
       tl.render().prop('outerHTML')
 
   parseSrt: (raw) ->
@@ -102,18 +88,26 @@ class Transcript extends Extension
         text: parts.slice(2).join("\n")
 
       tl = new TranscriptLine(data)
+      @search.addLine(tl)
       tl.render().prop('outerHTML')
 
+  currentSearchResultIndex: 0
   bindEvents: =>
     $(@app.player.media).on('timeupdate', @setActiveLine)
     @panel.find('li').click (event) =>
       @app.player.media.currentTime = event.currentTarget.dataset.timestamp
 
+    @search.initInterface(this, @panel)
+
   activateLine: (line) =>
     $line = $(line)
     return if $line.hasClass('active')
     $line.addClass('active')
-    @panel.find('ul').scrollTop(line.offsetTop - 50)
+    @scrollToLine(line)
+
+  scrollToLine: (elem) ->
+    return unless elem
+    @panel.find('ul').scrollTop(elem.offsetTop - 50)
 
   deactivateAll: (currentLine) =>
     $(currentLine).siblings().removeClass('active')
@@ -147,7 +141,9 @@ class Transcript extends Extension
     <div class="transcript">
       <h3>Transcript</h3>
 
-      <ul class="transcript-text" pp-html="transcript"></pre>
+      <div class="search"></div>
+
+      <ul class="transcript-text" pp-html="transcript"></ul>
     </div>
     """
 

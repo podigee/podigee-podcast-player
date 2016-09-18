@@ -6,12 +6,12 @@
 
 @font-face {
   font-family: 'podigee-podcast-player';
-  src: url("../fonts/podigee-podcast-player.eot?25j0zh");
-  src: url("../fonts/podigee-podcast-player.eot?25j0zh#iefix") format("embedded-opentype"), url("../fonts/podigee-podcast-player.ttf?25j0zh") format("truetype"), url("../fonts/podigee-podcast-player.woff?25j0zh") format("woff"), url("../fonts/podigee-podcast-player.svg?25j0zh#podigee-podcast-player") format("svg");
+  src: url("../fonts/podigee-podcast-player.eot?kq1u8x");
+  src: url("../fonts/podigee-podcast-player.eot?kq1u8x#iefix") format("embedded-opentype"), url("../fonts/podigee-podcast-player.ttf?kq1u8x") format("truetype"), url("../fonts/podigee-podcast-player.woff?kq1u8x") format("woff"), url("../fonts/podigee-podcast-player.svg?kq1u8x#podigee-podcast-player") format("svg");
   font-weight: normal;
   font-style: normal; }
 
-.icon, .play-button, .backward-button, .forward-button, .chaptermarks-button, .download-button, .episode-info-button, .playlist-button, .share-button, .transcript-button, .panels .share-social-links a {
+.icon, .play-button, .backward-button, .forward-button, .chaptermarks-button, .download-button, .episode-info-button, .playlist-button, .share-button, .transcript-button, .search-result-next, .search-result-prev, .panels .share-social-links a {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'podigee-podcast-player' !important;
   speak: none;
@@ -42,10 +42,16 @@
 .icon-episode-info:before, .episode-info-button:before {
   content: ""; }
 
+.icon-keyboard_arrow_left:before, .search-result-prev:before {
+  content: ""; }
+
+.icon-keyboard_arrow_right:before, .search-result-next:before {
+  content: ""; }
+
 .icon-playlist:before, .playlist-button:before {
   content: ""; }
 
-.icon-mail-outline:before {
+.icon-mail_outline:before {
   content: ""; }
 
 .icon-pause:before, .playing .play-button:before {
@@ -161,3 +167,15 @@ body {
     padding: 0 10px; }
   .panels .download .download-links li + li {
     border-left: 1px solid; }
+
+.transcript .search .search-result button {
+  font-size: 110%;
+  color: inherit;
+  padding-bottom: 0;
+  padding-top: 0;
+  position: relative;
+  top: 2px; }
+
+.transcript .search input {
+  font-size: 110%;
+  width: 300px; }
