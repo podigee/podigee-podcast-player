@@ -234,6 +234,14 @@
       padding: 4px;
       text-align: center;
       width: 100%; }
+  .podcast-player .panels .transcript h3 {
+    float: left; }
+  .podcast-player .panels .transcript .search,
+  .podcast-player .panels .transcript .search-result {
+    display: inline-block; }
+  .podcast-player .panels .transcript .search {
+    float: right;
+    padding: 10px 15px; }
   .podcast-player .panels .transcript .transcript-text {
     height: calc(100% - 54px);
     list-style: none;
@@ -248,12 +256,14 @@
       .podcast-player .panels .transcript .transcript-text li:hover > *,
       .podcast-player .panels .transcript .transcript-text li.active > * {
         background-color: #fff9a9; }
+      .podcast-player .panels .transcript .transcript-text li.search-highlight {
+        background-color: #fff9a9; }
 
 @media (max-width: 500px) {
   .podcast-player.mode-script .cover-image {
     border: 12px solid #1b1b1b;
     border-bottom: 0;
-    display: block;
+    display: none;
     float: none;
     height: auto;
     width: 100%; }
@@ -282,7 +292,28 @@
   .podcast-player.mode-script .progress-bar .progress-bar-rail {
     min-height: 20px; }
   .podcast-player.mode-script.playing .progress-bar .progress-bar-time-played {
-    display: none; } }
+    display: none; }
+  .podcast-player.mode-script .transcript h3 {
+    float: none; }
+  .podcast-player.mode-script .transcript .search {
+    display: block;
+    float: none;
+    overflow: hidden;
+    padding: 0 24px 0 0;
+    position: relative; }
+  .podcast-player.mode-script .transcript .search-input {
+    float: left;
+    width: calc(100% - 100px); }
+  .podcast-player.mode-script .transcript .search-result {
+    float: right;
+    position: relative;
+    top: 2px; }
+  .podcast-player.mode-script .transcript .search-clear {
+    color: inherit;
+    font-size: 150%;
+    left: calc(100% - 150px);
+    position: absolute;
+    top: -3px; } }
 
 @media (max-width: 500px) {
   .podcast-player.mode-iframe .cover-image {
@@ -300,5 +331,6 @@
   color: #c8c8c8; }
 
 .podcast-player .panels .transcript .transcript-text li:hover > *,
-.podcast-player .panels .transcript .transcript-text li.active > * {
+.podcast-player .panels .transcript .transcript-text li.active > *,
+.podcast-player .panels .transcript .transcript-text li.search-highlight > * {
   color: #1b1b1b; }

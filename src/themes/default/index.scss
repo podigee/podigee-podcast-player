@@ -341,6 +341,20 @@
     }
 
     .transcript {
+      h3 {
+        float: left;
+      }
+
+      .search,
+      .search-result {
+        display: inline-block;
+      }
+
+      .search {
+        float: right;
+        padding: 10px 15px;
+      }
+
       .transcript-text {
         height: calc(100% - 54px);
         list-style: none;
@@ -358,6 +372,10 @@
           &.active > * {
             background-color: $transcript-highlight;
           }
+
+          &.search-highlight {
+            background-color: $transcript-search-highlight;
+          }
         }
       }
     }
@@ -369,7 +387,7 @@
     .cover-image {
       border: 12px solid $background-color;
       border-bottom: 0;
-      display: block;
+      display: none;
       float: none;
       height: auto;
       width: 100%;
@@ -421,6 +439,39 @@
 
     &.playing .progress-bar .progress-bar-time-played {
       display: none;
+    }
+
+    .transcript {
+      h3 {
+        float: none;
+      }
+
+      .search {
+        display: block;
+        float: none;
+        overflow: hidden;
+        padding: 0 24px 0 0;
+        position: relative;
+      }
+
+      .search-input {
+        float: left;
+        width: calc(100% - 100px);
+      }
+
+      .search-result {
+        float: right;
+        position: relative;
+        top: 2px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 150px);
+        position: absolute;
+        top: -3px;
+      }
     }
   }
 }

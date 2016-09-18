@@ -16,7 +16,8 @@
 
     .transcript .transcript-text li {
       &:hover > *,
-      &.active > * {
+      &.active > *,
+      &.search-highlight > * {
         color: $background-color;
       }
     }
