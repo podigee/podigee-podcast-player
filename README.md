@@ -78,7 +78,7 @@ window.playerConfiguration = {
       "disabled": true
     },
     "Transcript": {
-      "data": "https://cdn.podigee.com/ppp/samples/transcript.txt"
+      "disabled": false
     },
     "Waveform": {
       "color": "rgba(100, 149, 237, 0.3)",
@@ -122,7 +122,8 @@ window.playerConfiguration = {
       {"start": "01:04:09.361", "title": "Forschungsprojekte"},
       {"start": "01:14:56.559", "title": "Andere Studiengänge in Europa"},
       {"start": "01:20:54.085", "title": "Ausklang"}
-    ]
+    ],
+    "transcript": "https://example.com/transcript.(json|srt)"
   }
 }
 ```
