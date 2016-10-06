@@ -31139,8 +31139,12 @@ TranscriptSearch = (function() {
   TranscriptSearch.prototype.currentSearchResultIndex = 1;
 
   TranscriptSearch.prototype.updateSearchResult = function() {
-    this.data.currentIndex = this.currentSearchResultIndex;
-    return this.data.resultCount = this.results.length || null;
+    if (this.results.length) {
+      this.data.currentIndex = this.currentSearchResultIndex;
+    } else {
+      this.data.currentIndex = 0;
+    }
+    return this.data.resultCount = this.results.length;
   };
 
   TranscriptSearch.prototype.data = {

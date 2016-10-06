@@ -94,8 +94,11 @@ class TranscriptSearch
 
   currentSearchResultIndex: 1
   updateSearchResult: ->
-    @data.currentIndex = @currentSearchResultIndex
-    @data.resultCount = @results.length || null
+    if @results.length
+      @data.currentIndex = @currentSearchResultIndex
+    else
+      @data.currentIndex = 0
+    @data.resultCount = @results.length
 
   data:
     currentIndex: 0
