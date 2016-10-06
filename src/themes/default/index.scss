@@ -355,6 +355,14 @@
         padding: 10px 15px;
       }
 
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 40px);
+        position: absolute;
+        top: 6px;
+      }
+
       .transcript-text {
         height: calc(100% - 54px);
         list-style: none;
