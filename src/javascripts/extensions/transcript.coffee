@@ -48,6 +48,8 @@ class Transcript extends Extension
   processTranscript: (rawTranscript) =>
     parsedTranscript = if @transcriptFileFormat() == 'srt'
       @parseSrt(rawTranscript)
+    else if @transcriptFileFormat() == 'json'
+      @parseJson(rawTranscript)
     else
       @parseTimScript(rawTranscript)
 
@@ -67,9 +69,7 @@ class Transcript extends Extension
         speaker: meta[2]
         text: text[1] if text
 
-      tl = new TranscriptLine(data)
-      @search.addLine(tl)
-      tl.render().prop('outerHTML')
+      @renderLine(data)
 
   parseSrt: (raw) ->
     splitBy = if (raw.search("\n\r\n") > -1) then "\n\r\n" else "\n\n"
@@ -87,9 +87,21 @@ class Transcript extends Extension
         timestamp: Utils.hhmmssToSeconds(times[0])
         text: parts.slice(2).join("\n")
 
-      tl = new TranscriptLine(data)
-      @search.addLine(tl)
-      tl.render().prop('outerHTML')
+      @renderLine(data)
+
+  parseJson: (raw) ->
+    raw.transcription.map (segment) =>
+      data =
+        time: Utils.secondsToHHMMSS(segment.start)
+        timestamp: segment.start.toString()
+        speaker: segment.speaker
+        text: segment.text
+      @renderLine(data)
+
+  renderLine: (data) ->
+    tl = new TranscriptLine(data)
+    @search.addLine(tl)
+    tl.render().prop('outerHTML')
 
   currentSearchResultIndex: 0
   bindEvents: =>

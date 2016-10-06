@@ -30842,7 +30842,7 @@ Transcript = (function(superClass) {
 
   Transcript.prototype.processTranscript = function(rawTranscript) {
     var parsedTranscript;
-    parsedTranscript = this.transcriptFileFormat() === 'srt' ? this.parseSrt(rawTranscript) : this.parseTimScript(rawTranscript);
+    parsedTranscript = this.transcriptFileFormat() === 'srt' ? this.parseSrt(rawTranscript) : this.transcriptFileFormat() === 'json' ? this.parseJson(rawTranscript) : this.parseTimScript(rawTranscript);
     return this.data.transcript = parsedTranscript.join('');
   };
 
@@ -30851,7 +30851,7 @@ Transcript = (function(superClass) {
     splitLines = raw.split("\n");
     return splitLines.map((function(_this) {
       return function(line) {
-        var data, meta, text, time, tl;
+        var data, meta, text, time;
         if (line === "") {
           return;
         }
@@ -30864,9 +30864,7 @@ Transcript = (function(superClass) {
           speaker: meta[2],
           text: text ? text[1] : void 0
         };
-        tl = new TranscriptLine(data);
-        _this.search.addLine(tl);
-        return tl.render().prop('outerHTML');
+        return _this.renderLine(data);
       };
     })(this));
   };
@@ -30877,7 +30875,7 @@ Transcript = (function(superClass) {
     segments = raw.split(splitBy);
     return segments.map((function(_this) {
       return function(segment) {
-        var data, parts, times, tl;
+        var data, parts, times;
         parts = segment.split("\n");
         if (parts.length < 3) {
           return "";
@@ -30889,11 +30887,31 @@ Transcript = (function(superClass) {
           timestamp: Utils.hhmmssToSeconds(times[0]),
           text: parts.slice(2).join("\n")
         };
-        tl = new TranscriptLine(data);
-        _this.search.addLine(tl);
-        return tl.render().prop('outerHTML');
+        return _this.renderLine(data);
       };
     })(this));
+  };
+
+  Transcript.prototype.parseJson = function(raw) {
+    return raw.transcription.map((function(_this) {
+      return function(segment) {
+        var data;
+        data = {
+          time: Utils.secondsToHHMMSS(segment.start),
+          timestamp: segment.start.toString(),
+          speaker: segment.speaker,
+          text: segment.text
+        };
+        return _this.renderLine(data);
+      };
+    })(this));
+  };
+
+  Transcript.prototype.renderLine = function(data) {
+    var tl;
+    tl = new TranscriptLine(data);
+    this.search.addLine(tl);
+    return tl.render().prop('outerHTML');
   };
 
   Transcript.prototype.currentSearchResultIndex = 0;
