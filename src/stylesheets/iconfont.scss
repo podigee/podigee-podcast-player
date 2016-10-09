@@ -12,7 +12,7 @@ $icon-playlist: "\e896";
 $icon-mail_outline: "\e0e1";
 $icon-pause: "\e034";
 $icon-play: "\e037";
-$icon-backward-10: "\e059";
+$icon-backward_10: "\e059";
 $icon-share: "\e80d";
 $icon-twitter: "\f099";
 $icon-facebook: "\f09a";
@@ -22,9 +22,7 @@ $icon-whatsapp: "\f232";
 
 @font-face {
   font-family: 'podigee-podcast-player';
-  src:  url('#{$icomoon-font-path}/podigee-podcast-player.eot?kq1u8x');
-  src:  url('#{$icomoon-font-path}/podigee-podcast-player.eot?kq1u8x#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/podigee-podcast-player.ttf?kq1u8x') format('truetype'),
+  src: url('#{$icomoon-font-path}/podigee-podcast-player.ttf?kq1u8x') format('truetype'),
     url('#{$icomoon-font-path}/podigee-podcast-player.woff?kq1u8x') format('woff'),
     url('#{$icomoon-font-path}/podigee-podcast-player.svg?kq1u8x#podigee-podcast-player') format('svg');
   font-weight: normal;
@@ -108,7 +106,7 @@ $icon-whatsapp: "\f232";
 }
 .icon-backward-10 {
   &:before {
-    content: $icon-backward-10;
+    content: $icon-backward_10;
   }
 }
 .icon-share {

@@ -6,8 +6,7 @@
 
 @font-face {
   font-family: 'podigee-podcast-player';
-  src: url("../fonts/podigee-podcast-player.eot?kq1u8x");
-  src: url("../fonts/podigee-podcast-player.eot?kq1u8x#iefix") format("embedded-opentype"), url("../fonts/podigee-podcast-player.ttf?kq1u8x") format("truetype"), url("../fonts/podigee-podcast-player.woff?kq1u8x") format("woff"), url("../fonts/podigee-podcast-player.svg?kq1u8x#podigee-podcast-player") format("svg");
+  src: url("../fonts/podigee-podcast-player.ttf?kq1u8x") format("truetype"), url("../fonts/podigee-podcast-player.woff?kq1u8x") format("woff"), url("../fonts/podigee-podcast-player.svg?kq1u8x#podigee-podcast-player") format("svg");
   font-weight: normal;
   font-style: normal; }
 
