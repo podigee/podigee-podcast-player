@@ -66,7 +66,7 @@ class TranscriptSearch
 
       @query = @data.query = event.target.value
 
-      @results = @find(@query)
+      @results = _.sortBy(@find(@query), (r) => parseInt(r.ref, 10))
 
       transcriptLines.removeClass('search-highlight')
 
