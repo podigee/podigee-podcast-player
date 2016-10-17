@@ -15,8 +15,9 @@ class TranscriptLine
     """
       <li class="transcript-line" pp-data-timestamp="timestamp">
         <span class="transcript-line-timestamp" pp-if="time">{ time }</span>
-        <span class="transcript-line-speaker" pp-if="speaker">{ speaker }</span>
-        <span class="transcript-line-separator" pp-if="text">-</span>
+        <span class="transcript-line-speaker" pp-if="speaker">
+          [{ speaker }]
+        </span>
         <span class="transcript-line-text" pp-if="text">{ text }</span>
       </li>
     """
