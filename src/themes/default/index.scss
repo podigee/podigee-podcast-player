@@ -219,7 +219,7 @@
     color: $default-color;
     font-size: 14px;
     font-weight: 300;
-    height: 400px;
+    height: auto;
     line-height: 18px;
 
     & > div {
@@ -237,6 +237,8 @@
   .panels {
     .chaptermarks,
     .playlist {
+      height: 400px;
+
       ul {
         display: block;
         height: calc(100% - 54px);
@@ -341,6 +343,8 @@
     }
 
     .transcript {
+      height: 400px;
+
       h3 {
         float: left;
       }
@@ -376,12 +380,12 @@
           line-height: 1.4em;
           margin-bottom: 8px;
 
-          &:hover > *,
-          &.active > * {
-            background-color: $transcript-highlight;
+          &:hover,
+          &.active {
+            color: #222;
           }
 
-          &.search-highlight {
+          &.search-highlight > * {
             background-color: $transcript-search-highlight;
           }
         }
@@ -464,21 +468,23 @@
 
       .search-input {
         float: left;
-        width: calc(100% - 100px);
+        padding-right: 100px;
+        width: 100%;
       }
 
       .search-result {
         float: right;
         position: relative;
-        top: 2px;
+        right: 17px;
+        top: 21px;
       }
 
       .search-clear {
         color: inherit;
         font-size: 150%;
-        left: calc(100% - 150px);
+        left: calc(100% - 50px);
         position: absolute;
-        top: -3px;
+        top: 15px;
       }
     }
   }
@@ -493,5 +499,8 @@
     .buttons {
       right: 0;
     }
+  }
+
+  .panels .transcript {
   }
 }
