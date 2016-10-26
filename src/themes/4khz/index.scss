@@ -450,7 +450,13 @@
       height: 400px;
 
       h3 {
+        color: transparent;
         float: left;
+      }
+
+      h3:before {
+        color: $default-color;
+        content: 'Transkript';
       }
 
       .search,
@@ -472,6 +478,7 @@
       }
 
       .transcript-text {
+        color: #888;
         height: calc(100% - 54px);
         list-style: none;
         overflow-y: auto;
@@ -484,12 +491,12 @@
           line-height: 1.4em;
           margin-bottom: 8px;
 
-          &:hover > *,
-          &.active > * {
-            background-color: $transcript-highlight;
+          &:hover,
+          &.active {
+            color: #333;
           }
 
-          &.search-highlight {
+          &.search-highlight > * {
             background-color: $transcript-search-highlight;
           }
         }
