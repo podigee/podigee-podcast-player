@@ -30,7 +30,11 @@ The player is extensible and ships with the following default extensions:
 
 ## Themes
 
-The player is completely themeable, you can even change the markup! It comes with a responsive default theme.
+The player is completely themeable, you can even change the markup! It comes with a responsive default theme. Themes currently available:
+
+- Default - The default theme
+- Default dark - A dark version of the default theme
+- Minimal - A very minimal theme
 
 You can find some details on how to create your own theme [here](docs/theming.md).
 
