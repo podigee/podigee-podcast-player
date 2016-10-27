@@ -6,12 +6,9 @@ rivets = require('rivets')
 class Theme
   constructor: (@app) ->
     @context = @app.episode
-    @themeName = @app.options.theme
-    @html = @app.options.themeHtml
-    @css = @app.options.themeCss
-    @loadHtml()
-    @loadCss()
+    @loadThemeFiles()
 
+  html: null
   render: =>
     @elem = $(@html)
     rivets.bind(@elem, @context)
@@ -23,38 +20,35 @@ class Theme
 
     return @elem
 
-  loadHtml: () =>
-    loaded = $.Deferred()
-
-    self = this
-    @html ?= "themes/#{@themeName}/index.html"
-
-    if @html.match('^.*\.html$')
-      $.get(@html).done (html) =>
-        self.html = html
-        loaded.resolve()
-      @html = null
+  loadThemeFiles: () =>
+    theme = @app.options.theme || 'default'
+    if theme.constructor == String
+      @loadInternalTheme(theme)
     else
-      @html ?= @defaultHtml
+      @loadCss(theme.css)
+      @loadHtml(theme.html)
+
+  loadInternalTheme: (name) =>
+    pathPrefix = "themes/#{name}/index"
+    @loadCss("#{pathPrefix}.css")
+    @loadHtml("#{pathPrefix}.html")
+
+  loadHtml: (path) =>
+    loaded = $.Deferred()
+    self = this
+
+    $.get(path).done (html) =>
+      self.html = html
       loaded.resolve()
 
     @loaded = loaded.promise()
 
-  loadCss: =>
-    @css ?= "themes/#{@themeName}/index.css"
-
-    if @css.match('^.*\.css')
-      style = $('<link>').attr
-        href: @css
-        rel: 'stylesheet'
-        type: 'text/css'
-        media: 'all'
-    else
-      style = $('<style>').attr
-        type: 'text/css'
-        media: 'all'
-      style.append(@css)
-
+  loadCss: (path) =>
+    style = $('<link>').attr
+      href: path
+      rel: 'stylesheet'
+      type: 'text/css'
+      media: 'all'
     $('head').append(style)
 
   addEmbedModeClass: ->
