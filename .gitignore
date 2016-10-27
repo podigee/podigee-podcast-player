@@ -1,4 +1,5 @@
 node_modules/
 .sass-cache/
 samples/
+build/
 aws.json
