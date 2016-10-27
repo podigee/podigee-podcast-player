@@ -1,5 +1,49 @@
 # Changelog
 
+## 2016-10-17
+
+### Fixed
+
+- UI problems with transcript speakers
+- fix off-by-one error in transcript search
+
+## 2016-10-06
+
+### Added
+
+- transcript extension supports JSON
+
+### Fixed
+
+- UI problems in transcript search
+- fix off-by-one error in transcript search
+
+## 2016-09-18
+
+### Added
+
+- search in transcripts
+
+## 2016-08-16
+
+### Added
+
+- transcript extension supports SRT
+
+## 2016-07-07
+
+### Added
+
+- duration is now available in templates
+
+### Changed
+
+- switched from fontawesome to a custom icon set
+
+### Fixed
+
+- horizontal resizing should work better now
+
 ## 2016-06-14
 
 ### Fixed
