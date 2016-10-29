@@ -7,6 +7,45 @@
   @extend .icon-pause;
 }
 
+.loading .play-button {
+  &:before {
+    content: '';
+  }
+
+  & {
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+    background-color: #666;
+    border-radius: 100%;
+  }
+
+  @-webkit-keyframes sk-scaleout {
+    0% { -webkit-transform: scale(0) }
+    100% {
+      -webkit-transform: scale(1.0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes sk-scaleout {
+    0% { 
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 100% {
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+      opacity: 0;
+    }
+  }
+}
+
+.error-loading .play-button {
+  @extend .icon-error_outline;
+
+  color: red !important;
+  font-size: 36px !important;
+}
+
 .backward-button {
   @extend .icon;
   @extend .icon-backward-10;

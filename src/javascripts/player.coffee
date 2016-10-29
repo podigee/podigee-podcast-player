@@ -64,6 +64,8 @@ class Player
 
   attachEvents: =>
     $(@media).on('timeupdate', @setCurrentTime)
+    $(@media).on('canplay', @app.mediaLoaded)
+    $(@media).on('error', @app.mediaLoadError)
 
   setInitialTime: =>
     @media.currentTime = @timeHash()

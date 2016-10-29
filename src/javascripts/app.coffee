@@ -55,6 +55,7 @@ class PodigeePodcastPlayer
     @theme = new Theme(this)
     @theme.loaded.done =>
       @elem = @theme.render()
+      window.setTimeout @sendSizeChange, 0
       rendered.resolve()
 
     rendered.promise()
@@ -68,8 +69,14 @@ class PodigeePodcastPlayer
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
-    window.setTimeout @sendSizeChange, 0
     @bindWindowResizing()
+
+  mediaLoaded: =>
+    @theme.removeLoadingClass()
+
+  mediaLoadError: =>
+    @theme.removeLoadingClass()
+    @theme.addFailedLoadingClass()
 
   # initialize elements
 
@@ -120,11 +127,14 @@ class PodigeePodcastPlayer
     @updateSpeedDisplay()
 
   bindButtons: () =>
-    @theme.playPauseElement.click =>
+    triggerPlayPause = (event) =>
+      event.preventDefault()
       if @extensions.ChromeCast && @extensions.ChromeCast.active
         @extensions.ChromeCast.togglePlayState()
       else
         @player.playPause()
+    @theme.playPauseElement.on 'click', triggerPlayPause
+    @theme.playPauseElement.on 'touchstart', triggerPlayPause
 
     @theme.backwardElement.click =>
       @player.jumpBackward()
