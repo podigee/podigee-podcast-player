@@ -1,8 +1,10 @@
 $icomoon-font-path: "../fonts" !default;
 
 $icon-cast: "\e307";
+$icon-close: "\e5cd";
 $icon-download: "\e2c0";
 $icon-chaptermarks: "\e431";
+$icon-error_outline: "\e001";
 $icon-transcript: "\e236";
 $icon-forward_30: "\e057";
 $icon-episode-info: "\e88f";
@@ -49,6 +51,11 @@ $icon-whatsapp: "\f232";
     content: $icon-cast;
   }
 }
+.icon-close {
+  &:before {
+    content: $icon-close;
+  }
+}
 .icon-download {
   &:before {
     content: $icon-download;
@@ -57,6 +64,11 @@ $icon-whatsapp: "\f232";
 .icon-chaptermarks {
   &:before {
     content: $icon-chaptermarks;
+  }
+}
+.icon-error_outline {
+  &:before {
+    content: $icon-error_outline;
   }
 }
 .icon-transcript {

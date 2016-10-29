@@ -1,8 +1,8 @@
 {
   "metadata": {
     "name": "podigee-podcast-player",
-    "lastOpened": 1474215491290,
-    "created": 1474215485831
+    "lastOpened": 1477743614183,
+    "created": 1477743611224
   },
   "iconSets": [
     {
@@ -4025,9 +4025,13 @@
           "id": 156
         },
         {
-          "order": 0,
+          "order": 31,
           "ligatures": "clear, close",
-          "id": 157
+          "id": 157,
+          "prevSize": 24,
+          "code": 58829,
+          "name": "close",
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -4061,7 +4065,7 @@
           "prevSize": 24,
           "code": 58048,
           "name": "download",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -4090,7 +4094,7 @@
           "prevSize": 24,
           "code": 58417,
           "name": "chaptermarks",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -4482,9 +4486,13 @@
           "id": 245
         },
         {
-          "order": 0,
+          "order": 32,
           "ligatures": "error_outline",
-          "id": 246
+          "id": 246,
+          "prevSize": 24,
+          "code": 57345,
+          "name": "error_outline",
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -4868,7 +4876,7 @@
           "prevSize": 24,
           "code": 57910,
           "name": "transcript",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -4992,7 +5000,7 @@
           "prevSize": 24,
           "code": 57431,
           "name": "forward_30",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -5271,7 +5279,7 @@
           "prevSize": 24,
           "name": "episode-info",
           "code": 59535,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -5330,7 +5338,7 @@
           "prevSize": 24,
           "code": 58132,
           "name": "keyboard_arrow_left",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 27,
@@ -5339,7 +5347,7 @@
           "prevSize": 24,
           "code": 58133,
           "name": "keyboard_arrow_right",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -5488,7 +5496,7 @@
           "prevSize": 24,
           "name": "playlist",
           "code": 59542,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -5707,7 +5715,7 @@
           "prevSize": 24,
           "code": 57569,
           "name": "mail_outline",
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -6011,7 +6019,7 @@
           "prevSize": 24,
           "name": "pause",
           "code": 57396,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -6225,7 +6233,7 @@
           "prevSize": 24,
           "name": "play",
           "code": 57399,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -6435,8 +6443,8 @@
           "id": 626,
           "prevSize": 24,
           "code": 57433,
-          "name": "replay_10",
-          "tempChar": ""
+          "name": "backward_10",
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -6715,7 +6723,7 @@
           "prevSize": 24,
           "name": "share",
           "code": 59405,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -20119,7 +20127,7 @@
           "order": 23,
           "prevSize": 32,
           "code": 61593,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "facebook, facebook-f",
@@ -20127,7 +20135,7 @@
           "order": 22,
           "prevSize": 32,
           "code": 61594,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "github",
@@ -20345,7 +20353,7 @@
           "order": 24,
           "prevSize": 32,
           "code": 61653,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "money",
@@ -21963,7 +21971,7 @@
           "order": 25,
           "prevSize": 32,
           "code": 62002,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "server",
@@ -42667,7 +42675,7 @@
       "noie8": false,
       "ie7": false,
       "cssVars": true,
-      "cssVarsFormat": "sass",
+      "cssVarsFormat": "scss",
       "showSelector": false,
       "selector": "class",
       "classSelector": ".icon",
