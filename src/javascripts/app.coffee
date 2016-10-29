@@ -120,11 +120,14 @@ class PodigeePodcastPlayer
     @updateSpeedDisplay()
 
   bindButtons: () =>
-    @theme.playPauseElement.click =>
+    triggerPlayPause = (event) =>
+      event.preventDefault()
       if @extensions.ChromeCast && @extensions.ChromeCast.active
         @extensions.ChromeCast.togglePlayState()
       else
         @player.playPause()
+    @theme.playPauseElement.on 'click', triggerPlayPause
+    @theme.playPauseElement.on 'touchstart', triggerPlayPause
 
     @theme.backwardElement.click =>
       @player.jumpBackward()
