@@ -14,6 +14,7 @@ class Theme
     rivets.bind(@elem, @context)
     $(@app.elemClass).replaceWith(@elem)
 
+    @addLoadingClass()
     @addEmbedModeClass()
     @findElements()
     @bindCoverLoad()
@@ -50,6 +51,15 @@ class Theme
       type: 'text/css'
       media: 'all'
     $('head').append(style)
+
+  addLoadingClass: ->
+    @elem.addClass('loading')
+
+  removeLoadingClass: ->
+    @elem.removeClass('loading')
+
+  addFailedLoadingClass: ->
+    @elem.addClass('error-loading')
 
   addEmbedModeClass: ->
     modeClass = "mode-#{@app.options.iframeMode}"

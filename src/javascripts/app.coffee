@@ -71,6 +71,13 @@ class PodigeePodcastPlayer
     @initializeExtensions()
     @bindWindowResizing()
 
+  mediaLoaded: =>
+    @theme.removeLoadingClass()
+
+  mediaLoadError: =>
+    @theme.removeLoadingClass()
+    @theme.addFailedLoadingClass()
+
   # initialize elements
 
   togglePlayState: () =>
