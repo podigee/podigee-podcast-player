@@ -55,6 +55,7 @@ class PodigeePodcastPlayer
     @theme = new Theme(this)
     @theme.loaded.done =>
       @elem = @theme.render()
+      window.setTimeout @sendSizeChange, 0
       rendered.resolve()
 
     rendered.promise()
@@ -68,7 +69,6 @@ class PodigeePodcastPlayer
     @bindButtons()
     @bindPlayerEvents()
     @initializeExtensions()
-    window.setTimeout @sendSizeChange, 0
     @bindWindowResizing()
 
   # initialize elements
