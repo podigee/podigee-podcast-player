@@ -72,9 +72,11 @@ class PodigeePodcastPlayer
     @bindWindowResizing()
 
   mediaLoaded: =>
+    window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
 
   mediaLoadError: =>
+    window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
     @theme.addFailedLoadingClass()
 
