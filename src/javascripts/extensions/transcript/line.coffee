@@ -18,7 +18,7 @@ class TranscriptLine
         <span class="transcript-line-speaker" pp-if="speaker">
           [{ speaker }]
         </span>
-        <span class="transcript-line-text" pp-if="text">{ text }</span>
+        <span class="transcript-line-text" pp-if="text" pp-html="text"></span>
       </li>
     """
 

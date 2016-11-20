@@ -41,9 +41,12 @@ class Transcript extends Extension
     transcript: ''
 
   load: =>
-    promise = @app.externalData.get(@transcript)
-    promise.done (transcript) =>
-      @processTranscript(transcript)
+    if @transcriptFileFormat() == 'vtt'
+      @processWebVTTTranscript(@transcript)
+    else
+      promise = @app.externalData.get(@transcript)
+      promise.done (transcript) =>
+        @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>
     parsedTranscript = if @transcriptFileFormat() == 'srt'
@@ -88,6 +91,27 @@ class Transcript extends Extension
         text: parts.slice(2).join("\n")
 
       @renderLine(data)
+
+  processWebVTTTranscript: (url) ->
+    deferred = $.Deferred()
+    track = @app.theme.addTranscriptionTrack(url)
+    track.addEventListener 'load', (event) =>
+      cues = (cue for cue in event.target.track.cues)
+      transcript = cues.map (cue) =>
+        startTime = Math.round(cue.startTime)
+        cueHTML = cue.getCueAsHTML().firstChild
+        data =
+          time: Utils.secondsToHHMMSS(startTime)
+          timestamp: startTime.toString()
+          speaker: cueHTML.title
+          text: cueHTML.textContent
+        @renderLine(data)
+
+      @data.transcript = transcript.join('')
+
+      deferred.resolve()
+
+    deferred.promise()
 
   parseJson: (raw) ->
     raw.transcription.map (segment) =>

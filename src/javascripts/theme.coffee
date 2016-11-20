@@ -98,6 +98,15 @@ class Theme
   removePanels: () =>
     @panels.empty()
 
+  addTranscriptionTrack: (url) =>
+    track = document.createElement('track')
+    track.kind = 'captions'
+    track.label = 'Transcript'
+    track.src = url
+    track.track.mode = 'showing'
+    @audioElement.append(track)
+    track
+
   addButton: (button) =>
     @buttons.append(button)
     button.on 'click', @changeActiveButton
