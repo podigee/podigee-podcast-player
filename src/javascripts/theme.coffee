@@ -102,6 +102,7 @@ class Theme
     track = document.createElement('track')
     track.kind = 'captions'
     track.label = 'Transcript'
+    track.crossorigin = 'anonymous'
     track.src = url
     track.track.mode = 'showing'
     @audioElement.append(track)

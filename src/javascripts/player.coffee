@@ -9,7 +9,7 @@ class Player
     self = this
     self.media = elem
     self.media.preload = "metadata"
-    self.media.crossOrigin = true
+    self.media.crossOrigin = 'anonymous'
     @loadFile()
     @setInitialTime()
     @setCurrentTime()
