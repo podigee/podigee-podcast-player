@@ -143,7 +143,10 @@ class Transcript extends Extension
 
   scrollToLine: (elem) ->
     return unless elem
-    @panel.find('ul').scrollTop(elem.offsetTop - 50)
+    if @panel.find('ul').width() < 517
+      @panel.find('ul').scrollTop(elem.offsetTop - 80)
+    else
+      @panel.find('ul').scrollTop(elem.offsetTop - 50)
 
   deactivateAll: (currentLine) =>
     $(currentLine).siblings().removeClass('active')

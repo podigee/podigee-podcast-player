@@ -474,9 +474,9 @@
 
       .search-result {
         float: right;
-        position: relative;
-        right: 17px;
-        top: 21px;
+        position: absolute;
+        right: 44px;
+        top: 4px;
       }
 
       .search-clear {
@@ -484,7 +484,7 @@
         font-size: 150%;
         left: calc(100% - 50px);
         position: absolute;
-        top: 15px;
+        top: -2px;
       }
 
       .transcript-text {
