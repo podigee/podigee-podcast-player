@@ -2,6 +2,7 @@ $ = require('jquery')
 _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
+WebVTT = require('vtt.js').WebVTT
 
 Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
@@ -46,7 +47,9 @@ class Transcript extends Extension
       @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>
-    parsedTranscript = if @transcriptFileFormat() == 'srt'
+    parsedTranscript = if @transcriptFileFormat() == 'vtt'
+      @parseWebVTT(rawTranscript)
+    else if @transcriptFileFormat() == 'srt'
       @parseSrt(rawTranscript)
     else if @transcriptFileFormat() == 'json'
       @parseJson(rawTranscript)
@@ -89,6 +92,27 @@ class Transcript extends Extension
 
       @renderLine(data)
 
+  parseWebVTT: (raw) =>
+    cues = []
+    parser = new WebVTT.Parser(window, WebVTT.StringDecoder())
+    parser.oncue = (cue) -> cues.push(cue)
+    parser.parse(raw)
+    parser.flush()
+
+    track = @app.player.media.addTextTrack('captions', 'Transcript')
+    track.mode = 'showing'
+
+    cues.map (cue) =>
+      track.addCue(cue)
+      startTime = Math.round(cue.startTime)
+      cueHTML = cue.getCueAsHTML().firstChild
+      data =
+        time: Utils.secondsToHHMMSS(startTime)
+        timestamp: startTime.toString()
+        speaker: cueHTML.title
+        text: cueHTML.textContent
+      @renderLine(data)
+
   parseJson: (raw) ->
     raw.transcription.map (segment) =>
       data =
@@ -119,7 +143,10 @@ class Transcript extends Extension
 
   scrollToLine: (elem) ->
     return unless elem
-    @panel.find('ul').scrollTop(elem.offsetTop - 50)
+    if @panel.find('ul').width() < 517
+      @panel.find('ul').scrollTop(elem.offsetTop - 80)
+    else
+      @panel.find('ul').scrollTop(elem.offsetTop - 50)
 
   deactivateAll: (currentLine) =>
     $(currentLine).siblings().removeClass('active')

@@ -50,7 +50,8 @@
     "sightglass": "^0.2.4",
     "source-map": "^0.4.4",
     "urijs": "^1.17.0",
-    "elasticlunr": "^0.9.0"
+    "elasticlunr": "^0.9.0",
+    "vtt.js": "^0.12.1"
   },
   "engines": {
     "node": ">=0.10.0"

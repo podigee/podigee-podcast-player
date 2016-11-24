@@ -117,7 +117,7 @@ class TranscriptSearch
         <span class="search-result-size">{currentIndex}/{resultCount}</span>
         <button class="search-result-next"></button>
       </div>
-      <input type="text" class="search-input">
+      <input type="text" class="search-input" placeholder="Search in transcript">
       <button class="search-clear" pp-show="query">&times;</button>
     """
 module.exports = TranscriptSearch
