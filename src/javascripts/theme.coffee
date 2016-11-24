@@ -26,8 +26,8 @@ class Theme
     if theme.constructor == String
       @loadInternalTheme(theme)
     else
-      @loadCss(theme.css)
-      @loadHtml(theme.html)
+      @loadCss(@app.options.themeCss || theme.css)
+      @loadHtml(@app.options.themeHtml || theme.html)
 
   loadInternalTheme: (name) =>
     pathPrefix = "themes/#{name}/index"
