@@ -453,7 +453,7 @@
       display: none;
     }
 
-    .transcript {
+    .panels .transcript {
       h3 {
         float: none;
       }
@@ -486,6 +486,10 @@
         position: absolute;
         top: 15px;
       }
+
+      .transcript-text {
+        height: calc(100% - 90px);
+      }
     }
   }
 }
@@ -499,8 +503,5 @@
     .buttons {
       right: 0;
     }
-  }
-
-  .panels .transcript {
   }
 }
