@@ -2,6 +2,7 @@ $ = require('jquery')
 _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
+WebVTT = require('vtt.js').WebVTT
 
 Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
@@ -41,15 +42,14 @@ class Transcript extends Extension
     transcript: ''
 
   load: =>
-    if @transcriptFileFormat() == 'vtt'
-      @processWebVTTTranscript(@transcript)
-    else
-      promise = @app.externalData.get(@transcript)
-      promise.done (transcript) =>
-        @processTranscript(transcript)
+    promise = @app.externalData.get(@transcript)
+    promise.done (transcript) =>
+      @processTranscript(transcript)
 
   processTranscript: (rawTranscript) =>
-    parsedTranscript = if @transcriptFileFormat() == 'srt'
+    parsedTranscript = if @transcriptFileFormat() == 'vtt'
+      @parseWebVTT(rawTranscript)
+    else if @transcriptFileFormat() == 'srt'
       @parseSrt(rawTranscript)
     else if @transcriptFileFormat() == 'json'
       @parseJson(rawTranscript)
@@ -92,26 +92,26 @@ class Transcript extends Extension
 
       @renderLine(data)
 
-  processWebVTTTranscript: (url) ->
-    deferred = $.Deferred()
-    track = @app.theme.addTranscriptionTrack(url)
-    track.addEventListener 'load', (event) =>
-      cues = (cue for cue in event.target.track.cues)
-      transcript = cues.map (cue) =>
-        startTime = Math.round(cue.startTime)
-        cueHTML = cue.getCueAsHTML().firstChild
-        data =
-          time: Utils.secondsToHHMMSS(startTime)
-          timestamp: startTime.toString()
-          speaker: cueHTML.title
-          text: cueHTML.textContent
-        @renderLine(data)
+  parseWebVTT: (raw) =>
+    cues = []
+    parser = new WebVTT.Parser(window, WebVTT.StringDecoder())
+    parser.oncue = (cue) -> cues.push(cue)
+    parser.parse(raw)
+    parser.flush()
 
-      @data.transcript = transcript.join('')
+    track = @app.player.media.addTextTrack('captions', 'Transcript')
+    track.mode = 'showing'
 
-      deferred.resolve()
-
-    deferred.promise()
+    cues.map (cue) =>
+      track.addCue(cue)
+      startTime = Math.round(cue.startTime)
+      cueHTML = cue.getCueAsHTML().firstChild
+      data =
+        time: Utils.secondsToHHMMSS(startTime)
+        timestamp: startTime.toString()
+        speaker: cueHTML.title
+        text: cueHTML.textContent
+      @renderLine(data)
 
   parseJson: (raw) ->
     raw.transcription.map (segment) =>
