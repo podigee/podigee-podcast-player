@@ -23,7 +23,12 @@ class Theme
 
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
-    if theme.constructor == String
+    themeHtml = @app.options.themeHtml
+    themeCss = @app.options.themeCss
+    if themeHtml && themeCss
+      @loadCss(themeCss)
+      @loadHtml(themeHtml)
+    else if theme.constructor == String
       @loadInternalTheme(theme)
     else
       @loadCss(@app.options.themeCss || theme.css)
