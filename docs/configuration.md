@@ -49,7 +49,7 @@ The player is either configured via a JavaScript object present in the same HTML
       {"start": "00:01:00", "title": "Second chapter"},
       ...
     ],
-    "transcript": "https://example.com/transcript.json"
+    "transcript": "https://example.com/transcript.vtt"
   }
 }
 ```
@@ -90,7 +90,7 @@ The configuration passed into the player either as a Javascript Object or as a J
 
 `episode.chaptermarks` - An object containing chaptermark information (see below)
 
-`episode.transcript` - An URL where the player can fetch a transcript for the episode
+`episode.transcript` - An URL where the player can fetch a WebVTT transcript file for this episode. If the WebVTT file is on another domain as the player, the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy) applies. You'll need to [enable CORS](http://enable-cors.org/) in order to do so.
 
 ### Media
 
@@ -107,7 +107,7 @@ The configuration passed into the player either as a Javascript Object or as a J
 
 `episode.chaptermarks` - This is an object containing zero or more chaptermarks in the following format:
 
-`episode.chaptermarks[0].start` - Starting time of the chapter
+`episode.chaptermarks[0].start` - Starting time of the chapter as timestring (e.g. 00:05:26)
 
 `episode.chaptermarks[0].title` - Title of the chapter
 
