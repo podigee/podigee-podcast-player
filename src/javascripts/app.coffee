@@ -175,7 +175,7 @@ class PodigeePodcastPlayer
     })
     window.parent.postMessage(resizeData, '*')
 
-    @extensions.ProgressBar.updateBarWidths()
+    @extensions.ProgressBar?.updateBarWidths()
 
   isInIframeMode: ->
     @options.iframeMode == 'iframe'

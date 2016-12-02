@@ -10,8 +10,6 @@ class Player
     self.media = elem
     self.media.preload = "metadata"
     @loadFile()
-    @setInitialTime()
-    @setCurrentTime()
     @attachEvents()
     @app.init(self)
 
@@ -69,7 +67,8 @@ class Player
     $(@media).on('error', @app.mediaLoadError)
 
   setInitialTime: =>
-    @media.currentTime = @timeHash()
+    $(@media).on 'loadedmetadata', =>
+      @media.currentTime = @timeHash()
 
   setCurrentTime: =>
     @currentTimeInSeconds = @media.currentTime
