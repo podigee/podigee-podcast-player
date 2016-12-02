@@ -60,11 +60,16 @@ class Player
       return 0
 
   attachEvents: =>
-    $(@media).on('timeupdate', @setCurrentTime)
+    $(@media).on('timeupdate', @updateTime)
     $(@media).on('loadedmetadata', @app.mediaLoaded)
     $(@media).on('durationchange', @app.mediaLoaded)
     $(@media).on('canplay', @app.mediaLoaded)
     $(@media).on('error', @app.mediaLoadError)
+    $(@media).on('ended', @app.mediaEnded)
+
+  updateTime: =>
+    @app.updateTime()
+    @setCurrentTime()
 
   setInitialTime: =>
     $(@media).on 'loadedmetadata', =>
