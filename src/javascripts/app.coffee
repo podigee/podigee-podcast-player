@@ -138,7 +138,6 @@ class PodigeePodcastPlayer
       else
         @player.playPause()
     @theme.playPauseElement.on 'click', triggerPlayPause
-    @theme.playPauseElement.on 'touchstart', triggerPlayPause
 
     @theme.backwardElement.click =>
       @player.jumpBackward()
