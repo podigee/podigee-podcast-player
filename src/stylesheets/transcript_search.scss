@@ -1,4 +1,8 @@
 .transcript .search {
+  button {
+    padding: 0;
+  }
+
   .search-result button {
     font-size: 110%;
     color: inherit;
@@ -9,7 +13,10 @@
   }
 
   input {
+    border: 1px solid #ccc;
+    border-radius: 0;
     font-size: 110%;
+    margin: 0;
     width: 300px;
   }
 }
