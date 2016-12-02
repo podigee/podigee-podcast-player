@@ -63,6 +63,8 @@ class Player
 
   attachEvents: =>
     $(@media).on('timeupdate', @setCurrentTime)
+    $(@media).on('loadedmetadata', @app.mediaLoaded)
+    $(@media).on('durationchange', @app.mediaLoaded)
     $(@media).on('canplay', @app.mediaLoaded)
     $(@media).on('error', @app.mediaLoadError)
 
@@ -93,6 +95,8 @@ class Player
 
   play: () ->
     return unless @media.paused
+    if @media.readyState < 2
+      @app.theme.addLoadingClass()
     @media.play()
     @playing = true
     @app.togglePlayState()

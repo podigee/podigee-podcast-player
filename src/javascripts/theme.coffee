@@ -14,7 +14,6 @@ class Theme
     rivets.bind(@elem, @context)
     $(@app.elemClass).replaceWith(@elem)
 
-    @addLoadingClass()
     @addEmbedModeClass()
     @findElements()
     @bindCoverLoad()
