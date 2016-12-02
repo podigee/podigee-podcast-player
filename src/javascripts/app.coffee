@@ -13,6 +13,7 @@ ChapterMarks = require('./extensions/chaptermarks.coffee')
 Download = require('./extensions/download.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
+Playerjs = require('./extensions/playerjs.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
 
@@ -23,6 +24,7 @@ class PodigeePodcastPlayer
     Download,
     EpisodeInfo,
     Playlist,
+    Playerjs,
     Share,
     Transcript,
   ]
