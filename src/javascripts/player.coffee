@@ -10,8 +10,6 @@ class Player
     self.media = elem
     self.media.preload = "metadata"
     @loadFile()
-    @setInitialTime()
-    @setCurrentTime()
     @attachEvents()
     @app.init(self)
 
@@ -62,14 +60,20 @@ class Player
       return 0
 
   attachEvents: =>
-    $(@media).on('timeupdate', @setCurrentTime)
+    $(@media).on('timeupdate', @updateTime)
     $(@media).on('loadedmetadata', @app.mediaLoaded)
     $(@media).on('durationchange', @app.mediaLoaded)
     $(@media).on('canplay', @app.mediaLoaded)
     $(@media).on('error', @app.mediaLoadError)
+    $(@media).on('ended', @app.mediaEnded)
+
+  updateTime: =>
+    @app.updateTime()
+    @setCurrentTime()
 
   setInitialTime: =>
-    @media.currentTime = @timeHash()
+    $(@media).on 'loadedmetadata', =>
+      @media.currentTime = @timeHash()
 
   setCurrentTime: =>
     @currentTimeInSeconds = @media.currentTime
