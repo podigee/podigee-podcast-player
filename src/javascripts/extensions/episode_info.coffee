@@ -39,8 +39,8 @@ class EpisodeInfo extends Extension
   panelHtml:
     """
     <div class="episode-info">
-      <h1 class="episode-title">{ title }</h1>
-      <p class="episode-subtitle">{ subtitle }</p>
+      <h1 class="episode-title" pp-html="title"></h1>
+      <p class="episode-subtitle" pp-html="subtitle"></p>
       <p class="episode-description" pp-html="description"></p>
     </div>
     """
