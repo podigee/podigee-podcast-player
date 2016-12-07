@@ -13,6 +13,7 @@ ChapterMarks = require('./extensions/chaptermarks.coffee')
 Download = require('./extensions/download.coffee')
 EpisodeInfo = require('./extensions/episode_info.coffee')
 Playlist = require('./extensions/playlist.coffee')
+Playerjs = require('./extensions/playerjs.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
 
@@ -23,6 +24,7 @@ class PodigeePodcastPlayer
     Download,
     EpisodeInfo,
     Playlist,
+    Playerjs,
     Share,
     Transcript,
   ]
@@ -67,7 +69,6 @@ class PodigeePodcastPlayer
   init: (player) =>
     @player = player
     @bindButtons()
-    @bindPlayerEvents()
     @initializeExtensions()
     @bindWindowResizing()
 
@@ -79,6 +80,7 @@ class PodigeePodcastPlayer
     window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
     @theme.addFailedLoadingClass()
+    @extensions.ProgressBar.hideBuffering()
 
   # initialize elements
 
@@ -89,24 +91,14 @@ class PodigeePodcastPlayer
     else
       @elem.removeClass('playing')
 
-  # event handlers
-
-  bindPlayerEvents: () ->
-    $(@player.media).on('timeupdate', @updateTime)
-      .on('ended', @triggerEnded)
-      .on('error', @triggerError)
-
   updateTime: () =>
     timeString = @extensions.ProgressBar.updateTime()
     @adjustPlaySpeed(timeString)
 
-  triggerEnded: =>
+  mediaEnded: =>
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
     @togglePlayState()
-
-  triggerError: =>
-    @extensions.ProgressBar.hideBuffering()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
@@ -136,7 +128,6 @@ class PodigeePodcastPlayer
       else
         @player.playPause()
     @theme.playPauseElement.on 'click', triggerPlayPause
-    @theme.playPauseElement.on 'touchstart', triggerPlayPause
 
     @theme.backwardElement.click =>
       @player.jumpBackward()
@@ -173,8 +164,7 @@ class PodigeePodcastPlayer
     })
     window.parent.postMessage(resizeData, '*')
 
-    if @extensions.ProgressBar
-      @extensions.ProgressBar.updateBarWidths()
+    @extensions.ProgressBar?.updateBarWidths()
 
   isInIframeMode: ->
     @options.iframeMode == 'iframe'

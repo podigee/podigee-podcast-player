@@ -15,10 +15,10 @@
 
   <div class="episode-basic-info">
     <div class="episode-title">
-      <a pp-if="url" pp-href="url" target="_parent">{ title }</a>
-      <span pp-unless="url">{ title }</a>
+      <a pp-if="url" pp-href="url" target="_parent" pp-html="title"></a>
+      <span pp-unless="url" pp-html="title"></a>
     </div>
-    <div class="episode-subtitle">{ subtitle }</div>
+    <div class="episode-subtitle" pp-html="subtitle"></div>
   </div>
   <div class="buttons"></div>
 

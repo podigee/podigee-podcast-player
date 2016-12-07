@@ -2,7 +2,10 @@ $ = require('jquery')
 _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
-WebVTT = require('vtt.js').WebVTT
+window.WebVTT = WebVTT = require('vtt.js').WebVTT
+if window.navigator.appVersion.match /Trident/
+  window.VTTCue = VTTCue = require('vtt.js').VTTCue
+
 
 Extension = require('../extension.coffee')
 Utils = require('../utils.coffee')
@@ -103,7 +106,8 @@ class Transcript extends Extension
     track.mode = 'showing'
 
     cues.map (cue) =>
-      track.addCue(cue)
+      unless window.navigator.appVersion.match /Trident/
+        track.addCue(cue)
       startTime = Math.round(cue.startTime)
       cueHTML = cue.getCueAsHTML().firstChild
       data =
