@@ -27,6 +27,7 @@ The player is extensible and ships with the following default extensions:
 - Playlist - Displays a list of podcast episodes based on as standard podcast RSS feed.
 - Transcript - Displays the transcript of an episode, highlights the currently spoken words and allows the listener to search and jump to certain passages by clicking or tapping.
 - Chromecast (experimental) - Allows the listener to play the podcast episode on a Chromecast device. This is currently not enabled by default, because it's still in testing and requires a little polishing work.
+- Deeplinking - Allows to share an URL in the form https://example.com/ep-1#t=123,321, which will set the player to start with second 123 and play until second 321 (see https://podlove.org/deep-link/ for details).
 
 ## Themes
 

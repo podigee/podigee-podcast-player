@@ -2,6 +2,7 @@ $ = require('jquery')
 _ = require('lodash')
 
 AudioFile = require('./audio_file.coffee')
+DeeplinkParser = require('./deeplink_parser.coffee')
 Utils = require('./utils.coffee')
 
 class Player
@@ -62,6 +63,7 @@ class Player
   attachEvents: =>
     $(@media).on('timeupdate', @updateTime)
     $(@media).on('loadedmetadata', @app.mediaLoaded)
+    $(@media).on('loadedmetadata', @setInitialTime)
     $(@media).on('durationchange', @app.mediaLoaded)
     $(@media).on('canplay', @app.mediaLoaded)
     $(@media).on('error', @app.mediaLoadError)
@@ -70,14 +72,22 @@ class Player
   updateTime: =>
     @app.updateTime()
     @setCurrentTime()
+    @checkStopTime()
 
   setInitialTime: =>
-    $(@media).on 'loadedmetadata', =>
-      @media.currentTime = @timeHash()
+    deeplink = new DeeplinkParser(@app.options.parentLocationHash)
+    @media.currentTime = deeplink.startTime
+    @stopTime = deeplink.endTime
 
   setCurrentTime: =>
     @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+
+  checkStopTime: () =>
+    return unless @stopTime?
+    if @currentTimeInSeconds >= @stopTime
+      @stopTime = null
+      @pause()
 
   setDuration: =>
     clear = -> window.clearInterval(interval)
@@ -112,19 +122,5 @@ class Player
     @app.togglePlayState()
 
   playing: false
-
-  # private
-
-  timeHash: =>
-    if hash = @app.options.parentLocationHash
-      hash = hash[1..-1].split('&')
-      timeHash = _(hash).find (h) -> _(h).startsWith('t')
-
-      if timeHash
-        timeHash.split('=')[1]
-      else
-        0
-    else
-      0
 
 module.exports = Player
