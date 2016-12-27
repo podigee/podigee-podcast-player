@@ -24,6 +24,7 @@ class Configuration
       return unless event.originalEvent.data
       data = event.originalEvent.data
       @configuration = JSON.parse(data)
+      return unless @configuration.episode? || @configuration.json_config?
 
       if @configuration.json_config
         @fetchJsonConfiguration()
