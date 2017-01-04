@@ -48,8 +48,7 @@ class Player
   # Sort files by probability of the browser to be able to play them
   sortByPlayability: (files) ->
     _.sortBy files, (file) ->
-      return 1 if file.playable == ''
-      return 1 if file.playable == 'maybe' && file.playable == 'probably'
+      return 1 if file.playable == 'maybe'
       return -1 if file.playable == 'probably'
       return 0
 
