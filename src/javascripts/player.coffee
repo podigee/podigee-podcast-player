@@ -76,8 +76,8 @@ class Player
 
   setInitialTime: =>
     deeplink = new DeeplinkParser(@app.options.parentLocationHash)
-    @media.currentTime = deeplink.startTime
-    @stopTime = deeplink.endTime
+    @media.currentTime = deeplink.startTime if (deeplink.startTime > 0)
+    @stopTime = deeplink.endTime if deeplink.endTime?
 
   setCurrentTime: =>
     @currentTimeInSeconds = @media.currentTime
