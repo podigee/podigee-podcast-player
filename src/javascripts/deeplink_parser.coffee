@@ -15,7 +15,7 @@ class DeeplinkParser
       if code.match(':')
         Utils.hhmmssToSeconds(code)
       else
-        code
+        parseInt(code, 10)
 
     return [0] if codes[0] > codes[1]
 
