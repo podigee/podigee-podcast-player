@@ -3,6 +3,7 @@ _ = require('lodash')
 class AudioFile
   @formatMapping:
     m4a: 'audio/mp4',
+    m4a: 'audio/aac',
     mp3: 'audio/mpeg',
     ogg: 'audio/ogg; codecs="vorbis"',
     opus: 'audio/ogg; codecs="opus"',

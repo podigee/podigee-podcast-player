@@ -16,13 +16,13 @@ class FeedItem
   extract: (elemName) =>
     @[elemName] ?= $(@xml).find(elemName)
 
+  media: {}
   mapEnclosure: () =>
     enclosure = @extract('enclosure')
     url = enclosure.attr('url')
     type = enclosure.attr('type')
-    media = {}
-    media[@enclosureMapping(type)] = url
-    media
+    @media[@enclosureMapping(type)] = url
+    @media
 
   enclosureMapping: (type) ->
     AudioFile.reverseFormatMapping[type]
