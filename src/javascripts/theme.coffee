@@ -11,7 +11,7 @@ class Theme
   html: null
   render: =>
     @elem = $(@html)
-    rivets.bind(@elem, @context)
+    @view = rivets.bind(@elem, @context)
     $(@app.elemClass).replaceWith(@elem)
 
     @addEmbedModeClass()
@@ -19,6 +19,9 @@ class Theme
     @bindCoverLoad()
 
     return @elem
+
+  updateView: () =>
+    @view.update(@context)
 
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
