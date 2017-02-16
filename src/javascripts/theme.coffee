@@ -5,13 +5,14 @@ rivets = require('rivets')
 
 class Theme
   constructor: (@app) ->
-    @context = @app.episode
     @loadThemeFiles()
+
+  context: => @app.episode
 
   html: null
   render: =>
     @elem = $(@html)
-    @view = rivets.bind(@elem, @context)
+    @view = rivets.bind(@elem, @context())
     $(@app.elemClass).replaceWith(@elem)
 
     @addEmbedModeClass()
@@ -21,7 +22,7 @@ class Theme
     return @elem
 
   updateView: () =>
-    @view.update(@context)
+    @view.update(@context())
 
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
