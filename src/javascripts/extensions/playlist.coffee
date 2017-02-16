@@ -68,6 +68,8 @@ class Playlist extends Extension
     @app.episode.transcript = null
     @app.episode.chaptermarks = null
 
+    @app.theme.updateView()
+
   renderPanel: =>
     @panel = $(@panelHtml)
 
