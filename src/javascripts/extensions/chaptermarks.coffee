@@ -14,6 +14,7 @@ class ChapterMark
 
   cleanData: =>
     @data.start = @data.start.split('.')[0]
+    @data.startInSeconds = Utils.hhmmssToSeconds(@data.start)
 
   render: =>
     @elem = $(@defaultHtml)
@@ -60,10 +61,14 @@ class ChapterMarks extends Extension
   renderPanel: =>
     @panel = $(@panelHtml)
     @panel.hide()
-    @chaptermarks.forEach((item, index, array) =>
-      item.elem = new ChapterMark(item, @click).render()
-
-      @panel.find('ul').append(item.elem)
+    marks = _.map(@chaptermarks, (item) =>
+      new ChapterMark(item, @click)
+    )
+    marks = _.sortBy(marks, (mark) =>
+      mark.data.startInSeconds
+    )
+    _.map(marks, (mark) =>
+      @panel.find('ul').append(mark.render())
     )
 
   attachEvents: =>
