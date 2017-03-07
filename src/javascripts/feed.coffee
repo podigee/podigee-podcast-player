@@ -9,7 +9,8 @@ class FeedItem
 
   parse: () =>
     @title = @extract('title').html()
-    @subtitle = @extract('subtitle').html()
+    @subtitle = @extract('subtitle').html() ||
+      @extract('itunes\\:subtitle').html()
     @href = @extract('link').html()
     @enclosure = @mapEnclosure()
     @description = @extract('description').html()
