@@ -4,6 +4,7 @@ AudioFile = require('./audio_file.coffee')
 
 class FeedItem
   constructor: (@xml) ->
+    @media = {}
     @parse()
 
   parse: () =>
@@ -16,7 +17,6 @@ class FeedItem
   extract: (elemName) =>
     @[elemName] ?= $(@xml).find(elemName)
 
-  media: {}
   mapEnclosure: () =>
     enclosure = @extract('enclosure')
     url = enclosure.attr('url')
@@ -25,7 +25,13 @@ class FeedItem
     @media
 
   enclosureMapping: (type) ->
-    AudioFile.reverseFormatMapping[type]
+    {
+      'audio/aac': 'm4a',
+      'audio/mp4': 'm4a',
+      'audio/mpeg': 'mp3',
+      'audio/ogg; codecs="vorbis"': 'ogg',
+      'audio/ogg; codecs="opus"': 'opus',
+    }[type]
 
 class Feed
   constructor: (app) ->
