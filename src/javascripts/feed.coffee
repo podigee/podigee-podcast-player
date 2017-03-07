@@ -15,7 +15,8 @@ class FeedItem
     @enclosure = @mapEnclosure()
     @description = @extract('description')
       .html()
-      .match(/<!\[CDATA\[([\s\S]*)]]>$/)[1]
+    if @description.match(/^<!/)
+      @description = @description.match(/<!\[CDATA\[([\s\S]*)]]>$/)[1]
 
   extract: (elemName) =>
     @[elemName] ?= $(@xml).find(elemName)
