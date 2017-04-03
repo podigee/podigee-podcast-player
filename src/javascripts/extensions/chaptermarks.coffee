@@ -42,8 +42,8 @@ class ChapterMarks extends Extension
     @options = _.extend(@defaultOptions, @app.extensionOptions.ChapterMarks)
     return if @options.disabled
 
-    @chaptermarks = @app.episode.chaptermarks
-    return unless @chaptermarks && @chaptermarks.length
+    @chapters = @app.episode.chaptermarks
+    return unless @chapters && @chapters.length
 
     @renderPanel()
     @renderButton()
@@ -61,13 +61,13 @@ class ChapterMarks extends Extension
   renderPanel: =>
     @panel = $(@panelHtml)
     @panel.hide()
-    marks = _.map(@chaptermarks, (item) =>
+    @chaptermarks = _.map(@chapters, (item) =>
       new ChapterMark(item, @click)
     )
-    marks = _.sortBy(marks, (mark) =>
+    @chaptermarks = _.sortBy(@chaptermarks, (mark) =>
       mark.data.startInSeconds
     )
-    _.map(marks, (mark) =>
+    _.map(@chaptermarks, (mark) =>
       @panel.find('ul').append(mark.render())
     )
 
@@ -76,12 +76,12 @@ class ChapterMarks extends Extension
 
   setActiveMark: () =>
     time = @app.player.currentTimeInSeconds
-    if time <= Utils.hhmmssToSeconds(@chaptermarks[0].start)
+    if time <= Utils.hhmmssToSeconds(@chaptermarks[0].data.start)
       @deactivateAll()
       @activateMark(@chaptermarks[0])
     else
       _(@chaptermarks).findLast (mark) =>
-        markTime = Utils.hhmmssToSeconds(mark.start)
+        markTime = Utils.hhmmssToSeconds(mark.data.start)
         return unless time >= markTime
 
         @deactivateAll()
