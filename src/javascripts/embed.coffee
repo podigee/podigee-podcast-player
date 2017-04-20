@@ -17,13 +17,18 @@ class Iframe
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
 
-    scriptPath = $(@elem).attr('src').match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
-    @url = "#{scriptPath}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
+    @url = "#{@origin()}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
 
     @buildIframe()
     @setupListeners()
     @replaceElem()
     @injectConfiguration() if @configuration
+
+  origin: () ->
+    scriptSrc = $(@elem).attr('src')
+    unless window.location.protocol.match(/^https/)
+      scriptSrc = scriptSrc.replace(/^https/, 'http')
+    scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
 
   buildIframe: ->
     @iframe = document.createElement('iframe')
