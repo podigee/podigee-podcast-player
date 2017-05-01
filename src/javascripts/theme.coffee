@@ -7,7 +7,10 @@ class Theme
   constructor: (@app) ->
     @loadThemeFiles()
 
-  context: => @app.episode
+  context: =>
+    _.merge(@app.episode, {
+      podcastTitle: @app.podcast.title,
+    })
 
   html: null
   render: =>

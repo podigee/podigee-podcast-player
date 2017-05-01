@@ -1,0 +1,35 @@
+<div class="podcast-player">
+  <audio></audio>
+
+  <div class="main-player">
+    <div class="left">
+      <div class="episode-basic-info">
+        <div class="episode-title">
+          <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
+          <span pp-unless="url" pp-html="title"></a>
+        </div>
+        <div class="podcast-title" pp-html="podcastTitle"></div>
+      </div>
+
+      <div class="controls">
+        <button class="backward-button" title="Backward 10s"></button>
+        <button class="play-button"></button>
+        <button class="forward-button" title="Forward 30s"></button>
+      </div>
+
+      <div class="custom-buttons">
+        <div class="buttons"></div>
+        <a class="logo" href="https://deezer.com"></a>
+      </div>
+
+      <progressbar/>
+    </div>
+
+    <div class="right">
+      <img class="cover-image" pp-src="coverUrl" />
+    </div>
+  </div>
+
+  <div class="panels"></div>
+</div>
+
