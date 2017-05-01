@@ -8,7 +8,7 @@ class ExternalData
   get: (url) ->
     deferred = $.Deferred()
 
-    url = if @sslProxy
+    url = if url.startsWith('http:') && @sslProxy
       "#{@sslProxy}#{url}"
     else
       url
