@@ -2,6 +2,10 @@
   <audio></audio>
 
   <div class="main-player">
+    <div class="right">
+      <img class="cover-image" pp-src="coverUrl" />
+    </div>
+
     <div class="left">
       <div class="episode-basic-info">
         <div class="episode-title">
@@ -12,9 +16,11 @@
       </div>
 
       <div class="controls">
+        <button class="skip-backward-button" title="Skip to previous Episode"></button>
         <button class="backward-button" title="Backward 10s"></button>
         <button class="play-button"></button>
         <button class="forward-button" title="Forward 30s"></button>
+        <button class="skip-forward-button" title="Skip to next Episode"></button>
       </div>
 
       <div class="custom-buttons">
@@ -25,11 +31,7 @@
       <progressbar/>
     </div>
 
-    <div class="right">
-      <img class="cover-image" pp-src="coverUrl" />
-    </div>
   </div>
 
   <div class="panels"></div>
 </div>
-

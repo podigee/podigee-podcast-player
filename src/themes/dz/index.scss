@@ -26,6 +26,13 @@ $icon-play: "\e037";
   }
 }
 
+$icon-pause: "\e034";
+.icon-pause {
+  &:before {
+    content: $icon-pause;
+  }
+}
+
 .podcast-player {
   background: $backgroundColor;
   color: $textColor;
@@ -57,7 +64,7 @@ a {
 }
 
 .episode-basic-info {
-  margin: $spacing 0 5px $spacing;
+  margin: $spacing $spacing 5px $spacing;
 }
 
 .episode-title {
@@ -87,6 +94,15 @@ a {
   margin-left: $spacing;
 }
 
+.loading .play-button {
+  color: white;
+  font-size: 30px;
+  height: 30px;
+  margin: -7px 0 0;
+  padding: 0;
+  width: 30px;
+}
+
 .controls button,
 .buttons button {
   background: transparent;
@@ -104,6 +120,12 @@ a {
   position: relative;
   top: -5px;
 }
+.controls .skip-forward-button,
+.controls .skip-backward-button {
+  font-size: 18px;
+  position: relative;
+  top: -5px;
+}
 
 .buttons {
   display: inline-block;
@@ -113,7 +135,6 @@ a {
   font-size: 14px;
   margin-left: 5px;
 }
-
 
 .custom-buttons {
   float: right;
@@ -141,9 +162,12 @@ a {
   position: absolute;
   top: -22px;
 }
-
 .playing .progress-bar-time-played {
   display: block;
+}
+
+.loading.playing .progress-bar-time-played {
+  display: none;
 }
 
 .progress-bar {
@@ -237,6 +261,10 @@ a {
     background: darken($backgroundColor, 4%);
   }
 
+  &.active {
+    color: $highlightColor;
+  }
+
   a {
     display: none;
   }
@@ -244,6 +272,10 @@ a {
   span {
     font-family: $fontFamily;
   }
+}
+
+.playing .panels .playlist ul li.active {
+  @extend .icon-pause;
 }
 
 .panels .playlist ul li + li {
@@ -271,5 +303,28 @@ a {
   .share-deeplink,
   .share-embed {
     display: none;
+  }
+}
+
+$mobile-breakpoint: 500px;
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+    .left, .right {
+      float: none;
+      width: 100%;
+    }
+
+    .cover-image {
+      height: auto;
+      width: 100%;
+    }
+
+    .custom-buttons {
+      right: 10px;
+    }
+
+    .panels {
+      padding: 10px;
+    }
   }
 }
