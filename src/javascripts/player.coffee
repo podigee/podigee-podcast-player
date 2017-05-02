@@ -22,12 +22,23 @@ class Player
     seconds = seconds || @app.options.forwardSeconds
     @media.currentTime = @media.currentTime + seconds
 
+  skipBackward: () =>
+    @pause()
+    @app.extensions.Playlist.playPrevious()
+
+  skipForward: () =>
+    @pause()
+    @app.extensions.Playlist.playNext()
+
   changePlaySpeed: () =>
     nextRateIndex = @app.options.playbackRates.indexOf(@app.options.currentPlaybackRate) + 1
     if nextRateIndex >= @app.options.playbackRates.length
       nextRateIndex = 0
 
     @setPlaySpeed(@app.options.playbackRates[nextRateIndex])
+
+  currentFile: =>
+    @media.src
 
   loadFile: =>
     @pause()

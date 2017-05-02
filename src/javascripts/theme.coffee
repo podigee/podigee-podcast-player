@@ -60,7 +60,14 @@ class Theme
       media: 'all'
     $('head').append(style)
 
+  addPlayingClass: ->
+    @elem.addClass('playing')
+
+  removePlayingClass: ->
+    @elem.removeClass('playing')
+
   addLoadingClass: ->
+    @removePlayingClass()
     @elem.addClass('loading')
 
   removeLoadingClass: ->
@@ -80,6 +87,8 @@ class Theme
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
+    @skipForwardElement = @elem.find('.skip-forward-button')
+    @skipBackwardElement = @elem.find('.skip-backward-button')
     @speedElement = @elem.find('.speed-toggle')
     @coverImage = @elem.find('.cover-image')
 

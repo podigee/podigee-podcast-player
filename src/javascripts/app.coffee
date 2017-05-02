@@ -87,9 +87,9 @@ class PodigeePodcastPlayer
   togglePlayState: () =>
     return unless @player?
     if @player.playing
-      @elem.addClass('playing')
+      @theme.addPlayingClass()
     else
-      @elem.removeClass('playing')
+      @theme.removePlayingClass()
 
   updateTime: () =>
     timeString = @extensions.ProgressBar.updateTime()
@@ -134,6 +134,12 @@ class PodigeePodcastPlayer
 
     @theme.forwardElement.click =>
       @player.jumpForward()
+
+    @theme.skipBackwardElement.click =>
+      @player.skipBackward()
+
+    @theme.skipForwardElement.click =>
+      @player.skipForward()
 
     @theme.speedElement.click (event) =>
       @player.changePlaySpeed()
