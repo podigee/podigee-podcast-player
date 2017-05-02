@@ -16,6 +16,8 @@ $icon-pause: "\e034";
 $icon-play: "\e037";
 $icon-backward_10: "\e059";
 $icon-share: "\e80d";
+$icon-skip_next: "\e044";
+$icon-skip_previous: "\e045";
 $icon-twitter: "\f099";
 $icon-facebook: "\f09a";
 $icon-facebook-f: "\f09a";
@@ -124,6 +126,16 @@ $icon-whatsapp: "\f232";
 .icon-share {
   &:before {
     content: $icon-share;
+  }
+}
+.icon-skip-next {
+  &:before {
+    content: $icon-skip_next;
+  }
+}
+.icon-skip-previous {
+  &:before {
+    content: $icon-skip_previous;
   }
 }
 .icon-twitter {

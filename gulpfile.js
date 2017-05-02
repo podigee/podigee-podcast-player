@@ -126,7 +126,7 @@ gulp.task('connect', function() {
     host: '0.0.0.0',
     port: 8081,
     root: [__dirname],
-    livereload: false
+    livereload: true
   });
 });
 
