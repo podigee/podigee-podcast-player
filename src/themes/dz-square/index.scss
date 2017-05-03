@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $backgroundColor: rgb(50, 50, 61);
+$backgroundColorTransparent: rgba(50, 50, 61, .8);
 $textColor: white;
 $highlightColor: rgb(38, 146, 183);
 $playerHeight: 90px;
@@ -50,7 +51,7 @@ a {
 }
 
 .info {
-  background: $backgroundColor;
+  background: $backgroundColorTransparent;
   bottom: -50px;
   height: 95px;
   padding: $spacing;
