@@ -52,7 +52,7 @@ $icon-pause: "\e034";
   height: $playerHeight;
 }
 
-.left {
+.info {
   float: left;
   padding-bottom: 10px;
   width: calc(100% - 100px);
@@ -101,6 +101,10 @@ a {
   float: left;
   height: 26px;
   margin-left: $spacing;
+}
+
+.overlay-play-button {
+  display: none;
 }
 
 .loading .play-button {
@@ -316,24 +320,44 @@ a {
 }
 
 $mobile-breakpoint: 500px;
-.podcast-player.mode-script {
-  @media (max-width: $mobile-breakpoint) {
-    .left, .right {
-      float: none;
-      width: 100%;
-    }
+@media (max-width: $mobile-breakpoint) {
+  @import '../dz-square/index';
 
-    .cover-image {
-      height: auto;
-      width: 100%;
-    }
+  .main-player {
+    height: auto;
+    position: relative;
+  }
 
-    .custom-buttons {
-      right: 10px;
-    }
+  .right {
+    float: none;
+  }
 
-    .panels {
-      padding: 10px;
-    }
+  .episode-basic-info {
+    margin: 0;
+  }
+
+  .overlay-play-button {
+    display: block;
+  }
+
+  .custom-buttons {
+    right: 7px;
+    top: -24px;
+  }
+
+  .progress-bar {
+    top: -24px;
+  }
+
+  .progress-bar-time-played {
+    display: none !important;
+  }
+
+  .custom-buttons .buttons {
+    display: none;
+  }
+  .panels {
+    height: 0 !important;
+    padding: 0 !important;
   }
 }
