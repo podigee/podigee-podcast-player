@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+@import 'equalizer';
+
 $backgroundColor: rgb(50, 50, 61);
 $backgroundColorTransparent: rgba(50, 50, 61, .8);
 $textColor: white;
@@ -123,6 +125,10 @@ a {
   left: calc(50% - 25px);
   position: absolute;
   top: calc(50% - 25px);
+}
+
+.playing .overlay-play-button {
+  display: inline-block;
 }
 
 .controls .forward-button,

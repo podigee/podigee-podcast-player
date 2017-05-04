@@ -1,11 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+@import 'equalizer';
+
 $backgroundColor: rgb(50, 50, 61);
 $textColor: white;
 $highlightColor: rgb(38, 146, 183);
 $playerHeight: 90px;
 $spacing: 10px;
 $fontFamily: 'Roboto', sans-serif;
+
+*,
+::before,
+::after {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 .icon {
   font-family: 'podigee-podcast-player' !important;
@@ -64,7 +73,7 @@ a {
 }
 
 .episode-basic-info {
-  margin: $spacing $spacing 5px $spacing;
+  margin: $spacing $spacing 0 $spacing;
 }
 
 .episode-title {
