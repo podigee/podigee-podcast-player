@@ -37,11 +37,6 @@ class PodigeePodcastPlayer
 
   extensions: {}
 
-  getFeed: () ->
-    return unless @podcast.feed
-
-    @podcast.feed = new Feed(this)
-
   getProductionData: () ->
     return unless @episode.productionDataUrl
 

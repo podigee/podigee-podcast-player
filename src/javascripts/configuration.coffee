@@ -3,6 +3,8 @@ _ = require('lodash')
 Utils = require('./utils.coffee')
 rivets = require('rivets')
 
+Podcast = require('./podcast.coffee')
+
 class Configuration
   constructor: (@app) ->
     @loader = $.Deferred()
@@ -52,7 +54,7 @@ class Configuration
     )
 
   setConfigurations: (viaJSON) =>
-    @app.podcast = @configuration.podcast || {}
+    @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
     @app.episode = @configuration.episode
     if @app.episode.cover_url?

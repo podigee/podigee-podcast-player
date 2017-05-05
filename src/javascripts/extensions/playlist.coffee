@@ -3,18 +3,18 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Utils = require('../utils.coffee')
 Extension = require('../extension.coffee')
 
 class PlaylistItem
-  constructor: (feedItem, callback) ->
-    @feedItem = feedItem
+  constructor: (@episode, @callback) ->
     @media = @context().media
-    @callback = callback
 
   active: false
   context: () ->
-    _.merge(@feedItem, {
+    _.merge(@episode, {
       active: @active,
+      humanDuration: Utils.secondsToHHMMSS(_.clone(@episode.duration))
     })
 
   activate: ->
@@ -32,15 +32,17 @@ class PlaylistItem
     @view = rivets.bind(@elem, @context())
 
     @elem.data('item', @context())
-    @elem.on('click', @context(), @callback)
+    @elem.on('click', @episode, @callback)
 
     return @elem
 
   defaultHtml:
     """
     <li pp-class-active="active">
-      <a pp-if="href" pp-href="href" target="_blank"><i class="fa fa-link"></i></a>
-      <span>{ title }</span>
+      <a class="episode-link" pp-if="url" pp-href="url" target="_blank"><i class="fa fa-link"></i></a>
+      <span class="playlist-episode-number" pp-if="number">{ number }.</span>
+      <span class="playlist-episode-title">{ title }</span>
+      <span class="playlist-episode-duration">{ humanDuration }</span>
     </li>
     """
 
@@ -53,15 +55,15 @@ class Playlist extends Extension
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
-    @feed = @app.getFeed()
-    return unless @feed
+    return unless @app.podcast.hasEpisodes()
 
-    @feed.promise.done =>
+    @app.podcast.getEpisodes().done =>
+      @episodes = @app.podcast.episodes
       @renderPanel()
       @renderButton()
 
       @app.theme.addExtension(this)
-      @setCurrentEpisode()
+      $(@app.player.media).on 'loadedmetadata', @setCurrentEpisode
 
   defaultOptions:
     showOnStart: false
@@ -74,9 +76,9 @@ class Playlist extends Extension
   setCurrentEpisode: () =>
     current = @app.player.currentFile()
     cleanedCurrent = @cleanFile(current)
-    @currentEpisode = _.find @playlist, (item) =>
-      item.deactivate()
-      filteredMedia = _.filter item.media, (file) =>
+    @currentEpisode = _.find @playlist, (episode) =>
+      episode.deactivate()
+      filteredMedia = _.filter episode.media, (file) =>
         cleanedFile = @cleanFile(file)
         cleanedCurrent == cleanedFile
       filteredMedia.length
@@ -94,32 +96,22 @@ class Playlist extends Extension
     else
       @playItem(event.data)
 
-  playItem: (item) =>
-    @updateEpisodeData(item)
+  playItem: (episode) =>
+    @updateEpisodeData(episode)
     @app.player.loadFile()
     @app.player.play()
     @app.initializeExtensions()
 
   playPrevious: () =>
     prevItem = @playlist[@currentIndex() + 1]
-    @playItem(prevItem.feedItem)
+    @playItem(prevItem)
 
   playNext: () =>
     nextItem = @playlist[@currentIndex() - 1]
-    @playItem(nextItem.feedItem)
+    @playItem(nextItem)
 
-  updateEpisodeData: (feedItem) ->
-    @app.episode.title = feedItem.title
-    @app.episode.subtitle = feedItem.subtitle
-    @app.episode.description = feedItem.description
-    @app.episode.media =
-      mp3: feedItem.enclosure.mp3
-      m4a: feedItem.enclosure.m4a
-      ogg: feedItem.enclosure.ogg
-      opus: feedItem.enclosure.opus
-    @app.episode.url = feedItem.href
-    @app.episode.transcript = null
-    @app.episode.chaptermarks = null
+  updateEpisodeData: (episode) ->
+    @app.episode = episode
 
     @app.theme.updateView()
 
@@ -127,8 +119,8 @@ class Playlist extends Extension
     @panel = $(@panelHtml)
 
     list = @panel.find('ul')
-    _.each @feed.items, (feedItem, index) =>
-      playlistItem = new PlaylistItem(feedItem, @click)
+    _.each @episodes, (episode, index) =>
+      playlistItem = new PlaylistItem(episode, @click)
       @playlist.push(playlistItem)
       list.append(playlistItem.render())
 
