@@ -285,6 +285,10 @@ a {
   span {
     font-family: $fontFamily;
   }
+
+  .playlist-episode-duration {
+    float: right;
+  }
 }
 
 .playing .panels .playlist ul li.active {
