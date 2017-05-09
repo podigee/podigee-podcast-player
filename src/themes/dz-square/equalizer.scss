@@ -33,9 +33,16 @@ $fourteen: $max;
   width: $size;
 }
 
+.equalizer-outer.overlay-equalizer {
+  left: calc(50% - 18px);
+  position: absolute;
+  top: calc(50% + 10px);
+}
+
 .playing .play-button {
   display: none;
 }
+
 .playing .equalizer-outer {
   display: inline-block;
 }
@@ -338,27 +345,4 @@ $fourteen: $max;
   100% {
     height: $nine;
   }
-}
-
-.center-me {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -($size / 2);
-  margin-left: -($size / 2);
-  width: $size;
-  height: $size;
-
-  &:hover {
-    background-color: white;
-  }  
-}
-
-html {
-  background-color: #e5e5e5;
-}
-
-html,
-body {
-  height: 100%;
 }

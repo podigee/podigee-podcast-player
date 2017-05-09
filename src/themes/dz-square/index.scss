@@ -127,8 +127,14 @@ a {
   top: calc(50% - 25px);
 }
 
-.playing .overlay-play-button {
-  display: inline-block;
+.playing:hover {
+  .overlay-play-button {
+    display: inline-block;
+  }
+
+  .equalizer-outer.overlay-equalizer {
+    display: none;
+  }
 }
 
 .controls .forward-button,
