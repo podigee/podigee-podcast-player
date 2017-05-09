@@ -100,7 +100,7 @@ class Playlist extends Extension
     @updateEpisodeData(episode)
     @app.player.loadFile()
     @app.player.play()
-    @app.initializeExtensions()
+    @app.initializeExtensions(this)
 
   playPrevious: () =>
     prevItem = @playlist[@currentIndex() + 1]
