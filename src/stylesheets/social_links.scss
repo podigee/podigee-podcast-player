@@ -1,4 +1,5 @@
 .panels .share-social-links {
+  height: 48px;
   list-style: none;
   padding: 0;
   text-align: center;
@@ -7,16 +8,18 @@
     display: inline-block;
     height: 48px;
     padding: 0 5px;
+    position: relative;
     overflow: hidden;
 
-    &:hover a:after {
+    &:hover:after {
       background: rgba(0, 0, 0, 0.2);
-      bottom: -16px;
+      bottom: 0;
       content: '';
       display: block;
       height: 5px;
+      left: 5px;
       position: absolute;
-      width: 100%;
+      width: calc(100% - 10px);
       z-index: 10;
     }
   }
@@ -25,6 +28,7 @@
     @extend .icon;
 
     color: transparent;
+    display: block;
     font-size: 1px;
     letter-spacing: -1px;
     position: relative;
@@ -54,8 +58,8 @@
     background: rgb(221, 75, 57);
     font-size: 1.6rem;
     content: $icon-google-plus;
+    padding: 10px 9px 12px;
     top: 11px;
-    padding: 11px 9px;
   }
 
   .share-link-twitter:before {
@@ -77,14 +81,12 @@
   }
 
   .share-link-clammr {
-    border-radius: 3px;
-    overflow: hidden;
-
     &:after {
       bottom: 0px !important;
     }
 
     img {
+      border-radius: 3px;
       height: 48px;
       width: 48px;
     }

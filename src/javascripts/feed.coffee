@@ -3,32 +3,44 @@ $ = require('jquery')
 AudioFile = require('./audio_file.coffee')
 
 class FeedItem
-  constructor: (@xml) ->
-    @media = {}
-    @parse()
 
-  parse: () =>
-    @title = @extract('title').html()
-    @subtitle = @extract('subtitle').html() ||
-      @extract('itunes\\:subtitle').html()
-    @href = @extract('link').html()
-    @enclosure = @mapEnclosure()
-    @description = @extract('description')
-      .html()
-    if @description.match(/^<!/)
-      @description = @description.match(/<!\[CDATA\[([\s\S]*)]]>$/)[1]
+  constructor: (@xml, @podcastCoverUrl) ->
+    true
 
-  extract: (elemName) =>
+  episodeAttributes: ->
+    title: @_extract('title').html()
+    subtitle: @_findSubtitle()
+    href: @_extract('link').html()
+    media: @_mapEnclosure()
+    description: @_cleanDescription(@_extract('description').html())
+    duration: parseInt(@_extract('duration').text(), 10)
+    coverUrl: @_extract('image').attr('href') || @podcastCoverUrl
+
+    number: null
+    chaptermarks: null
+    embedCode: null
+
+  _extract: (elemName) =>
     @[elemName] ?= $(@xml).find(elemName)
 
-  mapEnclosure: () =>
-    enclosure = @extract('enclosure')
+  _findSubtitle: () ->
+    @_extract('subtitle').html()
+
+  _cleanDescription: (description) ->
+    if description.match(/^<!/)
+      description.match(/<!\[CDATA\[([\s\S]*)]]>$/)[1]
+    else
+      description
+
+  _mapEnclosure: () =>
+    media = {}
+    enclosure = @_extract('enclosure')
     url = enclosure.attr('url')
     type = enclosure.attr('type')
-    @media[@enclosureMapping(type)] = url
-    @media
+    media[@_enclosureMapping(type)] = url
+    media
 
-  enclosureMapping: (type) ->
+  _enclosureMapping: (type) ->
     {
       'audio/aac': 'm4a',
       'audio/mp4': 'm4a',
@@ -38,26 +50,22 @@ class FeedItem
     }[type]
 
 class Feed
-  constructor: (app) ->
-    unless app.podcast.feed.constructor == Feed
-      @feedUrl = app.podcast.feed
-      @externalData = app.externalData
-      @fetch()
-    else
-      @feed = app.podcast.feed.feed
-      @items = app.podcast.feed.items
-      deferred = $.Deferred()
-      @promise = deferred.promise()
-      deferred.resolve()
+  constructor: (@app, @feedUrl) ->
+    true
 
   fetch: () ->
     self = this
 
-    @promise = @externalData.get(@feedUrl)
+    @promise = @app.externalData.get(@feedUrl)
     @promise.done (data) ->
-      self.feed = data
-      self.items = $(self.feed).find('item').map (_, item) -> new FeedItem(item)
+      self.episodes = $(data).find('item').map (_, item) ->
+        new FeedItem(item, self.podcastCover(data)).episodeAttributes()
 
     self
+
+  podcastCover: (data) ->
+    $(data).find('channel image').first().find('url').text() ||
+      $(data).find('channel > image').last().attr('href')
+
 
 module.exports = Feed

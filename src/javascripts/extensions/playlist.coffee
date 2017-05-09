@@ -3,27 +3,46 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Utils = require('../utils.coffee')
 Extension = require('../extension.coffee')
 
 class PlaylistItem
-  constructor: (context, callback) ->
-    @context = context
-    @callback = callback
+  constructor: (@episode, @callback) ->
+    @media = @context().media
+
+  active: false
+  context: () ->
+    _.merge(@episode, {
+      active: @active,
+      humanDuration: Utils.secondsToHHMMSS(_.clone(@episode.duration))
+    })
+
+  activate: ->
+    return if @active
+    @active = true
+    @view.update(@context())
+
+  deactivate: ->
+    return unless @active
+    @active = false
+    @view.update(@context())
 
   render: =>
     @elem = $(@defaultHtml)
-    rivets.bind(@elem, @context)
+    @view = rivets.bind(@elem, @context())
 
-    @elem.data('item', @context)
-    @elem.on('click', @context, @callback)
+    @elem.data('item', @context())
+    @elem.on('click', @episode, @callback)
 
     return @elem
 
   defaultHtml:
     """
-    <li>
-      <a pp-if="href" pp-href="href" target="_blank"><i class="fa fa-link"></i></a>
-      <span>{ title }</span>
+    <li pp-class-active="active">
+      <a class="episode-link" pp-if="url" pp-href="url" target="_blank"><i class="fa fa-link"></i></a>
+      <span class="playlist-episode-number" pp-if="number">{ number }.</span>
+      <span class="playlist-episode-title">{ title }</span>
+      <span class="playlist-episode-duration">{ humanDuration }</span>
     </li>
     """
 
@@ -36,37 +55,63 @@ class Playlist extends Extension
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
-    @feed = @app.getFeed()
-    return unless @feed
+    return unless @app.podcast.hasEpisodes()
 
-    @feed.promise.done =>
+    @app.podcast.getEpisodes().done =>
+      @episodes = @app.podcast.episodes
       @renderPanel()
       @renderButton()
 
       @app.theme.addExtension(this)
+      $(@app.player.media).on 'loadedmetadata', @setCurrentEpisode
 
   defaultOptions:
     showOnStart: false
     disabled: false
 
+  playlist: []
+
+  currentEpisode: null
+  currentIndex: => @playlist.indexOf(@currentEpisode)
+  setCurrentEpisode: () =>
+    current = @app.player.currentFile()
+    cleanedCurrent = @cleanFile(current)
+    @currentEpisode = _.find @playlist, (episode) =>
+      episode.deactivate()
+      filteredMedia = _.filter episode.media, (file) =>
+        cleanedFile = @cleanFile(file)
+        cleanedCurrent == cleanedFile
+      filteredMedia.length
+    @currentEpisode.activate()
+
+  cleanFile: (file) ->
+    file = file.split('?')[0]
+    file = file.split('.')
+    file.pop()
+    file.join('.')
+
   click: (event) =>
-    @updateEpisodeData(event.data)
+    if event.data == @currentEpisode.feedItem
+      @app.player.playPause()
+    else
+      @playItem(event.data)
 
-    @app.initializeExtensions()
+  playItem: (episode) =>
+    @updateEpisodeData(episode)
     @app.player.loadFile()
+    @app.player.play()
+    @app.initializeExtensions()
 
-  updateEpisodeData: (feedItem) ->
-    @app.episode.title = feedItem.title
-    @app.episode.subtitle = feedItem.subtitle
-    @app.episode.description = feedItem.description
-    @app.episode.media =
-      mp3: feedItem.enclosure.mp3
-      m4a: feedItem.enclosure.m4a
-      ogg: feedItem.enclosure.ogg
-      opus: feedItem.enclosure.opus
-    @app.episode.url = feedItem.href
-    @app.episode.transcript = null
-    @app.episode.chaptermarks = null
+  playPrevious: () =>
+    prevItem = @playlist[@currentIndex() + 1]
+    @playItem(prevItem)
+
+  playNext: () =>
+    nextItem = @playlist[@currentIndex() - 1]
+    @playItem(nextItem)
+
+  updateEpisodeData: (episode) ->
+    @app.episode = episode
 
     @app.theme.updateView()
 
@@ -74,9 +119,10 @@ class Playlist extends Extension
     @panel = $(@panelHtml)
 
     list = @panel.find('ul')
-    _.each @feed.items, (feedItem, index) =>
-      playlistItem = new PlaylistItem(feedItem, @click).render()
-      list.append(playlistItem)
+    _.each @episodes, (episode, index) =>
+      playlistItem = new PlaylistItem(episode, @click)
+      @playlist.push(playlistItem)
+      list.append(playlistItem.render())
 
     @panel.hide()
 

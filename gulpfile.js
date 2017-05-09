@@ -10,7 +10,6 @@ var gulp = require('gulp'),
     connect = require('gulp-connect');
     gzip = require('gulp-gzip');
     fs = require('fs');
-    s3 = require('gulp-s3');
 
 var dest = './dist';
 var paths = {
@@ -130,17 +129,6 @@ gulp.task('connect', function() {
     livereload: true
   });
 });
-
-gulp.task('upload', ['default'], function() {
-  awsCredentials = JSON.parse(fs.readFileSync('./aws.json'))
-  return gulp.src('build/**')
-    .pipe(s3(awsCredentials, {
-      uploadPath: "/podcast-player/",
-      headers: {'x-amz-acl': 'public-read'}
-    }))
-})
-
-gulp.task('deploy', ['upload'])
 
 // Serve
 gulp.task('serve', ['connect', 'watch']);
