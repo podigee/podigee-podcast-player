@@ -41,7 +41,7 @@ class PlaylistItem
     <li pp-class-active="active">
       <a class="episode-link" pp-if="url" pp-href="url" target="_blank"><i class="fa fa-link"></i></a>
       <span class="playlist-episode-number" pp-if="number">{ number }.</span>
-      <span class="playlist-episode-title">{ title }</span>
+      <span class="playlist-episode-title" pp-html="title"></span>
       <span class="playlist-episode-duration">{ humanDuration }</span>
     </li>
     """
