@@ -287,6 +287,15 @@
             margin-left: 10px;
           }
 
+          .episode-link,
+          .playlist-episode-number {
+            display: none;
+          }
+
+          .playlist-episode-duration {
+            float: right;
+          }
+
           a {
             color: $highlight2;
             font-size: 16px;

@@ -1,5 +1,116 @@
 # Changelog
 
+## 2017-05-09
+
+### Added
+
+- ability to skip between playlist entries
+- extract more information from feed playlist entries
+- add possibility to add a playlist via initial configuration to allow more advanced uses
+- add podcast title to configuration parser
+
+## 2017-04-20
+
+### Changes
+
+- iframe is loaded from the same protocol as the surrounding site (before always used https)
+
+## 2017-04-03
+
+### Fixes
+
+- regression in chapter mark update while playing
+
+## 2017-03-07
+
+### Fixes
+
+- various problems with extracting playlists from feeds
+
+## 2017-02-28
+
+### Fixes
+
+- ensure correct order of chapter marks
+
+## 2017-02-16
+
+### Fixes
+
+- issues when clicking playlist items
+
+## 2017-01-05
+
+### Fixes
+
+- title link opening in iframe
+
+## 2017-01-04
+
+### Fixes
+
+- regression in deep linking code
+
+## 2016-12-27
+
+### Fixes
+
+- problem with injecting configuration into iframe
+
+### Changes
+
+- improve deep link capabilities
+
+## 2016-12-07
+
+### Fixes
+
+- HTML entity encoding in themes
+
+## 2016-12-02
+
+### Fixed
+
+- problems with transcripts in Safari
+- update vtt.js to work around bug in Firefox
+- some smaller Internet Explorer related issues
+
+### Added
+
+- improvements for loading indicator
+
+### Changed
+
+- clean up internal player events
+
+## 2016-11-29
+
+### Added
+
+- support for player.js protocol
+
+## 2016-11-24
+
+### Added
+
+- WebVTT transcript support
+
+## 2016-10-30
+
+### Fixed
+
+- iframe resizing too late
+- play button not reacting on mobile safari
+- resize iframe again if media is loaded to late
+
+### Added
+
+- some new icons
+
+### Changed
+
+- loading animation if play button is clicked before audio is ready to play
+
 ## 2016-10-17
 
 ### Fixed

@@ -37,11 +37,6 @@ class PodigeePodcastPlayer
 
   extensions: {}
 
-  getFeed: () ->
-    return unless @podcast.feed
-
-    @podcast.feed = new Feed(this)
-
   getProductionData: () ->
     return unless @episode.productionDataUrl
 
@@ -87,9 +82,9 @@ class PodigeePodcastPlayer
   togglePlayState: () =>
     return unless @player?
     if @player.playing
-      @elem.addClass('playing')
+      @theme.addPlayingClass()
     else
-      @elem.removeClass('playing')
+      @theme.removePlayingClass()
 
   updateTime: () =>
     timeString = @extensions.ProgressBar.updateTime()
@@ -135,6 +130,12 @@ class PodigeePodcastPlayer
     @theme.forwardElement.click =>
       @player.jumpForward()
 
+    @theme.skipBackwardElement.click =>
+      @player.skipBackward()
+
+    @theme.skipForwardElement.click =>
+      @player.skipForward()
+
     @theme.speedElement.click (event) =>
       @player.changePlaySpeed()
       @updateSpeedDisplay()
@@ -142,13 +143,16 @@ class PodigeePodcastPlayer
   updateSpeedDisplay: () ->
     @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
-  initializeExtensions: () =>
+  initializeExtensions: (currentlyActiveExtension) =>
     self = this
     @extensions = {}
     @theme.removeButtons()
     @theme.removePanels()
     PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
       self.extensions[extension.extension.name] = new extension(self)
+      if currentlyActiveExtension instanceof extension
+        self.theme.togglePanel(self.extensions[extension.extension.name].panel)
+
 
   bindWindowResizing: =>
     $(window).on('resize', _.debounce(@sendSizeChange, 250))

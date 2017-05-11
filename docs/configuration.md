@@ -29,7 +29,31 @@ The player is either configured via a JavaScript object present in the same HTML
     "Transcript": {},
   },
   "podcast": {
-    "feed": "https://example.com/feed.xml"
+    "title": "Podcast Title",
+    "feed": "https://example.com/feed.xml",
+    "episodes": [
+     {
+      "media": {
+        "mp3": "https://example.com/media2.mp3",
+        "m4a": "https://example.com/media2.m4a",
+        "ogg": "https://example.com/media2.ogg",
+        "opus": "https://example.com/media2.opus"
+      },
+      "coverUrl": "https://example.com/cover.jpg",
+      "title": "Episode 2 title",
+      "subtitle": "Episode 2 subtitle",
+      "url": "http://example.com/episode-2",
+      "embedCode": "<script class=\"podigee-podcast-player\" src=\"https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js\" data-configuration=\"https://example.com/episode-2.json\"><\/script>",
+      "description": "Episode 2 description",
+      "chaptermarks": [
+        {"start": "00:00:00", "title": "First chapter"},
+        {"start": "00:01:00", "title": "Second chapter"},
+        ...
+      ],
+      "transcript": "https://example.com/transcript-2.vtt"
+    },
+    ...
+  ],
   },
   "episode": {
     "media": {

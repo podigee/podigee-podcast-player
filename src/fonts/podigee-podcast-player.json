@@ -1,8 +1,8 @@
 {
   "metadata": {
     "name": "podigee-podcast-player",
-    "lastOpened": 1477743614183,
-    "created": 1477743611224
+    "lastOpened": 1493753546948,
+    "created": 1493753543058
   },
   "iconSets": [
     {
@@ -6801,14 +6801,22 @@
           "id": 696
         },
         {
-          "order": 0,
+          "order": 34,
           "ligatures": "skip_next",
-          "id": 697
+          "id": 697,
+          "prevSize": 24,
+          "code": 57412,
+          "name": "skip_next",
+          "tempChar": ""
         },
         {
-          "order": 0,
+          "order": 33,
           "ligatures": "skip_previous",
-          "id": 698
+          "id": 698,
+          "prevSize": 24,
+          "code": 57413,
+          "name": "skip_previous",
+          "tempChar": ""
         },
         {
           "order": 0,
@@ -20127,7 +20135,7 @@
           "order": 23,
           "prevSize": 32,
           "code": 61593,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "facebook, facebook-f",
@@ -20135,7 +20143,7 @@
           "order": 22,
           "prevSize": 32,
           "code": 61594,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "github",
@@ -20353,7 +20361,7 @@
           "order": 24,
           "prevSize": 32,
           "code": 61653,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "money",
@@ -21971,7 +21979,7 @@
           "order": 25,
           "prevSize": 32,
           "code": 62002,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "name": "server",

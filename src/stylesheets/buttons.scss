@@ -56,6 +56,16 @@
   @extend .icon-forward-30;
 }
 
+.skip-backward-button {
+  @extend .icon;
+  @extend .icon-skip-previous;
+}
+
+.skip-forward-button {
+  @extend .icon;
+  @extend .icon-skip-next;
+}
+
 .chaptermarks-button {
   @extend .icon;
   @extend .icon-chaptermarks;
