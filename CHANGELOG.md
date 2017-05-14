@@ -1,5 +1,14 @@
 # Changelog
 
+## 2017-05-09
+
+### Added
+
+- ability to skip between playlist entries
+- extract more information from feed playlist entries
+- add possibility to add a playlist via initial configuration to allow more advanced uses
+- add podcast title to configuration parser
+
 ## 2017-04-20
 
 ### Changes

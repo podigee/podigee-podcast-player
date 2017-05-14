@@ -105,6 +105,7 @@ class Player
     interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
       @app.episode.duration ?= @media.duration
+      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@media.duration))
       clear()
     ), 500
 
