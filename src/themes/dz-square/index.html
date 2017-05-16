@@ -1,0 +1,30 @@
+<div class="podcast-player">
+  <audio></audio>
+
+  <button class="play-button overlay-play-button"></button>
+  <div class="equalizer-outer overlay-equalizer"><div class="equalizer"></div></div>
+  <img class="cover-image" pp-src="coverUrl" />
+
+  <div class="info">
+    <div class="episode-basic-info">
+      <div class="episode-title">
+        <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
+        <span pp-unless="url" pp-html="title"></a>
+      </div>
+      <div class="podcast-title" pp-html="podcastTitle"></div>
+    </div>
+
+    <div class="controls">
+      <button class="skip-backward-button" title="Skip to previous Episode"></button>
+      <button class="backward-button" title="Backward 10s"></button>
+      <button class="play-button"></button>
+      <div class="equalizer-outer"><div class="equalizer"></div></div>
+      <button class="forward-button" title="Forward 30s"></button>
+      <button class="skip-forward-button" title="Skip to next Episode"></button>
+    </div>
+
+    <a class="logo" href="http://www.deezer.com/?utm_source=podigee&utm_campaign=ptn-podigee&utm_medium=widget-obj_stream&utm_content=homepage" target="_blank"></a>
+
+    <progressbar/>
+  </div>
+</div>

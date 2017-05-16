@@ -1,0 +1,348 @@
+$size: 40px;
+
+$max: $size / 1.666;
+$width: $max / 3.5;
+$margin: $max / 14;
+$color: white;
+
+$equalizers: 3;
+$equalizerSize: ($equalizers * $width) + ( ($equalizers - 1) * $margin );
+$bottom: ( $size - $max ) / 2;
+$left: ( $size - $equalizerSize ) / 2;
+
+// Heights
+$two: $max / 7;
+$three: $max / 4.666666667;
+$four: $max / 3.5;
+$five: $max / 2.8;
+$six: $max / 2.333333333;
+$seven: $max / 2;
+$eight: $max / 1.75;
+$nine: $max / 1.555555556;
+$ten: $max / 1.4;
+$eleven: $max / 1.272727273;
+$twelve: $max / 1.166666667;
+$thirteen: $max / 1.076923077;
+$fourteen: $max;
+
+.equalizer-outer {
+  display: none;
+  margin-bottom: 5px;
+  padding-left: 8px;
+  position: relative;
+  width: $size;
+}
+
+.equalizer-outer.overlay-equalizer {
+  left: calc(50% - 18px);
+  position: absolute;
+  top: calc(50% + 10px);
+}
+
+.playing .play-button {
+  display: none;
+}
+
+.playing .equalizer-outer {
+  display: inline-block;
+}
+
+.playing .controls button {
+  margin-top: 8px;
+}
+
+.playing .controls:hover {
+  .play-button {
+    display: inline-block;
+  }
+
+  button {
+    margin-top: -5px;
+  }
+
+  .equalizer-outer {
+    display: none;
+  }
+}
+
+.equalizer {
+  background-color: $color;
+  bottom: 0;
+  display: block;
+  height: $three;
+  position: absolute;
+  width: $width;
+}
+
+.equalizer,
+.equalizer::before,
+.equalizer::after {
+  animation: equalize 1.25s steps(25, end) 0s infinite;
+}
+
+.equalizer::before,
+.equalizer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: $width + $margin;
+  height: $max;
+  width: $width;
+  background-color: $color;
+}
+
+// Equalizer 2
+.equalizer::before {
+  animation-name: equalize2;
+}
+
+// Equalizer 3
+.equalizer::after {
+  left: $width * 2 + $margin * 2;
+  animation-name: equalize3;
+}
+
+@keyframes equalize {
+  0% {
+    height: $four;
+  }
+  4% {
+    height: $two;
+  }
+  8% {
+    height: $four;
+  }
+  12% {
+    height: $seven;
+  }
+  16% {
+    height: $ten;
+  }
+  20% {
+    height: $thirteen;
+  }
+  24% {
+    height: $twelve;
+  }
+  28% {
+    height: $eleven;
+  }
+  32% {
+    height: $eleven;
+  }
+  36% {
+    height: $eight;
+  }
+  40% {
+    height: $ten;
+  }
+  44% {
+    height: $ten;
+  }
+  48% {
+    height: $eleven;
+  }
+  52% {
+    height: $twelve;
+  }
+  56% {
+    height: $thirteen;
+  }
+  60% {
+    height: $twelve;
+  }
+  64% {
+    height: $twelve;
+  }
+  68% {
+    height: $eleven;
+  }
+  72% {
+    height: $ten;
+  }
+  76% {
+    height: $eleven;
+  }
+  80% {
+    height: $twelve;
+  }
+  84% {
+    height: $twelve;
+  }
+  88% {
+    height: $thirteen;
+  }
+  92% {
+    height: $ten;
+  }
+  96% {
+    height: $seven;
+  }
+  100% {
+    height: $four;
+  }
+}
+
+
+@keyframes equalize2 {
+  0% {
+    height: $twelve;
+  }
+  4% {
+    height: $thirteen;
+  }
+  8% {
+    height: $twelve;
+  }
+  12% {
+    height: $twelve;
+  }
+  16% {
+    height: $eleven;
+  }
+  20% {
+    height: $eleven;
+  }
+  24% {
+    height: $eleven;
+  }
+  28% {
+    height: $twelve;
+  }
+  32% {
+    height: $twelve;
+  }
+  36% {
+    height: $thirteen;
+  }
+  40% {
+    height: $thirteen;
+  }
+  44% {
+    height: $thirteen;
+  }
+  48% {
+    height: $eleven;
+  }
+  52% {
+    height: $eight;
+  }
+  56% {
+    height: $six;
+  }
+  60% {
+    height: $eight;
+  }
+  64% {
+    height: $ten;
+  }
+  68% {
+    height: $eleven;
+  }
+  72% {
+    height: $thirteen;
+  }
+  76% {
+    height: $twelve;
+  }
+  80% {
+    height: $twelve;
+  }
+  84% {
+    height: $eleven;
+  }
+  88% {
+    height: $eleven;
+  }
+  92% {
+    height: $nine;
+  }
+  96% {
+    height: $eleven;
+  }
+  100% {
+    height: $twelve;
+  }
+}
+
+
+@keyframes equalize3 {
+  0% {
+    height: $nine;
+  }
+  4% {
+    height: $seven;
+  }
+  8% {
+    height: $nine;
+  }
+  12% {
+    height: $eleven;
+  }
+  16% {
+    height: $thirteen;
+  }
+  20% {
+    height: $size / 2.666666667;
+  }
+  24% {
+    height: $fourteen;
+  }
+  28% {
+    height: $eleven;
+  }
+  32% {
+    height: $nine;
+  }
+  36% {
+    height: $eight;
+  }
+  40% {
+    height: $seven;
+  }
+  44% {
+    height: $five;
+  }
+  48% {
+    height: $eight;
+  }
+  52% {
+    height: $ten;
+  }
+  56% {
+    height: $eleven;
+  }
+  60% {
+    height: $thirteen;
+  }
+  64% {
+    height: $twelve;
+  }
+  68% {
+    height: $eleven;
+  }
+  72% {
+    height: $eleven;
+  }
+  76% {
+    height: $ten;
+  }
+  80% {
+    height: $twelve;
+  }
+  84% {
+    height: $thirteen;
+  }
+  88% {
+    height: $fourteen;
+  }
+  92% {
+    height: $twelve;
+  }
+  96% {
+    height: $ten;
+  }
+  100% {
+    height: $nine;
+  }
+}

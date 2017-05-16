@@ -9,7 +9,7 @@ class Theme
 
   context: =>
     _.merge(@app.episode, {
-      podcastTitle: @app.podcast.title 
+      podcastTitle: @app.podcast.title,
     })
 
   html: null
