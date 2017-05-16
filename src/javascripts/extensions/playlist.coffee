@@ -107,14 +107,14 @@ class Playlist extends Extension
     return if (currentIndex + 1) > @playlist.length
 
     prevItem = @playlist[currentIndex + 1]
-    @playItem(prevItem)
+    @playItem(prevItem.episode)
 
   playNext: () =>
     currentIndex = @currentIndex()
     return if currentIndex == 0
 
     nextItem = @playlist[currentIndex - 1]
-    @playItem(nextItem)
+    @playItem(nextItem.episode)
 
   updateEpisodeData: (episode) ->
     @app.episode = episode

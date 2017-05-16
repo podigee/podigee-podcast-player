@@ -128,6 +128,7 @@ class Theme
 
     if extension.name() == @app.options.startPanel
       extension.button.trigger('click')
+      @app.options.startPanel = null
 
     if !@app.options.startPanel && @app.isInIframeMode()
       @buttons.hide()
