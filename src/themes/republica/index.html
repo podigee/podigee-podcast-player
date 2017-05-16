@@ -1,0 +1,32 @@
+<div class="podcast-player">
+  <audio></audio>
+
+  <div class="main-player">
+    <img class="cover-image" pp-src="coverUrl" />
+
+    <div class="controls">
+      <button class="play-button"></button>
+    </div>
+
+    <div class="episode-basic-info">
+      <div class="episode-title">
+        <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
+        <span pp-unless="url" pp-html="title"></a>
+      </div>
+      <div class="episode-subtitle" pp-html="podcastTitle"></div>
+    </div>
+    <div class="podigee-logo"></div>
+
+    <div class="controls-advanced">
+      <button class="backward-button" title="Backward 10s"></button>
+      <button class="forward-button" title="Forward 30s"></button>
+      <button class="speed-toggle" title="Playback speed">1x</button>
+    </div>
+
+    <div class="buttons"></div>
+
+    <progressbar/>
+  </div>
+
+  <div class="panels"></div>
+</div>
