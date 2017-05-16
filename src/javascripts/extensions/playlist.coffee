@@ -55,7 +55,10 @@ class Playlist extends Extension
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
-    return unless @app.podcast.hasEpisodes()
+    unless @app.podcast.hasEpisodes()
+      @app.theme.skipBackwardElement.hide()
+      @app.theme.skipForwardElement.hide()
+      return
 
     @app.podcast.getEpisodes().done =>
       @episodes = @app.podcast.episodes

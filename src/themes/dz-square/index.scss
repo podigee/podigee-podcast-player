@@ -111,6 +111,7 @@ a {
   background: transparent;
   border: none;
   color: $textColor;
+  cursor: pointer;
   font-size: 40px;
   margin: -5px 0 0;
   outline: none;
@@ -148,6 +149,11 @@ a {
   font-size: 26px;
   position: relative;
   top: -7px;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
 .custom-buttons {
