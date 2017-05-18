@@ -134,14 +134,7 @@ a {
 }
 .controls .skip-forward-button,
 .controls .skip-backward-button {
-  font-size: 26px;
-  position: relative;
-  top: -7px;
-
-  &.disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+  display: none;
 }
 
 .custom-buttons {
