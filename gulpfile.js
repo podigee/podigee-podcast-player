@@ -22,7 +22,7 @@ var paths = {
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
     html: ['./src/themes/**/index.html'],
-    css: ['./src/themes/**/*.scss']
+    css: ['./src/themes/**/index.scss']
   }
 };
 
@@ -118,7 +118,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.html, ['html'])
   gulp.watch(paths.images, ['images'])
   gulp.watch(paths.themes.html, ['themes'])
-  gulp.watch(paths.themes.css, ['themes'])
+  gulp.watch('./src/themes/**/*.scss', ['themes'])
 })
 
 gulp.task('connect', function() {
