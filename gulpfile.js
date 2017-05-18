@@ -118,7 +118,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.html, ['html'])
   gulp.watch(paths.images, ['images'])
   gulp.watch(paths.themes.html, ['themes'])
-  gulp.watch(paths.themes.css, ['themes'])
+  gulp.watch('./src/themes/**/*.scss', ['themes'])
 })
 
 gulp.task('connect', function() {
