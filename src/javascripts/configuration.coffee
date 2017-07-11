@@ -32,7 +32,11 @@ class Configuration
         @fetchJsonConfiguration()
       else
         @setConfigurations()
-    window.parent.postMessage('sendConfig', '*')
+    data = JSON.stringify({
+      id: @frameOptions.id,
+      listenTo: 'sendConfig'
+    })
+    window.parent.postMessage(data, '*')
 
   fetchJsonConfiguration: =>
     return unless @configuration.json_config && @configuration.json_config.length
