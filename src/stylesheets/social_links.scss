@@ -79,16 +79,4 @@
     content: $icon-mail-outline;
     padding: 8px 8px;
   }
-
-  .share-link-clammr {
-    &:after {
-      bottom: 0px !important;
-    }
-
-    img {
-      border-radius: 3px;
-      height: 48px;
-      width: 48px;
-    }
-  }
 }

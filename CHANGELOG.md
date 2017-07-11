@@ -1,5 +1,11 @@
 # Changelog
 
+## 2017-07-10
+
+### Removed
+
+- clammr is going out of business soon, so no sharing any more
+
 ## 2017-05-09
 
 ### Added

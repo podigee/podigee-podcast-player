@@ -18,7 +18,9 @@ class IframeResizer
         resizeData.width + (offset.width || 0)
 
       iframe.height(height)
+      iframe.css("max-height", height)
       iframe.width(width)
+      iframe.css("max-width", width)
 
       callback(iframe) if callback?
 

@@ -39,30 +39,11 @@ class Share extends Extension
     coverUrl = encodeURI(@episode.coverUrl)
 
     shareLinks =
-      clammr: @clammrUrl(title, coverUrl, url, fileUrl, currentTimeInSeconds)
       email: "mailto:?subject=Podcast: #{title}&body=#{url}"
       facebook: "https://www.facebook.com/sharer/sharer.php?u=#{url}&t=#{title}"
       googleplus: "https://plus.google.com/share?url=#{url}"
       twitter: "https://twitter.com/intent/tweet?url=#{url}&text=#{title}"
       whatsapp: "whatsapp://send?text=#{title}: #{url}"
-
-  clammrUrl: (title, coverUrl, url, fileUrl, time) ->
-    return unless fileUrl
-
-    startTime = if time > 24
-      (time - 24) * 1000
-    else
-      0
-    popupUrl = """
-      https://www.clammr.com/app/clammr/crop
-      ?audioUrl=#{fileUrl}
-      &referralName="Podigee Podcast Player"
-      &title=#{title}
-      &imageUrl=#{coverUrl}
-      &attributeUrl=#{url}
-      &extendedUrl=#{url}
-      &audioStartTime=#{startTime}
-    """
 
   audioFileUrl: () ->
     url = @app.episode.media.mp3 || @app.episode.media.m4a
@@ -123,7 +104,6 @@ class Share extends Extension
         <li><a pp-href="shareLinks.twitter" class="share-link-twitter" target="_blank">Twitter</a></li>
         <li><a pp-href="shareLinks.whatsapp" class="share-link-whatsapp" target="_blank">Whatsapp</a></li>
         <li><a pp-href="shareLinks.email" class="share-link-email" target="_blank">Email</a></li>
-        <li pp-if="shareLinks.clammr"><a pp-href="shareLinks.clammr" target="_blank" class="share-link-clammr"><img src="https://www.clammr.com/cropplugin/clammr_red" width="150" height="150" /></a></li>
       </ul>
       <div class="share-episode-link">
         <h3>Copy episode link</h3>
