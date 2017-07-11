@@ -20,7 +20,7 @@ class IframeResizer
       iframe.height(height)
       iframe.css("max-height", height)
       iframe.width(width)
-      iframe.css("max-width", height)
+      iframe.css("max-width", width)
 
       callback(iframe) if callback?
 
