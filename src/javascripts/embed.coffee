@@ -51,8 +51,12 @@ class Iframe
 
   injectConfiguration: ->
     $(window).on 'message', (event) =>
-      eventData = event.data || event.originalEvent.data
-      return unless eventData == 'sendConfig'
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'sendConfig'
 
       config = if @configuration.constructor == String
         @configuration
