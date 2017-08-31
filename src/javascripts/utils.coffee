@@ -41,6 +41,9 @@ class Utils
     number
 
   @calculateCursorPosition: (event) ->
-    event.pageX - event.target.offsetLeft
+    if (event.offsetX == undefined)
+      event.layerX - event.currentTarget.offsetLeft
+    else
+      event.offsetX
 
 module.exports = Utils
