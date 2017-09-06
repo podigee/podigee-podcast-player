@@ -1,0 +1,276 @@
+$background: rgb(238, 238, 240);
+$black: #252525;
+$progress: rgba(0, 0, 0, .1);
+$progress-loaded: rgba(0, 0, 0, .3);
+$progress-played: $black;
+$mobile-breakpoint: 521px;
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal
+}
+
+.podcast-player {
+  background-color: $background;
+  color: $black;
+  font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
+  padding: 15px;
+
+  .hidden {
+    display: none;
+  }
+
+  .cover-image {
+    border: 1px solid rgb(204, 204, 207);
+    float: right;
+    height: 88px;
+    width: 88px;
+  }
+
+  .episode-basic-info {
+    display: inline-block;
+    left: 11px;
+    position: relative;
+    top: -19px;
+    width: calc(100% - 176px);
+
+    .podcast-title {
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .episode-title {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: calc(100% - 22px);
+      white-space: nowrap;
+    }
+
+    .button-show-description {
+      border: 1px solid $black;
+      border-radius: 100px;
+      display: inline-block;
+      font-size: 12px;
+      padding: 0 7px;
+      position: relative;
+      top: -7px;
+    }
+  }
+
+  .episode-description {
+    margin: -5px 0 0 75px;
+    width: calc(100% - 176px);
+  }
+
+  button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
+    outline: none;
+
+    &.play-button {
+      border: none;
+      color: transparent;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      top: 13px;
+      width: 60px;
+
+      .play-button-paused {
+        display: none;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+  &.playing button.play-button {
+    .play-button-playing {
+      display: none;
+    }
+
+    .play-button-paused {
+      display: block;
+    }
+  }
+
+  .play-button-playing,
+  .play-button-paused {
+    &:hover #Group-7 {
+      transform: translate(19.5px, 16.0px) scale(1.2);
+    }
+
+    &:hover #Rectangle-6 {
+      transform: translate(-6px, -6px) scale(1.2);
+    }
+  }
+
+  .progress-bar {
+    display: inline-block;
+    height: 20px;
+    left: 74px;
+    position: relative;
+    top: -12px;
+    width: calc(100% - 180px);
+
+    .progress-bar-time-played {
+      font-size: 12px;
+      float: right;
+      position: relative;
+      top: -7px;
+    }
+
+    .progress-bar-rail {
+      background-color: $progress;
+      border-radius: 10px;
+      cursor: move; /* fallback if grab cursor is unsupported */
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+      min-height: 6px;
+      position: relative;
+      width: calc(100% - 71px);
+
+      &:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
+    }
+  }
+
+  &.playing .progress-bar .progress-bar-time-played {
+    display: block;
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $progress-played;
+    border-radius: 10px;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-played:after {
+    background-color: $black;
+    border: 3px solid #ffe52c;
+    border-radius: 50px;
+    content: '';
+    height: 19px;
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    width: 19px;
+  }
+
+  .progress-bar-rail:active .progress-bar-played:after {
+    height: 15px;
+    right: -6px;
+    top: -5px;
+    width: 15px;
+  }
+
+  .progress-bar-loaded {
+    background-color: $progress-loaded;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+}
+
+.podcast-player {
+  @media (max-width: $mobile-breakpoint) {
+    padding: 30px 15px;
+
+    .cover-image {
+      display: none;
+    }
+
+    button.play-button {
+      top: 74px;
+    }
+
+    .episode-basic-info {
+      left: 0;
+      top: -60px;
+      width: 100%;
+
+      .podcast-title {
+        text-align: center;
+      }
+    }
+
+    .episode-description {
+      margin: -5px 0 0 75px;
+      width: calc(100% - 75px);
+    }
+
+    .progress-bar {
+      top: -11px;
+      width: calc(100% - 75px);
+    }
+  }
+}
