@@ -1,12 +1,32 @@
-$black: #000;
-$white: #fff;
+$black: #252525;
 $progress: rgba(0, 0, 0, .1);
 $progress-loaded: rgba(0, 0, 0, .3);
 $progress-played: $black;
 
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal
+}
+
 .podcast-player {
   color: $black;
-  font-family: Arial, sans-serif;
+  font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
 
   button {
     background: transparent;
@@ -15,39 +35,74 @@ $progress-played: $black;
     outline: none;
 
     &.play-button {
-      border: 3px solid $black;
-      border-radius: 100px;
-      color: $black;
-      font-size: 30px;
-      height: 43px;
-      margin: 0 0;
+      border: none;
+      color: transparent;
+      height: 60px;
+      margin: 0;
       padding: 0;
-      width: 43px;
+      width: 60px;
+
+      .play-button-paused {
+        display: none;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+  &.playing button.play-button {
+    .play-button-playing {
+      display: none;
+    }
+
+    .play-button-paused {
+      display: block;
+    }
+  }
+
+  .play-button-playing,
+  .play-button-paused {
+    &:hover #Group-7 {
+      transform: translate(19.5px, 16.0px) scale(1.2);
+    }
+
+    &:hover #Rectangle-6 {
+      transform: translate(-6px, -6px) scale(1.2);
     }
   }
 
   .progress-bar {
     display: inline-block;
     height: 20px;
-    left: 5px;
+    left: 13px;
     position: relative;
-    top: 6px;
-    width: calc(100% - 55px);
+    top: -12px;
+    width: calc(100% - 76px);
 
     .progress-bar-time-played {
       font-size: 12px;
       float: right;
       position: relative;
-      top: -5px;
+      top: -7px;
     }
 
     .progress-bar-rail {
       background-color: $progress;
       border-radius: 10px;
-      cursor: ew-resize;
-      min-height: 4px;
+      cursor: move; /* fallback if grab cursor is unsupported */
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+      min-height: 6px;
       position: relative;
-      width: calc(100% - 55px);
+      width: calc(100% - 71px);
+
+      &:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
     }
   }
 
@@ -68,14 +123,21 @@ $progress-played: $black;
 
   .progress-bar-played:after {
     background-color: $black;
-    border: 1px solid $white;
+    border: 3px solid #ffe52c;
     border-radius: 50px;
     content: '';
-    height: 14px;
+    height: 19px;
     position: absolute;
+    right: -7px;
+    top: -7px;
+    width: 19px;
+  }
+
+  .progress-bar-rail:active .progress-bar-played:after {
+    height: 15px;
     right: -6px;
     top: -5px;
-    width: 14px;
+    width: 15px;
   }
 
   .progress-bar-loaded {
@@ -89,12 +151,12 @@ $progress-played: $black;
       animation: move 2s linear infinite;
       background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, .2) 25%, 
-        transparent 25%, 
-        transparent 50%, 
-        rgba(255, 255, 255, .2) 50%, 
-        rgba(255, 255, 255, .2) 75%, 
-        transparent 75%, 
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
         transparent
       );
       background-size: 50px 50px;
