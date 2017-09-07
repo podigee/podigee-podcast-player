@@ -25,8 +25,11 @@ class Configuration
     $(window).on 'message', (event) =>
       return unless event.originalEvent.data
       data = event.originalEvent.data
-      @configuration = JSON.parse(data)
-      return unless @configuration.episode? || @configuration.json_config?
+      try
+        @configuration = JSON.parse(data)
+      catch error
+        return
+      return unless @configuration?.episode? || @configuration?.json_config?
 
       if @configuration.json_config
         @fetchJsonConfiguration()
