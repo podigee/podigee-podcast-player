@@ -54,10 +54,10 @@ class Configuration
       self.configuration = _.extend(self.configuration, data)
       self.setConfigurations(true)
     ).error((xhr, status, trace) ->
-      console.debug("[podigee podcast player] Error while fetching player configuration:")
-      console.debug("xhr:", xhr)
-      console.debug("status:", status)
-      console.debug("trace:", trace)
+      console.log("[podigee podcast player] Error while fetching player configuration:")
+      console.log("xhr:", xhr)
+      console.log("status:", status)
+      console.log("trace:", trace)
     )
 
   setConfigurations: (viaJSON) =>
