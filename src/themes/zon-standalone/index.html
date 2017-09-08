@@ -2,7 +2,11 @@
   <audio></audio>
 
   <div class="main-player">
-    <img class="cover-image" pp-src="coverUrl" />
+    <div class="episode-basic-info">
+      <div class="podcast-title" pp-html="podcastTitle"></div>
+      <div class="episode-title" pp-html="title"></div>
+      <button class="button-show-description">i</button>
+    </div>
 
     <button class="play-button">
       <svg class="play-button-playing" width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -29,16 +33,13 @@
       </svg>
     </button>
 
-    <div class="episode-basic-info">
-      <div class="podcast-title" pp-html="podcastTitle"></div>
-      <div class="episode-title" pp-html="title"></div>
-      <button class="button-show-description">i</button>
-    </div>
-
     <progressbar/>
+
+    <img class="cover-image" pp-src="coverUrl" />
 
     <div class="episode-description hidden" pp-html="description"></div>
   </div>
+
   <script>
    var button = document.querySelector('.button-show-description')
    button.addEventListener('click', function () {

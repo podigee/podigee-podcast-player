@@ -36,21 +36,23 @@ $mobile-breakpoint: 521px;
     display: none;
   }
 
+  .main-player {
+    margin-bottom: -34px;
+  }
+
   .cover-image {
     border: 1px solid rgb(204, 204, 207);
     float: right;
     height: 88px;
     position: relative;
     right: -5px;
-    top: -5px;
+    top: -57px;
     width: 88px;
   }
 
   .episode-basic-info {
-    display: inline-block;
-    left: 11px;
+    margin-left: 74px;
     position: relative;
-    top: -16px;
     width: calc(100% - 176px);
 
     .podcast-title {
@@ -71,7 +73,7 @@ $mobile-breakpoint: 521px;
       margin-top: 2px;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: calc(100% - 22px);
+      width: calc(100% - 26px);
       white-space: nowrap;
     }
 
@@ -79,11 +81,12 @@ $mobile-breakpoint: 521px;
       border: 1px solid #77777c;
       border-radius: 100px;
       color: #77777c;
-      display: inline-block;
+      display: block;
+      float: right;
       font-size: 12px;
       padding: 0 7px;
       position: relative;
-      top: -7px;
+      top: 7px;
 
       &:hover {
         border-color: $black;
@@ -93,7 +96,7 @@ $mobile-breakpoint: 521px;
   }
 
   .episode-description {
-    margin: -5px 0 0 75px;
+    margin: -5px 0 35px 75px;
     width: calc(100% - 176px);
   }
 
@@ -111,7 +114,7 @@ $mobile-breakpoint: 521px;
       margin: 0;
       padding: 0;
       position: relative;
-      top: 13px;
+      top: -40px;
       width: 60px;
 
       .play-button-paused {
@@ -150,10 +153,9 @@ $mobile-breakpoint: 521px;
 
   .progress-bar {
     display: inline-block;
-    height: 20px;
-    left: 74px;
+    left: 20px;
     position: relative;
-    // top: -12px;
+    top: -32px;
     width: calc(100% - 180px);
 
     .progress-bar-time-played {
@@ -209,10 +211,10 @@ $mobile-breakpoint: 521px;
   }
 
   .progress-bar-rail:active .progress-bar-played:after {
-    height: 15px;
-    right: -6px;
-    top: -5px;
-    width: 15px;
+    height: 12px;
+    right: -4px;
+    top: -4px;
+    width: 12px;
   }
 
   .progress-bar-loaded {
@@ -260,17 +262,21 @@ $mobile-breakpoint: 521px;
   @media (max-width: $mobile-breakpoint) {
     padding: 30px 15px;
 
+    .main-player {
+      margin-bottom: -5px;
+    }
+
     .cover-image {
       display: none;
     }
 
     button.play-button {
-      top: 74px;
+      top: 0px;
     }
 
     .episode-basic-info {
-      left: 0;
-      top: -60px;
+      margin-bottom: 20px;
+      margin-left: 0;
       width: 100%;
 
       .podcast-title {
@@ -285,7 +291,7 @@ $mobile-breakpoint: 521px;
 
     .progress-bar {
       top: -15px;
-      width: calc(100% - 75px);
+      width: calc(100% - 84px);
     }
   }
 }

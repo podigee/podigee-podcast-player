@@ -75,7 +75,7 @@ $progress-played: $black;
   .progress-bar {
     display: inline-block;
     height: 20px;
-    left: 13px;
+    left: 20px;
     position: relative;
     top: -12px;
     width: calc(100% - 76px);
@@ -125,18 +125,18 @@ $progress-played: $black;
     background-color: $black;
     border-radius: 50px;
     content: '';
-    height: 19px;
+    height: 16px;
     position: absolute;
-    right: -7px;
-    top: -7px;
-    width: 19px;
+    right: -5px;
+    top: -5px;
+    width: 16px;
   }
 
   .progress-bar-rail:active .progress-bar-played:after {
-    height: 15px;
-    right: -6px;
-    top: -5px;
-    width: 15px;
+    height: 12px;
+    right: -4px;
+    top: -4px;
+    width: 12px;
   }
 
   .progress-bar-loaded {
