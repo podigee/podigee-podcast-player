@@ -1,19 +1,14 @@
-$ = require('jquery')
-_ = require('lodash')
-
 IframeResizer = require('./iframe_resizer.coffee')
 
 class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-    config = $(@elem).data('configuration')
+    config = @elem.getAttribute('data-configuration')
     @configuration = if typeof config == 'string'
-      window[config] || {}
+      window[config] || {json_config: config}
     else
       config
 
-    if _.isEmpty(@configuration)
-      @configuration.json_config = config
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
 
@@ -25,7 +20,7 @@ class Iframe
     @injectConfiguration() if @configuration
 
   origin: () ->
-    scriptSrc = $(@elem).attr('src')
+    scriptSrc = @elem.src
     unless window.location.protocol.match(/^https/)
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
@@ -43,14 +38,14 @@ class Iframe
     @iframe
 
   setupListeners: ->
-    IframeResizer.listen('resizePlayer', $(@iframe))
+    IframeResizer.listen('resizePlayer', @iframe)
 
   replaceElem: ->
-    $(@iframe).addClass($(@elem).attr('class'))
+    @iframe.className += @elem.className
     @elem.parentNode.replaceChild(@iframe, @elem)
 
   injectConfiguration: ->
-    $(window).on 'message', (event) =>
+    window.addEventListener 'message', ((event) =>
       try
         eventData = JSON.parse(event.data || event.originalEvent.data)
       catch
@@ -63,11 +58,12 @@ class Iframe
       else
         JSON.stringify(@configuration)
       @iframe.contentWindow.postMessage(config, '*')
+    ), false
 
 class Embed
   constructor: ->
     players = []
-    elems = $('script.podigee-podcast-player')
+    elems = document.querySelectorAll('script.podigee-podcast-player')
 
     return if elems.length == 0
 
@@ -76,4 +72,4 @@ class Embed
 
     window.podigeePodcastPlayers = players
 
-module.exports = Embed
+new Embed()
