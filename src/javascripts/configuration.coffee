@@ -1,5 +1,4 @@
 $ = require('jquery')
-ajaxTransport = require('./lib/jquery-transport-xdr')
 _ = require('lodash')
 Utils = require('./utils.coffee')
 rivets = require('rivets')
@@ -56,7 +55,6 @@ class Configuration
       self.setConfigurations(true)
     ).error((xhr, status, trace) ->
       console.log("[podigee podcast player] Error while fetching player configuration:")
-      console.log("url:", self.configuration.json_config)
       console.log("xhr:", xhr)
       console.log("status:", status)
       console.log("trace:", trace)
