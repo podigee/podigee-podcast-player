@@ -9,12 +9,15 @@ Extension = require('../extension.coffee')
 class PlaylistItem
   constructor: (@episode, @callback) ->
     @media = @context().media
+    if @episode.duration
+      @humanDuration = Utils.secondsToHHMMSS(_.clone(@episode.duration))
 
+  humanDuration: null
   active: false
   context: () ->
     _.merge(@episode, {
       active: @active,
-      humanDuration: Utils.secondsToHHMMSS(_.clone(@episode.duration))
+      humanDuration: @humanDuration
     })
 
   activate: ->
@@ -42,7 +45,7 @@ class PlaylistItem
       <a class="episode-link" pp-if="url" pp-href="url" target="_blank"><i class="fa fa-link"></i></a>
       <span class="playlist-episode-number" pp-if="number">{ number }.</span>
       <span class="playlist-episode-title" pp-html="title"></span>
-      <span class="playlist-episode-duration">{ humanDuration }</span>
+      <span class="playlist-episode-duration" pp-if="humanDuration">{ humanDuration }</span>
     </li>
     """
 
