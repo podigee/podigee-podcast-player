@@ -9,7 +9,10 @@ class Player
   constructor: (@app, elem) ->
     self = this
     self.media = elem
-    self.media.preload = "metadata"
+    if Utils.isIE9()
+      self.media.preload = "metadata"
+    else
+      self.media.preload = "none"
     @loadFile()
     @attachEvents()
     @app.init(self)
@@ -100,12 +103,16 @@ class Player
       @pause()
 
   setDuration: =>
+    if @app.episode.duration
+      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      return
+
     clear = -> window.clearInterval(interval)
 
     interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
-      @app.episode.duration ?= @media.duration
-      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@media.duration))
+      @app.episode.duration = @media.duration
+      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
       clear()
     ), 500
 
