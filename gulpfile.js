@@ -7,9 +7,10 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     browserify = require('gulp-browserify'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect');
-    gzip = require('gulp-gzip');
-    fs = require('fs');
+    connect = require('gulp-connect'),
+    gzip = require('gulp-gzip'),
+    fs = require('fs'),
+    inject = require('gulp-inject')
 
 var dest = './dist';
 var paths = {
@@ -88,6 +89,25 @@ gulp.task('javascripts-dev', function() {
 
 gulp.task('html', function() {
   gulp.src(paths.html)
+    .pipe(
+      inject(gulp.src(['./build/stylesheets/app.css'], {read: true}), {
+        starttag: '<!-- inject:head:{{ext}} -->',
+        transform: function (filePath, file) {
+          var fileContents = file.contents.toString('utf8')
+          fileContents = fileContents.replace('url("../', 'url("')
+          return '<style>' + fileContents + '</style>'
+        }
+      })
+    )
+    .pipe(
+      inject(gulp.src(['./build/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
+        starttag: '<!-- inject:head:{{ext}} -->',
+        transform: function (filePath, file) {
+          var fileContents = file.contents.toString('utf8')
+          return '<script>' + fileContents + '</script>'
+        }
+      })
+    )
     .pipe(gulp.dest('./build'))
     .pipe(connect.reload())
 })
