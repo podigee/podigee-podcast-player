@@ -78,7 +78,7 @@ gulp.task('javascripts-dev', function() {
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(connect.reload())
 
-  return gulp.src(paths.embed_javascript, {read: false})
+  gulp.src(paths.embed_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
       extensions: ['.coffee']
@@ -109,6 +109,12 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
         }
       })
     )
+    .pipe(gulp.dest('./build'))
+    .pipe(connect.reload())
+})
+
+gulp.task('html-dev', function() {
+  return gulp.src(paths.html)
     .pipe(gulp.dest('./build'))
     .pipe(connect.reload())
 })
@@ -148,7 +154,7 @@ gulp.task('default', [
 gulp.task('dev', [
   'stylesheets-dev',
   'javascripts-dev',
-  'html',
+  'html-dev',
   'images',
   'fonts',
   'themes'
@@ -157,7 +163,7 @@ gulp.task('dev', [
 gulp.task('watch', function() {
   gulp.watch(paths.stylesheets, ['stylesheets-dev'])
   gulp.watch(paths.javascripts, ['javascripts-dev'])
-  gulp.watch(paths.html, ['html'])
+  gulp.watch(paths.html, ['html-dev'])
   gulp.watch(paths.images, ['images'])
   gulp.watch(paths.themes.html, ['themes'])
   gulp.watch(paths.themes.css, ['themes'])
