@@ -44,17 +44,6 @@ gulp.task('stylesheets-dev', function() {
 })
 
 gulp.task('javascripts', function() {
-  gulp.src(paths.embed_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
-    .pipe(uglify())
-    .pipe(rename('podigee-podcast-player-embed.js'))
-    .pipe(gulp.dest('./build/javascripts'))
-    .pipe(gzip())
-    .pipe(gulp.dest('./build/javascripts'))
-
   gulp.src(paths.main_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
@@ -65,18 +54,21 @@ gulp.task('javascripts', function() {
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(gzip())
     .pipe(gulp.dest('./build/javascripts'))
+
+  return gulp.src(paths.embed_javascript, {read: false})
+    .pipe(browserify({
+      transform: ['coffeeify'],
+      extensions: ['.coffee']
+    }))
+    .pipe(uglify())
+    .pipe(rename('podigee-podcast-player-embed.js'))
+    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gzip())
+    .pipe(gulp.dest('./build/javascripts'))
+
 })
 
 gulp.task('javascripts-dev', function() {
-  gulp.src(paths.embed_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
-    .pipe(rename('podigee-podcast-player-embed.js'))
-    .pipe(gulp.dest('./build/javascripts'))
-    .pipe(connect.reload())
-
   gulp.src(paths.main_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
@@ -85,10 +77,19 @@ gulp.task('javascripts-dev', function() {
     .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest('./build/javascripts'))
     .pipe(connect.reload())
+
+  return gulp.src(paths.embed_javascript, {read: false})
+    .pipe(browserify({
+      transform: ['coffeeify'],
+      extensions: ['.coffee']
+    }))
+    .pipe(rename('podigee-podcast-player-embed.js'))
+    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(connect.reload())
 })
 
-gulp.task('html', function() {
-  gulp.src(paths.html)
+gulp.task('html', ['javascripts', 'stylesheets'], function() {
+  return gulp.src(paths.html)
     .pipe(
       inject(gulp.src(['./build/stylesheets/app.css'], {read: true}), {
         starttag: '<!-- inject:head:{{ext}} -->',
@@ -113,13 +114,13 @@ gulp.task('html', function() {
 })
 
 gulp.task('images', function() {
-  gulp.src(paths.images)
+  return gulp.src(paths.images)
     .pipe(gulp.dest('./build/images'))
     .pipe(connect.reload())
 })
 
 gulp.task('fonts', function() {
-  gulp.src(paths.fonts)
+  return gulp.src(paths.fonts)
     .pipe(gulp.dest('./build/fonts'))
     .pipe(connect.reload())
 })
@@ -129,7 +130,7 @@ gulp.task('themes', function() {
     .pipe(gulp.dest('./build/themes'))
     .pipe(connect.reload())
 
-  gulp.src(paths.themes.css)
+  return gulp.src(paths.themes.css)
     .pipe(sass({style: 'compressed'}))
     .pipe(gulp.dest('./build/themes'))
     .pipe(connect.reload())
