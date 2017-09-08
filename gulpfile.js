@@ -18,7 +18,7 @@ var paths = {
   stylesheets: ['./src/stylesheets/*.scss'],
   embed_javascript: ['./src/javascripts/app.coffee'],
   main_javascript: ['./src/javascripts/embed.coffee'],
-  javascripts: ['./src/javascripts/**/*.coffee'],
+  javascripts: ['./src/javascripts/**/*.coffee', './src/javascripts/**/*.js'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
   images: ['./src/images/**'],
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
