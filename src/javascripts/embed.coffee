@@ -5,7 +5,10 @@ class Iframe
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     config = @elem.getAttribute('data-configuration')
     @configuration = if typeof config == 'string'
-      window[config] || {json_config: config}
+      if config.match(/^{/)
+        JSON.parse(config)
+      else
+        window[config] || {json_config: config}
     else
       config
 
