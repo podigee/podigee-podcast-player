@@ -5,7 +5,6 @@ Configuration = require('./configuration.coffee')
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
-Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
 ExternalData = require('./external_data.coffee')
 
@@ -173,7 +172,5 @@ class PodigeePodcastPlayer
   isInIframeMode: ->
     @options.iframeMode == 'iframe'
 
-unless window.inEmbed
-  new Embed()
-else
+if window.inEmbed
   window.PodigeePodcastPlayer = PodigeePodcastPlayer

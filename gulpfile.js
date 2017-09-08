@@ -15,7 +15,8 @@ var dest = './dist';
 var paths = {
   main_stylesheet: ['./src/stylesheets/app.scss'],
   stylesheets: ['./src/stylesheets/*.scss'],
-  main_javascript: ['./src/javascripts/app.coffee'],
+  embed_javascript: ['./src/javascripts/app.coffee'],
+  main_javascript: ['./src/javascripts/embed.coffee'],
   javascripts: ['./src/javascripts/**/*.coffee'],
   html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
   images: ['./src/images/**'],
@@ -42,6 +43,17 @@ gulp.task('stylesheets-dev', function() {
 })
 
 gulp.task('javascripts', function() {
+  gulp.src(paths.embed_javascript, {read: false})
+    .pipe(browserify({
+      transform: ['coffeeify'],
+      extensions: ['.coffee']
+    }))
+    .pipe(uglify())
+    .pipe(rename('podigee-podcast-player-embed.js'))
+    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gzip())
+    .pipe(gulp.dest('./build/javascripts'))
+
   gulp.src(paths.main_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
@@ -55,6 +67,15 @@ gulp.task('javascripts', function() {
 })
 
 gulp.task('javascripts-dev', function() {
+  gulp.src(paths.embed_javascript, {read: false})
+    .pipe(browserify({
+      transform: ['coffeeify'],
+      extensions: ['.coffee']
+    }))
+    .pipe(rename('podigee-podcast-player-embed.js'))
+    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(connect.reload())
+
   gulp.src(paths.main_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
