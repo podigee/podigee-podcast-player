@@ -3,7 +3,7 @@ IframeResizer = require('./iframe_resizer.coffee')
 class Iframe
   constructor: (@elem)->
     @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-    config = @elem.dataset.configuration
+    config = @elem.getAttribute('data-configuration')
     @configuration = if typeof config == 'string'
       window[config] || {json_config: config}
     else
