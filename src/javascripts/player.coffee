@@ -71,6 +71,7 @@ class Player
     _.sortBy files, (file) ->
       return -100 if file.playable == 'probably' && file.format == 'opus'
       return -90 if file.playable == 'probably' && file.format == 'm4a'
+      return -90 if file.playable == 'maybe' && file.format == 'mp3'
       return 0
 
   attachEvents: =>
