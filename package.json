@@ -52,12 +52,12 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-      "elasticlunr": "^0.9.0",
-      "jquery": "^1.12.4",
-      "lodash": "^4.17.4",
-      "peaks.js": "github:bbcrd/peaks.js#9baf3b0",
-      "rivets": "^0.8.0",
-      "sightglass": "^0.2.4",
-      "vtt.js": "github:mozilla/vtt.js#f823de8"
+    "elasticlunr": "^0.9.0",
+    "jquery": "^2.2.4",
+    "lodash": "^4.17.4",
+    "peaks.js": "github:bbcrd/peaks.js#9baf3b0",
+    "rivets": "^0.8.0",
+    "sightglass": "^0.2.4",
+    "vtt.js": "github:mozilla/vtt.js#f823de8"
   }
 }
