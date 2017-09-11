@@ -24,6 +24,10 @@ $progress-played: $black;
   font-style: normal
 }
 
+.loading-animation .spinner > div {
+  background-color: #313131 !important;
+}
+
 .podcast-player {
   color: $black;
   font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
@@ -63,6 +67,14 @@ $progress-played: $black;
 
   .play-button-playing,
   .play-button-paused {
+    #Group-7, #Rectangle-6 {
+      transition: transform 0.2s;
+    }
+
+    #Group-7 {
+      transform: translate(21.5px, 18.0px) scale(1.0);
+    }
+
     &:hover #Group-7 {
       transform: translate(19.5px, 16.0px) scale(1.2);
     }
