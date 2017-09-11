@@ -26,6 +26,10 @@ $mobile-breakpoint: 521px;
   font-style: normal
 }
 
+.loading-animation .spinner > div {
+  background-color: #313131;
+}
+
 .podcast-player {
   background-color: $background;
   color: $black;
@@ -46,7 +50,7 @@ $mobile-breakpoint: 521px;
     height: 88px;
     position: relative;
     right: -5px;
-    top: -57px;
+    top: -5px;
     width: 88px;
   }
 
@@ -96,6 +100,8 @@ $mobile-breakpoint: 521px;
   }
 
   .episode-description {
+    color: #535560;
+    font-size: 14px;
     margin: -5px 0 35px 75px;
     width: calc(100% - 176px);
   }
@@ -140,6 +146,10 @@ $mobile-breakpoint: 521px;
   .play-button-paused {
     #Group-7, #Rectangle-6 {
       transition: transform 0.2s;
+    }
+
+    #Group-7 {
+      transform: translate(21.5px, 18.0px) scale(1.0);
     }
 
     &:hover #Group-7 {
@@ -267,7 +277,12 @@ $mobile-breakpoint: 521px;
     }
 
     .cover-image {
-      display: none;
+      display: block;
+      float: none;
+      height: auto;
+      margin: 0 auto 30px;
+      position: static;
+      width: 66%;
     }
 
     button.play-button {
