@@ -52,6 +52,7 @@ class PodigeePodcastPlayer
     @theme.loaded.done =>
       @elem = @theme.render()
       window.setTimeout @sendSizeChange, 0
+      $('.loading-animation').remove()
       rendered.resolve()
 
     rendered.promise()
