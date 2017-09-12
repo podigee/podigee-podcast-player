@@ -153,7 +153,6 @@ class PodigeePodcastPlayer
       if currentlyActiveExtension instanceof extension
         self.theme.togglePanel(self.extensions[extension.extension.name].panel)
 
-
   bindWindowResizing: =>
     $(window).on('resize', _.debounce(@sendSizeChange, 250))
 
