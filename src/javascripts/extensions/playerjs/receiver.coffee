@@ -32,7 +32,10 @@ class Receiver
   eventListeners: {}
 
   receive: (e) ->
-    data = window.JSON.parse(e.originalEvent.data)
+    try
+      data = window.JSON.parse(e.originalEvent.data)
+    catch error
+      return
 
     unless data.method
       return false
