@@ -25,8 +25,11 @@ class Configuration
     $(window).on 'message', (event) =>
       return unless event.originalEvent.data
       data = event.originalEvent.data
-      @configuration = JSON.parse(data)
-      return unless @configuration.episode? || @configuration.json_config?
+      try
+        @configuration = JSON.parse(data)
+      catch error
+        return
+      return unless @configuration?.episode? || @configuration?.json_config?
 
       if @configuration.json_config
         @fetchJsonConfiguration()
@@ -51,10 +54,10 @@ class Configuration
       self.configuration = _.extend(self.configuration, data)
       self.setConfigurations(true)
     ).error((xhr, status, trace) ->
-      console.debug("[podigee podcast player] Error while fetching player configuration:")
-      console.debug("xhr:", xhr)
-      console.debug("status:", status)
-      console.debug("trace:", trace)
+      console.log("[podigee podcast player] Error while fetching player configuration:")
+      console.log("xhr:", xhr)
+      console.log("status:", status)
+      console.log("trace:", trace)
     )
 
   setConfigurations: (viaJSON) =>

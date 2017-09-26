@@ -19,7 +19,7 @@ class Podcast
   getEpisodes: () ->
     if @attributes.episodes? && @attributes.episodes.length
       deferred = $.Deferred()
-      @episodes = _.orderBy(@attributes.episodes, 'number', 'desc')
+      @episodes = @attributes.episodes
       deferred.resolve()
       deferred.promise()
     else if @feed?

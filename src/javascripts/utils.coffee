@@ -41,6 +41,19 @@ class Utils
     number
 
   @calculateCursorPosition: (event) ->
-    event.pageX - event.target.offsetLeft
+    if (event.offsetX == undefined)
+      event.layerX - event.currentTarget.offsetLeft
+    else
+      event.offsetX
+
+  @isIE9: () ->
+    try
+      isIE = navigator.appVersion.indexOf("MSIE") != -1
+      return false unless isIE
+      version = parseFloat(navigator.appVersion.split("MSIE")[1])
+      return false if version > 9
+      return true
+    catch
+      return true
 
 module.exports = Utils

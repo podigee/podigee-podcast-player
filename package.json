@@ -32,31 +32,32 @@
   },
   "devDependencies": {
     "coffeeify": "^1.1.0",
-    "elasticlunr": "^0.9.0",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-coffee": "^2.3.1",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^2.2.0",
     "gulp-gzip": "^1.2.0",
+    "gulp-inject": "^4.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "node-sass": "^4.5.3",
     "gulp-uglify": "^1.4.0",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.5",
-    "jquery": "^1.11.3",
-    "peaks.js": "github:bbcrd/peaks.js#9baf3b0",
-    "rivets": "^0.8.0",
-    "sightglass": "^0.2.4",
+    "node-sass": "^4.5.3",
     "source-map": "^0.4.4",
-    "urijs": "^1.17.0",
-    "vtt.js": "github:mozilla/vtt.js#f823de8"
+    "urijs": "^1.17.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "elasticlunr": "^0.9.0",
+    "jquery": "^2.2.4",
+    "lodash": "^4.17.4",
+    "peaks.js": "github:bbcrd/peaks.js#9baf3b0",
+    "rivets": "^0.8.0",
+    "sightglass": "^0.2.4",
+    "vtt.js": "github:mozilla/vtt.js#f823de8"
   }
 }
