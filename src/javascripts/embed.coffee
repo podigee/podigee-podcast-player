@@ -2,8 +2,8 @@ IframeResizer = require('./iframe_resizer.coffee')
 
 class Iframe
   constructor: (@elem)->
-    @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
     config = @elem.getAttribute('data-configuration')
+    @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
         JSON.parse(config)
@@ -21,6 +21,19 @@ class Iframe
     @setupListeners()
     @replaceElem()
     @injectConfiguration() if @configuration
+
+  randomId: (string) ->
+    hash = 0
+    return hash if string.length == 0
+
+    hsh = (char) =>
+      return if isNaN(char)
+      hash = ((hash<<5)-hash)+char
+      hash = hash & hash
+
+    hsh(string.charCodeAt(i)) for i in [0..string.length]
+
+    return hash.toString(16).substring(1)
 
   origin: () ->
     scriptSrc = @elem.src
