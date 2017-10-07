@@ -94,7 +94,7 @@ class Playlist extends Extension
     file.join('.')
 
   click: (event) =>
-    if event.data == @currentEpisode.feedItem
+    if @currentEpisod && event.data == @currentEpisode.feedItem
       @app.player.playPause()
     else
       @playItem(event.data)

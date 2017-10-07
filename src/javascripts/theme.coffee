@@ -139,6 +139,7 @@ class Theme
 
   activePanel: null
   togglePanel: (elem) =>
+    return unless elem
     if @activePanel?
       if @activePanel == elem
         if !@app.isInIframeMode()
