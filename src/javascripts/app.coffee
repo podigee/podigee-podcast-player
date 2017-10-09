@@ -30,7 +30,6 @@ class PodigeePodcastPlayer
 
   constructor: (@elemClass) ->
     @getConfiguration().loaded.done =>
-      @externalData = new ExternalData(this)
       @renderTheme().done =>
         @initPlayer()
 
