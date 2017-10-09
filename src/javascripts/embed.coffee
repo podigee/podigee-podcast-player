@@ -2,8 +2,8 @@ IframeResizer = require('./iframe_resizer.coffee')
 
 class Iframe
   constructor: (@elem)->
-    @id = @randomId(config)
     config = @elem.getAttribute('data-configuration').replace(/\s/g, '')
+    @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
         JSON.parse(config)
