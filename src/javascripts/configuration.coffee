@@ -3,6 +3,7 @@ _ = require('lodash')
 Utils = require('./utils.coffee')
 rivets = require('rivets')
 
+ExternalData = require('./external_data.coffee')
 Podcast = require('./podcast.coffee')
 
 class Configuration
@@ -29,12 +30,12 @@ class Configuration
         @configuration = JSON.parse(data)
       catch error
         return
-      return unless @configuration?.episode? || @configuration?.json_config?
 
       if @configuration.json_config
         @fetchJsonConfiguration()
       else
         @setConfigurations()
+
     data = JSON.stringify({
       id: @frameOptions.id,
       listenTo: 'sendConfig'
@@ -63,19 +64,28 @@ class Configuration
   setConfigurations: (viaJSON) =>
     @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
-    @app.episode = @configuration.episode
+    @app.extensionOptions = @configuration.extensions || {}
+
+    @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
+    @app.options.parentLocationHash = @configuration.parentLocationHash
+    @app.options.configViaJSON = viaJSON
+    @app.externalData = new ExternalData(@app)
+
+    if @configuration.episode
+      @app.episode = @configuration.episode
+    else
+      @app.podcast.getEpisodes().done =>
+        if @app.podcast.episodes
+          @configuration.episode = @app.podcast.episodes[0]
+          @setConfigurations(viaJSON)
+      return
+
     if @app.episode.cover_url?
       console.warn('Please use episode.coverUrl instead of episode.cover_url in player configuration')
       @app.episode.coverUrl ?= @configuration.episode.cover_url
 
     @app.episode.embedCode ?= @configuration.embedCode
     @app.getProductionData()
-
-    @app.extensionOptions = @configuration.extensions || {}
-
-    @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
-    @app.options.parentLocationHash = @configuration.parentLocationHash
-    @app.options.configViaJSON = viaJSON
 
     @loader.resolve()
 
