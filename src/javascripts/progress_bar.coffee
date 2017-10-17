@@ -46,6 +46,7 @@ class ProgressBar
       prefix = '-'
       @player.duration - @player.currentTime
 
+    time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
     @timeElement.text(prefix + timeString)
 
