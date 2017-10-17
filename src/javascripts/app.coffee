@@ -73,6 +73,7 @@ class PodigeePodcastPlayer
   mediaLoadError: =>
     window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
+    @theme.removePlayingClass()
     @theme.addFailedLoadingClass()
     @extensions.ProgressBar.hideBuffering()
 
