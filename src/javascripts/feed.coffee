@@ -11,6 +11,7 @@ class FeedItem
     title: @_extract('title').html()
     subtitle: @_findSubtitle()
     href: @_extract('link').html()
+    url: @_extract('link').html()
     media: @_mapEnclosure()
     description: @_cleanDescription(@_extract('description').html())
     duration: parseInt(@_extract('duration').text(), 10)

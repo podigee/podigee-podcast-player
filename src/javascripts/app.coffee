@@ -30,7 +30,6 @@ class PodigeePodcastPlayer
 
   constructor: (@elemClass) ->
     @getConfiguration().loaded.done =>
-      @externalData = new ExternalData(this)
       @renderTheme().done =>
         @initPlayer()
 
@@ -74,6 +73,7 @@ class PodigeePodcastPlayer
   mediaLoadError: =>
     window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
+    @theme.removePlayingClass()
     @theme.addFailedLoadingClass()
     @extensions.ProgressBar.hideBuffering()
 
