@@ -1,0 +1,28 @@
+<div class="podcast-player">
+  <audio></audio>
+
+  <div class="controls">
+    <button class="play-button"></button>
+
+    <div class="controls-advanced">
+      <button class="backward-button"><i class="fa fa-backward" title="Backward 10s"></i></button>
+      <button class="forward-button"><i class="fa fa-forward" title="Forward 30s"></i></button>
+      <button class="speed-toggle" title="Playback speed">1x</button>
+    </div>
+  </div>
+
+  <img class="cover-image" pp-src="coverUrl" />
+
+  <div class="episode-basic-info">
+    <div class="episode-title">
+      <a pp-if="url" pp-href="url" target="_parent" pp-html="title"></a>
+      <span pp-unless="url" pp-html="title"></a>
+    </div>
+    <div class="episode-subtitle" pp-html="subtitle"></div>
+  </div>
+  <div class="buttons"></div>
+
+  <progressbar/>
+
+  <div class="panels"></div>
+</div>
