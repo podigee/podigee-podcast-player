@@ -208,7 +208,7 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 .podcast-player {
   @media (max-width: $mobile-breakpoint) {
-    padding: 30px 15px;
+    padding: 25px 15px;
 
     .main-player {
       margin-bottom: -5px;
@@ -218,9 +218,9 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       display: block;
       float: none;
       height: auto;
-      margin: 0 auto 30px;
+      margin: 0 auto 20px;
       position: static;
-      width: 66%;
+      width: 100%;
     }
 
     button.play-button {
@@ -228,21 +228,18 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
     .episode-basic-info {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       margin-left: 0;
       width: 100%;
 
-      .podcast-title {
+      .podcast-title,
+      .episode-title {
         text-align: center;
       }
     }
 
-    .episode-description {
-      margin: 10px 0 0;
-      width: 100%;
-    }
-
     .progress-bar {
+      left: 20px;
       top: -15px;
       width: calc(100% - 84px);
     }
