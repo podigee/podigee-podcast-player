@@ -125,7 +125,7 @@ class Playlist extends Extension
     @app.theme.updateView()
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
 
     list = @panel.find('ul')
     _.each @episodes, (episode, index) =>
@@ -135,15 +135,15 @@ class Playlist extends Extension
 
     @panel.hide()
 
-  buttonHtml:
+  buttonHtml: ->
     """
-    <button class="playlist-button" title="Show playlist"></button>
+    <button class="playlist-button" title="#{@t('playlist.show')}"></button>
     """
 
-  panelHtml:
+  panelHtml: ->
     """
     <div class="playlist">
-      <h3>Playlist</h3>
+      <h3>#{@t('playlist.title')}</h3>
 
       <ul></ul>
     </div>
