@@ -48,7 +48,7 @@ class Download extends Extension
 
   buttonHtml: ->
     """
-    <button class="download-button" title="Download episode"></button>
+    <button class="download-button" title="#{@t('download.episode')}"></button>
     """
 
   panelHtml: ->
