@@ -76,21 +76,17 @@ $mobile-breakpoint: 521px;
       font-weight: bold;
       margin-top: 2px;
       overflow: hidden;
-      text-overflow: ellipsis;
-      width: calc(100% - 26px);
-      white-space: nowrap;
     }
 
     .button-show-description {
       border: 1px solid #77777c;
       border-radius: 100px;
       color: #77777c;
-      display: block;
-      float: right;
+      display: inline;
       font-size: 12px;
       padding: 0 7px;
       position: relative;
-      top: 7px;
+      top: -3px;
 
       &:hover {
         border-color: $black;
