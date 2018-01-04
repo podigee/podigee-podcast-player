@@ -97,10 +97,31 @@ If you would like to propose new features or have found a bug, please use [Githu
 
 # Assuming nodejs is installed
 
-npm install gulp-cli -g
-npm install gulp -D
-gulp dev
+## Install dependencies
+
+Install yarn: https://yarnpkg.com/en/docs/install
+
+```
+yarn install
+```
+
+## Run dev server (also watches and builds assets live)
+
+```
 gulp serve
+```
+
+## Build dev assets
+
+```
+gulp dev
+```
+
+## Build production assets
+
+```
+gulp build
+```
 
 Open http://0.0.0.0:8081/ in your browser.
 
