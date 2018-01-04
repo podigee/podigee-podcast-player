@@ -49,7 +49,8 @@
     "urijs": "^1.17.0"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8.9.4 < 9.0.0",
+    "yarn": "^1.3.2"
   },
   "dependencies": {
     "elasticlunr": "^0.9.0",
