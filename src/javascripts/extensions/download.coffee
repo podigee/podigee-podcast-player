@@ -42,19 +42,19 @@ class Download extends Extension
     )
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
     rivets.bind(@panel, @episode)
     @panel.hide()
 
-  buttonHtml:
+  buttonHtml: ->
     """
-    <button class="download-button" title="Download episode"></button>
+    <button class="download-button" title="#{@t('download.episode')}"></button>
     """
 
-  panelHtml:
+  panelHtml: ->
     """
     <div class="download">
-      <h1 class="download-title">Download episode</h1>
+      <h3 class="download-title">#{@t('download.episode')}</h3>
       <div class="icon icon-download"></div>
       <ul class="download-links">
         <li pp-each-link="downloadLinks">

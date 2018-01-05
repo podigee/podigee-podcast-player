@@ -12,20 +12,22 @@ class Extension
   defaultOptions: {}
 
   renderButton: =>
-    @button = $(@buttonHtml)
+    @button = $(@buttonHtml())
     @button.on 'click', =>
       @app.theme.togglePanel(@panel)
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
     @panel.hide()
 
-  buttonHtml:
+  t: (key) -> @app.i18n.t(key)
+
+  buttonHtml: ->
     """
     <button class="fa fa-bookmark" title="Show example extension"></button>
     """
 
-  panelHtml:
+  panelHtml: ->
     """
     <div class="example">
       <h3>Example</h3>

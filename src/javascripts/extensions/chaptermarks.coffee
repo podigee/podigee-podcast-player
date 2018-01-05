@@ -59,7 +59,7 @@ class ChapterMarks extends Extension
     @app.player.media.currentTime = Utils.hhmmssToSeconds(time)
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
     @panel.hide()
     @chaptermarks = _.map(@chapters, (item) =>
       new ChapterMark(item, @click)
@@ -93,15 +93,15 @@ class ChapterMarks extends Extension
   deactivateAll: =>
     @panel.find('li').removeClass('active')
 
-  buttonHtml:
+  buttonHtml: =>
     """
-    <button class="chaptermarks-button" title="Show chaptermarks"></button>
+    <button class="chaptermarks-button" title="#{@t('chaptermarks.show')}"></button>
     """
 
-  panelHtml:
+  panelHtml: =>
     """
     <div class="chaptermarks">
-      <h3>Chaptermarks</h3>
+      <h3>#{@t('chaptermarks.title')}</h3>
 
       <ul></ul>
     </div>

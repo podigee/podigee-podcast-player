@@ -52,7 +52,7 @@ class ChromeCast extends Extension
     elem.show()
 
   renderButton: =>
-    @button = $(@buttonHtml)
+    @button = $(@buttonHtml())
     @button.on 'click', =>
       @active = true
       chrome.cast.requestSession(@onRequestSessionSuccess, @onLaunchError)
@@ -60,10 +60,10 @@ class ChromeCast extends Extension
     @castButton = @button.find('.chromecast-button')
     @castReceiver = @button.find('.chromecast-receiver')
 
-  buttonHtml:
+  buttonHtml: ->
     """
     <button class="chromecast-ui">
-      <img class="chromecast-button" title="Play on chromecast" src="images/chromcast.png"/>
+      <img class="chromecast-button" title="#{@t('chromecast.play')}" src="images/chromcast.png"/>
       <span class="chromecast-receiver"></span>
     </button>
     """

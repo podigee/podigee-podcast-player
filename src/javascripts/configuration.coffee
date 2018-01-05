@@ -4,6 +4,7 @@ Utils = require('./utils.coffee')
 rivets = require('rivets')
 
 ExternalData = require('./external_data.coffee')
+I18n = require('./i18n.coffee')
 Podcast = require('./podcast.coffee')
 
 class Configuration
@@ -71,6 +72,12 @@ class Configuration
     @app.options.configViaJSON = viaJSON
     @app.externalData = new ExternalData(@app)
 
+    # The locale can be fixed in the player config, or autodetected by the browser. 
+    # It will fall back to en-US if no locale was found
+    confLocale = @configuration.options.locale
+    i18n = new I18n(confLocale, @defaultOptions.locale)
+    @app.i18n = i18n
+
     if @configuration.episode
       @app.episode = @configuration.episode
     else
@@ -102,6 +109,7 @@ class Configuration
     # Can be 'script' or 'iframe' depending on how the player is embedded
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
+    locale: 'en-US'
   }
 
   configureTemplating: =>
