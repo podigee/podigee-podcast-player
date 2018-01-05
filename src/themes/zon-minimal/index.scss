@@ -86,8 +86,8 @@ $progress-played: $black;
 
   .progress-bar {
     display: inline-block;
-    height: 20px;
     left: 20px;
+    padding-top: 20px;
     position: relative;
     top: -12px;
     width: calc(100% - 84px);
