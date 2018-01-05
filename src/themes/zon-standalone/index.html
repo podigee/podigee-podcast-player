@@ -5,7 +5,10 @@
     <img class="cover-image" pp-src="coverUrl" />
 
     <div class="episode-basic-info">
-      <div class="podcast-title" pp-html="podcastTitle"></div>
+      <div class="podcast-title">
+        <span pp-html="podcastTitle"></span>
+        <span pp-if="podcastSubtitle"> - {podcastSubtitle}</span>
+      </div>
       <div class="episode-title"><span pp-html="title"></span>
       <button class="button-show-description">i</button></div>
     </div>
