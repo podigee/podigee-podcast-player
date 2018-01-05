@@ -93,7 +93,37 @@ We are [Podigee](https://www.podigee.com "The Podcast Hosting Platform"), an awe
 
 If you would like to propose new features or have found a bug, please use [Github issues](https://github.com/podigee/podigee-podcast-player/issues) to tell us.
 
-If you would like to help us improve the player please [get in touch with us](mailto:hello@podigee.com).
+### Installing the dev dependencies
+
+# Assuming nodejs is installed
+
+## Install dependencies
+
+Install yarn: https://yarnpkg.com/en/docs/install
+
+```
+yarn install
+```
+
+## Run dev server (also watches and builds assets live)
+
+```
+gulp serve
+```
+
+## Build dev assets
+
+```
+gulp dev
+```
+
+## Build production assets
+
+```
+gulp build
+```
+
+Open http://0.0.0.0:8081/ in your browser.
 
 ## License
 

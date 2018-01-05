@@ -26,7 +26,7 @@ class Transcript extends Extension
 
     @transcript = @app.episode.transcript
 
-    @search = new Search()
+    @search = new Search(@app)
 
     @load().done =>
       @renderPanel()
@@ -170,19 +170,19 @@ class Transcript extends Extension
         @deactivateAll(line)
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
     rivets.bind(@panel, @data)
     @panel.hide()
 
-  buttonHtml:
+  buttonHtml: ->
     """
-    <button class="transcript-button" title="Show transcript"></button>
+    <button class="transcript-button" title="#{@t('transcript.show')}"></button>
     """
 
-  panelHtml:
+  panelHtml: ->
     """
     <div class="transcript">
-      <h3>Transcript</h3>
+      <h3>#{@t('transcript.title')}</h3>
 
       <div class="search"></div>
 
