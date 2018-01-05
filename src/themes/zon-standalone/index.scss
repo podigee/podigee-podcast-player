@@ -160,6 +160,7 @@ $mobile-breakpoint: 521px;
   .progress-bar {
     display: inline-block;
     left: 20px;
+    padding-top: 20px;
     position: relative;
     top: -32px;
     width: calc(100% - 180px);
