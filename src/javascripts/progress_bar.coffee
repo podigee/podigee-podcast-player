@@ -113,7 +113,7 @@ class ProgressBar
       .on('progress', @updateLoaded)
 
     # drag&drop on time rail
-    @railElement.on 'mousedown', (event) =>
+    @elem.on 'mousedown', (event) =>
       currentTarget = event.currentTarget
       target = event.target
       $(currentTarget).on 'mousemove', (event) =>
