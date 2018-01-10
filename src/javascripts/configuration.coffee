@@ -67,6 +67,7 @@ class Configuration
 
     @app.extensionOptions = @configuration.extensions || {}
 
+    @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
     @app.options.configViaJSON = viaJSON
@@ -74,8 +75,7 @@ class Configuration
 
     # The locale can be fixed in the player config, or autodetected by the browser. 
     # It will fall back to en-US if no locale was found
-    confLocale = @configuration.options.locale
-    i18n = new I18n(confLocale, @defaultOptions.locale)
+    i18n = new I18n(@configuration.options.locale, @defaultOptions.locale)
     @app.i18n = i18n
 
     if @configuration.episode
