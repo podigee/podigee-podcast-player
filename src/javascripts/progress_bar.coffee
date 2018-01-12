@@ -102,6 +102,18 @@ class ProgressBar
     @updateLoaded()
     @hideBuffering()
 
+  handleLetgo: (event) =>
+    $(@app.elem).off('mousemove')
+    $(@app.elem).off('mouseup')
+    @handleDrop(event)
+
+  handlePickup: (event) =>
+    $(@app.elem).on 'mousemove', @handleDrag
+    $(@app.elem).on 'touchmove', @handleDrag
+    $(@app.elem).on 'mouseup', @handleLetgo
+    $(@app.elem).on 'mouseleave', @handleLetgo
+    $(@app.elem).on 'touchend', @handleLetgo
+
   bindEvents: () ->
     @timeElement.click => @switchTimeDisplay()
 
@@ -113,15 +125,8 @@ class ProgressBar
       .on('progress', @updateLoaded)
 
     # drag&drop on time rail
-    @elem.on 'mousedown', (event) =>
-      currentTarget = event.currentTarget
-      target = event.target
-      $(currentTarget).on 'mousemove', (event) =>
-        @handleDrag(event)
-      $(target).on 'mouseup', (event) =>
-        $(currentTarget).off('mousemove')
-        $(target).off('mouseup')
-        @handleDrop(event)
+    @elem.on 'mousedown', @handlePickup
+    @elem.on 'touchstart', @handlePickup
 
   jumpToPosition: (position) =>
     if @player.duration
@@ -131,11 +136,12 @@ class ProgressBar
         @player.currentTime = newTime
 
   handleDrag: (event) =>
-    position = Utils.calculateCursorPosition(event)
-    @playedElement.width(position + 'px')
+    position = Utils.calculateCursorPosition(event, @elem[0])
+    if position <= @barWidth()
+      @playedElement.width(position + 'px')
 
   handleDrop: (event) =>
-    position = Utils.calculateCursorPosition(event)
+    position = Utils.calculateCursorPosition(event, @elem[0])
     @jumpToPosition(position)
 
   barWidth: => @railElement.width()

@@ -40,11 +40,13 @@ class Utils
 
     number
 
-  @calculateCursorPosition: (event) ->
-    if (event.offsetX == undefined)
-      event.layerX - event.currentTarget.offsetLeft
+  @calculateCursorPosition: (event, elem) ->
+    if event.originalEvent.touches
+      pageX = event.originalEvent.touches[0].pageX
     else
-      event.offsetX
+      pageX = event.pageX
+
+    pageX - elem.getBoundingClientRect().left
 
   @isIE9: () ->
     try
