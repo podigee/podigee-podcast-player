@@ -13,7 +13,8 @@ class ProgressBar
     return unless @app.theme.progressBarElement.length
 
     @elem = @app.theme.progressBarElement
-    @player = @app.player.media
+    @player = @app.player
+    @media = @app.player.media
 
     @render()
     @findElements()
@@ -38,13 +39,14 @@ class ProgressBar
     @updatePlayed()
     @updateLoaded()
 
-  updateTime: () =>
+  updateTime: (time) =>
+    currentTime = time || @media.currentTime
     time = if @timeMode == 'countup'
       prefix = ''
-      @player.currentTime
+      currentTime
     else
       prefix = '-'
-      @player.duration - @player.currentTime
+      @player.duration - currentTime
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
@@ -55,9 +57,9 @@ class ProgressBar
     return timeString
 
   updateLoaded: (buffered) =>
-    return unless @player.seekable.length
+    return unless @media.seekable.length
 
-    newWidth = @player.seekable.end(@player.seekable.length - 1) * @timeRailFactor()
+    newWidth = @media.seekable.end(@media.seekable.length - 1) * @timeRailFactor()
     @loadedElement.css('margin-left', 0).width(newWidth)
 
   #private
@@ -117,7 +119,7 @@ class ProgressBar
   bindEvents: () ->
     @timeElement.click => @switchTimeDisplay()
 
-    $(@player).on('timeupdate', @updateTime)
+    $(@media).on('timeupdate', @updateTime)
       .on('play', @triggerPlaying)
       .on('playing', @triggerPlaying)
       .on('waiting', @triggerLoading)
@@ -132,8 +134,8 @@ class ProgressBar
     if @player.duration
       pixelPerSecond = @player.duration/@barWidth()
       newTime = pixelPerSecond * position
-      unless newTime == @player.currentTime
-        @player.currentTime = newTime
+      unless newTime == @media.currentTime
+        @player.setCurrentTime(newTime)
 
   handleDrag: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
@@ -150,7 +152,7 @@ class ProgressBar
     @barWidth()/@player.duration
 
   updatePlayed: () =>
-    newWidth = @player.currentTime * @timeRailFactor()
+    newWidth = @media.currentTime * @timeRailFactor()
     @playedElement.width(newWidth)
 
 module.exports = ProgressBar

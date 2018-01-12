@@ -56,7 +56,7 @@ class ChapterMarks extends Extension
 
   click: (event) =>
     time = event.data.start
-    @app.player.media.currentTime = Utils.hhmmssToSeconds(time)
+    @app.player.setCurrentTime(Utils.hhmmssToSeconds(time))
 
   renderPanel: =>
     @panel = $(@panelHtml())
