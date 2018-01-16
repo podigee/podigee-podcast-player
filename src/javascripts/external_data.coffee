@@ -5,15 +5,15 @@ class ExternalData
   constructor: (app) ->
     @sslProxy = app.options.sslProxy
 
-  get: (url) ->
+  get: (url, params) ->
     deferred = $.Deferred()
 
-    url = if url.match(/^http:/)? && @sslProxy
-      "#{@sslProxy}#{url}"
-    else
-      url
+    # url = if url.match(/^http:/)? && @sslProxy
+      # "#{@sslProxy}#{url}"
+    # else
+      # url
 
-    $.get url, (data) -> deferred.resolve(data)
+    $.get url, (params || {}), (data) -> deferred.resolve(data)
 
     deferred.promise()
 

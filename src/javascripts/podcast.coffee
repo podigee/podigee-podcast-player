@@ -32,10 +32,13 @@ class Podcast
   episodes: []
   getEpisodes: () ->
     if @attributes.episodes? && @attributes.episodes.length
-      deferred = $.Deferred()
-      @episodes = @attributes.episodes
-      deferred.resolve()
-      deferred.promise()
+      if Array.isArray(@attributes.episodes)
+        deferred = $.Deferred()
+        @episodes = @attributes.episodes
+        deferred.resolve()
+        deferred.promise()
+      else
+        @fetchEpisodes(@attributes.episodes, 0)
     else if @feed?
       self = this
       feedResult = @feed.fetch()
@@ -46,5 +49,17 @@ class Podcast
       deferred = $.Deferred()
       deferred.resolve()
       deferred.promise()
+
+  fetchEpisodes: (url, page) =>
+    self = this
+    pageSize = 10
+    params = {
+      page_size: pageSize,
+      offset: pageSize * page
+    }
+    promise = @app.externalData.get(url, params)
+    promise.done (data) ->
+      self.episodes = data.episodes
+    promise
 
 module.exports = Podcast
