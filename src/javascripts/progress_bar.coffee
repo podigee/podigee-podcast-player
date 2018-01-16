@@ -13,7 +13,8 @@ class ProgressBar
     return unless @app.theme.progressBarElement.length
 
     @elem = @app.theme.progressBarElement
-    @player = @app.player.media
+    @player = @app.player
+    @media = @app.player.media
 
     @render()
     @findElements()
@@ -38,13 +39,14 @@ class ProgressBar
     @updatePlayed()
     @updateLoaded()
 
-  updateTime: () =>
+  updateTime: (time) =>
+    currentTime = time || @media.currentTime
     time = if @timeMode == 'countup'
       prefix = ''
-      @player.currentTime
+      currentTime
     else
       prefix = '-'
-      @player.duration - @player.currentTime
+      @player.duration - currentTime
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
@@ -55,9 +57,9 @@ class ProgressBar
     return timeString
 
   updateLoaded: (buffered) =>
-    return unless @player.seekable.length
+    return unless @media.seekable.length
 
-    newWidth = @player.seekable.end(@player.seekable.length - 1) * @timeRailFactor()
+    newWidth = @media.seekable.end(@media.seekable.length - 1) * @timeRailFactor()
     @loadedElement.css('margin-left', 0).width(newWidth)
 
   #private
@@ -102,10 +104,22 @@ class ProgressBar
     @updateLoaded()
     @hideBuffering()
 
+  handleLetgo: (event) =>
+    $(@app.elem).off('mousemove')
+    $(@app.elem).off('mouseup')
+    @handleDrop(event)
+
+  handlePickup: (event) =>
+    $(@app.elem).on 'mousemove', @handleDrag
+    $(@app.elem).on 'touchmove', @handleDrag
+    $(@app.elem).on 'mouseup', @handleLetgo
+    $(@app.elem).on 'mouseleave', @handleLetgo
+    $(@app.elem).on 'touchend', @handleLetgo
+
   bindEvents: () ->
     @timeElement.click => @switchTimeDisplay()
 
-    $(@player).on('timeupdate', @updateTime)
+    $(@media).on('timeupdate', @updateTime)
       .on('play', @triggerPlaying)
       .on('playing', @triggerPlaying)
       .on('waiting', @triggerLoading)
@@ -113,29 +127,23 @@ class ProgressBar
       .on('progress', @updateLoaded)
 
     # drag&drop on time rail
-    @elem.on 'mousedown', (event) =>
-      currentTarget = event.currentTarget
-      target = event.target
-      $(currentTarget).on 'mousemove', (event) =>
-        @handleDrag(event)
-      $(target).on 'mouseup', (event) =>
-        $(currentTarget).off('mousemove')
-        $(target).off('mouseup')
-        @handleDrop(event)
+    @elem.on 'mousedown', @handlePickup
+    @elem.on 'touchstart', @handlePickup
 
   jumpToPosition: (position) =>
     if @player.duration
       pixelPerSecond = @player.duration/@barWidth()
       newTime = pixelPerSecond * position
-      unless newTime == @player.currentTime
-        @player.currentTime = newTime
+      unless newTime == @media.currentTime
+        @player.setCurrentTime(newTime)
 
   handleDrag: (event) =>
-    position = Utils.calculateCursorPosition(event)
-    @playedElement.width(position + 'px')
+    position = Utils.calculateCursorPosition(event, @elem[0])
+    if position <= @barWidth()
+      @playedElement.width(position + 'px')
 
   handleDrop: (event) =>
-    position = Utils.calculateCursorPosition(event)
+    position = Utils.calculateCursorPosition(event, @elem[0])
     @jumpToPosition(position)
 
   barWidth: => @railElement.width()
@@ -144,7 +152,7 @@ class ProgressBar
     @barWidth()/@player.duration
 
   updatePlayed: () =>
-    newWidth = @player.currentTime * @timeRailFactor()
+    newWidth = @media.currentTime * @timeRailFactor()
     @playedElement.width(newWidth)
 
 module.exports = ProgressBar

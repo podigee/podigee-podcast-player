@@ -16,6 +16,7 @@ class Player
     @loadFile()
     @attachEvents()
     @app.init(self)
+    @setInitialTime()
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -90,12 +91,20 @@ class Player
 
   setInitialTime: =>
     deeplink = new DeeplinkParser(@app.options.parentLocationHash)
-    @media.currentTime = deeplink.startTime if (deeplink.startTime > 0)
+    if deeplink.startTime > 0
+      @currentTimeInSeconds = deeplink.startTime
+      @media.currentTime = deeplink.startTime
+      @app.updateTime(@currentTimeInSeconds)
     @stopTime = deeplink.endTime if deeplink.endTime?
 
-  setCurrentTime: =>
-    @currentTimeInSeconds = @media.currentTime
+  setCurrentTime: (time) =>
+    if time
+      @currentTimeInSeconds = time
+      @media.currentTime = time
+    else
+      @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+    @app.updateTime(@currentTimeInSeconds)
 
   checkStopTime: () =>
     return unless @stopTime?
@@ -106,6 +115,7 @@ class Player
   setDuration: =>
     if @app.episode.duration
       @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      @duration = @app.episode.duration
       return
 
     clear = -> window.clearInterval(interval)
@@ -113,6 +123,7 @@ class Player
     interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
       @app.episode.duration = @media.duration
+      @duration = @media.duration
       @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
       clear()
     ), 500
@@ -131,6 +142,13 @@ class Player
     if @media.readyState < 2
       @app.theme.addLoadingClass()
     @media.play()
+    if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
+      clear = -> window.clearInterval(interval)
+      interval = window.setInterval ((t) =>
+        return unless @media.readyState > 0
+        @media.currentTime = @currentTimeInSeconds
+        clear()
+      ), 10
     @playing = true
     @app.togglePlayState()
 
