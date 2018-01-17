@@ -40,6 +40,7 @@ class ProgressBar
     @updateLoaded()
 
   updateTime: (time) =>
+    return unless typeof time == 'number'
     currentTime = time || @media.currentTime
     time = if @timeMode == 'countup'
       prefix = ''
@@ -147,7 +148,8 @@ class ProgressBar
 
   handleDrop: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
-    @jumpToPosition(position)
+    if position <= @barWidth()
+      @jumpToPosition(position)
 
   barWidth: => @railElement.width()
 
