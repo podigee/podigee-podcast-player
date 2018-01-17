@@ -8,10 +8,7 @@ class Theme
     @loadThemeFiles()
 
   context: =>
-    _.merge(@app.episode, {
-      podcastTitle: @app.podcast.title,
-      podcastSubtitle: @app.podcast.subtitle
-    })
+    _.merge(@app.episode, @app.podcast.forTheme())
 
   html: null
   render: =>

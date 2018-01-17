@@ -5,10 +5,23 @@ Feed = require('./feed.coffee')
 
 class Podcast
   constructor: (@app, @attributes) ->
-    @title = @attributes.title
-    @subtitle = @attributes.subtitle
+    @assignAttributes()
     @feed = if @attributes.feed?
       new Feed(@app, @attributes.feed)
+
+  assignAttributes: () ->
+    @title = @attributes.title
+    @subtitle = @attributes.subtitle
+    @url = @attributes.url
+    @connections = @attributes.connections
+
+  forTheme: () ->
+    {
+      podcastTitle: @title,
+      podcastSubtitle: @subtitle,
+      podcastUrl: @url,
+      podcastConnections: @connections
+    }
 
   feed: null
 
