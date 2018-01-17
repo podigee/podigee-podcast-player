@@ -40,6 +40,7 @@ class ProgressBar
     @updateLoaded()
 
   updateTime: (time) =>
+    return unless typeof time == 'number'
     currentTime = time || @media.currentTime
     time = if @timeMode == 'countup'
       prefix = ''
@@ -107,13 +108,16 @@ class ProgressBar
   handleLetgo: (event) =>
     $(@app.elem).off('mousemove')
     $(@app.elem).off('mouseup')
+    $(@app.elem).off('mouseleave')
+    $(@app.elem).off('touchmove')
+    $(@app.elem).off('touchend')
     @handleDrop(event)
 
   handlePickup: (event) =>
     $(@app.elem).on 'mousemove', @handleDrag
-    $(@app.elem).on 'touchmove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo
+    $(@app.elem).on 'touchmove', @handleDrag
     $(@app.elem).on 'touchend', @handleLetgo
 
   bindEvents: () ->
@@ -144,7 +148,8 @@ class ProgressBar
 
   handleDrop: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
-    @jumpToPosition(position)
+    if position <= @barWidth()
+      @jumpToPosition(position)
 
   barWidth: => @railElement.width()
 

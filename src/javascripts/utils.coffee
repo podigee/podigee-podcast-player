@@ -41,8 +41,8 @@ class Utils
     number
 
   @calculateCursorPosition: (event, elem) ->
-    if event.originalEvent.touches
-      pageX = event.originalEvent.touches[0].pageX
+    if event.originalEvent.changedTouches?.length
+      pageX = event.originalEvent.changedTouches[0].pageX
     else
       pageX = event.pageX
 
