@@ -139,16 +139,16 @@ class Player
 
   play: () ->
     return unless @media.paused
-    if @media.readyState < 2
+    if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
+    if @media.readyState < 1 # has metadata available
+      if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
+        setTime = () =>
+          @media.currentTime = @currentTimeInSeconds
+          $(@media).off('loadedmetadata', setTime)
+
+        $(@media).on('loadedmetadata', setTime)
     @media.play()
-    if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
-      clear = -> window.clearInterval(interval)
-      interval = window.setInterval ((t) =>
-        return unless @media.readyState > 0
-        @media.currentTime = @currentTimeInSeconds
-        clear()
-      ), 10
     @playing = true
     @app.togglePlayState()
 

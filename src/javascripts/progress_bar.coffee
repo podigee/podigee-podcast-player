@@ -107,13 +107,16 @@ class ProgressBar
   handleLetgo: (event) =>
     $(@app.elem).off('mousemove')
     $(@app.elem).off('mouseup')
+    $(@app.elem).off('mouseleave')
+    $(@app.elem).off('touchmove')
+    $(@app.elem).off('touchend')
     @handleDrop(event)
 
   handlePickup: (event) =>
     $(@app.elem).on 'mousemove', @handleDrag
-    $(@app.elem).on 'touchmove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo
+    $(@app.elem).on 'touchmove', @handleDrag
     $(@app.elem).on 'touchend', @handleLetgo
 
   bindEvents: () ->
