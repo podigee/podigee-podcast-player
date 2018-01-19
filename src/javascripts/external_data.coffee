@@ -8,10 +8,10 @@ class ExternalData
   get: (url, params) ->
     deferred = $.Deferred()
 
-    # url = if url.match(/^http:/)? && @sslProxy
-      # "#{@sslProxy}#{url}"
-    # else
-      # url
+    url = if url.match(/^http:/)? && @sslProxy
+      "#{@sslProxy}#{url}"
+    else
+      url
 
     $.get url, (params || {}), (data) -> deferred.resolve(data)
 
