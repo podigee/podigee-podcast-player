@@ -3,14 +3,14 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+SubscribeButton = require('./subscribe_button.coffee')
+
 class Theme
   constructor: (@app) ->
     @loadThemeFiles()
 
   context: =>
-    _.merge(@app.episode, {
-      podcastTitle: @app.podcast.title,
-    })
+    _.merge(@app.episode, @app.podcast.forTheme())
 
   html: null
   render: =>
@@ -86,7 +86,6 @@ class Theme
   findElements: ->
     @audioElement = @elem.find('audio')
     @progressBarElement = @elem.find('progressbar')
-    @waveformElement = @elem.find('.waveform')
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
@@ -94,6 +93,9 @@ class Theme
     @skipBackwardElement = @elem.find('.skip-backward-button')
     @speedElement = @elem.find('.speed-toggle')
     @coverImage = @elem.find('.cover-image')
+    @subscribeButton = @elem.find('.subscribe-button')
+
+    @subscribeButton.on 'click', () => SubscribeButton.open(@app)
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')

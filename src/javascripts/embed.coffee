@@ -1,4 +1,5 @@
 IframeResizer = require('./iframe_resizer.coffee')
+SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
@@ -21,6 +22,7 @@ class Iframe
     @setupListeners()
     @replaceElem()
     @injectConfiguration() if @configuration
+    @setupSubscribeButton()
 
   randomId: (string) ->
     hash = 0
@@ -55,6 +57,10 @@ class Iframe
 
   setupListeners: ->
     IframeResizer.listen('resizePlayer', @iframe)
+
+  setupSubscribeButton: ->
+    subscribeButton = new SubscribeButtonTrigger(@iframe)
+    subscribeButton.listen()
 
   replaceElem: ->
     @iframe.className += @elem.className
