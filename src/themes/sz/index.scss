@@ -1,4 +1,4 @@
-$background: #83d0c6;
+$background: #9ad7cf;
 $black: #29293a;
 $progress: $black;
 $progress-loaded: $black;
@@ -281,6 +281,58 @@ $mobile-breakpoint: 521px;
     font-size: 14px;
     position: relative;
     top: -9px;
+  }
+
+	.player-footer {
+    background: #83d0c6;
+    bottom: -23px;
+    left: -23px;
+    padding: 18px 23px;
+    position: relative;
+    width: calc(100% + 46px);
+
+    .subscribe-button {
+      background: transparent;
+      border-bottom: 1px solid;
+      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      outline: none;
+      padding: 0 0 4px;
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        color: $black;
+        fill: currentColor;
+        vertical-align: middle;
+      }
+    }
+
+    .all-episodes-link {
+      border-bottom: 1px solid $black;
+      color: $black;
+      float: right;
+      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 0 0 4px;
+      text-decoration: none;
+    }
   }
 }
 
