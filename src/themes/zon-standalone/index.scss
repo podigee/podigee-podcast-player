@@ -272,7 +272,7 @@ $mobile-breakpoint: 521px;
     position: relative;
     width: calc(100% + 40px);
 
-    .podlove-button {
+    .subscribe-button {
       border-radius: .25rem;
       border: 1px rgba(37,37,37,0.5) solid;
       bottom: 4.25rem;
@@ -282,6 +282,7 @@ $mobile-breakpoint: 521px;
       left: 50%;
       letter-spacing: .05em;
       padding: .1875rem .5rem;
+      text-decoration: none;
       text-transform: uppercase;
       white-space: nowrap;
 
