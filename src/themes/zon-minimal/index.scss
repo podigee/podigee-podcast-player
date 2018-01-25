@@ -1,0 +1,193 @@
+$black: #252525;
+$progress: rgba(0, 0, 0, .1);
+$progress-loaded: rgba(0, 0, 0, .3);
+$progress-played: $black;
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic
+}
+
+@font-face {
+  font-family: "TabletGothic";
+  src: url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff2") format("woff2"),url("http://www.zeit.de/static/latest/fonts/tabletgothic/TabletGothic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal
+}
+
+.loading-animation .spinner > div {
+  background-color: #313131 !important;
+}
+
+.podcast-player {
+  color: $black;
+  font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
+
+  button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+
+    &.play-button {
+      border: none;
+      color: transparent;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+      width: 60px;
+
+      .play-button-paused {
+        display: none;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
+  &.playing button.play-button {
+    .play-button-playing {
+      display: none;
+    }
+
+    .play-button-paused {
+      display: block;
+    }
+  }
+
+  .play-button-playing,
+  .play-button-paused {
+    #Group-7, #Rectangle-6 {
+      transition: transform 0.2s;
+    }
+
+    #Group-7 {
+      transform: translate(21.5px, 18.0px) scale(1.0);
+    }
+
+    &:hover #Group-7 {
+      transform: translate(19.5px, 16.0px) scale(1.2);
+    }
+
+    &:hover #Rectangle-6 {
+      transform: translate(-6px, -6px) scale(1.2);
+    }
+  }
+
+  .progress-bar {
+    display: inline-block;
+    left: 20px;
+    padding-top: 20px;
+    position: relative;
+    top: -12px;
+    width: calc(100% - 84px);
+
+    .progress-bar-time-played {
+      font-size: 12px;
+      float: right;
+      position: relative;
+      top: -7px;
+    }
+
+    .progress-bar-rail {
+      background-color: $progress;
+      border-radius: 10px;
+      cursor: move; /* fallback if grab cursor is unsupported */
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+      min-height: 6px;
+      position: relative;
+      width: calc(100% - 71px);
+
+      &:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
+    }
+  }
+
+  &.playing .progress-bar .progress-bar-time-played {
+    display: block;
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $progress-played;
+    border-radius: 10px;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-played:after {
+    background-color: $black;
+    border-radius: 50px;
+    content: '';
+    height: 16px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    width: 16px;
+  }
+
+  .progress-bar-rail:active .progress-bar-played:after {
+    height: 12px;
+    right: -4px;
+    top: -4px;
+    width: 12px;
+  }
+
+  .progress-bar-loaded {
+    background-color: $progress-loaded;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+}

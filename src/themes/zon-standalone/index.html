@@ -1,0 +1,80 @@
+<div class="podcast-player">
+  <audio></audio>
+
+  <div class="main-player">
+    <img class="cover-image" pp-src="coverUrl" />
+
+    <div class="episode-basic-info">
+      <div class="podcast-title">
+        <span pp-html="podcastTitle"></span>
+        <span pp-if="podcastSubtitle"> - {podcastSubtitle}</span>
+      </div>
+      <div class="episode-title"><span pp-html="title"></span>
+      <button class="button-show-description">i</button></div>
+    </div>
+
+    <button class="play-button">
+      <svg class="play-button-playing" width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Player-Icon-/-PLAY">
+            <g id="Group-7" transform="translate(21.500000, 18.000000)" fill="#252525">
+              <path d="M13.7888544,3.57770876 L22.5527864,21.1055728 L22.5527864,21.1055728 C23.0467649,22.0935298 22.6463162,23.2948759 21.6583592,23.7888544 C21.3806483,23.9277098 21.0744222,24 20.763932,24 L3.23606798,24 L3.23606798,24 C2.13149848,24 1.23606798,23.1045695 1.23606798,22 C1.23606798,21.6895098 1.30835816,21.3832837 1.4472136,21.1055728 L10.2111456,3.57770876 L10.2111456,3.57770876 C10.7051241,2.58975177 11.9064702,2.18930308 12.8944272,2.68328157 C13.281482,2.87680898 13.595327,3.19065396 13.7888544,3.57770876 Z" id="Triangle" transform="translate(12.000000, 12.000000) rotate(90.000000) translate(-12.000000, -12.000000) "></path>
+            </g>
+            <circle id="Oval" stroke="#252525" stroke-width="2" cx="30" cy="30" r="29"></circle>
+          </g>
+        </g>
+      </svg>
+
+      <svg class="play-button-paused" width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Player-Icon-/-PAUSE">
+            <g id="Group">
+              <circle id="Oval" stroke="#252525" stroke-width="2" cx="30" cy="30" r="29"></circle>
+              <rect id="Rectangle-6" fill="#252525" x="20" y="18" width="8" height="25" rx="2"></rect>
+              <rect id="Rectangle-6" fill="#252525" x="33" y="18" width="8" height="25" rx="2"></rect>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </button>
+
+    <progressbar/>
+
+    <div class="episode-description hidden" pp-html="description"></div>
+
+    <div class="player-footer hidden">
+      <span class="subscribe-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14" viewBox="0 0 11 14" class="svg-symbol podlove-button__icon" preserveAspectRatio="xMinYMin meet" aria-hidden="true"><title>Podcast</title><path d="M2.384 9.931A5.423 5.423 0 0 1 0 5.444C0 2.438 2.462 0 5.5 0S11 2.438 11 5.444a5.423 5.423 0 0 1-2.384 4.487l-.445-.64a4.649 4.649 0 0 0 2.043-3.847c0-2.577-2.11-4.666-4.714-4.666C2.896.778.786 2.868.786 5.444c0 1.596.809 3.005 2.043 3.846l-.445.641zM3.497 8.33a3.486 3.486 0 0 1-1.533-2.885c0-1.933 1.583-3.5 3.536-3.5s3.536 1.567 3.536 3.5A3.486 3.486 0 0 1 7.503 8.33l-.445-.641A2.712 2.712 0 0 0 8.25 5.444c0-1.503-1.231-2.722-2.75-2.722S2.75 3.941 2.75 5.444c0 .931.472 1.753 1.192 2.244l-.445.64zm2.003.227c1.085 0 1.964.879 1.964 1.964v1.516a1.964 1.964 0 0 1-3.928 0V10.52c0-1.085.88-1.964 1.964-1.964zm-.016-4.667h.032a1.556 1.556 0 1 1 0 3.111h-.032a1.556 1.556 0 1 1 0-3.111z" fill-rule="nonzero"></path></svg>
+        Abonnieren
+      </span>
+
+      <ul class="podcast-connections-items">
+        <li class="podcast-connections-item" pp-if="podcastConnections.itunes">
+          <a pp-href="podcastConnections.itunes" title="Podcast bei iTunes" target="_parent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16" class="svg-symbol itunes__icon" preserveAspectRatio="xMinYMin meet" role="img" aria-label="itunes-icon"><title>itunes-icon</title><path d="M12.993 12.288c.103 1.362-.932 2.6-2.317 2.769-1.383.17-2.593-.797-2.699-2.158-.106-1.358.935-2.599 2.317-2.768.438-.053.856.006 1.23.156v-6.68L5.027 4.8v8.348c-.01.023-.004.046-.004.069.106 1.361-.931 2.598-2.317 2.768-1.386.17-2.592-.796-2.699-2.155-.106-1.36.932-2.602 2.318-2.768.437-.056.855.006 1.23.157V1.593L12.98.003l.01 12.214c0 .03.003.049.003.071z" fill-rule="nonzero"></path></svg>
+          </a>
+        </li>
+        <li class="podcast-connections-item" pp-if="podcastConnections.spotify">
+          <a pp-href="podcastConnections.spotify" title="Podcast bei Spotify" target="_parent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" class="svg-symbol spotify__icon" preserveAspectRatio="xMinYMin meet" role="img" aria-label="spotify-icon"><title>spotify-icon</title><path d="M12.472 11.975c0-.236-.11-.425-.33-.564-1.425-.848-3.075-1.273-4.948-1.273-.982 0-2.04.124-3.176.376-.311.066-.465.258-.465.576 0 .147.05.274.149.382.099.107.23.16.392.16.036 0 .173-.029.41-.088.972-.2 1.87-.298 2.688-.298 1.667 0 3.133.38 4.394 1.14.14.081.262.121.366.121.14 0 .262-.05.366-.149a.507.507 0 0 0 .154-.383zm1.064-2.379a.74.74 0 0 0-.387-.674C11.4 7.88 9.378 7.36 7.084 7.36c-1.129 0-2.246.155-3.353.465-.354.096-.53.332-.53.708 0 .184.064.342.194.47a.643.643 0 0 0 .47.194c.052 0 .187-.03.41-.088.9-.243 1.826-.366 2.777-.366 2.059 0 3.86.458 5.401 1.372.177.095.318.144.42.144a.636.636 0 0 0 .47-.194.638.638 0 0 0 .193-.469zM14.73 6.85a.837.837 0 0 0-.442-.775c-.93-.54-2.01-.947-3.242-1.223a17.219 17.219 0 0 0-3.796-.415c-1.506 0-2.848.174-4.028.52a.88.88 0 0 0-.427.284c-.114.137-.171.315-.171.536 0 .229.076.42.227.575.15.155.342.233.57.233.082 0 .23-.03.443-.089.982-.272 2.114-.409 3.398-.409 1.173 0 2.316.125 3.426.376 1.11.252 2.045.602 2.805 1.052a.894.894 0 0 0 .443.133c.213 0 .4-.076.558-.227a.763.763 0 0 0 .236-.57zM17 8.5a8.32 8.32 0 0 1-1.14 4.267 8.476 8.476 0 0 1-3.093 3.093A8.32 8.32 0 0 1 8.5 17a8.32 8.32 0 0 1-4.267-1.14 8.476 8.476 0 0 1-3.093-3.093A8.32 8.32 0 0 1 0 8.5a8.32 8.32 0 0 1 1.14-4.267A8.476 8.476 0 0 1 4.233 1.14 8.32 8.32 0 0 1 8.5 0a8.32 8.32 0 0 1 4.267 1.14 8.476 8.476 0 0 1 3.093 3.093A8.32 8.32 0 0 1 17 8.5z" fill-rule="nonzero"></path></svg>
+          </a>
+        </li>
+        <li class="podcast-connections-item" pp-if="podcastConnections.deezer">
+          <a pp-href="podcastConnections.deezer" title="Podcast bei Deezer" target="_parent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="10" viewBox="0 0 19 10" class="svg-symbol deezer__icon" preserveAspectRatio="xMinYMin meet" role="img" aria-label="deezer-icon"><title>deezer-icon</title><path d="M0 10v-.991h3.463V10H0zm0-1.286v-.991h3.463v.99H0zm0-1.286v-.991h3.463v.99H0zM0 6.14v-.991h3.463v.99H0zm0-1.286v-.99h3.463v.99H0zM3.884 10v-.991h3.463V10H3.884zm0-1.286v-.991h3.463v.99H3.884zm0-1.286v-.991h3.463v.99H3.884zM11.233 10H7.767v-.991h3.466V10zm0-1.286H7.767v-.991h3.466v.99zm0-1.286H7.767v-.991h3.466v.99zm0-1.288H7.767v-.991h3.466v.99zm0-1.286H7.767v-.99h3.466v.99zm0-1.289H7.767v-.99h3.466v.99zm0-1.286H7.767v-.99h3.466v.99zm.42 7.721v-.991h3.463V10h-3.463zm0-1.286v-.991h3.463v.99h-3.463zm0-1.286v-.991h3.463v.99h-3.463zm0-1.288v-.991h3.463v.99h-3.463zm0-1.286v-.99h3.463v.99h-3.463zM15.537 10v-.991H19V10h-3.463zm0-1.286v-.991H19v.99h-3.463zm0-1.288v-.991H19v.99h-3.463zm0-1.286v-.991H19v.99h-3.463zm0-1.286v-.991H19v.99h-3.463zm0-1.289v-.988H19v.988h-3.463zm0-1.286V1.29H19v.99h-3.463zm0-1.288V0H19v.991h-3.463z" fill-rule="nonzero"></path></svg>
+          </a>
+        </li>
+      </ul>
+      <a class="all-episodes-link" pp-href="podcastUrl" target="_parent" pp-if="podcastUrl">Alle Folgen</a>
+    </div>
+  </div>
+
+  <script>
+   var button = document.querySelector('.button-show-description')
+   button.addEventListener('click', function () {
+     var desc = document.querySelector('.episode-description')
+     desc.classList.toggle('hidden')
+     window.dispatchEvent(new Event('resize'))
+   }, false)
+  </script>
+</div>
