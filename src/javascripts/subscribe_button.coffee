@@ -2,6 +2,7 @@ class SubscribeButton
   @open: (@app) ->
     data = JSON.stringify({
       listenTo: 'subscribeButtonTrigger',
+      id: @app.options.id,
       detail : {
         title: @app.podcast.title,
         subtitle: @app.podcast.subtitle,
