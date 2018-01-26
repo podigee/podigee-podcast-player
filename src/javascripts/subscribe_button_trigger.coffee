@@ -1,6 +1,7 @@
 class SubscribeButtonTrigger
   # referenceElement is the DOM element after which the script tag should be inserted
   constructor: (@referenceElement) ->
+    @referenceId = @referenceElement.id
     @id = @randomId(@referenceElement.toString())
     @buildTags()
     @insert()
@@ -24,6 +25,8 @@ class SubscribeButtonTrigger
     @referenceElement.parentNode.insertBefore(@button, @referenceElement.nextSibling)
 
   randomId: (string) ->
+    randomPart = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+    string += randomPart
     hash = 0
     return hash if string.length == 0
 
@@ -43,6 +46,7 @@ class SubscribeButtonTrigger
       catch
         return
       return unless data.listenTo == 'subscribeButtonTrigger'
+      return unless data.id == @referenceId
 
       detail = data.detail
       detail.id = @id
