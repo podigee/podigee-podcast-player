@@ -24,6 +24,7 @@ class DeeplinkParser
   # private
 
   _parseLocation: (location) ->
+    return null unless location
     hash = location[1..-1].split('&')
     timeHash = _(hash).find (h) -> _(h).startsWith('t')
 
