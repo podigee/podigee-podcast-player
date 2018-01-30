@@ -15,14 +15,14 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: $background;
   color: $text;
   font-family: $font-family;
-  padding: 15px;
+  padding: 15px 15px 0;
 
   .hidden {
     display: none;
   }
 
   .main-player {
-    margin-bottom: -30px;
+    margin-bottom: -0px;
   }
 
   .cover-image {
@@ -204,23 +204,73 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
     }
   }
+
+  .player-footer {
+    color: #fff;
+    font-size: 20px;
+    left: -15px;
+    position: relative;
+    width: calc(100% + 30px);
+
+    .subscribe-button {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: $font-family;
+      font-size: 20px;
+      outline: none;
+      padding: 0 0 4px;
+    }
+
+    .podcast-connections-items {
+      border-top: 1px solid #110f16;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .podcast-connections-item {
+      border-left: 1px solid #110f16;
+      display: inline-block;
+      height: 50px;
+      list-style: none;
+      text-align: center;
+      width: calc(25% - 4.5px);
+
+      a {
+        color: #fff;
+        display: block;
+        height: 100%;
+        padding: 10px 0;
+        text-decoration: none;
+        width: 100%;
+
+        &:hover {
+          background: #CC707D;
+        }
+      }
+
+      svg {
+        color: #fff;
+        fill: currentColor;
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
 }
 
 .podcast-player {
   @media (max-width: $mobile-breakpoint) {
-    padding: 25px 15px;
+    padding: 25px 15px 0;
 
     .main-player {
       margin-bottom: -5px;
     }
 
     .cover-image {
-      display: block;
-      float: none;
-      height: auto;
-      margin: 0 auto 20px;
-      position: static;
-      width: 100%;
+      display: none;
     }
 
     button.play-button {
@@ -242,6 +292,12 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       left: 20px;
       top: -15px;
       width: calc(100% - 84px);
+    }
+
+    .podcast-connections-item {
+      .button-title {
+        display: none;
+      }
     }
   }
 }
