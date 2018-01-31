@@ -506,13 +506,12 @@
     }
 
     .buttons {
-      margin-top: 25px;
       position: absolute;
-      text-align: right;
+      text-align: center;
       bottom: 20px;
       top: auto;
-      right: 50%;
-      transform: translateX(50%);
+      right: 0;
+      left: 0;
 
       button {
         font-size: 24px;
@@ -582,4 +581,9 @@
       right: 0;
     }
   }
+}
+
+.panels .share-social-links {
+  height: auto;
+  min-height: 48px;
 }
