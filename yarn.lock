@@ -3026,9 +3026,9 @@ rimraf@2, rimraf@^2.5.1, rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-rivets@^0.8.0:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/rivets/-/rivets-0.8.1.tgz#8e37af7cf54264172dd9ca4b45f1d02d321c20d7"
+rivets@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/rivets/-/rivets-0.9.6.tgz#5081e5ed3944def7f6fcd3a326ee42168799fd33"
   dependencies:
     sightglass "~0.2.4"
 
