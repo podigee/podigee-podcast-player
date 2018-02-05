@@ -85,7 +85,6 @@ class Player
     $(@media).on('ended', @app.mediaEnded)
 
   updateTime: =>
-    @app.updateTime()
     @setCurrentTime()
     @checkStopTime()
 

@@ -108,6 +108,7 @@ class Playlist extends Extension
     @app.player.loadFile()
     @app.player.play()
     @app.initializeExtensions(this)
+    @app.extensions.ProgressBar.updateView()
 
   playPrevious: () =>
     return if @isFirstEntry()
