@@ -9,7 +9,10 @@ class SubscribeButton
         cover: @app.episode.coverUrl,
         feeds: [
           {url: @app.podcast.feed.feedUrl, "type": "audio", "format": "mp3"}
-        ]
+        ],
+        options: {
+          language: @app.podcast.language
+        }
       }
     })
     window.parent.postMessage(data, '*')

@@ -66,7 +66,7 @@ class Playlist extends Extension
       @renderButton()
 
       @app.theme.addExtension(this)
-      $(@app.player.media).on 'loadedmetadata', @setCurrentEpisode
+      @setCurrentEpisode()
 
   defaultOptions:
     showOnStart: false
@@ -78,13 +78,16 @@ class Playlist extends Extension
   currentIndex: => @playlist.indexOf(@currentEpisode)
   setCurrentEpisode: () =>
     current = @app.player.currentFile()
-    cleanedCurrent = @cleanFile(current)
-    @currentEpisode = _.find @playlist, (episode) =>
-      episode.deactivate()
-      filteredMedia = _.filter episode.media, (file) =>
-        cleanedFile = @cleanFile(file)
-        cleanedCurrent == cleanedFile
-      filteredMedia.length
+    if current
+      cleanedCurrent = @cleanFile(current)
+      @currentEpisode = _.find @playlist, (episode) =>
+        episode.deactivate()
+        filteredMedia = _.filter episode.media, (file) =>
+          cleanedFile = @cleanFile(file)
+          cleanedCurrent == cleanedFile
+        filteredMedia.length
+    else
+      @currentEpisode = @playlist[0]
     @currentEpisode.activate()
 
   cleanFile: (file) ->
@@ -110,14 +113,14 @@ class Playlist extends Extension
     return if (currentIndex + 1) > @playlist.length
 
     prevItem = @playlist[currentIndex + 1]
-    @playItem(prevItem)
+    @playItem(prevItem.episode)
 
   playNext: () =>
     currentIndex = @currentIndex()
     return if currentIndex == 0
 
     nextItem = @playlist[currentIndex - 1]
-    @playItem(nextItem)
+    @playItem(nextItem.episode)
 
   updateEpisodeData: (episode) ->
     @app.episode = episode
