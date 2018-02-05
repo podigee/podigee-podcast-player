@@ -89,6 +89,7 @@ class Playlist extends Extension
     else
       @currentEpisode = @playlist[0]
     @currentEpisode.activate()
+    @setSkippingAvailability()
 
   cleanFile: (file) ->
     file = file.split('?')[0]
@@ -111,7 +112,7 @@ class Playlist extends Extension
   playPrevious: () =>
     return if @isFirstEntry()
 
-    prevItem = @playlist[currentIndex + 1]
+    prevItem = @playlist[@currentIndex() + 1]
     @playItem(prevItem.episode)
 
   playNext: () =>
