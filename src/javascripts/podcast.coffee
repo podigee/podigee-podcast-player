@@ -14,6 +14,7 @@ class Podcast
     @subtitle = @attributes.subtitle
     @url = @attributes.url
     @connections = @attributes.connections
+    @language = @attributes.language
 
   forTheme: () ->
     {
