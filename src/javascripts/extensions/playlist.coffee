@@ -109,18 +109,30 @@ class Playlist extends Extension
     @app.initializeExtensions(this)
 
   playPrevious: () =>
-    currentIndex = @currentIndex()
-    return if (currentIndex + 1) > @playlist.length
+    return if @isFirstEntry()
 
     prevItem = @playlist[currentIndex + 1]
     @playItem(prevItem.episode)
 
   playNext: () =>
-    currentIndex = @currentIndex()
-    return if currentIndex == 0
+    return if @isLastEntry()
 
-    nextItem = @playlist[currentIndex - 1]
+    nextItem = @playlist[@currentIndex() - 1]
     @playItem(nextItem.episode)
+
+  isFirstEntry: () =>
+    (@currentIndex() + 1) > @playlist.length
+
+  isLastEntry: () =>
+    @currentIndex() == 0
+
+  setSkippingAvailability: () =>
+    @app.theme.skipBackwardElement.removeClass('disabled')
+    @app.theme.skipForwardElement.removeClass('disabled')
+    if @isLastEntry()
+      @app.theme.skipForwardElement.addClass('disabled')
+    if @isFirstEntry()
+      @app.theme.skipBackwardElement.addClass('disabled')
 
   updateEpisodeData: (episode) ->
     @app.episode = episode
