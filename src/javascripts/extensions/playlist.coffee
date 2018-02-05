@@ -137,8 +137,6 @@ class Playlist extends Extension
       @app.theme.skipForwardElement.addClass('disabled')
     if @isFirstEntry()
       @app.theme.skipBackwardElement.addClass('disabled')
-    nextItem = @playlist[currentIndex - 1]
-    @playItem(nextItem.episode)
 
   updateEpisodeData: (episode) ->
     @app.episode = episode
