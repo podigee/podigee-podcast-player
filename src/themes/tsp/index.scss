@@ -37,11 +37,20 @@
     overflow: hidden;
     padding: 12px 18px 12px 30px;
 
+    @media (max-width: $mobile-breakpoint) {
+      padding-left: 18px;
+      height: 80px;
+    }
+
     .podcast-title {
       font-size: 14px;
       font-weight: 300;
       line-height: 2em;
       text-transform: uppercase;
+
+      @media (max-width: $mobile-breakpoint) {
+        display: block;
+      }
     }
 
     .subscribe-button {
@@ -586,4 +595,19 @@
 .panels .share-social-links {
   height: auto;
   min-height: 48px;
+}
+
+.button-all-episodes {
+  border: 2px solid $highlight1;
+  float: right;
+  font-size: 10px;
+  margin-right: 10px;
+  padding: 3px 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 16px;
+
+  @media (max-width: $mobile-breakpoint) {
+    float: left;
+  }
 }
