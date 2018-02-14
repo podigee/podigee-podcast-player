@@ -91,46 +91,38 @@ $mobile-breakpoint: 521px;
   }
 
   .controls {
-    margin-bottom: -8px;
-    position: relative;
     text-align: center;
-    top: -8px;
   }
 
   .controls {
     button {
       position: relative;
-      left: 29px;
+      left: 26px;
     }
-  }
-
-  &.playing .controls {
-    margin-bottom: -12px;
   }
 
   button {
     background: transparent;
     border: 0;
     cursor: pointer;
-    font-family: "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
     outline: none;
     overflow: hidden;
+    padding: 0;
+
+    &:before {
+      content: '';
+      display: none;
+    }
 
     &.play-button {
       border: none;
       color: transparent;
-      height: 60px;
-      margin: 0;
+      height: 50px;
+      margin: 0 10px;
       padding: 0;
-      width: 60px;
+      width: 50px;
 
       .icon-pause-button {
-        display: none;
-        margin-left: 5px;
-      }
-
-      &:before {
-        content: '';
         display: none;
       }
     }
@@ -153,17 +145,9 @@ $mobile-breakpoint: 521px;
 
   .skip-backward-button,
   .skip-forward-button {
-    position: relative;
+    height: 30px;
     top: -10px;
-
-    &:before {
-      content: '';
-    }
-  }
-
-  &.playing .skip-backward-button,
-  &.playing .skip-forward-button {
-    top: -15px;
+    width: 30px;
   }
 
   .progress-bar {
@@ -357,6 +341,10 @@ $mobile-breakpoint: 521px;
 
     .episode-title {
       margin-top: 10px;
+    }
+
+    .cover-image {
+      top: 0;
     }
   }
 }
