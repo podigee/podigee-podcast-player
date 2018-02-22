@@ -294,6 +294,11 @@ $mobile-breakpoint: 521px;
       .podcast-title {
         text-align: center;
       }
+
+      .episode-title {
+        display: block;
+        text-align: center;
+      }
     }
 
     .episode-description {
