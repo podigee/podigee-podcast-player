@@ -267,7 +267,7 @@ $mobile-breakpoint: 521px;
 
 .podcast-player {
   @media (max-width: $mobile-breakpoint) {
-    padding: 30px 15px 0;
+    padding: 30px 15px;
 
     .main-player {
       margin-bottom: -5px;
@@ -292,6 +292,11 @@ $mobile-breakpoint: 521px;
       width: 100%;
 
       .podcast-title {
+        text-align: center;
+      }
+
+      .episode-title {
+        display: block;
         text-align: center;
       }
     }
