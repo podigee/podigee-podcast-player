@@ -41,7 +41,7 @@ $mobile-breakpoint: 521px;
   }
 
   .main-player {
-    margin-bottom: -24px;
+    margin-bottom: -34px;
   }
 
   .cover-image {
@@ -309,10 +309,6 @@ $mobile-breakpoint: 521px;
     .progress-bar {
       top: -15px;
       width: calc(100% - 84px);
-    }
-
-    .player-footer {
-      margin-top: 25px;
     }
   }
 }
