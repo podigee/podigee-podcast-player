@@ -1,5 +1,14 @@
 @import 'variables';
 
+@keyframes marquee {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 .podcast-player {
   &, *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -105,8 +114,17 @@
       font-weight: 600;
       margin-bottom: 3px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      position: relative;
       white-space: nowrap;
+      height: 22px;
+
+      .marquee {
+        animation: marquee 7s linear infinite alternate;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateX(50%);
+      }
     }
 
     .episode-subtitle {
