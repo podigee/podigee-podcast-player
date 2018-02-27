@@ -80,7 +80,6 @@ function removeMarqeeAnimation() {
 }
 
 window.addEventListener('resize', function() {
-  console.log('Resizing', checkForMarquee(), hasMarquee);
   if (checkForMarquee() === true && hasMarquee === false) {
     addMarqueeAnimation();
   } else if (checkForMarquee() === false && hasMarquee === true) {
