@@ -12,12 +12,16 @@
       <button class="play-button"></button>
     </div>
 
-    <div class="episode-basic-info">
-      <div class="episode-title">
-        <a class="marquee" pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
-        <span class="marquee" pp-unless="url" pp-html="title"></a>
+    <div id="marquee-container" class="episode-basic-info">
+      <div id="marquee" class="marquee">
+        <div id="marquee-content" class="marquee-content">
+          <div class="episode-title">
+            <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
+            <span pp-unless="url" pp-html="title"></a>
+          </div>
+          <div class="episode-subtitle" pp-html="subtitle"></div>
+        </div>
       </div>
-      <div class="episode-subtitle" pp-html="subtitle"></div>
     </div>
 
     <div class="buttons"></div>
@@ -35,3 +39,54 @@
 
   <div class="panels"></div>
 </div>
+
+<script type="text/javascript">
+"use strict";
+
+var marqueeContainer = document.getElementById('marquee-container');
+var marqueeElement = document.getElementById('marquee');
+var marqueeContent = document.getElementById('marquee-content');
+var hasMarquee = false;
+
+function addMarqueeAnimation() {
+  var newMarqueeElement = marqueeContent.cloneNode(true);
+
+  newMarqueeElement.id = 'marquee-content-clone';
+  marqueeElement.style.width = (marqueeContent.offsetWidth + 60) * 2 + 'px';
+  marqueeElement.appendChild(newMarqueeElement);
+  marqueeContainer.classList.add('animating');
+  hasMarquee = true;
+}
+
+function checkForMarquee() {
+  if (marqueeContent.offsetWidth > marqueeContainer.offsetWidth) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function init() {
+  if (checkForMarquee() === true && hasMarquee === false) {
+    addMarqueeAnimation();
+  }
+}
+
+function removeMarqeeAnimation() {
+  var marqueeClone = document.getElementById('marquee-content-clone');
+  marqueeClone.parentNode.removeChild(marqueeClone);
+  marqueeContainer.classList.remove('animating');
+  hasMarquee = false;
+}
+
+window.addEventListener('resize', function() {
+  console.log('Resizing', checkForMarquee(), hasMarquee);
+  if (checkForMarquee() === true && hasMarquee === false) {
+    addMarqueeAnimation();
+  } else if (checkForMarquee() === false && hasMarquee === true) {
+    removeMarqeeAnimation();
+  }
+
+});
+init();
+</script>

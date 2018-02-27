@@ -1,12 +1,8 @@
 @import 'variables';
 
 @keyframes marquee {
-  0% {
-    transform: translateX(50%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% + 60px)); }
 }
 
 .podcast-player {
@@ -103,37 +99,42 @@
   }
 
   .episode-basic-info {
-    max-height: 90px;
-    padding: 30px 110px 0 $default-padding;
+    height: 42px;
+    margin: 27px 0 0 100px;
     position: relative;
     overflow: hidden;
+    width: calc(100% - 340px);
 
     .episode-title {
       color: $highlight1;
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 3px;
-      overflow: hidden;
       position: relative;
       white-space: nowrap;
       height: 22px;
-
-      .marquee {
-        animation: marquee 7s linear infinite alternate;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        transform: translateX(50%);
-      }
     }
 
     .episode-subtitle {
       color: $default-color;
       font-size: 16px;
-      overflow: hidden;
-      text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+    .marquee {
+      position: absolute;
+      height: 100%;
+    }
+
+    &.animating .marquee {
+      animation: marquee 10s linear infinite;
+    }
+
+    .marquee-content {
+      float: left;
+      padding-right: 60px;
+    }
+
   }
 
   .cover-image {
@@ -407,6 +408,7 @@
       height: calc(100% - 12px);
       overflow-y: auto;
       padding: 0 12px;
+      line-height: 1.5;
 
       > h3:first-child {
         display: none;
@@ -504,8 +506,8 @@
     }
 
     .episode-basic-info {
-      padding-top: 10px;
-      padding-right: 12px;
+      margin: 0 20px;
+      width: auto;
 
       .episode-title {
         font-size: 16px;
