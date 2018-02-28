@@ -86,14 +86,17 @@ $mobile-breakpoint: 521px;
   }
 
   .episode-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: .35px;
     margin: 0 0 14px;
   }
 
   .controls {
+    margin-bottom: 10px;
     text-align: center;
+    position: relative;
+    top: 10px;
   }
 
   .controls {
@@ -355,6 +358,14 @@ $mobile-breakpoint: 521px;
 
     .cover-image {
       top: 0;
+    }
+
+    .progress-bar {
+      margin-top: 15px;
+    }
+
+    .controls {
+      margin-bottom: 15px;
     }
   }
 }
