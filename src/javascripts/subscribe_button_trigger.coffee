@@ -12,7 +12,6 @@ class SubscribeButtonTrigger
     @scriptTag.src = "https://cdn.podlove.org/subscribe-button/javascripts/app.js"
     @scriptTag.dataset.language = 'en'
     @scriptTag.dataset.size = 'medium'
-    @scriptTag.setAttribute('data-json-data', 'podcastData_id_adeba7cb_390a_4a57_80a0_d79c7a9b9c1e')
     @scriptTag.setAttribute('data-hide', true)
     @scriptTag.setAttribute('data-buttonid', @id)
 
