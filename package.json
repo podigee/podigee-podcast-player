@@ -56,7 +56,7 @@
     "elasticlunr": "^0.9.0",
     "jquery": "^2.2.4",
     "lodash": "^4.17.4",
-    "rivets": "^0.8.0",
+    "rivets": "^0.9.6",
     "sightglass": "^0.2.4",
     "vtt.js": "github:mozilla/vtt.js#f823de8"
   }
