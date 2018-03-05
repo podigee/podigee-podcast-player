@@ -63,7 +63,7 @@ class Configuration
     )
 
   setConfigurations: (viaJSON) =>
-    return unless @configuration.podcast
+    return unless @configuration.episode
     @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
     @app.extensionOptions = @configuration.extensions || {}
