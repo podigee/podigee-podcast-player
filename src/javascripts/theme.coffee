@@ -3,11 +3,13 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+CustomStyles = require('./custom_styles.coffee')
 SubscribeButton = require('./subscribe_button.coffee')
 
 class Theme
   constructor: (@app) ->
     @loadThemeFiles()
+    @addCustomStyles()
 
   context: =>
     _.merge(@app.episode, @app.podcast.forTheme())
@@ -27,18 +29,20 @@ class Theme
   updateView: () =>
     @view.update(@context())
 
+  addCustomStyles: () =>
+    tag = new CustomStyles(@app.options.customStyle).toStyleTag()
+    return unless tag
+    $('head').append(tag)
+
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
-    themeHtml = @app.options.themeHtml
-    themeCss = @app.options.themeCss
+    themeHtml = @app.options.themeHtml || theme.html
+    themeCss = @app.options.themeCss || theme.css
     if themeHtml && themeCss
       @loadCss(themeCss)
       @loadHtml(themeHtml)
     else if theme.constructor == String
       @loadInternalTheme(theme)
-    else
-      @loadCss(@app.options.themeCss || theme.css)
-      @loadHtml(@app.options.themeHtml || theme.html)
 
   loadInternalTheme: (name) =>
     pathPrefix = "themes/#{name}/index"

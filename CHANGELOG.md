@@ -1,5 +1,11 @@
 # Changelog
 
+## 2018-03-09
+
+### Added
+
+- It is now possible to configure the colors of the default theme (not stable yet!)
+
 ## 2018-03-08
 
 ### Fixes
