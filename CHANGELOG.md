@@ -1,5 +1,150 @@
 # Changelog
 
+## 2018-03-09
+
+### Added
+
+- It is now possible to configure the colors of the default theme (not stable yet!)
+
+## 2018-03-08
+
+### Fixes
+
+- fix regression when checking for empty configurations
+
+## 2018-03-01
+
+### Fixes
+
+- fix error when receiving empty configuration
+
+## 2018-02-06
+
+### Fixes
+
+- fix displaying links in chaptermarks and playlist
+
+## 2018-02-01
+
+### Added
+
+- playlist skip buttons can be disabled now
+
+### Fixes
+
+- pass language to subscribe button when opening popup
+- fix progress bar not updating when episode changes from playlist
+
+## 2018-02-01
+
+### Fixes
+
+- fix skipping between playlist entries
+
+## 2018-01-30
+
+### Fixes
+
+- catch error when parsing URL for deeplinks
+
+## 2018-01-26
+
+### Fixes
+
+- fix subscribe button popup opening multiple times
+
+## 2018-01-19
+
+### Added
+
+- support for loading playlist information only when it is needed
+
+## 2018-01-18
+
+### Added
+
+- support for podlove subscribe button
+
+## 2018-01-17
+
+### Fixes
+
+- fix touch detection on progress bar
+- fix updating progress bar time
+
+### Changes
+
+- add more podcast information for use in themes
+
+## 2018-01-12
+
+### Fixes
+
+- better handling of current time when the episode is not yet fully loaded
+
+### Changes
+
+- improved touch support for progress bar scrubbing
+
+### Removed
+
+- non-working waveform extension was removed
+
+## 2018-01-04
+
+### Added
+
+- support for easy translation of the interface
+- podcast subtitle can be used in themes now
+
+### Changes
+
+- use a larger click target for scrubbing (works better on mobile)
+
+## 2017-10-06
+
+### Fixes
+
+- fix loading the player when using the browser back button
+
+## 2017-09-17
+
+### Fixes
+
+- use playlist order as it is in the configuration and re-sort it
+
+## 2017-09-08
+
+### Changes
+
+- switch to `preload=none` on the audio tag for all browsers except IE<10
+- split embed script and actual player script for faster loading times
+- update dependencies
+
+### Fixes
+
+- we are IE 9 compatible now
+- problem with loading playlist from the podcast feed
+
+## 2017-09-07
+
+### Fixes
+
+- catch JSON parsing errors when injecting configuration into the iframe
+
+## 2017-08-31
+
+### Fixes
+
+- better calculcation of cursor position when scrubbing
+
+## 2017-07-11
+
+### Fixes
+
+- regression in iframe resizer
+- prevent configuration loading twice
+
 ## 2017-07-10
 
 ### Removed
