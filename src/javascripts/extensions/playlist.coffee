@@ -159,7 +159,7 @@ class Playlist extends Extension
 
   buttonHtml: ->
     """
-    <button class="playlist-button" title="#{@t('playlist.show')}"></button>
+    <button class="playlist-button" title="#{@t('playlist.show')}" aria-label="#{@t('playlist.show')}"></button>
     """
 
   panelHtml: ->

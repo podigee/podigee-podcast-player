@@ -100,7 +100,7 @@ class ChapterMarks extends Extension
 
   buttonHtml: =>
     """
-    <button class="chaptermarks-button" title="#{@t('chaptermarks.show')}"></button>
+    <button class="chaptermarks-button" title="#{@t('chaptermarks.show')}" aria-label="#{@t('chaptermarks.show')}"></button>
     """
 
   panelHtml: =>

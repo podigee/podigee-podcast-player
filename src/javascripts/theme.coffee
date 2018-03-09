@@ -16,6 +16,11 @@ class Theme
     {
       showSubscribeBar: options?.disabled == false,
       translations: {
+        playPause: @t('theme.playPause'),
+        backward: @t('theme.backward'),
+        forward: @t('theme.forward'),
+        speed: @t('theme.changePlaybackSpeed'),
+
         allEpisodes: @t('subscribeBar.allEpisodes'),
         podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
         podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),

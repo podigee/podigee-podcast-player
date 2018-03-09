@@ -69,6 +69,11 @@ class I18n
         episode: 'Episode'
         episode_url: 'Share link to episode'
         start_at: 'Start at'
+      theme:
+        playPause: 'Play/Pause'
+        backward: 'Backward 10s'
+        forward: 'Forward 30s'
+        changePlaybackSpeed: 'Change Playback Speed'
       transcript:
         search: 'Search in transcript'
         show: 'Show transcription'
@@ -101,6 +106,11 @@ class I18n
         episode: 'Episode'
         episode_url: 'Link zur Episode teilen'
         start_at: 'Wiedergabe ab'
+      theme:
+        playPause: 'Play/Pause'
+        backward: '10s zurück'
+        forward: '30s vorwärts'
+        changePlaybackSpeed: 'Abspielgeschwindigkeit ändern'
       transcript:
         search: 'Transkript durchsuchen'
         show: 'Transkript anzeigen'
