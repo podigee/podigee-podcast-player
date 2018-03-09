@@ -73,6 +73,12 @@ class I18n
         search: 'Search in transcript'
         show: 'Show transcription'
         title: 'Transcription'
+      subscribeBar:
+        allEpisodes: 'All Episodes'
+        podcastOnItunes: 'View Podcast on iTunes'
+        podcastOnSpotify: 'View Podcast on Spotify'
+        podcastOnDeezer: 'View Podcast on Deezer'
+        subscribe: 'Subscribe'
 
     'de-DE':
       chaptermarks:
@@ -99,6 +105,11 @@ class I18n
         search: 'Transkript durchsuchen'
         show: 'Transkript anzeigen'
         title: 'Transkript'
-
+      subscribeBar:
+        allEpisodes: 'Alle Episoden'
+        podcastOnItunes: 'Podcast auf iTunes ansehen'
+        podcastOnSpotify: 'Podcast auf Spotify ansehen'
+        podcastOnDeezer: 'Podcast auf Deezer ansehen'
+        subscribe: 'Abonnieren'
 
 module.exports = I18n
