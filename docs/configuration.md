@@ -27,6 +27,7 @@ The player is either configured via a JavaScript object present in the same HTML
     "EpisodeInfo": {},
     "Playlist": {},
     "Transcript": {},
+    "SubscribeBar": {disbabled: true}
   },
   "podcast": {
     "title": "Podcast Title",
@@ -154,6 +155,8 @@ At the moment extensions only have one option to disable them. The keys for the 
 `extensions.Playlist`
 
 `extensions.Share`
+
+`extensions.SubscribeBar`
 
 `extensions.Transcript`
 

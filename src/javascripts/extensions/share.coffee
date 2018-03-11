@@ -91,7 +91,7 @@ class Share extends Extension
 
   buttonHtml: ->
     """
-    <button class="share-button" title="#{@t('share.episode_url')}"></button>
+    <button class="share-button" title="#{@t('share.episode_url')}" aria-label="#{@t('share.episode_url')}"></button>
     """
 
   panelHtml: ->

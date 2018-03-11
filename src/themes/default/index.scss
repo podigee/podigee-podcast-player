@@ -162,13 +162,13 @@
     &:after {
       animation: move 2s linear infinite;
       background-image: linear-gradient(
-        -45deg, 
-        rgba(255, 255, 255, .2) 25%, 
-        transparent 25%, 
-        transparent 50%, 
-        rgba(255, 255, 255, .2) 50%, 
-        rgba(255, 255, 255, .2) 75%, 
-        transparent 75%, 
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
         transparent
       );
       background-size: 50px 50px;
@@ -251,7 +251,7 @@
           cursor: pointer;
           line-height: 30px;
           list-style: none;
-          padding: 0 5px;
+          padding: 0 25px 0 5px;
           position: relative;
 
           &+li {
@@ -287,6 +287,8 @@
             margin-left: 10px;
           }
 
+          .chaptermark-href
+
           .episode-link,
           .playlist-episode-number {
             display: none;
@@ -297,11 +299,18 @@
           }
 
           a {
-            color: $highlight2;
             font-size: 16px;
-            right: 5px;
+            height: 13px;
+            padding: 0;
             position: absolute;
-            top: 5px;
+            right: 5px;
+            top: 3px;
+            width: 13px;
+
+            svg {
+              color: $default-color;
+              fill: currentColor;
+            }
           }
         }
       }
@@ -310,11 +319,6 @@
     .playlist ul li {
       span {
         margin-left: 0;
-      }
-
-      a {
-        padding: 0 5px;
-        position: static;
       }
     }
 
@@ -399,6 +403,53 @@
           }
         }
       }
+    }
+  }
+
+  .footer {
+    padding: 12px;
+    position: relative;
+    width: 100%;
+
+    .subscribe-button {
+      background: transparent;
+      border: 1px solid;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      outline: none;
+      padding: 4px 6px;
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        fill: currentColor;
+        vertical-align: middle;
+      }
+    }
+
+    .all-episodes-link {
+      float: right;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      padding: 6px 6px;
+      text-decoration: none;
     }
   }
 }

@@ -16,6 +16,7 @@ class Player
     @loadFile()
     @attachEvents()
     @app.init(self)
+    @setInitialTime()
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -84,18 +85,25 @@ class Player
     $(@media).on('ended', @app.mediaEnded)
 
   updateTime: =>
-    @app.updateTime()
     @setCurrentTime()
     @checkStopTime()
 
   setInitialTime: =>
     deeplink = new DeeplinkParser(@app.options.parentLocationHash)
-    @media.currentTime = deeplink.startTime if (deeplink.startTime > 0)
+    if deeplink.startTime > 0
+      @currentTimeInSeconds = deeplink.startTime
+      @media.currentTime = deeplink.startTime
+      @app.updateTime(@currentTimeInSeconds)
     @stopTime = deeplink.endTime if deeplink.endTime?
 
-  setCurrentTime: =>
-    @currentTimeInSeconds = @media.currentTime
+  setCurrentTime: (time) =>
+    if time
+      @currentTimeInSeconds = time
+      @media.currentTime = time
+    else
+      @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+    @app.updateTime(@currentTimeInSeconds)
 
   checkStopTime: () =>
     return unless @stopTime?
@@ -106,6 +114,7 @@ class Player
   setDuration: =>
     if @app.episode.duration
       @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      @duration = @app.episode.duration
       return
 
     clear = -> window.clearInterval(interval)
@@ -113,6 +122,7 @@ class Player
     interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
       @app.episode.duration = @media.duration
+      @duration = @media.duration
       @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
       clear()
     ), 500
@@ -128,8 +138,15 @@ class Player
 
   play: () ->
     return unless @media.paused
-    if @media.readyState < 2
+    if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
+    if @media.readyState < 1 # has metadata available
+      if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
+        setTime = () =>
+          @media.currentTime = @currentTimeInSeconds
+          $(@media).off('loadedmetadata', setTime)
+
+        $(@media).on('loadedmetadata', setTime)
     @media.play()
     @playing = true
     @app.togglePlayState()

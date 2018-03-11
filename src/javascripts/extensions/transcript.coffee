@@ -135,7 +135,7 @@ class Transcript extends Extension
   bindEvents: =>
     $(@app.player.media).on('timeupdate', @setActiveLine)
     @panel.find('li').click (event) =>
-      @app.player.media.currentTime = event.currentTarget.dataset.timestamp
+      @app.player.setCurrentTime(event.currentTarget.dataset.timestamp)
 
     @search.initInterface(this, @panel)
 
@@ -176,7 +176,7 @@ class Transcript extends Extension
 
   buttonHtml: ->
     """
-    <button class="transcript-button" title="#{@t('transcript.show')}"></button>
+    <button class="transcript-button" title="#{@t('transcript.show')}" aria-label="#{@t('transcript.show')}"></button>
     """
 
   panelHtml: ->
