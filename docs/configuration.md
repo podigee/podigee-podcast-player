@@ -27,7 +27,7 @@ The player is either configured via a JavaScript object present in the same HTML
     "EpisodeInfo": {},
     "Playlist": {},
     "Transcript": {},
-    "SubscribeBar": {disbabled: true}
+    "SubscribeBar": {disabled: true}
   },
   "podcast": {
     "title": "Podcast Title",
