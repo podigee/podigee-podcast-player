@@ -1,5 +1,11 @@
 # Changelog
 
+## 2018-03-13
+
+### Fixes
+
+- fix umlauts in episode title being cut off in Firefox
+
 ## 2018-03-09
 
 ### Added
