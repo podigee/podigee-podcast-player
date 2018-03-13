@@ -85,6 +85,16 @@ class CustomStyles
       border-color: #{@text};
       color: #{@text};
     }
+
+    .podcast-player .footer button {
+      border-color: #{@primary};
+      color: #{@primary};
+    }
+
+    .podcast-player .footer button:hover {
+      border-color: #{@primaryHover};
+      color: #{@primaryHover};
+    }
     "
 
   buildColors: () =>

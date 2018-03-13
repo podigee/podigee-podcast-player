@@ -5,6 +5,8 @@
 ### Added
 
 - It is now possible to configure the colors of the default theme (not stable yet!)
+- Added subscribe bar (including subscribe button) to default theme
+- Added accessibility labels to buttons
 
 ## 2018-03-08
 

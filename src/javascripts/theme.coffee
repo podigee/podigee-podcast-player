@@ -11,8 +11,29 @@ class Theme
     @loadThemeFiles()
     @addCustomStyles()
 
+  themeConfig: =>
+    options = @app.extensionOptions.SubscribeBar
+    {
+      showSubscribeBar: options?.disabled == false,
+      translations: {
+        playPause: @t('theme.playPause'),
+        backward: @t('theme.backward'),
+        forward: @t('theme.forward'),
+        speed: @t('theme.changePlaybackSpeed'),
+
+        allEpisodes: @t('subscribeBar.allEpisodes'),
+        podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
+        podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
+        podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
+        subscribe: @t('subscribeBar.subscribe')
+      }
+    }
+
   context: =>
-    _.merge(@app.episode, @app.podcast.forTheme())
+    _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+
+  t: (key) ->
+    @app.i18n.t(key)
 
   html: null
   render: =>
