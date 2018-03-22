@@ -45,6 +45,7 @@
       color: $highlight1;
       font-size: 18px;
       font-weight: 600;
+      line-height: 1.4em;
       margin-bottom: 3px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -403,6 +404,53 @@
           }
         }
       }
+    }
+  }
+
+  .footer {
+    padding: 12px;
+    position: relative;
+    width: 100%;
+
+    .subscribe-button {
+      background: transparent;
+      border: 1px solid;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      outline: none;
+      padding: 4px 6px;
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        fill: currentColor;
+        vertical-align: middle;
+      }
+    }
+
+    .all-episodes-link {
+      float: right;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      padding: 6px 6px;
+      text-decoration: none;
     }
   }
 }

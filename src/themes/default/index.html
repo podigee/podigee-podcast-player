@@ -5,21 +5,21 @@
     <img class="cover-image" pp-src="coverUrl" />
 
     <div class="controls">
-      <button class="play-button"></button>
+      <button class="play-button" pp-aria-label="translations.playPause" pp-title="translations.playPause"></button>
     </div>
 
     <div class="episode-basic-info">
       <div class="episode-title">
         <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
-        <span pp-unless="url" pp-html="title"></a>
+        <span pp-unless="url" pp-html="title"></span>
       </div>
       <div class="episode-subtitle" pp-html="subtitle"></div>
     </div>
 
     <div class="controls-advanced">
-      <button class="backward-button" title="Backward 10s"></button>
-      <button class="forward-button" title="Forward 30s"></button>
-      <button class="speed-toggle" title="Playback speed">1x</button>
+      <button class="backward-button" pp-title="translations.backward" pp-aria-label="translations.backward"></button>
+      <button class="forward-button" pp-title="translations.forward" pp-aria-label="translations.forward"></button>
+      <button class="speed-toggle" pp-title="translations.changePlaybackSpeed" pp-aria-label="translations.changePlaybackSpeed"></button>
     </div>
 
     <div class="buttons"></div>
@@ -28,4 +28,30 @@
   </div>
 
   <div class="panels"></div>
+
+  <div class="footer" pp-if="showSubscribeBar">
+    <button class="subscribe-button" pp-html="translations.subscribe" pp-aria-label="translations.subscribe"></button>
+
+    <ul class="podcast-connections-items">
+      <li class="podcast-connections-item" pp-if="podcastConnections.itunes">
+        <a pp-href="podcastConnections.itunes" pp-title="translations.podcastOnItunes" pp-aria-label="translations.podcastOnItunes" target="_parent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="16" viewBox="0 0 13 16" preserveAspectRatio="xMinYMin meet" role="img" ><path d="M12.993 12.288c.103 1.362-.932 2.6-2.317 2.769-1.383.17-2.593-.797-2.699-2.158-.106-1.358.935-2.599 2.317-2.768.438-.053.856.006 1.23.156v-6.68L5.027 4.8v8.348c-.01.023-.004.046-.004.069.106 1.361-.931 2.598-2.317 2.768-1.386.17-2.592-.796-2.699-2.155-.106-1.36.932-2.602 2.318-2.768.437-.056.855.006 1.23.157V1.593L12.98.003l.01 12.214c0 .03.003.049.003.071z" fill-rule="nonzero"></path></svg>
+        </a>
+      </li>
+      <li class="podcast-connections-item" pp-if="podcastConnections.spotify">
+        <a pp-href="podcastConnections.spotify" pp-title="translations.podcastOnSpotify" pp-aria-label="translations.podcastOnSpotify" target="_parent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" preserveAspectRatio="xMinYMin meet" role="img"><path d="M12.472 11.975c0-.236-.11-.425-.33-.564-1.425-.848-3.075-1.273-4.948-1.273-.982 0-2.04.124-3.176.376-.311.066-.465.258-.465.576 0 .147.05.274.149.382.099.107.23.16.392.16.036 0 .173-.029.41-.088.972-.2 1.87-.298 2.688-.298 1.667 0 3.133.38 4.394 1.14.14.081.262.121.366.121.14 0 .262-.05.366-.149a.507.507 0 0 0 .154-.383zm1.064-2.379a.74.74 0 0 0-.387-.674C11.4 7.88 9.378 7.36 7.084 7.36c-1.129 0-2.246.155-3.353.465-.354.096-.53.332-.53.708 0 .184.064.342.194.47a.643.643 0 0 0 .47.194c.052 0 .187-.03.41-.088.9-.243 1.826-.366 2.777-.366 2.059 0 3.86.458 5.401 1.372.177.095.318.144.42.144a.636.636 0 0 0 .47-.194.638.638 0 0 0 .193-.469zM14.73 6.85a.837.837 0 0 0-.442-.775c-.93-.54-2.01-.947-3.242-1.223a17.219 17.219 0 0 0-3.796-.415c-1.506 0-2.848.174-4.028.52a.88.88 0 0 0-.427.284c-.114.137-.171.315-.171.536 0 .229.076.42.227.575.15.155.342.233.57.233.082 0 .23-.03.443-.089.982-.272 2.114-.409 3.398-.409 1.173 0 2.316.125 3.426.376 1.11.252 2.045.602 2.805 1.052a.894.894 0 0 0 .443.133c.213 0 .4-.076.558-.227a.763.763 0 0 0 .236-.57zM17 8.5a8.32 8.32 0 0 1-1.14 4.267 8.476 8.476 0 0 1-3.093 3.093A8.32 8.32 0 0 1 8.5 17a8.32 8.32 0 0 1-4.267-1.14 8.476 8.476 0 0 1-3.093-3.093A8.32 8.32 0 0 1 0 8.5a8.32 8.32 0 0 1 1.14-4.267A8.476 8.476 0 0 1 4.233 1.14 8.32 8.32 0 0 1 8.5 0a8.32 8.32 0 0 1 4.267 1.14 8.476 8.476 0 0 1 3.093 3.093A8.32 8.32 0 0 1 17 8.5z" fill-rule="nonzero"></path></svg>
+        </a>
+      </li>
+      <li class="podcast-connections-item" pp-if="podcastConnections.deezer">
+        <a pp-href="podcastConnections.deezer" pp-title="translations.podcastOnDeezer" pp-aria-label="translations.podcastOnDeezer" target="_parent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" preserveAspectRatio="xMinYMin meet" role="img"><path d="M19.623 24.927h5.833v-1.767h-5.836v1.767h0.003zM6.543 24.927h5.831v-1.767h-5.832v1.767h0.005zM0 24.927h5.833v-1.767h-5.833v1.767zM13.080 24.927h5.84v-1.767h-5.84v1.767zM26.167 24.927h5.833v-1.767h-5.833v1.767zM26.167 22.628h5.833v-1.76h-5.833v1.773zM13.081 22.628h5.853v-1.76h-5.855v1.773zM0.001 22.628h5.84v-1.76h-5.841v1.773zM6.548 22.628h5.84v-1.76h-5.841v1.787l0.003-0.013zM19.655 22.628h5.84v-1.76h-5.867v1.787l0.023-0.013zM19.655 20.335h5.84v-1.76h-5.867v1.773h0.023zM6.581 20.335h5.813v-1.76h-5.848v1.773h0.021zM0.040 20.335h5.813v-1.76h-5.853v1.773h0.021zM13.12 20.335h5.84v-1.76h-5.867v1.773h0.021zM26.22 20.335h5.78v-1.76h-5.833v1.773h0.036zM26.22 18.041h5.78v-1.775h-5.833v1.768h0.036zM13.14 18.041h5.817v-1.775h-5.867v1.768h0.044zM0.060 18.041h5.807v-1.775h-5.867v1.768h0.040zM19.7 18.041h5.84v-1.775h-5.907v1.768h0.059zM19.7 15.748h5.84v-1.773h-5.907v1.76h0.059zM0.060 15.748h5.807v-1.76h-5.867v1.76h0.040zM13.14 15.748h5.84v-1.76h-5.9v1.76h0.043zM26.22 15.748h5.78v-1.773h-5.833v1.771l0.036-0.003zM13.080 13.44h5.84v-1.768h-5.84v1.768zM26.167 13.437h5.833v-1.767h-5.833v1.767zM13.080 11.14h5.84v-1.769h-5.84v1.769zM26.167 11.14h5.833v-1.769h-5.833v1.769zM26.167 8.84h5.833v-1.768h-5.833v1.768z"></path></svg>
+        </a>
+      </li>
+    </ul>
+    <a class="all-episodes-link" pp-href="podcastUrl" target="_blank" pp-if="podcastUrl" pp-title="translations.allEpisodes" pp-aria-label="translations.allEpisodes">
+      { translations.allEpisodes }
+      &rsaquo;
+    </a>
+  </div>
 </div>

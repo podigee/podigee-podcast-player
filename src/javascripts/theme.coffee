@@ -3,14 +3,37 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+CustomStyles = require('./custom_styles.coffee')
 SubscribeButton = require('./subscribe_button.coffee')
 
 class Theme
   constructor: (@app) ->
     @loadThemeFiles()
+    @addCustomStyles()
+
+  themeConfig: =>
+    options = @app.extensionOptions.SubscribeBar
+    {
+      showSubscribeBar: options?.disabled == false,
+      translations: {
+        playPause: @t('theme.playPause'),
+        backward: @t('theme.backward'),
+        forward: @t('theme.forward'),
+        speed: @t('theme.changePlaybackSpeed'),
+
+        allEpisodes: @t('subscribeBar.allEpisodes'),
+        podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
+        podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
+        podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
+        subscribe: @t('subscribeBar.subscribe')
+      }
+    }
 
   context: =>
-    _.merge(@app.episode, @app.podcast.forTheme())
+    _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+
+  t: (key) ->
+    @app.i18n.t(key)
 
   html: null
   render: =>
@@ -27,18 +50,20 @@ class Theme
   updateView: () =>
     @view.update(@context())
 
+  addCustomStyles: () =>
+    tag = new CustomStyles(@app.options.customStyle).toStyleTag()
+    return unless tag
+    $('head').append(tag)
+
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
-    themeHtml = @app.options.themeHtml
-    themeCss = @app.options.themeCss
+    themeHtml = @app.options.themeHtml || theme.html
+    themeCss = @app.options.themeCss || theme.css
     if themeHtml && themeCss
       @loadCss(themeCss)
       @loadHtml(themeHtml)
     else if theme.constructor == String
       @loadInternalTheme(theme)
-    else
-      @loadCss(@app.options.themeCss || theme.css)
-      @loadHtml(@app.options.themeHtml || theme.html)
 
   loadInternalTheme: (name) =>
     pathPrefix = "themes/#{name}/index"
