@@ -176,7 +176,7 @@ class Transcript extends Extension
 
   buttonHtml: ->
     """
-    <button class="transcript-button" title="#{@t('transcript.show')}"></button>
+    <button class="transcript-button" title="#{@t('transcript.show')}" aria-label="#{@t('transcript.show')}"></button>
     """
 
   panelHtml: ->

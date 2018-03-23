@@ -33,7 +33,7 @@ class EpisodeInfo extends Extension
 
   buttonHtml: ->
     """
-    <button class="episode-info-button" title="#{@t('episode_info.more_info')}"></button>
+    <button class="episode-info-button" title="#{@t('episode_info.more_info')}" aria-label="#{@t('episode_info.more_info')}"></button>
     """
 
   panelHtml: ->
