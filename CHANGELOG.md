@@ -1,5 +1,11 @@
 # Changelog
 
+## 2018-03-23
+
+### Changes
+
+- Links in episode description are rewritten to always open in parent window
+
 ## 2018-03-13
 
 ### Fixes
