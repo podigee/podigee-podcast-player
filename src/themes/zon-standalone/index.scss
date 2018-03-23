@@ -34,7 +34,7 @@ $mobile-breakpoint: 521px;
   background-color: $background;
   color: $black;
   font-family: "TabletGothic", "Helvetica Neue", Helvetica, Arial, FreeSans, sans-serif;
-  padding: 20px;
+  padding: 22px;
 
   .hidden {
     display: none;
@@ -63,6 +63,8 @@ $mobile-breakpoint: 521px;
       color: #535560;
       font-size: 13px;
       letter-spacing: 1px;
+      line-height: 1em;
+      margin-bottom: 12px;
       overflow: hidden;
       text-overflow: ellipsis;
       text-transform: uppercase;
@@ -74,7 +76,7 @@ $mobile-breakpoint: 521px;
       display: inline-block;
       font-size: 20px;
       font-weight: bold;
-      margin-top: 2px;
+      line-height: 1em;
       overflow: hidden;
     }
 
@@ -96,10 +98,30 @@ $mobile-breakpoint: 521px;
   }
 
   .episode-description {
-    color: #535560;
-    font-size: 14px;
-    margin: -5px 0 35px 75px;
+    color: #44444c;
+    font-size: 15px;
+    margin: -48px 0 35px 75px;
     width: calc(100% - 176px);
+
+    p {
+      line-height: 22px;
+      margin-bottom: 12px;
+    }
+
+    a {
+      border-bottom: 1px solid #44444c;
+      color: #44444c;
+      text-decoration: none;
+    }
+
+    a:hover {
+      border-color: #252525;
+      color: #252525;
+    }
+
+    a:active {
+      border-bottom: 1px solid #99999c;
+    }
   }
 
   button {
@@ -274,6 +296,7 @@ $mobile-breakpoint: 521px;
     }
 
     .cover-image {
+      box-shadow: 0 10px 24px 0 rgba(0, 0, 0, .05);
       display: block;
       float: none;
       height: auto;
@@ -287,22 +310,25 @@ $mobile-breakpoint: 521px;
     }
 
     .episode-basic-info {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       margin-left: 0;
       width: 100%;
 
       .podcast-title {
+        margin-bottom: 30px;
         text-align: center;
       }
 
       .episode-title {
         display: block;
+        line-height: 1em;
+        margin-top: 0;
         text-align: center;
       }
     }
 
     .episode-description {
-      margin: 10px 0 0;
+      margin: 20px 0 0;
       width: 100%;
     }
 
