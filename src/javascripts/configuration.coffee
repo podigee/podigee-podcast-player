@@ -111,6 +111,11 @@ class Configuration
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
     locale: 'en-US'
+    theme: 'default'
+    themeHtml: null
+    themeCss: null
+    customStyle: null
+    startPanel: null
   }
 
   configureTemplating: =>
