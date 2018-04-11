@@ -42,17 +42,17 @@ class CustomStyles
     }
 
     .podcast-player .controls .play-button {
-      border-color: #{@text};
-      color: #{@text};
+      border-color: #{@progressBar};
+      color: #{@progressBar};
     }
 
     .podcast-player .controls .play-button:hover {
-      border-color: #{@textHover};
-      color: #{@textHover};
+      border-color: #{@progressBarAlt};
+      color: #{@progressBarAlt};
     }
 
     .podcast-player .progress-bar .progress-bar-rail {
-      background: #{@text};
+      background: #{@progressBar};
     }
 
     .podcast-player .progress-bar-played {
@@ -60,7 +60,7 @@ class CustomStyles
     }
 
     .podcast-player .progress-bar-loaded {
-      background: #{@textHover};
+      background: #{@text};
     }
 
     .podcast-player .panels {
@@ -107,6 +107,8 @@ class CustomStyles
     else
       @getContrastColor(@background)
     @textHover = @getHoverColor(@text)
+    @progressBar = @getProgressColor(@textHover)
+    @progressBarAlt = @getHoverColor(@progressBar)
 
   getContrastColor: (color) ->
     color = color.clone()
@@ -127,5 +129,13 @@ class CustomStyles
       color.lighten(15)
     else
       color.darken(10)
+
+  getProgressColor: (color) ->
+    color = color.clone()
+    newColor = color.clone()
+    if color.getBrightness() < 50
+      color.darken(10)
+    else
+      color.lighten(30)
 
 module.exports = CustomStyles

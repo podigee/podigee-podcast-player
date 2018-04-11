@@ -142,7 +142,7 @@ gulp.task('themes', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('default', [
+gulp.task('build', [
   'stylesheets',
   'javascripts',
   'html',
@@ -150,6 +150,8 @@ gulp.task('default', [
   'fonts',
   'themes'
 ])
+
+gulp.task('default', ['build'])
 
 gulp.task('dev', [
   'stylesheets-dev',
