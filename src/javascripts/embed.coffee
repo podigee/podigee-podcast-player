@@ -38,7 +38,7 @@ class Iframe
     return hash.toString(16).substring(1)
 
   origin: () ->
-    scriptSrc = @elem.src
+    scriptSrc = @elem.src || @elem.getAttribute('src')
     unless window.location.protocol.match(/^https/)
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
@@ -85,7 +85,7 @@ class Iframe
 class Embed
   constructor: ->
     players = []
-    elems = document.querySelectorAll('script.podigee-podcast-player')
+    elems = document.querySelectorAll('script.podigee-podcast-player, div.podigee-podcast-player')
 
     return if elems.length == 0
 
