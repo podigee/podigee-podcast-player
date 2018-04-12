@@ -42,7 +42,7 @@ class EpisodeInfo extends Extension
       <h3>#{@t('episode_info.title')}</h3>
       <h3 class="episode-title" pp-html="title"></h3>
       <p class="episode-subtitle" pp-html="subtitle"></p>
-      <p class="episode-description" pp-html="description"></p>
+      <p class="episode-description" pp-html="description | description"></p>
     </div>
     """
 

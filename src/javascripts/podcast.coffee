@@ -30,7 +30,7 @@ class Podcast
     # has no episodes attribute at all
     return false unless @attributes.episodes
     # if the attribute is a string/URL we can fetch episodes later
-    return true unless Array.isArray(@attributes.epispdes)
+    return true unless Array.isArray(@attributes.episodes)
     # if it is an array of episodes or if a feed is defined
     @attributes.episodes.length || @feed?
 
