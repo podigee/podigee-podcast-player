@@ -73,10 +73,10 @@ $mobile-breakpoint: 521px;
     width: calc(100% - 150px);
 
     .podcast-title {
-      font-size: 24px;
+      font-size: 17px;
       font-weight: 400;
-      letter-spacing: .35px;
-      margin-bottom: 10px;
+      letter-spacing: .2px;
+      margin-bottom: 4px;
     }
 
     .podcast-subtitle {
@@ -86,9 +86,9 @@ $mobile-breakpoint: 521px;
   }
 
   .episode-title {
-    font-size: 36px;
+    font-size: 26px;
     font-weight: bold;
-    letter-spacing: .35px;
+    letter-spacing: .2px;
     margin: 0 0 14px;
   }
 
