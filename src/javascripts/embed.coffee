@@ -15,6 +15,10 @@ class Iframe
 
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
+    try
+      @configuration.customOptions = JSON.parse(@elem.getAttribute('data-options'))
+    catch
+      console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
     @url = "#{@origin()}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
 

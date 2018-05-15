@@ -26,8 +26,14 @@ class Theme
         podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
         podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
         subscribe: @t('subscribeBar.subscribe')
-      }
+      },
+      customOptions: @app.customOptions,
+      or: @orFunction
     }
+
+  # used in template to fall back to arg2 if arg1 is undefined or null
+  orFunction: (arg1, arg2) =>
+    arg1 || arg2
 
   context: =>
     _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
