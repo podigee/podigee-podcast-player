@@ -83,6 +83,13 @@ class PodigeePodcastPlayer
     return unless @player?
     if @player.playing
       @theme.addPlayingClass()
+      playerStartedData = JSON.stringify({
+        name: 'podigee',
+        id: @options.id,
+        listenTo: 'playerStarted',
+        event: 'started'
+      })
+      window.parent.postMessage(playerStartedData, '*');
     else
       @theme.removePlayingClass()
 
