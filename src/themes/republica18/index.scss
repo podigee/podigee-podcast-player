@@ -1,0 +1,532 @@
+$default-padding: 12px !default;
+$background-color: #fff !default;
+$default-color: rgb(0, 255, 133) !default;
+$light-grey: $default-color !default;
+$dark-grey: darken($default-color, 20%) !default;
+$highlight1: rgb(110, 110, 110) !default;
+$highlight2: $highlight1 !default;
+$transcript-highlight: $highlight1 !default;
+$transcript-search-highlight: $highlight1 !default;
+
+$mobile-breakpoint: 500px;
+
+.podcast-player {
+  &, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  background-color: $background-color;
+  color: #222;
+  font-family: Helvetica;
+  min-width: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 1px;
+
+  a {
+    color: $highlight1;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .main-player {
+    position: relative;
+  }
+
+  .episode-basic-info {
+    max-height: 90px;
+    padding: 23px 55px 0 12px;
+    position: relative;
+    overflow: hidden;
+
+    .episode-title {
+      color: $highlight1;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .episode-subtitle {
+      color: $highlight2;
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .cover-image {
+    float: right;
+    height: 90px;
+  }
+
+  .controls {
+    float: left;
+    height: 90px;
+
+    .play-button {
+      border: 3px solid $light-grey;
+      border-radius: 100px;
+      color: $highlight1;
+      font-size: 56px;
+      height: 70px;
+      margin: 10px 0 0 10px;
+      padding: 0;
+      width: 70px;
+    }
+  }
+
+  .controls-advanced {
+    bottom: 8px;
+    display: none;
+    left: 155px;
+    position: absolute;
+
+    button {
+      color: $dark-grey;
+      font-size: 18px;
+    }
+
+    button:hover {
+      color: $highlight1;
+    }
+
+    .speed-toggle {
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+      top: -3px;
+    }
+  }
+
+  &.playing .controls-advanced {
+    display: block;
+  }
+
+  .progress-bar {
+    clear: both;
+    overflow: hidden;
+
+    .progress-bar-time-played {
+      color: $dark-grey;
+      cursor: pointer;
+      display: none;
+      font-size: 14px;
+      left: 92px;
+      position: absolute;
+      text-align: left;
+      top: 71px;
+      width: 70px;
+    }
+
+    .progress-bar-time-played:hover {
+      color: $highlight1;
+    }
+
+    .progress-bar-rail {
+      background-color: $light-grey;
+      cursor: ew-resize;
+      min-height: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  &.playing .progress-bar .progress-bar-time-played {
+    display: block;
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $highlight2;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-loaded {
+    background-color: $dark-grey;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg, 
+        rgba(255, 255, 255, .2) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255, 255, 255, .2) 50%, 
+        rgba(255, 255, 255, .2) 75%, 
+        transparent 75%, 
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .buttons {
+    position: absolute;
+    right: 90px;
+    top: 68px;
+
+    button {
+      color: $dark-grey;
+      display: inline-block;
+      font-size: 16px;
+      text-align: center;
+      width: 26px;
+    }
+
+    button:hover,
+    button.button-active {
+      color: $highlight1;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
+
+  .panels {
+    color: $dark-grey;
+    font-size: 14px;
+    font-weight: 300;
+    height: auto;
+    line-height: 18px;
+
+    & > div {
+      height: 100%;
+      overflow: hidden;
+      padding: 0 0 0 $default-padding;
+      position: relative;
+    }
+
+    h3 {
+      margin: 12px 0;
+    }
+  }
+
+  .panels {
+    .chaptermarks,
+    .playlist {
+      height: 400px;
+
+      ul {
+        display: block;
+        height: calc(100% - 54px);
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
+
+        li {
+          background-color: none;
+          cursor: pointer;
+          line-height: 30px;
+          list-style: none;
+          padding: 0 5px;
+          position: relative;
+
+          &+li {
+            border-top: 1px solid $light-grey;
+          }
+
+          &:hover {
+            background-color: $light-grey;
+          }
+
+          &.active {
+            background-color: lighten($highlight2, 55%);
+          }
+
+          img {
+            float: left;
+            width: 30px;
+          }
+
+          span {
+            display: inline;
+            height: 100%;
+            margin: 0 0 0 10px;
+            overflow: hidden;
+          }
+
+          .chaptermark-start {
+            float: left;
+            margin-left: 0;
+          }
+
+          .chaptermark-image + .chaptermark-start {
+            margin-left: 10px;
+          }
+
+          .episode-link,
+          .playlist-episode-number {
+            display: none;
+          }
+
+          .playlist-episode-duration {
+            float: right;
+          }
+
+          a {
+            color: $highlight2;
+            font-size: 16px;
+            right: 5px;
+            position: absolute;
+            top: 5px;
+          }
+        }
+      }
+    }
+
+    .playlist ul li {
+      span {
+        margin-left: 0;
+      }
+
+      a {
+        padding: 0 5px;
+        position: static;
+      }
+    }
+
+    .episode-info {
+      font-size: 16px;
+      height: calc(100% - 12px);
+      overflow-y: auto;
+      padding: 0 12px;
+
+      .episode-title {
+        font-size: 22px;
+      }
+
+      .episode-subtitle {
+        font-size: 18px;
+        font-weight: 300;
+      }
+    }
+
+    .share {
+      padding: 12px;
+
+      .share-copy-url,
+      .share-embed-code {
+        background: transparent;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        color: rgb(77, 77, 77);
+        font-size: 20px;
+        outline: none;
+        padding: 4px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .transcript {
+      height: 400px;
+
+      h3 {
+        float: left;
+      }
+
+      .search,
+      .search-result {
+        display: inline-block;
+      }
+
+      .search {
+        float: right;
+        padding: 10px 15px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 40px);
+        position: absolute;
+        top: 6px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 54px);
+        list-style: none;
+        overflow-y: auto;
+        padding: 0 12px 0 0;
+        width: 100%;
+
+        li {
+          cursor: pointer;
+          font-size: 1.2em;
+          line-height: 1.4em;
+          margin-bottom: 8px;
+
+          &:hover,
+          &.active {
+            color: #222;
+          }
+
+          &.search-highlight > * {
+            background-color: $transcript-search-highlight;
+          }
+        }
+      }
+    }
+  }
+}
+
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+    .cover-image,
+    .podigee-logo {
+      display: none;
+    }
+
+    .episode-basic-info {
+      .episode-title {
+        font-size: 16px;
+      }
+
+      .episode-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    .controls {
+      height: 115px;
+      position: relative;
+    }
+
+    .controls-advanced {
+      bottom: 20px;
+      left: 0;
+      top: auto;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+      }
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: static;
+      text-align: right;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+        width: 35px;
+      }
+    }
+
+    .progress-bar {
+      .progress-bar-rail {
+        min-height: 20px;
+      }
+    }
+
+    &.playing .progress-bar .progress-bar-time-played {
+      display: none;
+    }
+
+    .panels .transcript {
+      h3 {
+        float: none;
+      }
+
+      .search {
+        display: block;
+        float: none;
+        overflow: hidden;
+        padding: 0 24px 0 0;
+        position: relative;
+      }
+
+      .search-input {
+        float: left;
+        padding-right: 100px;
+        width: 100%;
+      }
+
+      .search-result {
+        float: right;
+        position: absolute;
+        right: 44px;
+        top: 4px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 44px);
+        position: absolute;
+        top: -2px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 90px);
+      }
+    }
+  }
+
+  .podigee-logo {
+    background-image: url('data:image/png;base64,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');
+    background-size: cover;
+    height: 60px;
+    position: absolute;
+    right: 100px;
+    top: 5px;
+    width: 46px;
+  }
+}
+
+.podcast-player.mode-iframe {
+  @media (max-width: $mobile-breakpoint) {
+    .cover-image,
+    .podigee-logo {
+      display: none;
+    }
+
+    .buttons {
+      right: 0;
+    }
+  }
+}

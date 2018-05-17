@@ -68,6 +68,7 @@ class Configuration
 
     @app.extensionOptions = @configuration.extensions || {}
 
+    @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
