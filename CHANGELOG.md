@@ -1,5 +1,27 @@
 # Changelog
 
+## 2018-05-29
+
+### Fixes
+
+- Time jumping when trying to change the time display mode
+
+## 2018-05-15
+
+### Added
+
+- Allow passing custom options through an attribute on the script tag
+
+## 2018-04-11
+
+### Added
+
+- Allow using a div element as the marker for the position the player should be rendered
+
+### Fixes
+
+- Color calculation for progress bar
+
 ## 2018-03-23
 
 ### Changes
