@@ -30,7 +30,7 @@
   <div class="panels"></div>
 
   <div class="footer" pp-if="showSubscribeBar">
-    <button class="subscribe-button" pp-html="translations.subscribe" pp-aria-label="translations.subscribe"></button>
+    <button class="subscribe-button" pp-html="translations.subscribe" pp-aria-label="translations.subscribe" pp-if="showSubscribeButton"></button>
 
     <ul class="podcast-connections-items">
       <li class="podcast-connections-item" pp-if="podcastConnections.itunes">
@@ -49,7 +49,7 @@
         </a>
       </li>
     </ul>
-    <a class="all-episodes-link" pp-href="podcastUrl" target="_blank" pp-if="podcastUrl" pp-title="translations.allEpisodes" pp-aria-label="translations.allEpisodes">
+    <a class="all-episodes-link" pp-href="podcastUrl" target="_parent" pp-if="podcastUrl" pp-title="translations.allEpisodes" pp-aria-label="translations.allEpisodes">
       { translations.allEpisodes }
       &rsaquo;
     </a>

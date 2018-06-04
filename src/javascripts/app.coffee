@@ -172,5 +172,8 @@ class PodigeePodcastPlayer
   isInIframeMode: ->
     @options.iframeMode == 'iframe'
 
+  isInAMPMode: ->
+    @options.amp == true
+
 if window.inEmbed
   window.PodigeePodcastPlayer = PodigeePodcastPlayer
