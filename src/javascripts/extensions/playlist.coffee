@@ -119,7 +119,7 @@ class Playlist extends Extension
 
   renderPlaylistItems: (episodes) =>
     list = @panel.find('ul')
-    items = _.map @episodes, @buildPlaylistItem
+    items = _.map episodes, @buildPlaylistItem
     _.each items, (item) => list.append(item.render())
     list.scrollTop(100000)
 

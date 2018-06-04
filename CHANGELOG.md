@@ -1,5 +1,11 @@
 # Changelog
 
+## 2018-06-04
+
+### Added
+
+- Uses pagination for loading playlist from remote servers
+
 ## 2018-05-29
 
 ### Fixes
