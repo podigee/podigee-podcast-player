@@ -15,6 +15,7 @@ class Theme
     options = @app.extensionOptions.SubscribeBar
     {
       showSubscribeBar: options?.disabled == false,
+      showSubscribeButton: !@app.isInAMPMode(),
       translations: {
         playPause: @t('theme.playPause'),
         backward: @t('theme.backward'),

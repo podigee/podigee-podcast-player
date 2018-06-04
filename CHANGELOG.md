@@ -5,6 +5,7 @@
 ### Added
 
 - Uses pagination for loading playlist from remote servers
+- Improve AMP compatibility
 
 ## 2018-05-29
 
