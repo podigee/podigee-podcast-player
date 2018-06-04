@@ -28,7 +28,7 @@ class Podcast
 
   hasEpisodes: ->
     # has no episodes attribute at all
-    return false unless @attributes.episodes
+    return false unless @attributes.episodes || @feed
     # if the attribute is a string/URL we can fetch episodes later
     return true unless Array.isArray(@attributes.episodes)
     # if it is an array of episodes or if a feed is defined
@@ -43,7 +43,8 @@ class Podcast
         deferred.resolve()
         deferred.promise()
       else
-        @fetchEpisodes(@attributes.episodes, 0)
+        @playlistUrl = @attributes.episodes
+        @fetchEpisodes(@playlistUrl, 0)
     else if @feed?
       self = this
       feedResult = @feed.fetch()
@@ -55,16 +56,19 @@ class Podcast
       deferred.resolve()
       deferred.promise()
 
-  fetchEpisodes: (url, page) =>
+  fetchEpisodes: (url, page, pageSize) =>
+    unless url?
+      url = @playlistUrl
+
     self = this
-    pageSize = 10
+    pageSize ?= 10
     params = {
       page_size: pageSize,
       offset: pageSize * page
     }
     promise = @app.externalData.get(url, params)
     promise.done (data) ->
-      self.episodes = data.episodes
+      self.episodes = self.episodes.concat(data.episodes)
     promise
 
 module.exports = Podcast

@@ -62,6 +62,7 @@ class I18n
       playlist:
         show: 'Show playlist'
         title: 'Playlist'
+        load_more: 'Load more episodes'
       share:
         copy_episode_link: 'Copy episode link'
         email: 'Email'
@@ -99,6 +100,7 @@ class I18n
       playlist:
         show: 'Wiedergabeliste anzeigen'
         title: 'Wiedergabeliste'
+        load_more: 'Mehr Episoden laden'
       share:
         copy_episode_link: 'Link zur Episode kopieren'
         email: 'E-Mail'
