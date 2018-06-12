@@ -128,6 +128,7 @@ class ProgressBar
     @handleDrop(event)
 
   handlePickup: (event) =>
+    return if (event.target.className == 'progress-bar-time-played')
     $(@app.elem).on 'mousemove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo

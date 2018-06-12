@@ -68,6 +68,7 @@ class Configuration
 
     @app.extensionOptions = @configuration.extensions || {}
 
+    @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
@@ -110,6 +111,7 @@ class Configuration
     # Can be 'script' or 'iframe' depending on how the player is embedded
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
+    amp: false,
     locale: 'en-US'
     theme: 'default'
     themeHtml: null

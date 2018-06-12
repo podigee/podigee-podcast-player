@@ -242,7 +242,7 @@
 
       ul {
         display: block;
-        height: calc(100% - 54px);
+        height: calc(100% - 90px);
         margin: 0;
         padding: 0;
         overflow-y: scroll;
@@ -313,6 +313,17 @@
               fill: currentColor;
             }
           }
+        }
+      }
+
+      .buttons {
+        padding-top: 5px;
+        position: static;
+        text-align: center;
+
+        button {
+          font-size: 14px;
+          width: auto;
         }
       }
     }
