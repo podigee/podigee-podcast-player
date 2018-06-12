@@ -84,6 +84,7 @@ class I18n
         podcastOnItunes: 'View Podcast on iTunes'
         podcastOnSpotify: 'View Podcast on Spotify'
         podcastOnDeezer: 'View Podcast on Deezer'
+        podcastOnAlexa: 'View Podcast on Alexa'
         subscribe: 'Subscribe'
 
     'de-DE':
@@ -122,6 +123,7 @@ class I18n
         podcastOnItunes: 'Podcast auf iTunes ansehen'
         podcastOnSpotify: 'Podcast auf Spotify ansehen'
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
+        podcastOnAlexa: 'Podcast auf Alexa ansehen'
         subscribe: 'Abonnieren'
 
 module.exports = I18n
