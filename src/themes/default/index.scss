@@ -563,6 +563,14 @@
         height: calc(100% - 90px);
       }
     }
+
+    .footer {
+      padding: 12px 0;
+
+      .podcast-connections-item {
+        margin-left: 5px;
+      }
+    }
   }
 }
 
