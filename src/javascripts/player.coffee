@@ -142,9 +142,11 @@ class Player
 
   play: () ->
     return unless @media.paused
-    # set src on first playback
+
+    # set src on first playback to prevent IE from preloading the audio file
     unless @media.src
       @media.src = @src
+
     if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
     if @media.readyState < 1 # has metadata available
