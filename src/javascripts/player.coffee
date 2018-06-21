@@ -53,7 +53,11 @@ class Player
     files = @sortByPlayability(files)
     files = @sortByFormat(files)
 
-    @media.src = files[0].uri
+    @src = files[0].uri
+
+    # if src was already set for the audio element we can immediately
+    if @media.src.length
+      @media.src = @src
     @setDuration()
 
   # filter out unplayable files
@@ -138,6 +142,11 @@ class Player
 
   play: () ->
     return unless @media.paused
+
+    # set src on first playback to prevent IE from preloading the audio file
+    unless @media.src
+      @media.src = @src
+
     if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
     if @media.readyState < 1 # has metadata available
