@@ -15,6 +15,10 @@ class Iframe
 
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
+    try
+      @configuration.customOptions = JSON.parse(@elem.getAttribute('data-options'))
+    catch
+      console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
     @url = "#{@origin()}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
 
@@ -38,7 +42,7 @@ class Iframe
     return hash.toString(16).substring(1)
 
   origin: () ->
-    scriptSrc = @elem.src
+    scriptSrc = @elem.src || @elem.getAttribute('src')
     unless window.location.protocol.match(/^https/)
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
@@ -84,7 +88,7 @@ class Iframe
 class Embed
   constructor: ->
     players = []
-    elems = document.querySelectorAll('script.podigee-podcast-player')
+    elems = document.querySelectorAll('script.podigee-podcast-player, div.podigee-podcast-player')
 
     return if elems.length == 0
 

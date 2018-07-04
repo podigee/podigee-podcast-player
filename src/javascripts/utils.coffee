@@ -4,9 +4,15 @@ class Utils
     string = window.location.search.replace(/^\?/, '')
     split = string.split('&')
 
+    processValue = (value) =>
+      value = decodeURIComponent(value)
+      value = true if value == 'true'
+      value = false if value == 'false'
+      value
+
     for string in split
-      array = string.split('=')
-      options[array[0]] = decodeURIComponent(array[1])
+      [key, value] = string.split('=')
+      options[key] = processValue(value)
 
     options
 

@@ -1,6 +1,7 @@
 node_modules/
 .sass-cache/
 samples/
+staging-examples/
 dev/
 build/
 aws.json

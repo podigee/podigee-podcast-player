@@ -62,6 +62,7 @@ class I18n
       playlist:
         show: 'Show playlist'
         title: 'Playlist'
+        load_more: 'Load more episodes'
       share:
         copy_episode_link: 'Copy episode link'
         email: 'Email'
@@ -69,10 +70,22 @@ class I18n
         episode: 'Episode'
         episode_url: 'Share link to episode'
         start_at: 'Start at'
+      theme:
+        playPause: 'Play/Pause'
+        backward: 'Backward 10s'
+        forward: 'Forward 30s'
+        changePlaybackSpeed: 'Change Playback Speed'
       transcript:
         search: 'Search in transcript'
         show: 'Show transcription'
         title: 'Transcription'
+      subscribeBar:
+        allEpisodes: 'All Episodes'
+        podcastOnItunes: 'View Podcast on iTunes'
+        podcastOnSpotify: 'View Podcast on Spotify'
+        podcastOnDeezer: 'View Podcast on Deezer'
+        podcastOnAlexa: 'View Podcast on Alexa'
+        subscribe: 'Subscribe'
 
     'de-DE':
       chaptermarks:
@@ -88,6 +101,7 @@ class I18n
       playlist:
         show: 'Wiedergabeliste anzeigen'
         title: 'Wiedergabeliste'
+        load_more: 'Mehr Episoden laden'
       share:
         copy_episode_link: 'Link zur Episode kopieren'
         email: 'E-Mail'
@@ -95,10 +109,21 @@ class I18n
         episode: 'Episode'
         episode_url: 'Link zur Episode teilen'
         start_at: 'Wiedergabe ab'
+      theme:
+        playPause: 'Play/Pause'
+        backward: '10s zurück'
+        forward: '30s vorwärts'
+        changePlaybackSpeed: 'Abspielgeschwindigkeit ändern'
       transcript:
         search: 'Transkript durchsuchen'
         show: 'Transkript anzeigen'
         title: 'Transkript'
-
+      subscribeBar:
+        allEpisodes: 'Alle Episoden'
+        podcastOnItunes: 'Podcast auf iTunes ansehen'
+        podcastOnSpotify: 'Podcast auf Spotify ansehen'
+        podcastOnDeezer: 'Podcast auf Deezer ansehen'
+        podcastOnAlexa: 'Podcast auf Alexa ansehen'
+        subscribe: 'Abonnieren'
 
 module.exports = I18n

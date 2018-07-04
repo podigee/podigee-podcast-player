@@ -63,17 +63,19 @@ class Configuration
     )
 
   setConfigurations: (viaJSON) =>
+    return unless @configuration.episode
     @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
     @app.extensionOptions = @configuration.extensions || {}
 
+    @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
     @app.options.configViaJSON = viaJSON
     @app.externalData = new ExternalData(@app)
 
-    # The locale can be fixed in the player config, or autodetected by the browser. 
+    # The locale can be fixed in the player config, or autodetected by the browser.
     # It will fall back to en-US if no locale was found
     i18n = new I18n(@configuration.options.locale, @defaultOptions.locale)
     @app.i18n = i18n
@@ -109,11 +111,26 @@ class Configuration
     # Can be 'script' or 'iframe' depending on how the player is embedded
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
+    amp: false,
     locale: 'en-US'
+    theme: 'default'
+    themeHtml: null
+    themeCss: null
+    customStyle: null
+    startPanel: null
   }
 
   configureTemplating: =>
     rivets.configure(
       prefix: 'pp'
     )
+
+    # make links text open in parent window
+    rivets.formatters.description = (text) =>
+      elem = document.createElement('div')
+      elem.innerHTML = text.trim()
+      elem.querySelectorAll('a').forEach (link) =>
+        link.target = '_parent'
+      elem.innerHTML
+
 module.exports = Configuration

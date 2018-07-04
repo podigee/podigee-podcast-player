@@ -16,10 +16,14 @@ class ProgressBar
     @player = @app.player
     @media = @app.player.media
 
+    @init()
+
+  init: () =>
     @render()
     @findElements()
     @bindEvents()
     @hideBuffering()
+    @updateTime(0)
 
   showBuffering: () ->
     @bufferingElement.show()
@@ -51,11 +55,19 @@ class ProgressBar
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
-    @timeElement.text(prefix + timeString)
+    @currentTime = prefix + timeString
+    @view.update(@context())
 
     @updatePlayed()
 
     return timeString
+
+  updateView: () =>
+    newElem = $('<progress-bar>')
+    @elem.replaceWith(newElem)
+    @elem = $('progress-bar')
+    @init()
+    @view.update(@context())
 
   updateLoaded: (buffered) =>
     return unless @media.seekable.length
@@ -66,18 +78,20 @@ class ProgressBar
   #private
 
   context: () ->
-    {}
+    {
+      time: @currentTime || Utils.secondsToHHMMSS(0)
+    }
 
   render: () ->
     html = $(@template)
-    rivets.bind(html, @context)
+    @view = rivets.bind(html, @context())
     @elem.replaceWith(html)
-    @elem = html
+    @elem = $('.progress-bar')
 
   template:
     """
     <div class="progress-bar">
-      <div class="progress-bar-time-played" title="Switch display mode">00:00:00</div>
+      <div class="progress-bar-time-played" title="Switch display mode">{ time }</div>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>
@@ -114,6 +128,7 @@ class ProgressBar
     @handleDrop(event)
 
   handlePickup: (event) =>
+    return if (event.target.className == 'progress-bar-time-played')
     $(@app.elem).on 'mousemove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo
@@ -121,7 +136,7 @@ class ProgressBar
     $(@app.elem).on 'touchend', @handleLetgo
 
   bindEvents: () ->
-    @timeElement.click => @switchTimeDisplay()
+    @timeElement.on 'click', @switchTimeDisplay
 
     $(@media).on('timeupdate', @updateTime)
       .on('play', @triggerPlaying)

@@ -3,51 +3,10 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
-Utils = require('../utils.coffee')
 Extension = require('../extension.coffee')
 
-class PlaylistItem
-  constructor: (@episode, @callback) ->
-    @media = @context().media
-    if @episode.duration
-      @humanDuration = Utils.secondsToHHMMSS(_.clone(@episode.duration))
-
-  humanDuration: null
-  active: false
-  context: () ->
-    _.merge(@episode, {
-      active: @active,
-      humanDuration: @humanDuration
-    })
-
-  activate: ->
-    return if @active
-    @active = true
-    @view.update(@context())
-
-  deactivate: ->
-    return unless @active
-    @active = false
-    @view.update(@context())
-
-  render: =>
-    @elem = $(@defaultHtml)
-    @view = rivets.bind(@elem, @context())
-
-    @elem.data('item', @context())
-    @elem.on('click', @episode, @callback)
-
-    return @elem
-
-  defaultHtml:
-    """
-    <li pp-class-active="active">
-      <a class="episode-link" pp-if="url" pp-href="url" target="_blank"><i class="fa fa-link"></i></a>
-      <span class="playlist-episode-number" pp-if="number">{ number }.</span>
-      <span class="playlist-episode-title" pp-html="title"></span>
-      <span class="playlist-episode-duration" pp-if="humanDuration">{ humanDuration }</span>
-    </li>
-    """
+PlaylistItem = require('./playlist/playlist_item.coffee')
+PlaylistLoader = require('./playlist/playlist_loader.coffee')
 
 class Playlist extends Extension
   @extension:
@@ -60,13 +19,14 @@ class Playlist extends Extension
 
     return unless @app.podcast.hasEpisodes()
 
-    @app.podcast.getEpisodes().done =>
+    @playlistLoader = new PlaylistLoader(@app)
+    @playlistLoader.loadEpisodes().done =>
       @episodes = @app.podcast.episodes
       @renderPanel()
       @renderButton()
 
       @app.theme.addExtension(this)
-      $(@app.player.media).on 'loadedmetadata', @setCurrentEpisode
+      @setCurrentEpisode()
 
   defaultOptions:
     showOnStart: false
@@ -78,14 +38,19 @@ class Playlist extends Extension
   currentIndex: => @playlist.indexOf(@currentEpisode)
   setCurrentEpisode: () =>
     current = @app.player.currentFile()
-    cleanedCurrent = @cleanFile(current)
-    @currentEpisode = _.find @playlist, (episode) =>
-      episode.deactivate()
-      filteredMedia = _.filter episode.media, (file) =>
-        cleanedFile = @cleanFile(file)
-        cleanedCurrent == cleanedFile
-      filteredMedia.length
-    @currentEpisode.activate()
+    if current
+      cleanedCurrent = @cleanFile(current)
+      @currentEpisode = _.find @playlist, (episode) =>
+        episode.deactivate()
+        filteredMedia = _.filter episode.media, (file) =>
+          cleanedFile = @cleanFile(file)
+          cleanedCurrent == cleanedFile
+        filteredMedia.length
+    else
+      @currentEpisode = @playlist[0]
+    if @currentEpisode
+      @currentEpisode.activate()
+      @setSkippingAvailability()
 
   cleanFile: (file) ->
     file = file.split('?')[0]
@@ -104,40 +69,72 @@ class Playlist extends Extension
     @app.player.loadFile()
     @app.player.play()
     @app.initializeExtensions(this)
+    @app.extensions.ProgressBar.updateView()
 
   playPrevious: () =>
-    currentIndex = @currentIndex()
-    return if (currentIndex + 1) > @playlist.length
+    return if @isFirstEntry()
 
-    prevItem = @playlist[currentIndex + 1]
-    @playItem(prevItem)
+    prevItem = @playlist[@currentIndex() + 1]
+    @playItem(prevItem.episode)
 
   playNext: () =>
-    currentIndex = @currentIndex()
-    return if currentIndex == 0
+    return if @isLastEntry()
 
-    nextItem = @playlist[currentIndex - 1]
-    @playItem(nextItem)
+    nextItem = @playlist[@currentIndex() - 1]
+    @playItem(nextItem.episode)
+
+  isFirstEntry: () =>
+    (@currentIndex() + 1) > @playlist.length
+
+  isLastEntry: () =>
+    @currentIndex() == 0
+
+  setSkippingAvailability: () =>
+    @app.theme.skipBackwardElement.removeClass('disabled')
+    @app.theme.skipForwardElement.removeClass('disabled')
+    if @isLastEntry()
+      @app.theme.skipForwardElement.addClass('disabled')
+    if @isFirstEntry()
+      @app.theme.skipBackwardElement.addClass('disabled')
 
   updateEpisodeData: (episode) ->
     @app.episode = episode
 
     @app.theme.updateView()
 
+  loadMoreEpisodes: () =>
+    @playlistLoader.loadNextPage().done (data) =>
+      if data.episodes.length == 0
+        @panel.find('button.load-more').hide()
+      else
+        @renderPlaylistItems(data.episodes)
+
+  buildPlaylistItem: (episode, index) =>
+    playlistItem = new PlaylistItem(episode, @click)
+    @playlist.push(playlistItem)
+    playlistItem
+
+  renderPlaylistItems: (episodes) =>
+    list = @panel.find('ul')
+    items = _.map episodes, @buildPlaylistItem
+    _.each items, (item) => list.append(item.render())
+    list.scrollTop(100000)
+
   renderPanel: =>
     @panel = $(@panelHtml())
 
-    list = @panel.find('ul')
-    _.each @episodes, (episode, index) =>
-      playlistItem = new PlaylistItem(episode, @click)
-      @playlist.push(playlistItem)
-      list.append(playlistItem.render())
+    @renderPlaylistItems(@episodes)
 
+    loadMoreButton = @panel.find('button.load-more')
+    if @app.podcast.playlistUrl?
+      loadMoreButton.on('click', @loadMoreEpisodes)
+    else
+      loadMoreButton.hide()
     @panel.hide()
 
   buttonHtml: ->
     """
-    <button class="playlist-button" title="#{@t('playlist.show')}"></button>
+    <button class="playlist-button" title="#{@t('playlist.show')}" aria-label="#{@t('playlist.show')}"></button>
     """
 
   panelHtml: ->
@@ -146,6 +143,10 @@ class Playlist extends Extension
       <h3>#{@t('playlist.title')}</h3>
 
       <ul></ul>
+
+      <div class="buttons">
+        <button class="load-more">#{@t('playlist.load_more')}</button>
+      </div>
     </div>
     """
 

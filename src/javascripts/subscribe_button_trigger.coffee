@@ -1,6 +1,7 @@
 class SubscribeButtonTrigger
   # referenceElement is the DOM element after which the script tag should be inserted
   constructor: (@referenceElement) ->
+    @referenceId = @referenceElement.id
     @id = @randomId(@referenceElement.toString())
     @buildTags()
     @insert()
@@ -11,7 +12,6 @@ class SubscribeButtonTrigger
     @scriptTag.src = "https://cdn.podlove.org/subscribe-button/javascripts/app.js"
     @scriptTag.dataset.language = 'en'
     @scriptTag.dataset.size = 'medium'
-    @scriptTag.setAttribute('data-json-data', 'podcastData_id_adeba7cb_390a_4a57_80a0_d79c7a9b9c1e')
     @scriptTag.setAttribute('data-hide', true)
     @scriptTag.setAttribute('data-buttonid', @id)
 
@@ -24,6 +24,8 @@ class SubscribeButtonTrigger
     @referenceElement.parentNode.insertBefore(@button, @referenceElement.nextSibling)
 
   randomId: (string) ->
+    randomPart = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+    string += randomPart
     hash = 0
     return hash if string.length == 0
 
@@ -43,6 +45,7 @@ class SubscribeButtonTrigger
       catch
         return
       return unless data.listenTo == 'subscribeButtonTrigger'
+      return unless data.id == @referenceId
 
       detail = data.detail
       detail.id = @id
