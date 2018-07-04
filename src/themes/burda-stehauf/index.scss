@@ -223,7 +223,6 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
     .podcast-connections-items {
-      border-top: 1px solid $highlight;
       display: block;
       margin: 0;
       padding: 0;
@@ -231,7 +230,6 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
     .podcast-connections-item {
-      border-left: 1px solid $highlight;
       display: inline-block;
       height: 50px;
       list-style: none;
