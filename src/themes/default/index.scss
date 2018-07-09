@@ -453,6 +453,10 @@
         fill: currentColor;
         vertical-align: middle;
       }
+
+      &.podcast-connections-item-alexa {
+        margin-left: 0;
+      }
     }
 
     .all-episodes-link {
@@ -567,8 +571,17 @@
     .footer {
       padding: 12px 0;
 
+      .subscribe-button {
+        font-size: 12px;
+      }
+
       .podcast-connections-item {
         margin-left: 5px;
+      }
+
+      .all-episodes-link {
+        font-size: 12px;
+        margin-top: 4px;
       }
     }
   }
