@@ -30,12 +30,16 @@ class Theme
         subscribe: @t('subscribeBar.subscribe')
       },
       customOptions: @app.customOptions,
-      or: @orFunction
+      or: @orFunction,
+      externalSubscribeUrl: @externalSubscribeUrlFunction
     }
 
   # used in template to fall back to arg2 if arg1 is undefined or null
   orFunction: (arg1, arg2) =>
     arg1 || arg2
+
+  externalSubscribeUrlFunction: (url) =>
+    "#{url}#openSubscribeButtonPopup"
 
   context: =>
     _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())

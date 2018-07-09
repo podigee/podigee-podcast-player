@@ -291,15 +291,18 @@ $mobile-breakpoint: 521px;
     position: relative;
     width: calc(100% + 46px);
 
-    .subscribe-button {
+    .subscribe-button,
+    .subscribe-button-external {
       background: transparent;
       border-bottom: 1px solid;
+      color: $black;
       font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 14px;
       font-weight: bold;
       letter-spacing: .8px;
       outline: none;
       padding: 0 0 4px;
+      text-decoration: none;
     }
 
     .podcast-connections-items {
