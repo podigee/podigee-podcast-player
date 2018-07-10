@@ -4,7 +4,7 @@ sightglass = require('sightglass')
 rivets = require('rivets')
 
 CustomStyles = require('./custom_styles.coffee')
-SubscribeButton = require('./subscribe_button.coffee')
+SubscribeButton = require('./extensions/subscribe_button.coffee')
 
 class Theme
   constructor: (@app) ->
@@ -13,6 +13,8 @@ class Theme
 
   themeConfig: =>
     options = @app.extensionOptions.SubscribeBar
+    if options?.disabled == false
+      SubscribeButton.load(@app)
     {
       showSubscribeBar: options?.disabled == false,
       showSubscribeButton: !@app.isInAMPMode(),

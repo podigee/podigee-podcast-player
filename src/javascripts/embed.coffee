@@ -63,8 +63,17 @@ class Iframe
     IframeResizer.listen('resizePlayer', @iframe)
 
   setupSubscribeButton: ->
-    subscribeButton = new SubscribeButtonTrigger(@iframe)
-    subscribeButton.listen()
+    window.addEventListener 'message', ((event) =>
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'loadSubscribeButton'
+
+      subscribeButton = new SubscribeButtonTrigger(@iframe)
+      subscribeButton.listen()
+    ), false
 
   replaceElem: ->
     @iframe.className += @elem.className

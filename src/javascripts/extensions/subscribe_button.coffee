@@ -17,4 +17,11 @@ class SubscribeButton
     })
     window.parent.postMessage(data, '*')
 
+  @load: (@app) ->
+    data = JSON.stringify({
+      id: @app.configuration.frameOptions.id,
+      listenTo: 'loadSubscribeButton'
+    })
+    window.parent.postMessage(data, '*')
+
 module.exports = SubscribeButton
