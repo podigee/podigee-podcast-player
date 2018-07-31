@@ -64,4 +64,15 @@ class Utils
     catch
       return true
 
+  # check if Safari 10 or below is used
+  @isLteSafari10: () ->
+    try
+      isSafari = navigator.appVersion.indexOf('Safari') != -1
+      return false unless isSafari
+      version = parseInt(navigator.appVersion.match(/Version\/(\d{1,2})\.\d/)[1], 10)
+      return true if version <= 10
+      return false
+    catch
+      return false
+
 module.exports = Utils
