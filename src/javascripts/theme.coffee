@@ -73,12 +73,12 @@ class Theme
       @loadCss(themeCss)
       @loadHtml(themeHtml)
     else if theme.constructor == String
-      @loadInternalTheme(theme)
+      @loadInternalTheme(theme, themeHtml, themeCss)
 
-  loadInternalTheme: (name) =>
+  loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss("#{pathPrefix}.css")
-    @loadHtml("#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css")
+    @loadHtml(themeHtml || "#{pathPrefix}.html")
 
   loadHtml: (path) =>
     loaded = $.Deferred()
