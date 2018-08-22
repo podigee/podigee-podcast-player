@@ -55,8 +55,9 @@ class Player
 
     @src = files[0].uri
 
-    # if src was already set for the audio element we can immediately
-    if @media.src.length
+    # If src was already set for the audio element we can immediately set src
+    # If we are dealing with Safari 10 or below we also need to do this
+    if @media.src.length || Utils.isLteSafari10()
       @media.src = @src
     @setDuration()
 
