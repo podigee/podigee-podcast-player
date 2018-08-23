@@ -1,12 +1,11 @@
 .podcast-player {
-  background-color: #ededed;
   color: #262626;
   font-family: Helvetica;
   min-width: 100%;
   overflow: hidden;
   position: relative;
   width: 1px;
-  background: transparent url(https://audio.t-online.de/soundlib/themes/podcast_tagesanbruch_610x230_trans.png) no-repeat;
+  background: #ededed url(https://audio.t-online.de/soundlib/themes/podcast_tagesanbruch_610x230_trans.png) no-repeat;
   border-right: 10px solid #fff;
 }
 .podcast-player, .podcast-player *, .podcast-player *:before, .podcast-player *:after {
@@ -15,7 +14,7 @@
   box-sizing: border-box;
 }
 .podcast-player a {
-  color: #f57150;
+  color: #262626;
   text-decoration: none;
 }
 .podcast-player .footer a {
@@ -41,7 +40,7 @@
   height: 112px
 }
 .podcast-player .episode-basic-info .episode-title {
-  color: #ffffff;
+  color: #262626;
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4em;
@@ -49,8 +48,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.podcast-player .episode-title a {
+    color: #262626;
+}
 .podcast-player .episode-basic-info .episode-subtitle {
-  color: #ffffff;
+  color: #262626;
   font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
