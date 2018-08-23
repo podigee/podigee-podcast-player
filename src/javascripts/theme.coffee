@@ -3,6 +3,7 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Utils = require('./utils.coffee')
 CustomStyles = require('./custom_styles.coffee')
 SubscribeButton = require('./extensions/subscribe_button.coffee')
 
@@ -40,7 +41,11 @@ class Theme
     arg1 || arg2
 
   context: =>
-    _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+    attrs = _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+    # hide All Episodes link when on the page that is linked to
+    if Utils.onSameUrl(attrs.podcastUrl)
+      attrs.podcastUrl = null
+    attrs
 
   t: (key) ->
     @app.i18n.t(key)
