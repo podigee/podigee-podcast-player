@@ -56,8 +56,7 @@ class Utils
 
   # check if the player is embedded on the same URL as the parameter
   @onSameUrl: (url) ->
-    console.debug('[podigee]', document.referrer, url)
-    document.referrer == url
+    document.referrer.replace(/\/$/, '') == url
 
   @isIE9: () ->
     try
