@@ -1,12 +1,11 @@
 <div class="podcast-player">
   <audio></audio>
   <div class="main-player">
-    <img class="cover-image" pp-src="coverUrl" />
     <div class="episode-basic-info">
-      <div class="episode-subtitle">Podcast Meinung</div>
+      <div class="episode-subtitle">Podcast Tagesanbruch</div>
       <div class="episode-title">
         <a pp-if="url" pp-href="url" target="_parent">{ title }</a>
-        <span pp-unless="url">{ title }</a>
+        <span pp-unless="url">{ title }</span>
       </div>
     </div>
 

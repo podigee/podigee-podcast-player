@@ -1,11 +1,11 @@
 .podcast-player {
-  color: #262626;
+  color: #ffffff;
   font-family: Helvetica;
   min-width: 100%;
   overflow: hidden;
   position: relative;
   width: 1px;
-  background: #ededed url(https://audio.t-online.de/soundlib/themes/podcast_tagesanbruch_610x230_trans.png) no-repeat;
+  background: #5a84ad url(https://audio.t-online.de/soundlib/themes/podcast_tagesanbruch_610x230_hg.png) no-repeat;
   border-right: 10px solid #fff;
 }
 .podcast-player, .podcast-player *, .podcast-player *:before, .podcast-player *:after {
@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 .podcast-player a {
-  color: #262626;
+  color: #ffffff;
   text-decoration: none;
 }
 .podcast-player .footer a {
@@ -33,14 +33,14 @@
   position: relative;
 }
 .podcast-player .episode-basic-info {
-  max-height: 112px;
+  max-height: 104px;
   padding: 13px 12px 0;
   position: relative;
   overflow: hidden;
-  height: 112px
+  height: 104px
 }
 .podcast-player .episode-basic-info .episode-title {
-  color: #262626;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4em;
@@ -49,10 +49,10 @@
   text-overflow: ellipsis;
 }
 .podcast-player .episode-title a {
-    color: #262626;
+    color: #ffffff;
 }
 .podcast-player .episode-basic-info .episode-subtitle {
-  color: #262626;
+  color: #ffffff;
   font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,13 +64,13 @@
   padding: 16px;
 }
 .podcast-player .controls {
-  height: 118px;
+  height: 126px;
   width: 80px;
 }
 .podcast-player .controls .play-button {
-  border: 3px solid #262626 !important;
+  border: 3px solid #ffffff !important;
   border-radius: 100px;
-  color: #262626 !important;
+  color: #ffffff !important;
   font-size: 51px;
   height: 70px;
   margin: 10px 0 0 10px;
@@ -85,7 +85,7 @@
   top: auto;
 }
 .podcast-player .controls-advanced button {
-  color: #262626;
+  color: #ffffff;
   font-size: 24px;
   padding: 0 8px;
 }
@@ -113,7 +113,7 @@
   height: 10px;
 }
 .podcast-player .progress-bar .progress-bar-time-played {
-  color: #262626;
+  color: #ffffff;
   cursor: pointer;
   display: none;
   font-size: 14px;
@@ -149,7 +149,7 @@
   background-color: #c8c8c8 !important;
 }
 .podcast-player .progress-bar-played {
-  background-color: #7c7c7c !important;
+  background-color: #1d4469 !important;
 }
 
 .podcast-player .progress-bar-played:after {
@@ -194,7 +194,7 @@
   }
 }
 .podcast-player .buttons {
-  background-color: #7c7c7c;
+  background-color: #1d4469;
   position: static;
   text-align: right;
 }
@@ -434,14 +434,14 @@
 
 @media (max-width: 500px) {
   .podcast-player {
-    background: transparent url(https://audio.t-online.de/soundlib/themes/podcast-player_trans_und_waves_300x200.png) no-repeat 0 2px;
+    background: #5a84ad url(https://audio.t-online.de/soundlib/themes/podcast-player_hintergrund_und_waves_300x200.png) no-repeat;
   }
   .podcast-player .episode-basic-info {
     max-height: 90px;
     height: 90px
   }
   .podcast-player .controls .play-button {
-    border: 2px solid #262626;
+    border: 2px solid #ffffff;
     font-size: 37px;
     height: 50px;
     width: 50px;
@@ -462,14 +462,13 @@
     padding-top:10px;
   }
   .podcast-player.mode-script .episode-basic-info .episode-subtitle {
-    border-bottom: 2px solid #7c7c7c;
     font-size: 14px;
     text-transform: uppercase;
   }
   .podcast-player.mode-script .controls {
     height: 110px;
     position: relative;
-    padding-top: 15px;
+    padding-top: 16px;
   }
   .podcast-player.mode-script .buttons button {
     font-size: 24px;
