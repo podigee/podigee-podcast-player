@@ -54,6 +54,10 @@ class Utils
 
     pageX - elem.getBoundingClientRect().left
 
+  # check if the player is embedded on the same URL as the parameter
+  @onSameUrl: (url) ->
+    document.referrer.replace(/\/$/, '') == url
+
   @isIE9: () ->
     try
       isIE = navigator.appVersion.indexOf("MSIE") != -1
