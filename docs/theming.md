@@ -59,8 +59,8 @@ Everything configured in the `episode` block of the player configuration can be 
 
 - `duration` - The total duration of the episode
 
-You can have a look at the [included themes](src/themes) for more examples.
+You can have a look at the [included themes](https://github.com/podigee/podigee-podcast-player/tree/master/src/themes) for more examples.
 
 ## CSS
 
-There are no special requirements regarding CSS. You can have a look at the [included themes](src/themes) for examples.
+There are no special requirements regarding CSS. You can have a look at the [included themes](https://github.com/podigee/podigee-podcast-player/tree/master/src/themes) for examples.
