@@ -95,7 +95,7 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
         starttag: '<!-- inject:head:{{ext}} -->',
         transform: function (filePath, file) {
           var fileContents = file.contents.toString('utf8')
-          fileContents = fileContents.replace('url("../', 'url("')
+          fileContents = fileContents.replace(new RegExp('url\\("../', 'g'), 'url("');
           return '<style>' + fileContents + '</style>'
         }
       })
