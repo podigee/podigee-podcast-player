@@ -1,0 +1,382 @@
+$default-padding: 12px !default;
+$background-color: #811547 !default;
+$text-color: #fff !default;
+$dark: #000 !default;
+
+$mobile-breakpoint: 500px;
+
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,700');
+
+.podcast-player {
+  &, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Ubuntu', sans-serif;
+  height: 486px;
+  min-width: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 1px;
+
+  button {
+    cursor: pointer;
+  }
+
+  .podcast-title {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    font-weight: 100;
+    margin-top: 92px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .episode-title {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px;
+    text-align: center;
+
+    a {
+      color: $text-color;
+      text-decoration: none;
+    }
+  }
+
+  .progress-bar-container {
+    left: 10%;
+    margin-top: 100px;
+    position: relative;
+    width: 80%;
+  }
+
+  .progress-bar {
+    clear: both;
+    cursor: ew-resize;
+    height: 10px;
+    position: relative;
+
+    .progress-bar-time-played {
+      color: $text-color;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      position: absolute;
+      text-align: left;
+      top: 25px;
+      width: 70px;
+    }
+
+    .progress-bar-time-played:hover {
+      color: $dark;
+    }
+
+    .progress-bar-rail {
+      background-color: $text-color;
+      min-height: 3px;
+      position: relative;
+      top: 4px;
+    }
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $dark;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-played:after {
+    background-color: $text-color;
+    border-radius: 50px;
+    content: '';
+    height: 12px;
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    width: 12px;
+  }
+
+  .progress-bar-loaded {
+    background-color: $text-color;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .duration {
+    color: $text-color;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 25px;
+    width: 70px;
+  }
+
+  .controls {
+    text-align: center;
+
+    button {
+      background: none;
+      border: none;
+      color: $text-color;
+      outline: none;
+    }
+
+    .play-button {
+      font-size: 110px;
+      height: 110px;
+      margin: 0;
+      padding: 0;
+      width: 110px;
+    }
+
+    .forward-button,
+    .backward-button {
+      font-size: 36px;
+      position: relative;
+      top: -30px;
+    }
+  }
+
+  &.loading .controls .play-button {
+    background: $text-color;
+  }
+
+  .frame-desktop {
+    height: 103%;
+    left: -3%;
+    position: absolute;
+    pointer-events: none;
+    top: -8%;
+    width: 101%;
+
+    svg.frame {
+      height: 114%;
+      width: 106%;
+
+      .st0 {
+        fill: $text-color;
+      }
+
+      .st1 {
+        fill: none;
+        stroke: $text-color;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
+      }
+    }
+  }
+
+  .graphics {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    width: 100%;
+
+    svg {
+      position: absolute;
+    }
+
+    svg.circles {
+      height: 9px;
+      width: 46px;
+
+      .st0 {
+        clip-path: url(#SVGID_2_);
+        fill: #FFFFFF;
+      }
+    }
+
+    svg.pendulum {
+      height: 178px;
+      width: 255px;
+
+      .st0 {
+        fill: none;
+        stroke: #FFFFFF;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
+      }
+
+      .st1 {
+        fill: #FFFFFF;
+      }
+    }
+
+    svg.ring {
+      height: 185px;
+      width: 185px;
+
+      .st0 {
+        fill: #E81010;
+      }
+
+      .st1 {
+        fill: none;
+        stroke: #FFFFFF;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
+      }
+
+      .st2 {
+        fill: #FFFFFF;
+      }
+    }
+
+    svg.crosses {
+      height: 40px;
+      width: 40px;
+
+      .st0 {
+        fill: #FFFFFF;
+      }
+    }
+
+    svg.points {
+      height: 172px;
+      width: 172px;
+
+      .st0 {
+        fill: #F80038;
+      }
+    }
+  }
+
+  svg.circles {
+    left: 15%;
+    top: 30%;
+  }
+
+  svg.pendulum {
+    left: 78%;
+    top: 10%;
+  }
+
+  svg.ring {
+    left: -8%;
+    top: 25%;
+  }
+
+  svg.crosses {
+    left: 30%;
+    top: 16%;
+  }
+
+  svg.points {
+    left: 60%;
+    top: 80%;
+  }
+
+  .footer {
+    bottom: 0;
+    color: $text-color;
+    padding: 0 60px 30px;
+    position: absolute;
+    width: 100%;
+
+    .subscribe-button {
+      background: transparent;
+      border: none;
+      color: $text-color;
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: 5px;
+      outline: none;
+      padding: 0;
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        color: $text-color;
+        text-decoration: none;
+      }
+
+      svg {
+        fill: currentColor;
+        vertical-align: middle;
+      }
+
+      &.podcast-connections-item-alexa {
+        margin-left: 0;
+      }
+    }
+
+    .all-episodes-link {
+      color: $text-color;
+      float: right;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      padding: 6px 6px;
+      text-decoration: none;
+    }
+  }
+}
+
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+  }
+}
+
+.podcast-player.mode-iframe {
+  @media (max-width: $mobile-breakpoint) {
+  }
+}
