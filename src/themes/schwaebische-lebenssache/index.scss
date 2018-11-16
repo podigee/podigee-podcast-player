@@ -365,7 +365,7 @@ $mobile-breakpoint: 500px;
       font-size: 18px;
       font-weight: bold;
       letter-spacing: .8px;
-      padding: 6px 6px;
+      padding: 0;
       text-decoration: none;
     }
   }
@@ -373,6 +373,36 @@ $mobile-breakpoint: 500px;
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
+    svg.circles {
+      left: 4%;
+      top: 30%;
+    }
+
+    svg.pendulum {
+      left: 75%;
+      top: 0%;
+      width: 155px;
+    }
+
+    svg.ring {
+      left: -18%;
+      top: 25%;
+      width: 125px;
+    }
+
+    svg.crosses {
+      left: 15%;
+      top: 16%;
+    }
+
+    svg.points {
+      left: 60%;
+      top: 80%;
+    }
+
+    .footer {
+      padding: 0 30px 30px;
+    }
   }
 }
 
