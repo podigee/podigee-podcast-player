@@ -1,0 +1,82 @@
+$background-color: #ffcd00;
+$text-color: #24282b;
+$dark: #fff;
+$mobile-breakpoint: 800px;
+
+@import '../schwaebische-common/index';
+
+.podcast-player {
+  .graphics {
+    svg.icon {
+      width: 240px;
+
+      .st0 {
+        fill:#1D1D1B;
+        stroke:#1D1D1B;
+      }
+
+      .st1 {
+        fill:#1D1D1B;
+      }
+
+      .st2 {
+        fill:#1D1D1B;
+      }
+    }
+
+    svg.points {
+      left: 90%;
+      height: 220px;
+      top: 40%;
+      width: 172px;
+
+      .st0 {
+        fill: #ef012d;
+      }
+    }
+
+    svg.crosses {
+      .st0 {
+        fill: #1D1D1B;
+      }
+    }
+
+    svg.circles {
+      left: 0%;
+      top: 44%;
+
+      .st0 {
+        fill: #1D1D1B;
+      }
+    }
+  }
+
+  svg.icon {
+    left: 70%;
+    top: 8%;
+  }
+
+  svg.crosses {
+    left: 30%;
+    top: 10%;
+  }
+}
+
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+    svg.icon {
+      left: 66%;
+      top: 4%;
+      width: 150px;
+    }
+
+    svg.crosses {
+      // left: 15%;
+      // top: 33%;
+    }
+
+    // svg.points {
+      // left: -15%;
+    // }
+  }
+}
