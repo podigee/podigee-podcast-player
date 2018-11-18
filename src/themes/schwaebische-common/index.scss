@@ -2,7 +2,7 @@ $background-color: #811547 !default;
 $text-color: #fff !default;
 $dark: #000 !default;
 
-$mobile-breakpoint: 500px;
+$mobile-breakpoint: 800px;
 
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:300,700');
 
@@ -372,6 +372,11 @@ $mobile-breakpoint: 500px;
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
+    .episode-title {
+      margin: 0 auto;
+      max-width: 75%;
+    }
+
     svg.circles {
       left: 4%;
       top: 30%;
