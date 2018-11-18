@@ -15,14 +15,16 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: $background;
   color: $text;
   font-family: $font-family;
-  padding: 15px 15px 0;
+  padding: 0;
 
   .hidden {
     display: none;
   }
 
   .main-player {
-    margin-bottom: -0px;
+    background: #eee;
+    border: 2px solid $highlight;
+    padding: 15px 15px 0;
   }
 
   .cover-image {
@@ -209,7 +211,7 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     left: -15px;
     position: relative;
-    top: -20px;
+    top: -10px;
     width: calc(100% + 30px);
 
     .subscribe-button {
@@ -240,18 +242,16 @@ $font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         color: $text;
         display: block;
         height: 100%;
-        padding: 10px 0;
+        padding: 10px 0 0;
         text-decoration: none;
         width: 100%;
 
         &:hover {
           color: $highlight;
-          // background: #CC707D;
         }
       }
 
       svg {
-        // color: #;
         fill: currentColor;
         position: relative;
         top: 3px;
