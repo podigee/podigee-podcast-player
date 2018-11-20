@@ -10,7 +10,9 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     gzip = require('gulp-gzip'),
     fs = require('fs'),
-    inject = require('gulp-inject')
+    inject = require('gulp-inject'),
+    sassUnicode = require('gulp-sass-unicode')
+
 
 var dest = './dist';
 var paths = {
@@ -31,6 +33,7 @@ var paths = {
 gulp.task('stylesheets', function() {
   return gulp.src(paths.main_stylesheet)
     .pipe(sass({style: 'compressed'}))
+    .pipe(sassUnicode())
     .pipe(gulp.dest('./build/stylesheets'))
     .pipe(gzip())
     .pipe(gulp.dest('./build/stylesheets'))
