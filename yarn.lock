@@ -1462,6 +1462,14 @@ gulp-rename@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
+gulp-sass-unicode@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-sass-unicode/-/gulp-sass-unicode-1.0.1.tgz#b2113997b53ec74163e376c4cba463b68821d426"
+  integrity sha1-shE5l7U+x0Fj43bEy6Rjtogh1CY=
+  dependencies:
+    gulp-util "^3.0.7"
+    through2 "^2.0.1"
+
 gulp-sass@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/gulp-sass/-/gulp-sass-3.1.0.tgz#53dc4b68a1f5ddfe4424ab4c247655269a8b74b7"
