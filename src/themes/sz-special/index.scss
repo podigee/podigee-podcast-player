@@ -60,6 +60,7 @@ $mobile-breakpoint: 521px;
   }
 
   .cover-image {
+    display: none;
     float: right;
     height: 125px;
     position: relative;
@@ -219,7 +220,7 @@ $mobile-breakpoint: 521px;
   }
 
   .progress-bar-played:after {
-    background-color: #009990;
+    background-color: darken($background, 20%);
     border-radius: 50px;
     content: '';
     height: 18px;
