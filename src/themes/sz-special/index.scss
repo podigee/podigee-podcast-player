@@ -1,8 +1,8 @@
-$background: #F53A55;
+$background: #81d1c6;
 $black: #29293A;
 $progress: $black;
 $progress-loaded: $black;
-$progress-played: #009990;
+$progress-played: darken(#F53A55, 20%);
 $mobile-breakpoint: 521px;
 
 @font-face {
@@ -60,7 +60,6 @@ $mobile-breakpoint: 521px;
   }
 
   .cover-image {
-    display: none;
     float: right;
     height: 125px;
     position: relative;
@@ -220,7 +219,7 @@ $mobile-breakpoint: 521px;
   }
 
   .progress-bar-played:after {
-    background-color: darken($background, 20%);
+    background-color: #F53A55;
     border-radius: 50px;
     content: '';
     height: 18px;
@@ -285,7 +284,7 @@ $mobile-breakpoint: 521px;
   }
 
   .player-footer {
-    background: darken($background, 15%);
+    background: #68C1B4;
     bottom: -10px;
     left: -23px;
     padding: 14px 23px;
