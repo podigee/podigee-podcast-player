@@ -2,7 +2,7 @@ $background: #81d1c6;
 $black: #29293A;
 $progress: $black;
 $progress-loaded: $black;
-$progress-played: darken(#F53A55, 20%);
+$progress-played: #FD4560;
 $mobile-breakpoint: 521px;
 
 @font-face {
@@ -60,6 +60,7 @@ $mobile-breakpoint: 521px;
   }
 
   .cover-image {
+    display: none;
     float: right;
     height: 125px;
     position: relative;
@@ -219,7 +220,7 @@ $mobile-breakpoint: 521px;
   }
 
   .progress-bar-played:after {
-    background-color: #F53A55;
+    background-color: $progress-played;
     border-radius: 50px;
     content: '';
     height: 18px;
