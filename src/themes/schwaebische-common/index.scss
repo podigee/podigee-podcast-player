@@ -39,8 +39,9 @@ $mobile-breakpoint: 800px;
     font-family: 'Ubuntu', sans-serif;
     font-size: 28px;
     font-weight: 700;
-    margin-top: 20px;
+    margin: 20px auto 0;
     text-align: center;
+    max-width: 65%;
 
     a {
       color: $text-color;
@@ -374,7 +375,7 @@ $mobile-breakpoint: 800px;
   @media (max-width: $mobile-breakpoint) {
     .episode-title {
       margin: 0 auto;
-      max-width: 75%;
+      max-width: 65%;
     }
 
     svg.circles {
@@ -383,7 +384,7 @@ $mobile-breakpoint: 800px;
     }
 
     svg.pendulum {
-      left: 75%;
+      left: 80%;
       top: 0%;
       width: 155px;
     }
@@ -396,7 +397,7 @@ $mobile-breakpoint: 800px;
 
     svg.crosses {
       left: 15%;
-      top: 16%;
+      top: 13%;
     }
 
     svg.points {
