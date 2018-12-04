@@ -52,7 +52,7 @@ $mobile-breakpoint: 800px;
   }
 
   svg.icon {
-    left: 70%;
+    left: 75%;
     top: 8%;
   }
 
@@ -65,18 +65,9 @@ $mobile-breakpoint: 800px;
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
     svg.icon {
-      left: 66%;
+      left: 75%;
       top: 4%;
       width: 150px;
     }
-
-    svg.crosses {
-      // left: 15%;
-      // top: 33%;
-    }
-
-    // svg.points {
-      // left: -15%;
-    // }
   }
 }
