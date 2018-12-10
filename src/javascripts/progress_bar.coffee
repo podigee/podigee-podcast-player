@@ -55,6 +55,8 @@ class ProgressBar
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
+    if @player.duration < 3600
+      timeString = timeString.replace(/^00:/, '')
     @currentTime = prefix + timeString
     @view.update(@context())
 
