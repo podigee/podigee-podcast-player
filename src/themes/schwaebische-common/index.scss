@@ -297,7 +297,17 @@ $mobile-breakpoint: 800px;
   }
 }
 
-.podcast-player.mode-iframe {
-  @media (max-width: $mobile-breakpoint) {
+.podcast-player.mode-script {
+  @media (max-width: 460px) {
+    .footer {
+      text-align: center;
+      padding-bottom: 15px;
+    }
+
+    .all-episodes-link {
+      display: block;
+      float: none;
+      margin-top: 10px;
+    }
   }
 }
