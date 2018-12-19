@@ -28,7 +28,7 @@ $mobile-breakpoint: 800px;
 
   .podcast-title {
     font-family: 'Ubuntu', sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 100;
     margin-top: 92px;
     text-align: center;
@@ -37,11 +37,11 @@ $mobile-breakpoint: 800px;
 
   .episode-title {
     font-family: 'Ubuntu', sans-serif;
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 700;
     margin: 20px auto 0;
     text-align: center;
-    max-width: 65%;
+    max-width: 50%;
 
     a {
       color: $text-color;
@@ -65,7 +65,7 @@ $mobile-breakpoint: 800px;
     .progress-bar-time-played {
       color: $text-color;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 700;
       position: absolute;
       text-align: left;
@@ -149,7 +149,7 @@ $mobile-breakpoint: 800px;
   .duration {
     color: $text-color;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     position: absolute;
     right: 0;
@@ -189,31 +189,6 @@ $mobile-breakpoint: 800px;
     background: $text-color;
   }
 
-  .frame-desktop {
-    height: 103%;
-    left: -3%;
-    position: absolute;
-    pointer-events: none;
-    top: -8%;
-    width: 101%;
-
-    svg.frame {
-      height: 114%;
-      width: 106%;
-
-      .st0 {
-        fill: $text-color;
-      }
-
-      .st1 {
-        fill: none;
-        stroke: $text-color;
-        stroke-width: 2;
-        stroke-miterlimit: 10;
-      }
-    }
-  }
-
   .graphics {
     height: 100%;
     left: 0;
@@ -225,95 +200,6 @@ $mobile-breakpoint: 800px;
     svg {
       position: absolute;
     }
-
-    svg.circles {
-      height: 9px;
-      width: 46px;
-
-      .st0 {
-        clip-path: url(#SVGID_2_);
-        fill: #FFFFFF;
-      }
-    }
-
-    svg.pendulum {
-      height: 178px;
-      width: 255px;
-
-      .st0 {
-        fill: none;
-        stroke: #FFFFFF;
-        stroke-width: 2;
-        stroke-miterlimit: 10;
-      }
-
-      .st1 {
-        fill: #FFFFFF;
-      }
-    }
-
-    svg.ring {
-      height: 185px;
-      width: 185px;
-
-      .st0 {
-        fill: #E81010;
-      }
-
-      .st1 {
-        fill: none;
-        stroke: #FFFFFF;
-        stroke-width: 2;
-        stroke-miterlimit: 10;
-      }
-
-      .st2 {
-        fill: #FFFFFF;
-      }
-    }
-
-    svg.crosses {
-      height: 40px;
-      width: 40px;
-
-      .st0 {
-        fill: #FFFFFF;
-      }
-    }
-
-    svg.points {
-      height: 172px;
-      width: 172px;
-
-      .st0 {
-        fill: #F80038;
-      }
-    }
-  }
-
-  svg.circles {
-    left: 15%;
-    top: 30%;
-  }
-
-  svg.pendulum {
-    left: 78%;
-    top: 10%;
-  }
-
-  svg.ring {
-    left: -8%;
-    top: 25%;
-  }
-
-  svg.crosses {
-    left: 30%;
-    top: 16%;
-  }
-
-  svg.points {
-    left: 60%;
-    top: 80%;
   }
 
   .footer {
@@ -327,7 +213,7 @@ $mobile-breakpoint: 800px;
       background: transparent;
       border: none;
       color: $text-color;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: bold;
       margin-right: 5px;
       outline: none;
@@ -338,6 +224,8 @@ $mobile-breakpoint: 800px;
       display: inline-block;
       margin: 0;
       padding: 0;
+      position: relative;
+      top: -3px;
     }
 
     .podcast-connections-item {
@@ -363,7 +251,7 @@ $mobile-breakpoint: 800px;
     .all-episodes-link {
       color: $text-color;
       float: right;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: bold;
       letter-spacing: .8px;
       padding: 0;
@@ -374,40 +262,37 @@ $mobile-breakpoint: 800px;
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
+    .podcast-title {
+      margin-top: 50px;
+    }
+
     .episode-title {
+      font-size: 28px;
       margin: 0 auto;
       max-width: 65%;
     }
 
-    svg.circles {
-      left: 4%;
-      top: 30%;
-    }
-
-    svg.pendulum {
-      left: 80%;
-      top: 0%;
-      width: 155px;
-    }
-
-    svg.ring {
-      left: -18%;
-      top: 25%;
-      width: 125px;
-    }
-
-    svg.crosses {
-      left: 15%;
-      top: 13%;
-    }
-
-    svg.points {
-      left: 60%;
-      top: 80%;
+    .progress-bar-container {
+      margin-bottom: 20px;
+      margin-top: 40px;
     }
 
     .footer {
       padding: 0 30px 30px;
+    }
+
+    .graphics {
+      height: auto;
+      margin-bottom: -70px;
+      margin-top: 10px;
+      position: static;
+      text-align: center;
+
+      svg.icon {
+        left: auto;
+        position: static;
+        top: auto;
+      }
     }
   }
 }
