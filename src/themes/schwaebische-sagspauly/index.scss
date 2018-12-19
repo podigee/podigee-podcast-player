@@ -8,7 +8,9 @@ $mobile-breakpoint: 800px;
 .podcast-player {
   .graphics {
     svg.icon {
-      width: 240px;
+      left: 75%;
+      top: 10%;
+      width: 200px;
 
       .st0 {
         fill:#1D1D1B;
@@ -23,47 +25,15 @@ $mobile-breakpoint: 800px;
         fill:#1D1D1B;
       }
     }
-
-    svg.points {
-      left: 90%;
-      height: 220px;
-      top: 40%;
-      width: 172px;
-
-      .st0 {
-        fill: #ef012d;
-      }
-    }
-
-    svg.crosses {
-      .st0 {
-        fill: #1D1D1B;
-      }
-    }
-
-    svg.circles {
-      left: 0%;
-      top: 44%;
-
-      .st0 {
-        fill: #1D1D1B;
-      }
-    }
-  }
-
-  svg.icon {
-    left: 75%;
-    top: 8%;
-  }
-
-  svg.crosses {
-    left: 30%;
-    top: 10%;
   }
 }
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
+    .podcast-title {
+      margin-top: 80px;
+    }
+
     svg.icon {
       left: 75%;
       top: 4%;
