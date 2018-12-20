@@ -16,7 +16,6 @@ $mobile-breakpoint: 800px;
   background-color: $background-color;
   color: $text-color;
   font-family: 'Ubuntu', sans-serif;
-  height: 486px;
   min-width: 100%;
   overflow: hidden;
   position: relative;
@@ -203,10 +202,8 @@ $mobile-breakpoint: 800px;
   }
 
   .footer {
-    bottom: 0;
     color: $text-color;
     padding: 0 60px 30px;
-    position: absolute;
     width: 100%;
 
     .subscribe-button {
