@@ -1,5 +1,6 @@
 IframeResizer = require('./iframe_resizer.coffee')
 SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
+_ = require('lodash')
 
 class Iframe
   constructor: (@elem)->
@@ -9,7 +10,7 @@ class Iframe
       if config.match(/^{/)
         JSON.parse(config)
       else
-        window[config] || {json_config: config}
+        _.get(window, config) || {json_config: config}
     else
       config
 
