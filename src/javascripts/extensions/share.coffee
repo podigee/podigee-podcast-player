@@ -79,7 +79,7 @@ class Share extends Extension
     @bindEvents()
 
   attachEvents: =>
-    $(@app.player.media).on('timeupdate', @buildContext)
+    @app.player.addEventListener('timeupdate', @buildContext)
 
   bindEvents: () =>
     @panel.find('.share-copy-url').on 'focus', @copyUrlAction
