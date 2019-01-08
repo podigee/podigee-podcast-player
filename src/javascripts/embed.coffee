@@ -3,7 +3,7 @@ SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
-    config = @elem.getAttribute('data-configuration').replace(/\s/g, '')
+    config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
     @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
