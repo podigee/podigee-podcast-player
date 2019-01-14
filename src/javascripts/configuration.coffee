@@ -129,8 +129,8 @@ class Configuration
     rivets.formatters.description = (text) =>
       elem = document.createElement('div')
       elem.innerHTML = text.trim()
-      elem.querySelectorAll('a').forEach (link) =>
-        link.target = '_parent'
+      links = elem.querySelectorAll('a')
+      Array.prototype.forEach.call(links, (link) => link.target = '_parent')
       elem.innerHTML
 
 module.exports = Configuration
