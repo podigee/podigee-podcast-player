@@ -3,13 +3,13 @@ SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
-    config = @elem.getAttribute('data-configuration').replace(/\s/g, '')
+    config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
     @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
         JSON.parse(config)
       else
-        window[config] || {json_config: config}
+        @getInSiteConfig(config) || {json_config: config}
     else
       config
 
@@ -27,6 +27,19 @@ class Iframe
     @replaceElem()
     @injectConfiguration() if @configuration
     @setupSubscribeButton()
+
+  getInSiteConfig: (config) ->
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./)
+      configSplit = config.split('.')
+      tempConfig = null
+      configSplit.forEach (cfg) ->
+        if tempConfig == null
+          tempConfig = window[cfg]
+        else
+          tempConfig = tempConfig[cfg]
+      tempConfig
+    else
+      window[config]
 
   randomId: (string) ->
     hash = 0
@@ -62,8 +75,17 @@ class Iframe
     IframeResizer.listen('resizePlayer', @iframe)
 
   setupSubscribeButton: ->
-    subscribeButton = new SubscribeButtonTrigger(@iframe)
-    subscribeButton.listen()
+    window.addEventListener 'message', ((event) =>
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'loadSubscribeButton'
+
+      subscribeButton = new SubscribeButtonTrigger(@iframe)
+      subscribeButton.listen()
+    ), false
 
   replaceElem: ->
     @iframe.className += @elem.className

@@ -3,8 +3,9 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Utils = require('./utils.coffee')
 CustomStyles = require('./custom_styles.coffee')
-SubscribeButton = require('./subscribe_button.coffee')
+SubscribeButton = require('./extensions/subscribe_button.coffee')
 
 class Theme
   constructor: (@app) ->
@@ -13,6 +14,8 @@ class Theme
 
   themeConfig: =>
     options = @app.extensionOptions.SubscribeBar
+    if options?.disabled == false
+      SubscribeButton.load(@app)
     {
       showSubscribeBar: options?.disabled == false,
       showSubscribeButton: !@app.isInAMPMode(),
@@ -38,7 +41,11 @@ class Theme
     arg1 || arg2
 
   context: =>
-    _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+    attrs = _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+    # hide All Episodes link when on the page that is linked to
+    if @app.options.theme == 'default' && Utils.onSameUrl(attrs.podcastUrl)
+      attrs.podcastUrl = null
+    attrs
 
   t: (key) ->
     @app.i18n.t(key)
@@ -71,12 +78,12 @@ class Theme
       @loadCss(themeCss)
       @loadHtml(themeHtml)
     else if theme.constructor == String
-      @loadInternalTheme(theme)
+      @loadInternalTheme(theme, themeHtml, themeCss)
 
-  loadInternalTheme: (name) =>
+  loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss("#{pathPrefix}.css")
-    @loadHtml("#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css")
+    @loadHtml(themeHtml || "#{pathPrefix}.html")
 
   loadHtml: (path) =>
     loaded = $.Deferred()

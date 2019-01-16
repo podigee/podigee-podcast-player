@@ -15,8 +15,9 @@ class Player
       self.media.preload = "none"
     @loadFile()
     @attachEvents()
-    @app.init(self)
     @setInitialTime()
+    @app.init(self)
+    @app.updateTime(@currentTimeInSeconds)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -55,8 +56,9 @@ class Player
 
     @src = files[0].uri
 
-    # if src was already set for the audio element we can immediately
-    if @media.src.length
+    # If src was already set for the audio element we can immediately set src
+    # If we are dealing with Safari 10 or below we also need to do this
+    if @media.src.length || Utils.isLteSafari10()
       @media.src = @src
     @setDuration()
 
@@ -97,7 +99,9 @@ class Player
     if deeplink.startTime > 0
       @currentTimeInSeconds = deeplink.startTime
       @media.currentTime = deeplink.startTime
-      @app.updateTime(@currentTimeInSeconds)
+    else
+      @currentTimeInSeconds = 0
+    @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @stopTime = deeplink.endTime if deeplink.endTime?
 
   setCurrentTime: (time) =>
@@ -108,6 +112,7 @@ class Player
       @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @app.updateTime(@currentTimeInSeconds)
+    @emitEvent('timeupdate')
 
   checkStopTime: () =>
     return unless @stopTime?
@@ -167,5 +172,12 @@ class Player
     @app.togglePlayState()
 
   playing: false
+
+  eventListeners: {}
+  addEventListener: (type, listener) ->
+    @eventListeners[type] = listener
+
+  emitEvent: (type, options) ->
+    @eventListeners[type](options)
 
 module.exports = Player

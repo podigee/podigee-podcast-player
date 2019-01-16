@@ -19,11 +19,13 @@ class CustomStyles
     }
 
     .podcast-player a,
+    .podcast-player .episode-basic-info .episode-title,
     .podcast-player .episode-title a {
       color: #{@primary};
     }
 
     .podcast-player a:hover,
+    .podcast-player .episode-basic-info .episode-title:hover,
     .podcast-player .episode-title a:hover {
       color: #{@primaryHover};
     }
