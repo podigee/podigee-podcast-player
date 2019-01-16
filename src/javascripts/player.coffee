@@ -17,6 +17,7 @@ class Player
     @attachEvents()
     @setInitialTime()
     @app.init(self)
+    @app.updateTime(@currentTimeInSeconds)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -98,7 +99,6 @@ class Player
     if deeplink.startTime > 0
       @currentTimeInSeconds = deeplink.startTime
       @media.currentTime = deeplink.startTime
-      @app.updateTime(@currentTimeInSeconds)
     else
       @currentTimeInSeconds = 0
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
