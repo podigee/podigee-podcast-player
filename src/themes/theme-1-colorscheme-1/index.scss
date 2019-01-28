@@ -358,20 +358,15 @@
 
   @media (max-width: $mobile-breakpoint) {
     .buttons {
-      margin-top: 25px;
+      padding-bottom: 10px;
       position: static;
-      text-align: right;
+      text-align: center;
+      width: 100%;
 
       button {
         font-size: 24px;
         padding: 0 8px;
         width: 35px;
-      }
-    }
-
-    .progress-bar {
-      .progress-bar-rail {
-        min-height: 20px;
       }
     }
 

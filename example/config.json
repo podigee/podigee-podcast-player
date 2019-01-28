@@ -1,8 +1,8 @@
 {
   "options": {
-    "theme": "default",
+    "theme": "theme-1-colorscheme-1",
     "sslProxy": "https://cdn.podigee.com/ssl-proxy/",
-    "startPanel": "ChapterMarks"
+    "startPanel": ""
   },
   "extensions": {
     "ChapterMarks": {},
