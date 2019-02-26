@@ -43,7 +43,7 @@ class PodigeePodcastPlayer
       self.episode.productionData = data.data
 
   getConfiguration: () ->
-    new Configuration(this)
+    @configuration = new Configuration(this)
 
   renderTheme: =>
     rendered = $.Deferred()
@@ -171,6 +171,9 @@ class PodigeePodcastPlayer
 
   isInIframeMode: ->
     @options.iframeMode == 'iframe'
+
+  isInAMPMode: ->
+    @options.amp == true
 
 if window.inEmbed
   window.PodigeePodcastPlayer = PodigeePodcastPlayer

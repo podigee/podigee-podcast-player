@@ -1,5 +1,46 @@
 # Changelog
 
+## 2018-06-04
+
+### Added
+
+- Uses pagination for loading playlist from remote servers
+- Improve AMP compatibility
+
+## 2018-05-29
+
+### Fixes
+
+- Time jumping when trying to change the time display mode
+
+## 2018-05-15
+
+### Added
+
+- Allow passing custom options through an attribute on the script tag
+
+## 2018-04-11
+
+### Added
+
+- Allow using a div element as the marker for the position the player should be rendered
+
+### Fixes
+
+- Color calculation for progress bar
+
+## 2018-03-23
+
+### Changes
+
+- Links in episode description are rewritten to always open in parent window
+
+## 2018-03-13
+
+### Fixes
+
+- fix umlauts in episode title being cut off in Firefox
+
 ## 2018-03-09
 
 ### Added

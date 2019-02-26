@@ -3,18 +3,22 @@ SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
-    config = @elem.getAttribute('data-configuration').replace(/\s/g, '')
+    config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
     @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
         JSON.parse(config)
       else
-        window[config] || {json_config: config}
+        @getInSiteConfig(config) || {json_config: config}
     else
       config
 
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
+    try
+      @configuration.customOptions = JSON.parse(@elem.getAttribute('data-options'))
+    catch
+      console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
     @url = "#{@origin()}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
 
@@ -23,6 +27,19 @@ class Iframe
     @replaceElem()
     @injectConfiguration() if @configuration
     @setupSubscribeButton()
+
+  getInSiteConfig: (config) ->
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./)
+      configSplit = config.split('.')
+      tempConfig = null
+      configSplit.forEach (cfg) ->
+        if tempConfig == null
+          tempConfig = window[cfg]
+        else
+          tempConfig = tempConfig[cfg]
+      tempConfig
+    else
+      window[config]
 
   randomId: (string) ->
     hash = 0
@@ -38,7 +55,7 @@ class Iframe
     return hash.toString(16).substring(1)
 
   origin: () ->
-    scriptSrc = @elem.src
+    scriptSrc = @elem.src || @elem.getAttribute('src')
     unless window.location.protocol.match(/^https/)
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
@@ -58,8 +75,17 @@ class Iframe
     IframeResizer.listen('resizePlayer', @iframe)
 
   setupSubscribeButton: ->
-    subscribeButton = new SubscribeButtonTrigger(@iframe)
-    subscribeButton.listen()
+    window.addEventListener 'message', ((event) =>
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'loadSubscribeButton'
+
+      subscribeButton = new SubscribeButtonTrigger(@iframe)
+      subscribeButton.listen()
+    ), false
 
   replaceElem: ->
     @iframe.className += @elem.className
@@ -84,7 +110,7 @@ class Iframe
 class Embed
   constructor: ->
     players = []
-    elems = document.querySelectorAll('script.podigee-podcast-player')
+    elems = document.querySelectorAll('script.podigee-podcast-player, div.podigee-podcast-player')
 
     return if elems.length == 0
 

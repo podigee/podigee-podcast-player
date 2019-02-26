@@ -68,6 +68,7 @@ class Configuration
 
     @app.extensionOptions = @configuration.extensions || {}
 
+    @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
     @app.options.parentLocationHash = @configuration.parentLocationHash
@@ -110,11 +111,26 @@ class Configuration
     # Can be 'script' or 'iframe' depending on how the player is embedded
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
+    amp: false,
     locale: 'en-US'
+    theme: 'default'
+    themeHtml: null
+    themeCss: null
+    customStyle: null
+    startPanel: null
   }
 
   configureTemplating: =>
     rivets.configure(
       prefix: 'pp'
     )
+
+    # make links text open in parent window
+    rivets.formatters.description = (text) =>
+      elem = document.createElement('div')
+      elem.innerHTML = text.trim()
+      links = elem.querySelectorAll('a')
+      Array.prototype.forEach.call(links, (link) => link.target = '_parent')
+      elem.innerHTML
+
 module.exports = Configuration

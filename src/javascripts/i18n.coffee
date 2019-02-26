@@ -62,6 +62,7 @@ class I18n
       playlist:
         show: 'Show playlist'
         title: 'Playlist'
+        load_more: 'Load more episodes'
       share:
         copy_episode_link: 'Copy episode link'
         email: 'Email'
@@ -83,6 +84,7 @@ class I18n
         podcastOnItunes: 'View Podcast on iTunes'
         podcastOnSpotify: 'View Podcast on Spotify'
         podcastOnDeezer: 'View Podcast on Deezer'
+        podcastOnAlexa: 'View Podcast on Alexa'
         subscribe: 'Subscribe'
 
     'de-DE':
@@ -99,6 +101,7 @@ class I18n
       playlist:
         show: 'Wiedergabeliste anzeigen'
         title: 'Wiedergabeliste'
+        load_more: 'Mehr Episoden laden'
       share:
         copy_episode_link: 'Link zur Episode kopieren'
         email: 'E-Mail'
@@ -120,6 +123,7 @@ class I18n
         podcastOnItunes: 'Podcast auf iTunes ansehen'
         podcastOnSpotify: 'Podcast auf Spotify ansehen'
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
+        podcastOnAlexa: 'Podcast auf Alexa ansehen'
         subscribe: 'Abonnieren'
 
 module.exports = I18n

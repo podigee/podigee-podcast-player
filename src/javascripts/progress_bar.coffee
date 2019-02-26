@@ -55,6 +55,8 @@ class ProgressBar
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
+    if @player.duration < 3600
+      timeString = timeString.replace(/^00:/, '')
     @currentTime = prefix + timeString
     @view.update(@context())
 
@@ -128,6 +130,7 @@ class ProgressBar
     @handleDrop(event)
 
   handlePickup: (event) =>
+    return if (event.target.className == 'progress-bar-time-played')
     $(@app.elem).on 'mousemove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo

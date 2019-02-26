@@ -15,8 +15,9 @@ class Player
       self.media.preload = "none"
     @loadFile()
     @attachEvents()
-    @app.init(self)
     @setInitialTime()
+    @app.init(self)
+    @app.updateTime(@currentTimeInSeconds)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -53,7 +54,12 @@ class Player
     files = @sortByPlayability(files)
     files = @sortByFormat(files)
 
-    @media.src = files[0].uri
+    @src = files[0].uri
+
+    # If src was already set for the audio element we can immediately set src
+    # If we are dealing with Safari 10 or below we also need to do this
+    if @media.src.length || Utils.isLteSafari10()
+      @media.src = @src
     @setDuration()
 
   # filter out unplayable files
@@ -93,7 +99,9 @@ class Player
     if deeplink.startTime > 0
       @currentTimeInSeconds = deeplink.startTime
       @media.currentTime = deeplink.startTime
-      @app.updateTime(@currentTimeInSeconds)
+    else
+      @currentTimeInSeconds = 0
+    @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @stopTime = deeplink.endTime if deeplink.endTime?
 
   setCurrentTime: (time) =>
@@ -104,6 +112,7 @@ class Player
       @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @app.updateTime(@currentTimeInSeconds)
+    @emitEvent('timeupdate')
 
   checkStopTime: () =>
     return unless @stopTime?
@@ -138,6 +147,11 @@ class Player
 
   play: () ->
     return unless @media.paused
+
+    # set src on first playback to prevent IE from preloading the audio file
+    unless @media.src
+      @media.src = @src
+
     if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
     if @media.readyState < 1 # has metadata available
@@ -158,5 +172,12 @@ class Player
     @app.togglePlayState()
 
   playing: false
+
+  eventListeners: {}
+  addEventListener: (type, listener) ->
+    @eventListeners[type] = listener
+
+  emitEvent: (type, options) ->
+    @eventListeners[type](options)
 
 module.exports = Player
