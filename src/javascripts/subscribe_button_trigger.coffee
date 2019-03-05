@@ -1,3 +1,5 @@
+require('./polyfills/custom_event.coffee')
+
 class SubscribeButtonTrigger
   # referenceElement is the DOM element after which the script tag should be inserted
   constructor: (@referenceElement) ->

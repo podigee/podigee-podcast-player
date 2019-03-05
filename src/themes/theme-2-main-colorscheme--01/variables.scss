@@ -1,0 +1,11 @@
+$background-color: transparent !default;
+$default-color: #1A2B36 !default; // main darker
+$light-grey: #F7FCFF !default;
+$dark-grey: #ABA89A !default;
+$highlight1: #5792B5 !default; // main
+$highlight1-light: #9CCBE6 !default; // main light
+$highlight2: #DBCC88 !default; // highlight
+$transcript-highlight: $highlight1-light !default;
+$transcript-search-highlight: $highlight1-light !default;
+
+$mobile-breakpoint: 500px;
