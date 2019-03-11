@@ -139,7 +139,7 @@ class Theme
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
-    @panels.hide() unless @app.isInIframeMode()
+    @panels.hide() unless @app.isInIframeMode() || @app.options.startPanels
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
@@ -170,6 +170,9 @@ class Theme
 
     if extension.name() == @app.options.startPanel
       extension.button.trigger('click')
+
+    if @app.options.startPanels && @app.options.startPanels.indexOf(extension.name()) != -1
+      extension.panel.show()
 
     if !@app.options.startPanel && @app.isInIframeMode()
       @buttons.hide()
