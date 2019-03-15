@@ -1,0 +1,45 @@
+<div class="podcast-player">
+  <div class="background">
+    <span class="background__corner background__corner--top"></span>
+    <span class="background__corner background__corner--bottom"></span>
+  </div>
+  <div class="main">
+    <img class="cover-image" pp-src="coverUrl" />
+    <div class="main-content">
+      <div class="episode-basic-info">
+        <div class="episode-subtitle" pp-html="subtitle"></div>
+        <div class="episode-title">
+          <a pp-href="url" pp-if="url" pp-html="title" target="_parent"></a>
+          <span pp-unless="url" pp-html="title"></span>
+        </div>
+      </div>
+      <audio></audio>
+      <div class="main-player">
+        <div class="controls">
+          <button class="play-button" pp-aria-label="translations.playPause" pp-title="translations.playPause"></button>
+        </div>
+        <progressbar/>
+        <div class="controls-advanced">
+          <button class="backward-button" pp-title="translations.backward" pp-aria-label="translations.backward"></button>
+          <button class="forward-button" pp-title="translations.forward" pp-aria-label="translations.forward"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panels"></div>
+  <div class="subscribe">
+    <h2 class="subscribe__title">Subscribe to the podcast</h2>
+    <ul class="subscribe__links">
+      <li class="subscribe__links__item">Radio Invernalia FM on 
+        <a class="subscribe__links__item__link" href="#" target="_blank">iTunes</a>
+      </li>
+      <li class="subscribe__links__item">Radio Invernalia FM on 
+        <a class="subscribe__links__item__link" href="#" target="_blank">Spotify</a>
+      </li>
+      <li class="subscribe__links__item">Radio Invernalia FM on 
+        <a class="subscribe__links__item__link" href="#" target="_blank">Deezer</a>
+      </li>
+    </ul>
+    <button class="subscribe__button" id="subscribe__button">Subscribe</button>
+  </div>
+</div>
