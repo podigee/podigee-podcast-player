@@ -8,13 +8,13 @@
   padding: 60px;
   position: relative;
   overflow: hidden;
-  
+
   &:after {
     content: '';
     display: block;
     clear: both;
-}
-  
+  }
+
   &, *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -83,7 +83,7 @@
 
   .background {
     background-color: $color-01;
-    background-image: url("https://i.imgur.com/nEuq4tY.png");
+    background-image: url("background.png");
     background-repeat: no-repeat;
     background-size: contain;
     border: 10px solid $color-01;
@@ -169,7 +169,7 @@
       width: 60px;
     }
   }
-  
+
   .controls-advanced {
     position: absolute;
     right: 20px;
@@ -188,7 +188,7 @@
 
     button {
       transition: transform 0.125s ease-in-out;
-  
+
       &:active,
       &:hover {
         transform: scale(1.25);
@@ -224,7 +224,7 @@
     }
 
     &::before {
-      background-image: url("https://i.imgur.com/VsQBlXj.png");
+      background-image: url("ornament.png");
       background-position: 50% 50%;
       background-size: contain;
       content: "";
@@ -242,7 +242,7 @@
     float: right;
     margin-top: 10px;
     width: calc(100% - 220px);
-    
+
     @media (max-width: $mobile-breakpoint) {
       margin-top: 0;
       float: none;
@@ -255,7 +255,7 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    
+
     @media (max-width: $mobile-breakpoint) {
       flex-direction: column;
       margin-top: 20px;
@@ -264,7 +264,7 @@
 
   .progress-bar {
     width: calc(100% - 80px);
-    
+
     @media (max-width: $mobile-breakpoint) {
       margin-top: 10px;
       width: 100%;
@@ -388,7 +388,7 @@
     }
 
     &::before {
-      background-image: url("https://i.imgur.com/VsQBlXj.png");
+      background-image: url("ornament.png");
       background-position: 50% 50%;
       background-size: contain;
       content: "";
@@ -420,7 +420,7 @@
       padding: 0;
       width: calc(100% - 320px);
       height: 400px;
-      
+
       @media (max-width: $mobile-breakpoint) {
         float: none;
         margin-top: 80px;
@@ -431,7 +431,7 @@
         margin-bottom: 40px;
         text-align: center;
         position: relative;
-    
+
         &::after {
           background-color: $color-03;
           content: "";
@@ -443,9 +443,9 @@
           width: 140px;
           height: 1px;
         }
-    
+
         &::before {
-          background-image: url("https://i.imgur.com/VsQBlXj.png");
+          background-image: url("ornament.png");
           background-position: 50% 50%;
           background-size: contain;
           content: "";
@@ -460,7 +460,7 @@
 
       ul {
         display: block;
-        height: calc(100% - 54px);
+        height: calc(100% - 93px);
         margin: 0;
         padding: 0;
         overflow-y: scroll;
@@ -526,6 +526,17 @@
           }
         }
       }
+
+      .buttons {
+        position: relative;
+        right: 0;
+        text-align: center;
+        top: 2px;
+
+        button {
+          width: auto;
+        }
+      }
     }
 
     .episode-info {
@@ -536,7 +547,7 @@
       overflow-y: auto;
       padding: 0;
       width: calc(100% - 280px);
-    
+
       @media (max-width: $mobile-breakpoint) {
         width: 100%;
       }
@@ -559,7 +570,7 @@
       left: 10px;
       width: 240px;
       text-align: center;
-    
+
       @media (max-width: $mobile-breakpoint) {
         float: none;
         margin: 40px auto 0 auto;
@@ -603,11 +614,11 @@
           width: 10px;
           height: 10px;
         }
-  
+
         &::after {
           left: -10px;
         }
-  
+
         &::before {
           right: -10px;
         }
@@ -627,7 +638,7 @@
         width: 60px;
         height: 60px;
         transition: transform 0.125s ease-in-out;
-    
+
         &:active,
         &:hover {
           transform: scale(1.1);
@@ -655,17 +666,17 @@
           height: 1px;
         }
       }
-      
+
       .share-link-email {
-        background-image: url("https://i.imgur.com/9Zv8Hux.png");
+        background-image: url("icon-mail.png");
       }
-      
+
       .share-link-facebook {
-        background-image: url("https://i.imgur.com/IDU4dxf.png");
+        background-image: url("icon-facebook.png");
       }
-      
+
       .share-link-twitter {
-        background-image: url("https://i.imgur.com/cJdTdkH.png");
+        background-image: url("icon-twitter.png");
       }
 
       .share-episode-link,
@@ -687,7 +698,7 @@
     position: relative;
     text-align: center;
     width: 280px;
-    
+
     @media (max-width: $mobile-breakpoint) {
       width: 100%;
       max-width: 400px;
@@ -705,7 +716,7 @@
       left: 10px;
       width: 260px;
       height: 10px;
-    
+
       @media (max-width: $mobile-breakpoint) {
         width: calc(100% - 20px);
       }
@@ -713,7 +724,7 @@
   }
 
   .subscribe__button {
-    background-image: url("https://i.imgur.com/HulZ59J.png");
+    background-image: url("subscribe.png");
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: contain;
@@ -765,7 +776,7 @@
     }
 
     &::before {
-      background-image: url("https://i.imgur.com/VsQBlXj.png");
+      background-image: url("ornament.png");
       background-position: 50% 50%;
       background-size: contain;
       content: "";

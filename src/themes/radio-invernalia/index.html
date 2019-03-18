@@ -28,18 +28,18 @@
   </div>
   <div class="panels"></div>
   <div class="subscribe">
-    <h2 class="subscribe__title">Subscribe to the podcast</h2>
+    <h2 class="subscribe__title">Suscríbete al podcast</h2>
     <ul class="subscribe__links">
-      <li class="subscribe__links__item">Radio Invernalia FM on 
-        <a class="subscribe__links__item__link" href="#" target="_blank">iTunes</a>
+      <li class="subscribe__links__item" pp-if="podcastconnections.itunes">Radio Invernalia FM en
+        <a class="subscribe__links__item__link" pp-href="podcastConnections.itunes" pp-title="translations.podcastOnItunes" pp-aria-label="translations.podcastOnItunes" target="_parent">Apple Podcasts</a>
       </li>
-      <li class="subscribe__links__item">Radio Invernalia FM on 
-        <a class="subscribe__links__item__link" href="#" target="_blank">Spotify</a>
+      <li class="subscribe__links__item" pp-if="podcastconnections.spotify">Radio Invernalia FM en
+        <a class="subscribe__links__item__link" pp-href="podcastConnections.spotify" pp-title="translations.podcastOnSpotify" pp-aria-label="translations.podcastOnSpotify" target="_parent">Spotify</a>
       </li>
-      <li class="subscribe__links__item">Radio Invernalia FM on 
-        <a class="subscribe__links__item__link" href="#" target="_blank">Deezer</a>
+      <li class="subscribe__links__item" pp-if="podcastconnections.deezer">Radio Invernalia FM en
+        <a class="subscribe__links__item__link" pp-href="podcastConnections.deezer" pp-title="translations.podcastOnDeezer" pp-aria-label="translations.podcastOnDeezer" target="_parent">Deezer</a>
       </li>
     </ul>
-    <button class="subscribe__button" id="subscribe__button">Subscribe</button>
+    <button class="subscribe__button subscribe-button" id="subscribe__button">Suscríbete</button>
   </div>
 </div>
