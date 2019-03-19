@@ -27,21 +27,22 @@ class EpisodeInfo extends Extension
     showOnStart: false
 
   renderPanel: =>
-    @panel = $(@panelHtml)
+    @panel = $(@panelHtml())
     rivets.bind(@panel, @episode)
     @panel.hide()
 
-  buttonHtml:
+  buttonHtml: ->
     """
-    <button class="episode-info-button" title="Show more info"></button>
+    <button class="episode-info-button" title="#{@t('episode_info.more_info')}" aria-label="#{@t('episode_info.more_info')}"></button>
     """
 
-  panelHtml:
+  panelHtml: ->
     """
     <div class="episode-info">
-      <h1 class="episode-title" pp-html="title"></h1>
+      <h3>#{@t('episode_info.title')}</h3>
+      <h3 class="episode-title" pp-html="title"></h3>
       <p class="episode-subtitle" pp-html="subtitle"></p>
-      <p class="episode-description" pp-html="description"></p>
+      <p class="episode-description" pp-html="description | description"></p>
     </div>
     """
 

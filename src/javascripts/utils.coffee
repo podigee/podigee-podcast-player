@@ -4,9 +4,15 @@ class Utils
     string = window.location.search.replace(/^\?/, '')
     split = string.split('&')
 
+    processValue = (value) =>
+      value = decodeURIComponent(value)
+      value = true if value == 'true'
+      value = false if value == 'false'
+      value
+
     for string in split
-      array = string.split('=')
-      options[array[0]] = decodeURIComponent(array[1])
+      [key, value] = string.split('=')
+      options[key] = processValue(value)
 
     options
 
@@ -40,7 +46,37 @@ class Utils
 
     number
 
-  @calculateCursorPosition: (event) ->
-    event.pageX - event.target.offsetLeft
+  @calculateCursorPosition: (event, elem) ->
+    if event.originalEvent.changedTouches?.length
+      pageX = event.originalEvent.changedTouches[0].pageX
+    else
+      pageX = event.pageX
+
+    pageX - elem.getBoundingClientRect().left
+
+  # check if the player is embedded on the same URL as the parameter
+  @onSameUrl: (url) ->
+    document.referrer.replace(/\/$/, '') == url
+
+  @isIE9: () ->
+    try
+      isIE = navigator.appVersion.indexOf("MSIE") != -1
+      return false unless isIE
+      version = parseFloat(navigator.appVersion.split("MSIE")[1])
+      return false if version > 9
+      return true
+    catch
+      return true
+
+  # check if Safari 10 or below is used
+  @isLteSafari10: () ->
+    try
+      isSafari = navigator.appVersion.indexOf('Safari') != -1
+      return false unless isSafari
+      version = parseInt(navigator.appVersion.match(/Version\/(\d{1,2})\.\d/)[1], 10)
+      return true if version <= 10
+      return false
+    catch
+      return false
 
 module.exports = Utils

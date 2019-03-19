@@ -3,6 +3,8 @@ _ = require('lodash')
 Utils = require('./utils.coffee')
 rivets = require('rivets')
 
+ExternalData = require('./external_data.coffee')
+I18n = require('./i18n.coffee')
 Podcast = require('./podcast.coffee')
 
 class Configuration
@@ -25,14 +27,21 @@ class Configuration
     $(window).on 'message', (event) =>
       return unless event.originalEvent.data
       data = event.originalEvent.data
-      @configuration = JSON.parse(data)
-      return unless @configuration.episode? || @configuration.json_config?
+      try
+        @configuration = JSON.parse(data)
+      catch error
+        return
 
       if @configuration.json_config
         @fetchJsonConfiguration()
       else
         @setConfigurations()
-    window.parent.postMessage('sendConfig', '*')
+
+    data = JSON.stringify({
+      id: @frameOptions.id,
+      listenTo: 'sendConfig'
+    })
+    window.parent.postMessage(data, '*')
 
   fetchJsonConfiguration: =>
     return unless @configuration.json_config && @configuration.json_config.length
@@ -47,28 +56,45 @@ class Configuration
       self.configuration = _.extend(self.configuration, data)
       self.setConfigurations(true)
     ).error((xhr, status, trace) ->
-      console.debug("[podigee podcast player] Error while fetching player configuration:")
-      console.debug("xhr:", xhr)
-      console.debug("status:", status)
-      console.debug("trace:", trace)
+      console.log("[podigee podcast player] Error while fetching player configuration:")
+      console.log("xhr:", xhr)
+      console.log("status:", status)
+      console.log("trace:", trace)
     )
 
   setConfigurations: (viaJSON) =>
+    return unless @configuration.episode
     @app.podcast = new Podcast(@app, @configuration.podcast || {})
 
-    @app.episode = @configuration.episode
+    @app.extensionOptions = @configuration.extensions || {}
+
+    @app.customOptions = @configuration.customOptions
+    @configuration.options ?= {}
+    @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
+    @app.options.parentLocationHash = @configuration.parentLocationHash
+    @app.options.configViaJSON = viaJSON
+    @app.externalData = new ExternalData(@app)
+
+    # The locale can be fixed in the player config, or autodetected by the browser.
+    # It will fall back to en-US if no locale was found
+    i18n = new I18n(@configuration.options.locale, @defaultOptions.locale)
+    @app.i18n = i18n
+
+    if @configuration.episode
+      @app.episode = @configuration.episode
+    else
+      @app.podcast.getEpisodes().done =>
+        if @app.podcast.episodes
+          @configuration.episode = @app.podcast.episodes[0]
+          @setConfigurations(viaJSON)
+      return
+
     if @app.episode.cover_url?
       console.warn('Please use episode.coverUrl instead of episode.cover_url in player configuration')
       @app.episode.coverUrl ?= @configuration.episode.cover_url
 
     @app.episode.embedCode ?= @configuration.embedCode
     @app.getProductionData()
-
-    @app.extensionOptions = @configuration.extensions || {}
-
-    @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
-    @app.options.parentLocationHash = @configuration.parentLocationHash
-    @app.options.configViaJSON = viaJSON
 
     @loader.resolve()
 
@@ -85,10 +111,31 @@ class Configuration
     # Can be 'script' or 'iframe' depending on how the player is embedded
     # Using a <iframe> tag is considered the default
     iframeMode: 'iframe'
+    amp: false,
+    locale: 'en-US'
+    theme: 'default'
+    themeHtml: null
+    themeCss: null
+    customStyle: null
+    startPanel: null
   }
 
   configureTemplating: =>
     rivets.configure(
       prefix: 'pp'
     )
+
+    # make links text open in parent window
+    rivets.formatters.description = (text) =>
+      elem = document.createElement('div')
+      elem.innerHTML = text.trim()
+      links = elem.querySelectorAll('a')
+      Array.prototype.forEach.call(links, (link) => link.target = '_parent')
+      elem.innerHTML
+
+    rivets.formatters.scale = (url, size) =>
+      return url unless url.match(/images\.podigee\.com/)
+
+      url.replace(/\/\d+x,/, "/#{size}x,")
+
 module.exports = Configuration

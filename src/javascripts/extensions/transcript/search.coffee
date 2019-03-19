@@ -5,7 +5,7 @@ sightglass = require('sightglass')
 rivets = require('rivets')
 
 class TranscriptSearch
-  constructor: () ->
+  constructor: (@app) ->
     @setupIndex()
 
   setupIndex: ->
@@ -106,18 +106,20 @@ class TranscriptSearch
     query: null
 
   render: ->
-    html = $(@html)
+    html = $(@html())
     rivets.bind(html, @data)
     html
 
-  html:
+  t: (key) -> @app.i18n.t(key)
+
+  html: ->
     """
       <div class="search-result" pp-show="query">
         <button class="search-result-prev"></button>
         <span class="search-result-size">{currentIndex}/{resultCount}</span>
         <button class="search-result-next"></button>
       </div>
-      <input type="text" class="search-input" placeholder="Search in transcript">
+      <input type="text" class="search-input" placeholder="#{@t('transcript.search')}">
       <button class="search-clear" pp-show="query">&times;</button>
     """
 module.exports = TranscriptSearch

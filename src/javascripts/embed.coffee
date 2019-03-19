@@ -1,21 +1,24 @@
-$ = require('jquery')
-_ = require('lodash')
-
 IframeResizer = require('./iframe_resizer.coffee')
+SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
-    @id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
-    config = $(@elem).data('configuration')
+    config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
+    @id = @randomId(config)
     @configuration = if typeof config == 'string'
-      window[config] || {}
+      if config.match(/^{/)
+        JSON.parse(config)
+      else
+        @getInSiteConfig(config) || {json_config: config}
     else
       config
 
-    if _.isEmpty(@configuration)
-      @configuration.json_config = config
     @configuration.parentLocationHash = window.location.hash
     @configuration.embedCode = @elem.outerHTML
+    try
+      @configuration.customOptions = JSON.parse(@elem.getAttribute('data-options'))
+    catch
+      console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
     @url = "#{@origin()}/podigee-podcast-player.html?id=#{@id}&iframeMode=script"
 
@@ -23,9 +26,36 @@ class Iframe
     @setupListeners()
     @replaceElem()
     @injectConfiguration() if @configuration
+    @setupSubscribeButton()
+
+  getInSiteConfig: (config) ->
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./) && !config.match(/^\//)
+      configSplit = config.split('.')
+      tempConfig = null
+      configSplit.forEach (cfg) ->
+        if tempConfig == null
+          tempConfig = window[cfg]
+        else
+          tempConfig = tempConfig[cfg]
+      tempConfig
+    else
+      window[config]
+
+  randomId: (string) ->
+    hash = 0
+    return hash if string.length == 0
+
+    hsh = (char) =>
+      return if isNaN(char)
+      hash = ((hash<<5)-hash)+char
+      hash = hash & hash
+
+    hsh(string.charCodeAt(i)) for i in [0..string.length]
+
+    return hash.toString(16).substring(1)
 
   origin: () ->
-    scriptSrc = $(@elem).attr('src')
+    scriptSrc = @elem.src || @elem.getAttribute('src')
     unless window.location.protocol.match(/^https/)
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
@@ -42,27 +72,45 @@ class Iframe
     @iframe
 
   setupListeners: ->
-    IframeResizer.listen('resizePlayer', $(@iframe))
+    IframeResizer.listen('resizePlayer', @iframe)
+
+  setupSubscribeButton: ->
+    window.addEventListener 'message', ((event) =>
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'loadSubscribeButton'
+
+      subscribeButton = new SubscribeButtonTrigger(@iframe)
+      subscribeButton.listen()
+    ), false
 
   replaceElem: ->
-    $(@iframe).addClass($(@elem).attr('class'))
+    @iframe.className += @elem.className
     @elem.parentNode.replaceChild(@iframe, @elem)
 
   injectConfiguration: ->
-    $(window).on 'message', (event) =>
-      eventData = event.data || event.originalEvent.data
-      return unless eventData == 'sendConfig'
+    window.addEventListener 'message', ((event) =>
+      try
+        eventData = JSON.parse(event.data || event.originalEvent.data)
+      catch
+        return
+      return unless eventData.id == @iframe.id
+      return unless eventData.listenTo == 'sendConfig'
 
       config = if @configuration.constructor == String
         @configuration
       else
         JSON.stringify(@configuration)
       @iframe.contentWindow.postMessage(config, '*')
+    ), false
 
 class Embed
   constructor: ->
     players = []
-    elems = $('script.podigee-podcast-player')
+    elems = document.querySelectorAll('script.podigee-podcast-player, div.podigee-podcast-player')
 
     return if elems.length == 0
 
@@ -71,4 +119,4 @@ class Embed
 
     window.podigeePodcastPlayers = players
 
-module.exports = Embed
+new Embed()

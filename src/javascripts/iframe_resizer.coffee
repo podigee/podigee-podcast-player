@@ -1,14 +1,12 @@
-$ = require('jquery')
-
 class IframeResizer
   @listen: (listenTo, iframe, offset = {}, callback) ->
-    $(window).on 'message', (event) =>
+    window.addEventListener 'message', ((event) =>
       try
         resizeData = JSON.parse(event.data || event.originalEvent.data)
       catch
         return
 
-      return unless resizeData.id == iframe.attr('id')
+      return unless resizeData.id == iframe.id
       return unless resizeData.listenTo == listenTo
 
       height = resizeData.height + (offset.height || 0)
@@ -17,9 +15,12 @@ class IframeResizer
       else
         resizeData.width + (offset.width || 0)
 
-      iframe.height(height)
-      iframe.width(width)
+      iframe.style.height = "#{height}px"
+      iframe.style.maxHeight = "#{height}px"
+      iframe.style.width = "#{width}px"
+      iframe.style.maxWidth = "#{width}px"
 
       callback(iframe) if callback?
+    ), false
 
 module.exports = IframeResizer

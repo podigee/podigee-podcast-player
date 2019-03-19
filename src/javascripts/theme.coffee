@@ -3,11 +3,52 @@ _ = require('lodash')
 sightglass = require('sightglass')
 rivets = require('rivets')
 
+Utils = require('./utils.coffee')
+CustomStyles = require('./custom_styles.coffee')
+SubscribeButton = require('./extensions/subscribe_button.coffee')
+
 class Theme
   constructor: (@app) ->
     @loadThemeFiles()
+    @addCustomStyles()
 
-  context: => @app.episode
+  themeConfig: =>
+    options = @app.extensionOptions.SubscribeBar
+    if options?.disabled == false
+      SubscribeButton.load(@app)
+    {
+      showSubscribeBar: options?.disabled == false,
+      showSubscribeButton: !@app.isInAMPMode(),
+      translations: {
+        playPause: @t('theme.playPause'),
+        backward: @t('theme.backward'),
+        forward: @t('theme.forward'),
+        speed: @t('theme.changePlaybackSpeed'),
+
+        allEpisodes: @t('subscribeBar.allEpisodes'),
+        podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
+        podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
+        podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
+        podcastOnAlexa: @t('subscribeBar.podcastOnAlexa'),
+        subscribe: @t('subscribeBar.subscribe')
+      },
+      customOptions: @app.customOptions,
+      or: @orFunction
+    }
+
+  # used in template to fall back to arg2 if arg1 is undefined or null
+  orFunction: (arg1, arg2) =>
+    arg1 || arg2
+
+  context: =>
+    attrs = _.merge(@app.episode, @app.podcast.forTheme(), @themeConfig())
+    # hide All Episodes link when on the page that is linked to
+    if @app.options.theme == 'default' && Utils.onSameUrl(attrs.podcastUrl)
+      attrs.podcastUrl = null
+    attrs
+
+  t: (key) ->
+    @app.i18n.t(key)
 
   html: null
   render: =>
@@ -24,23 +65,25 @@ class Theme
   updateView: () =>
     @view.update(@context())
 
+  addCustomStyles: () =>
+    tag = new CustomStyles(@app.options.customStyle).toStyleTag()
+    return unless tag
+    $('head').append(tag)
+
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
-    themeHtml = @app.options.themeHtml
-    themeCss = @app.options.themeCss
+    themeHtml = @app.options.themeHtml || theme.html
+    themeCss = @app.options.themeCss || theme.css
     if themeHtml && themeCss
       @loadCss(themeCss)
       @loadHtml(themeHtml)
     else if theme.constructor == String
-      @loadInternalTheme(theme)
-    else
-      @loadCss(@app.options.themeCss || theme.css)
-      @loadHtml(@app.options.themeHtml || theme.html)
+      @loadInternalTheme(theme, themeHtml, themeCss)
 
-  loadInternalTheme: (name) =>
+  loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss("#{pathPrefix}.css")
-    @loadHtml("#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css")
+    @loadHtml(themeHtml || "#{pathPrefix}.html")
 
   loadHtml: (path) =>
     loaded = $.Deferred()
@@ -83,7 +126,6 @@ class Theme
   findElements: ->
     @audioElement = @elem.find('audio')
     @progressBarElement = @elem.find('progressbar')
-    @waveformElement = @elem.find('.waveform')
     @playPauseElement = @elem.find('.play-button')
     @backwardElement = @elem.find('.backward-button')
     @forwardElement = @elem.find('.forward-button')
@@ -91,10 +133,13 @@ class Theme
     @skipBackwardElement = @elem.find('.skip-backward-button')
     @speedElement = @elem.find('.speed-toggle')
     @coverImage = @elem.find('.cover-image')
+    @subscribeButton = @elem.find('.subscribe-button')
+
+    @subscribeButton.on 'click', () => SubscribeButton.open(@app)
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
-    @panels.hide() unless @app.isInIframeMode()
+    @panels.hide() unless @app.isInIframeMode() || @app.options.startPanels
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
@@ -126,6 +171,9 @@ class Theme
     if extension.name() == @app.options.startPanel
       extension.button.trigger('click')
 
+    if @app.options.startPanels && @app.options.startPanels.indexOf(extension.name()) != -1
+      extension.panel.show()
+
     if !@app.options.startPanel && @app.isInIframeMode()
       @buttons.hide()
       @panels.hide()
@@ -136,6 +184,7 @@ class Theme
 
   activePanel: null
   togglePanel: (elem) =>
+    return unless elem
     if @activePanel?
       if @activePanel == elem
         if !@app.isInIframeMode()

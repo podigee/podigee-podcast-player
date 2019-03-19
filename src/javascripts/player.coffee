@@ -9,10 +9,15 @@ class Player
   constructor: (@app, elem) ->
     self = this
     self.media = elem
-    self.media.preload = "metadata"
+    if Utils.isIE9()
+      self.media.preload = "metadata"
+    else
+      self.media.preload = "none"
     @loadFile()
     @attachEvents()
+    @setInitialTime()
     @app.init(self)
+    @app.updateTime(@currentTimeInSeconds)
 
   jumpBackward: (seconds) =>
     seconds = seconds || @app.options.backwardSeconds
@@ -49,7 +54,12 @@ class Player
     files = @sortByPlayability(files)
     files = @sortByFormat(files)
 
-    @media.src = files[0].uri
+    @src = files[0].uri
+
+    # If src was already set for the audio element we can immediately set src
+    # If we are dealing with Safari 10 or below we also need to do this
+    if @media.src.length || Utils.isLteSafari10()
+      @media.src = @src
     @setDuration()
 
   # filter out unplayable files
@@ -68,6 +78,7 @@ class Player
     _.sortBy files, (file) ->
       return -100 if file.playable == 'probably' && file.format == 'opus'
       return -90 if file.playable == 'probably' && file.format == 'm4a'
+      return -90 if file.playable == 'maybe' && file.format == 'mp3'
       return 0
 
   attachEvents: =>
@@ -80,18 +91,28 @@ class Player
     $(@media).on('ended', @app.mediaEnded)
 
   updateTime: =>
-    @app.updateTime()
     @setCurrentTime()
     @checkStopTime()
 
   setInitialTime: =>
     deeplink = new DeeplinkParser(@app.options.parentLocationHash)
-    @media.currentTime = deeplink.startTime if (deeplink.startTime > 0)
+    if deeplink.startTime > 0
+      @currentTimeInSeconds = deeplink.startTime
+      @media.currentTime = deeplink.startTime
+    else
+      @currentTimeInSeconds = 0
+    @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @stopTime = deeplink.endTime if deeplink.endTime?
 
-  setCurrentTime: =>
-    @currentTimeInSeconds = @media.currentTime
+  setCurrentTime: (time) =>
+    if time
+      @currentTimeInSeconds = time
+      @media.currentTime = time
+    else
+      @currentTimeInSeconds = @media.currentTime
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
+    @app.updateTime(@currentTimeInSeconds)
+    @emitEvent('timeupdate')
 
   checkStopTime: () =>
     return unless @stopTime?
@@ -100,12 +121,18 @@ class Player
       @pause()
 
   setDuration: =>
+    if @app.episode.duration
+      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      @duration = @app.episode.duration
+      return
+
     clear = -> window.clearInterval(interval)
 
     interval = window.setInterval ((t) =>
       return unless @media.readyState > 0
-      @app.episode.duration ?= @media.duration
-      @app.episode.humanDuration ?= Utils.secondsToHHMMSS(_.clone(@media.duration))
+      @app.episode.duration = @media.duration
+      @duration = @media.duration
+      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
       clear()
     ), 500
 
@@ -120,8 +147,20 @@ class Player
 
   play: () ->
     return unless @media.paused
-    if @media.readyState < 2
+
+    # set src on first playback to prevent IE from preloading the audio file
+    unless @media.src
+      @media.src = @src
+
+    if @media.readyState < 2 # can play current position
       @app.theme.addLoadingClass()
+    if @media.readyState < 1 # has metadata available
+      if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
+        setTime = () =>
+          @media.currentTime = @currentTimeInSeconds
+          $(@media).off('loadedmetadata', setTime)
+
+        $(@media).on('loadedmetadata', setTime)
     @media.play()
     @playing = true
     @app.togglePlayState()
@@ -133,5 +172,12 @@ class Player
     @app.togglePlayState()
 
   playing: false
+
+  eventListeners: {}
+  addEventListener: (type, listener) ->
+    @eventListeners[type] = listener
+
+  emitEvent: (type, options) ->
+    @eventListeners[type](options)
 
 module.exports = Player

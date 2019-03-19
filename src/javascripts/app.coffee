@@ -5,7 +5,6 @@ Configuration = require('./configuration.coffee')
 Theme = require('./theme.coffee')
 Player = require('./player.coffee')
 ProgressBar = require('./progress_bar.coffee')
-Embed = require('./embed.coffee')
 Feed = require('./feed.coffee')
 ExternalData = require('./external_data.coffee')
 
@@ -31,7 +30,6 @@ class PodigeePodcastPlayer
 
   constructor: (@elemClass) ->
     @getConfiguration().loaded.done =>
-      @externalData = new ExternalData(this)
       @renderTheme().done =>
         @initPlayer()
 
@@ -45,7 +43,7 @@ class PodigeePodcastPlayer
       self.episode.productionData = data.data
 
   getConfiguration: () ->
-    new Configuration(this)
+    @configuration = new Configuration(this)
 
   renderTheme: =>
     rendered = $.Deferred()
@@ -53,6 +51,7 @@ class PodigeePodcastPlayer
     @theme.loaded.done =>
       @elem = @theme.render()
       window.setTimeout @sendSizeChange, 0
+      $('.loading-animation').remove()
       rendered.resolve()
 
     rendered.promise()
@@ -74,6 +73,7 @@ class PodigeePodcastPlayer
   mediaLoadError: =>
     window.setTimeout @sendSizeChange, 0
     @theme.removeLoadingClass()
+    @theme.removePlayingClass()
     @theme.addFailedLoadingClass()
     @extensions.ProgressBar.hideBuffering()
 
@@ -86,8 +86,8 @@ class PodigeePodcastPlayer
     else
       @theme.removePlayingClass()
 
-  updateTime: () =>
-    timeString = @extensions.ProgressBar.updateTime()
+  updateTime: (timeInSeconds) =>
+    timeString = @extensions.ProgressBar.updateTime(timeInSeconds)
     @adjustPlaySpeed(timeString)
 
   mediaEnded: =>
@@ -153,7 +153,6 @@ class PodigeePodcastPlayer
       if currentlyActiveExtension instanceof extension
         self.theme.togglePanel(self.extensions[extension.extension.name].panel)
 
-
   bindWindowResizing: =>
     $(window).on('resize', _.debounce(@sendSizeChange, 250))
 
@@ -173,7 +172,8 @@ class PodigeePodcastPlayer
   isInIframeMode: ->
     @options.iframeMode == 'iframe'
 
-unless window.inEmbed
-  new Embed()
-else
+  isInAMPMode: ->
+    @options.amp == true
+
+if window.inEmbed
   window.PodigeePodcastPlayer = PodigeePodcastPlayer

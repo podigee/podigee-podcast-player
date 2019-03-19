@@ -28,6 +28,7 @@ The player is extensible and ships with the following default extensions:
 - Transcript - Displays the transcript of an episode, highlights the currently spoken words and allows the listener to search and jump to certain passages by clicking or tapping.
 - Chromecast (experimental) - Allows the listener to play the podcast episode on a Chromecast device. This is currently not enabled by default, because it's still in testing and requires a little polishing work.
 - Deeplinking - Allows to share an URL in the form https://example.com/ep-1#t=123,321, which will set the player to start with second 123 and play until second 321 (see https://podlove.org/deep-link/ for details).
+- Subscribe Bar / Subscribe Button - Shows the Podlove Subscribe Button and Links to iTunes, Spotify, Deezer if configured
 
 ## Themes
 
@@ -93,7 +94,37 @@ We are [Podigee](https://www.podigee.com "The Podcast Hosting Platform"), an awe
 
 If you would like to propose new features or have found a bug, please use [Github issues](https://github.com/podigee/podigee-podcast-player/issues) to tell us.
 
-If you would like to help us improve the player please [get in touch with us](mailto:hello@podigee.com).
+### Installing the dev dependencies
+
+# Assuming nodejs is installed
+
+## Install dependencies
+
+Install yarn: https://yarnpkg.com/en/docs/install
+
+```
+yarn install
+```
+
+## Run dev server (also watches and builds assets live)
+
+```
+gulp serve
+```
+
+## Build dev assets
+
+```
+gulp dev
+```
+
+## Build production assets
+
+```
+gulp build
+```
+
+Open http://0.0.0.0:8081/ in your browser.
 
 ## License
 
