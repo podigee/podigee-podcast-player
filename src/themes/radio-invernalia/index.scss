@@ -5,7 +5,7 @@
   color: $color-05;
   font-family: 'Marcellus', serif;
   min-width: 100%;
-  padding: 60px;
+  padding: 60px 60px 40px;
   position: relative;
   overflow: hidden;
 
@@ -374,13 +374,12 @@
     font-weight: 300;
     height: auto;
     line-height: 18px;
-    margin-bottom: 120px;
     position: relative;
 
     &::after {
       background-color: $color-03;
       content: "";
-      display: block;
+      display: none;
       position: absolute;
       bottom: -60px;
       left: 50%;
@@ -394,6 +393,7 @@
       background-position: 50% 50%;
       background-size: contain;
       content: "";
+      display: none;
       position: absolute;
       bottom: -68px;
       left: 50%;
@@ -415,13 +415,28 @@
     }
   }
 
+  // .buttons {
+    // padding-bottom: 10px;
+    // position: static;
+    // text-align: center;
+    // width: 100%;
+
+    // button {
+      // font-size: 32px;
+      // width: 35px;
+    // }
+
+    // .download-button,
+    // .share-button {
+      // display: none;
+    // }
+  // }
   .panels {
     .playlist {
-      float: right;
       margin-top: 120px;
       padding: 0;
       width: calc(100% - 320px);
-      height: 400px;
+      height: 514px;
 
       @media (max-width: $mobile-breakpoint) {
         float: none;
@@ -697,8 +712,10 @@
     color: $color-03;
     margin-top: 140px;
     padding: 20px;
-    position: relative;
+    position: absolute;
+    right: 40px;
     text-align: center;
+    top: 510px;
     width: 280px;
 
     @media (max-width: $mobile-breakpoint) {
@@ -790,6 +807,30 @@
       height: 15px;
     }
   }
+
+  .powered-by {
+    text-align: center;
+
+    svg {
+      position: relative;
+      top: 20px;
+      width: 160px;
+
+      .cls-1 {
+        fill: #fff;
+        stroke: #000;
+      }
+
+      .cls-2 {
+        fill: #000;
+        // stroke: #fff;
+      }
+
+      #TEXT {
+        fill: #fff;
+      }
+    }
+  }
 }
 
 .podcast-player.playing {
@@ -814,12 +855,25 @@
       }
     }
 
-    .playlist .buttons button {
-      font-size: 18px;
+    .playlist {
+      height: 434px;
+
+      .buttons button {
+        font-size: 18px;
+      }
     }
 
     &.playing .progress-bar .progress-bar-time-played {
       display: none;
+    }
+
+    .panels::before,
+    .panels::after {
+      display: block;
+    }
+
+    .subscribe {
+      position: static;
     }
   }
 }
