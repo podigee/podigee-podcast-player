@@ -1,9 +1,9 @@
 class I18n
   # List of locales that follow BCP-47
-  SUPPORTED_LOCALES = ['en-US', 'de-DE']
+  SUPPORTED_LOCALES = ['en-US', 'de-DE', 'es-ES']
   # E.g a user with en-GB will get the language 'en'
   # The languages are in ISO 639-1
-  SUPPORTED_LANGUAGES = ['en', 'de']
+  SUPPORTED_LANGUAGES = ['en', 'de', 'es']
 
   # locale<string> BCP-47, e.g. "en-US", can be nil
   # defaultLocale<string> BCP-47, e.g. "de-DE", should not be nil
@@ -34,6 +34,7 @@ class I18n
     switch language
       when "en" then "en-US"
       when "de" then "de-DE"
+      when "es" then "es-ES"
 
   t: (key) ->
     keys = key.split('.')
@@ -125,5 +126,44 @@ class I18n
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
         podcastOnAlexa: 'Podcast auf Alexa ansehen'
         subscribe: 'Abonnieren'
+
+    'es-ES':
+      chaptermarks:
+        show: 'Marca temporal'
+        title: 'Marcas temporales'
+      chromecast:
+        play: 'Reproducir en chromecast'
+      download:
+        episode: 'Descargar capítulo'
+      episode_info:
+        more_info: 'Mostrar más informaciones'
+        title: 'Informaciones del capítulo'
+      playlist:
+        show: 'Mostrar lista de reproducción'
+        title: 'Lista de reproducción'
+        load_more: 'Más capítulos'
+      share:
+        copy_episode_link: 'Copiar enlace del capítulo'
+        email: 'Correo electrónico'
+        embed_player: 'Embed del reproductor'
+        episode: 'Capítulo'
+        episode_url: 'Compartir enlace del capítulo'
+        start_at: 'Empezar en'
+      theme:
+        playPause: 'Reproducir/Pausar'
+        backward: 'Rebobinar 10s'
+        forward: 'Avanzar 30s'
+        changePlaybackSpeed: 'Cambiar velocidad de reproducción'
+      transcript:
+        search: 'Buscar en transcripción'
+        show: 'Mostrar transcripción'
+        title: 'Transcripción'
+      subscribeBar:
+        allEpisodes: 'Todos los capítulos'
+        podcastOnItunes: 'Ver podcast en Apple Podcasts'
+        podcastOnSpotify: 'Ver podcast en Spotify'
+        podcastOnDeezer: 'Ver podcast en Deezer'
+        podcastOnAlexa: 'Ver podcast en Alexa'
+        subscribe: 'Suscríbete'
 
 module.exports = I18n
