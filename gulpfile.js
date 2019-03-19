@@ -24,7 +24,7 @@ var paths = {
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
     html: ['./src/themes/**/index.html'],
-    css: ['./src/themes/**/*.scss'],
+    css: ['./src/themes/**/index.scss'],
     images: ['./src/themes/**/*.png', './src/themes/**/*.jpg']
   }
 };
