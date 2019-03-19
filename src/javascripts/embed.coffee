@@ -29,7 +29,7 @@ class Iframe
     @setupSubscribeButton()
 
   getInSiteConfig: (config) ->
-    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./)
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./) && !config.match(/^\//)
       configSplit = config.split('.')
       tempConfig = null
       configSplit.forEach (cfg) ->

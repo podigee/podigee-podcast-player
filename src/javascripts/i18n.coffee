@@ -81,7 +81,7 @@ class I18n
         title: 'Transcription'
       subscribeBar:
         allEpisodes: 'All Episodes'
-        podcastOnItunes: 'View Podcast on iTunes'
+        podcastOnItunes: 'View Podcast on Apple Podcasts'
         podcastOnSpotify: 'View Podcast on Spotify'
         podcastOnDeezer: 'View Podcast on Deezer'
         podcastOnAlexa: 'View Podcast on Alexa'
@@ -120,7 +120,7 @@ class I18n
         title: 'Transkript'
       subscribeBar:
         allEpisodes: 'Alle Episoden'
-        podcastOnItunes: 'Podcast auf iTunes ansehen'
+        podcastOnItunes: 'Podcast auf Apple Podcasts ansehen'
         podcastOnSpotify: 'Podcast auf Spotify ansehen'
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
         podcastOnAlexa: 'Podcast auf Alexa ansehen'
