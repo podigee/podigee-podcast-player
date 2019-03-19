@@ -156,6 +156,7 @@
     padding: 10px;
     height: 80px;
     width: 80px;
+    z-index: 1;
 
     .play-button {
       border: 3px solid $color-04;
@@ -174,6 +175,7 @@
     position: absolute;
     right: 20px;
     bottom: 0;
+    z-index: 0;
 
     @media (max-width: $mobile-breakpoint) {
       display: flex;
@@ -483,7 +485,7 @@
           }
 
           &.active {
-            background-color: lighten($color-00, 55%);
+            background-color: darken($color-03, 15%);
           }
 
           img {
@@ -810,6 +812,10 @@
         padding: 0 8px;
         width: 35px;
       }
+    }
+
+    .playlist .buttons button {
+      font-size: 18px;
     }
 
     &.playing .progress-bar .progress-bar-time-played {
