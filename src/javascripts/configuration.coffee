@@ -133,4 +133,10 @@ class Configuration
       Array.prototype.forEach.call(links, (link) => link.target = '_parent')
       elem.innerHTML
 
+    rivets.formatters.scale = (url, size) =>
+      return url if url == null
+      return url unless url.match(/images\.podigee\.com/)
+
+      url.replace(/\/\d+x,/, "/#{size}x,")
+
 module.exports = Configuration
