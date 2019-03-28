@@ -1,0 +1,106 @@
+.podcast-player .episode-basic-info .episode-title {
+  font-family: "Frutiger Neue_1450 W02 Bold", Helvetica, Arial, Verdana, sans-serif;
+  font-size: 1.5625rem;
+  font-weight: bold;
+  line-height: 1.45em;
+  color: #000;
+}
+
+.podcast-player .episode-basic-info .episode-subtitle {
+  font-family: "Frutiger Neue_1450 W02 Regular", Helvetica, Arial, Verdana, sans-serif;
+  font-size: 1.5625rem;
+  font-weight: 400;
+  line-height: 1.45em;
+  color: #000;
+}
+
+.podcast-player .buttons {
+  position: relative;
+  top: auto;
+  right: auto;
+}
+
+.podcast-player .buttons button {
+  font-size: 1.5625rem;
+  width: auto;
+  min-height: 50px;
+  min-width: 50px;
+  color: #164194;
+}
+
+.podcast-player .controls .play-button {
+  color: #164194;
+  border-color: #164194;
+}
+
+.podcast-player .controls .play-button:hover,
+.podcast-player .controls .play-button:focus {
+  border-color: #000;
+  color: #000;
+}
+
+.podcast-player .episode-basic-info .episode-title, .podcast-player .episode-title a {
+  color: #164194;
+}
+
+.podcast-player a, .podcast-player .episode-title a {
+  color: #164194;
+  text-decoration: none;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: inherit;
+}
+
+.podcast-player a:hover, .podcast-player a:focus,
+.podcast-player .episode-title a:hover, .podcast-player .episode-title a:focus {
+  color: #164194;
+}
+
+.podcast-player .progress-bar .progress-bar-rail {
+  background-color: #e6e6e6;
+  border: 2px solid #164194;
+}
+
+.podcast-player .progress-bar-played {
+  background: #164194;
+  color: #fff;
+}
+
+.podcast-player .footer button {
+  border-color: #164194;
+  color: #164194;
+}
+
+
+
+@media only screen and (min-width: 600px) {
+  .podcast-player .episode-basic-info .episode-title {
+    font-size: 1.25rem;
+    line-height: 1.34em;
+  }
+
+  .podcast-player .episode-basic-info .episode-subtitle {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .podcast-player .buttons button {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 801px) {
+  .podcast-player .episode-basic-info .episode-title {
+    font-size: 1.5625rem;
+    line-height: 1.45em;
+  }
+
+  .podcast-player .episode-basic-info .episode-subtitle {
+    font-size: 1.3125rem;
+    line-height: 1.2;
+  }
+
+  .podcast-player .buttons button {
+    font-size: 1.5625rem;
+  }
+}
