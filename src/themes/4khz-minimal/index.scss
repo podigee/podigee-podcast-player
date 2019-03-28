@@ -1,0 +1,84 @@
+$background-color: #ffed74;
+$progress-color: #a3dfd6;
+
+.custom-podcast-player {
+  background-color: $background-color;
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 12px;
+  height: 50px;
+  min-width: 100%;
+  position: relative;
+  width: 1px;
+}
+
+.custom-podcast-player .info,
+.custom-podcast-player .controls {
+  position: relative;
+  z-index: 1;
+}
+
+.custom-podcast-player .info {
+  font-size: 16px;
+  font-weight: 200;
+  height: 20px;
+  left: 60px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 15px;
+}
+
+.custom-podcast-player .controls {
+  height: 50px;
+  position: absolute;
+  top: 0;
+  width: 50px;
+}
+
+.custom-podcast-player .controls .play-button {
+  font-size: 34px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+
+.custom-podcast-player.loading .controls .play-button {
+  margin-left: 10px;
+  padding: 0 17px;
+}
+
+.custom-podcast-player .progress-bar {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.custom-podcast-player .progress-bar .progress-bar-time-player {
+  display: none;
+  width: 0;
+}
+
+.custom-podcast-player .progress-bar .progress-bar-rail {
+  background-color: $background-color;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.custom-podcast-player .progress-bar .progress-bar-played,
+.custom-podcast-player .progress-bar .progress-bar-loaded {
+  background-color: $progress-color;
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+
+.custom-podcast-player .progress-bar .progress-bar-loaded {
+  background-color: #aaa;
+  display: none;
+}
