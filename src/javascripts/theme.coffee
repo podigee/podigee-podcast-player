@@ -23,7 +23,7 @@ class Theme
         playPause: @t('theme.playPause'),
         backward: @t('theme.backward'),
         forward: @t('theme.forward'),
-        speed: @t('theme.changePlaybackSpeed'),
+        changePlaybackSpeed: @t('theme.changePlaybackSpeed'),
 
         allEpisodes: @t('subscribeBar.allEpisodes'),
         podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
