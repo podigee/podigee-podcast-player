@@ -59,6 +59,7 @@ class Theme
     @addEmbedModeClass()
     @findElements()
     @bindCoverLoad()
+    @initializeSpeedToggle()
 
     return @elem
 
@@ -148,6 +149,9 @@ class Theme
   bindCoverLoad: =>
     @coverImage.on 'load', =>
       @app.sendSizeChange()
+
+  initializeSpeedToggle: =>
+    @speedElement.text('1x')
 
   changeActiveButton: (event) =>
     button = $(event.target)
