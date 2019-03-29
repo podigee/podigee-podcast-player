@@ -72,7 +72,9 @@ class I18n
         episode_url: 'Share link to episode'
         start_at: 'Start at'
       theme:
-        playPause: 'Play/Pause'
+        playPause: 'Play'
+        play: 'Play'
+        pause: 'Pause'
         backward: 'Backward 10s'
         forward: 'Forward 30s'
         changePlaybackSpeed: 'Change Playback Speed'
@@ -111,7 +113,9 @@ class I18n
         episode_url: 'Link zur Episode teilen'
         start_at: 'Wiedergabe ab'
       theme:
-        playPause: 'Play/Pause'
+        playPause: 'Play'
+        play: 'Play'
+        pause: 'Pause'
         backward: '10s zurück'
         forward: '30s vorwärts'
         changePlaybackSpeed: 'Abspielgeschwindigkeit ändern'
@@ -150,7 +154,9 @@ class I18n
         episode_url: 'Compartir enlace del capítulo'
         start_at: 'Empezar en'
       theme:
-        playPause: 'Reproducir/Pausar'
+        playPause: 'Reproducir'
+        play: 'Reproducir'
+        pause: 'Pausar'
         backward: 'Rebobinar 10s'
         forward: 'Avanzar 30s'
         changePlaybackSpeed: 'Cambiar velocidad de reproducción'
