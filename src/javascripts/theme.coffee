@@ -105,9 +105,13 @@ class Theme
 
   addPlayingClass: ->
     @elem.addClass('playing')
+    @playPauseElement[0].title = @t('theme.pause')
+    @playPauseElement[0].setAttribute('aria-label', @t('theme.pause'))
 
   removePlayingClass: ->
     @elem.removeClass('playing')
+    @playPauseElement[0].title = @t('theme.play')
+    @playPauseElement[0].setAttribute('aria-label', @t('theme.play'))
 
   addLoadingClass: ->
     @removePlayingClass()
