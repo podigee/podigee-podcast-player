@@ -70,7 +70,6 @@ class Iframe
     @iframe.style.transition = 'height 100ms linear'
     @iframe.style.minWidth = '100%'
     @iframe.width = '1px'
-    @iframe.width = '100%'
     @iframe.title = 'Podcast'
     @iframe.setAttribute('aria-label', 'Podcast')
     @iframe
