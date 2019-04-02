@@ -1,5 +1,4 @@
 .panels .share-social-links {
-  height: 48px;
   list-style: none;
   padding: 0;
   text-align: center;
@@ -9,7 +8,6 @@
     height: 48px;
     padding: 0 5px;
     position: relative;
-    overflow: hidden;
 
     &:hover:after {
       background: rgba(0, 0, 0, 0.2);
@@ -59,7 +57,7 @@
     font-size: 1.6rem;
     content: $icon-google-plus;
     padding: 10px 9px 12px;
-    top: 11px;
+    top: 4px;
   }
 
   .share-link-twitter:before {
