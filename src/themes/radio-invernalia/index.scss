@@ -866,7 +866,7 @@
       button {
         font-size: 24px;
         padding: 0 8px;
-        width: 35px;
+        width: auto;
       }
     }
 
@@ -881,6 +881,7 @@
 
     .share {
       left: 0;
+      margin: 20px auto 40px;
       transform: none;
     }
 
@@ -894,11 +895,15 @@
 
     .panels::before,
     .panels::after {
-      display: block;
+      display: none;
     }
 
     .subscribe {
       position: static;
+    }
+
+    .panels.playlist-open + .subscribe {
+      margin-top: 20px;
     }
   }
 }
