@@ -105,3 +105,10 @@
   @extend .icon;
   @extend .icon-keyboard_arrow_left;
 }
+
+button.progress-bar-time-played {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
