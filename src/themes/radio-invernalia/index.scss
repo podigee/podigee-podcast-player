@@ -370,6 +370,7 @@
 
   .panels {
     color: $color-05;
+    display: flex;
     font-size: 14px;
     font-weight: 300;
     height: auto;
@@ -415,25 +416,33 @@
     }
   }
 
-  // .buttons {
-    // padding-bottom: 10px;
-    // position: static;
-    // text-align: center;
-    // width: 100%;
+  .buttons {
+    padding-bottom: 10px;
+    position: static;
+    text-align: center;
+    width: 100%;
 
-    // button {
-      // font-size: 32px;
-      // width: 35px;
-    // }
+    button {
+      font-size: 18px;
+      width: auto;
+    }
 
-    // .download-button,
-    // .share-button {
-      // display: none;
-    // }
-  // }
+    .playlist-button:before {
+      content: attr(title) "";
+    }
+
+    .download-button,
+    .episode-info-button,
+    .share-button {
+      display: none;
+    }
+  }
+
   .panels {
+    min-height: 240px;
+
     .playlist {
-      margin-top: 120px;
+      order: 1;
       padding: 0;
       width: calc(100% - 320px);
       height: 514px;
@@ -579,14 +588,15 @@
       border: 1px solid $color-03;
       box-shadow: $color-00--alpha 0 0 80px;
       float: right;
+      left: 70px;
       margin: 10px;
-      padding: 20px;
+      order: 2;
       overflow: visible;
+      padding: 20px;
       position: relative;
-      top: 20px;
-      left: 10px;
-      width: 240px;
       text-align: center;
+      top: 20px;
+      width: 240px;
 
       @media (max-width: $mobile-breakpoint) {
         float: none;
@@ -710,12 +720,11 @@
     background-color: $color-04;
     box-shadow: $color-04--alpha 0 0 80px 0;
     color: $color-03;
-    margin-top: 140px;
     padding: 20px;
     position: absolute;
-    right: 40px;
+    right: 100px;
     text-align: center;
-    top: 510px;
+    top: 420px;
     width: 280px;
 
     @media (max-width: $mobile-breakpoint) {
@@ -740,6 +749,12 @@
         width: calc(100% - 20px);
       }
     }
+  }
+
+  .panels.playlist-open + .subscribe {
+    margin-top: 140px;
+    right: 40px;
+    top: 540px;
   }
 
   .subscribe__button {
@@ -857,14 +872,24 @@
 
     .playlist {
       height: 434px;
+      margin-top: 0px;
 
       .buttons button {
         font-size: 18px;
       }
     }
 
+    .share {
+      left: 0;
+      transform: none;
+    }
+
     &.playing .progress-bar .progress-bar-time-played {
       display: none;
+    }
+
+    .panels {
+      flex-direction: column;
     }
 
     .panels::before,
