@@ -4,11 +4,10 @@
   <div class="main-player">
 
     <div class="podcast-info">
+      <img class="cover-image" pp-src="coverUrl" />
       <div class="podcast-title" pp-html="podcastTitle"></div>
       <div class="episode-title"><span pp-html="title"></span></div>
     </div>
-    <img class="cover-image" pp-src="coverUrl" />
-
 
     <progressbar/>
     <div class="duration">{ humanDuration }</div>
@@ -74,13 +73,6 @@
 
       <a class="all-episodes-link" pp-href="or | call customOptions.allEpisodesAppUrl podcastUrl" target="_blank">
         Alle Folgen
-
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="9" viewBox="0 0 20 9">
-          <defs>
-            <path id="a" d="M15.966 0l-.925 1.013 2.31 2.289H3v1.396h14.35l-2.309 2.289L15.966 8 20 4z"/>
-          </defs>
-          <use fill="#29293A" fill-rule="evenodd" stroke="#29293A" stroke-width=".3" xlink:href="#a"/>
-        </svg>
       </a>
     </div>
   </div>
