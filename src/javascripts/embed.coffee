@@ -3,13 +3,13 @@ SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 
 class Iframe
   constructor: (@elem)->
-    config = @elem.getAttribute('data-configuration').replace(/\s/g, '')
+    config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
     @id = @randomId(config)
     @configuration = if typeof config == 'string'
       if config.match(/^{/)
         JSON.parse(config)
       else
-        window[config] || {json_config: config}
+        @getInSiteConfig(config) || {json_config: config}
     else
       config
 
@@ -27,6 +27,19 @@ class Iframe
     @replaceElem()
     @injectConfiguration() if @configuration
     @setupSubscribeButton()
+
+  getInSiteConfig: (config) ->
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./) && !config.match(/^\//)
+      configSplit = config.split('.')
+      tempConfig = null
+      configSplit.forEach (cfg) ->
+        if tempConfig == null
+          tempConfig = window[cfg]
+        else
+          tempConfig = tempConfig[cfg]
+      tempConfig
+    else
+      window[config]
 
   randomId: (string) ->
     hash = 0
@@ -55,7 +68,10 @@ class Iframe
     @iframe.style.border = '0'
     @iframe.style.overflowY = 'hidden'
     @iframe.style.transition = 'height 100ms linear'
-    @iframe.width = "100%"
+    @iframe.style.minWidth = '100%'
+    @iframe.width = '1px'
+    @iframe.title = 'Podcast'
+    @iframe.setAttribute('aria-label', 'Podcast')
     @iframe
 
   setupListeners: ->

@@ -19,14 +19,20 @@ class Playlist extends Extension
 
     return unless @app.podcast.hasEpisodes()
 
-    @playlistLoader = new PlaylistLoader(@app)
-    @playlistLoader.loadEpisodes().done =>
-      @episodes = @app.podcast.episodes
-      @renderPanel()
-      @renderButton()
+    if @app.podcast.episodes.length
+      @finishLoading()
+    else
+      @app.playlistLoader = new PlaylistLoader(@app)
+      @app.playlistLoader = new PlaylistLoader(@app)
+      @app.playlistLoader.loadEpisodes().done(@finishLoading)
 
-      @app.theme.addExtension(this)
-      @setCurrentEpisode()
+  finishLoading: () =>
+    @episodes = @app.podcast.episodes
+    @renderPanel()
+    @renderButton()
+
+    @app.theme.addExtension(this)
+    @setCurrentEpisode()
 
   defaultOptions:
     showOnStart: false
@@ -103,7 +109,7 @@ class Playlist extends Extension
     @app.theme.updateView()
 
   loadMoreEpisodes: () =>
-    @playlistLoader.loadNextPage().done (data) =>
+    @app.playlistLoader.loadNextPage().done (data) =>
       if data.episodes.length == 0
         @panel.find('button.load-more').hide()
       else

@@ -55,6 +55,8 @@ class ProgressBar
 
     time = 0 if isNaN(time)
     timeString = Utils.secondsToHHMMSS(time)
+    if @player.duration < 3600
+      timeString = timeString.replace(/^00:/, '')
     @currentTime = prefix + timeString
     @view.update(@context())
 
@@ -91,7 +93,7 @@ class ProgressBar
   template:
     """
     <div class="progress-bar">
-      <div class="progress-bar-time-played" title="Switch display mode">{ time }</div>
+      <button class="progress-bar-time-played" title="Switch display mode" aria-label="Switch display mode">{ time }</button>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>

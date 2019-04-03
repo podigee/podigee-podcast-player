@@ -1,18 +1,23 @@
 {
   "options": {
-    "theme": "default",
+    "theme": "game-of-thrones",
     "sslProxy": "https://cdn.podigee.com/ssl-proxy/",
-    "startPanel": "ChapterMarks"
+    "startPanels": ["Share", "Playlist", "EpisodeInfo"]
   },
   "extensions": {
-    "ChapterMarks": {},
-    "EpisodeInfo": {},
-    "Playlist": {},
-    "Share": {},
-    "Transcript": {}
+    "EpisodeInfo": {
+      "showOnStart": true
+    },
+    "Playlist": {
+      "showOnStart": true
+    },
+    "Share": {
+      "showOnStart": true
+    }
   },
   "podcast": {
-    "feed": "https://cdn.podigee.com/ppp/samples/feed.xml"
+    "feed": "https://cdn.podigee.com/ppp/samples/feed.xml",
+    "episodes": "https://wasjetzt.podigee.io/embed/playlist?context=external"
   },
   "episode": {
     "media": {
