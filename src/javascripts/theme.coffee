@@ -23,7 +23,7 @@ class Theme
         playPause: @t('theme.playPause'),
         backward: @t('theme.backward'),
         forward: @t('theme.forward'),
-        speed: @t('theme.changePlaybackSpeed'),
+        changePlaybackSpeed: @t('theme.changePlaybackSpeed'),
 
         allEpisodes: @t('subscribeBar.allEpisodes'),
         podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
@@ -59,6 +59,7 @@ class Theme
     @addEmbedModeClass()
     @findElements()
     @bindCoverLoad()
+    @initializeSpeedToggle()
 
     return @elem
 
@@ -105,9 +106,13 @@ class Theme
 
   addPlayingClass: ->
     @elem.addClass('playing')
+    @playPauseElement[0].title = @t('theme.pause')
+    @playPauseElement[0].setAttribute('aria-label', @t('theme.pause'))
 
   removePlayingClass: ->
     @elem.removeClass('playing')
+    @playPauseElement[0].title = @t('theme.play')
+    @playPauseElement[0].setAttribute('aria-label', @t('theme.play'))
 
   addLoadingClass: ->
     @removePlayingClass()
@@ -140,10 +145,14 @@ class Theme
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
     @panels.hide() unless @app.isInIframeMode() || @app.options.startPanels
+    @subscribeButton.hide() if @app.isInIframeMode()
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
       @app.sendSizeChange()
+
+  initializeSpeedToggle: =>
+    @speedElement.text('1x')
 
   changeActiveButton: (event) =>
     button = $(event.target)
