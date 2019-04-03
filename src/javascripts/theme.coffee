@@ -149,6 +149,7 @@ class Theme
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
     @panels.hide() unless @app.isInIframeMode() || @app.options.startPanels
+    @subscribeButton.hide() if @app.isInIframeMode()
 
   bindCoverLoad: =>
     @coverImage.on 'load', =>
