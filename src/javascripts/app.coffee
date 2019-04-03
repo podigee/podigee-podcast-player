@@ -171,6 +171,9 @@ class PodigeePodcastPlayer
 
     @extensions.ProgressBar?.updateBarWidths()
 
+  isInMultiPanelMode: ->
+    @options.startPanels && @options.startPanels.length
+
   isInIframeMode: ->
     @options.iframeMode == 'iframe'
 
