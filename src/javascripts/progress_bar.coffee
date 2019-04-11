@@ -165,6 +165,9 @@ class ProgressBar
 
   handleDrop: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
+
+    # catch drop positions outside of progress bar
+    position = 0.001 if position < 0
     if position <= @barWidth()
       @jumpToPosition(position)
 
