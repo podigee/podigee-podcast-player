@@ -6,32 +6,7 @@ $progress-loaded: $black !default;
 $progress-played: #009990 !default;
 $mobile-breakpoint: 521px !default;
 
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 800;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.otf") format("opentype")
-}
-
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 200;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.otf") format("opentype")
-}
-
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 400;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.otf") format("opentype")
-}
+@import url('https://www.sueddeutsche.de/assets/contracts/fonts/fonts2019.1.css');
 
 .loading-animation .spinner > div {
   background-color: #313131 !important;
@@ -40,7 +15,7 @@ $mobile-breakpoint: 521px !default;
 .podcast-player {
   background-color: $background;
   color: $black;
-  font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
   padding: 24px;
 
   .hidden {
@@ -277,7 +252,7 @@ $mobile-breakpoint: 521px !default;
       background: transparent;
       border-bottom: 1px solid;
       color: $black;
-      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 12px;
       letter-spacing: .8px;
       outline: none;
@@ -311,7 +286,7 @@ $mobile-breakpoint: 521px !default;
       border-bottom: 1px solid $black;
       color: $black;
       float: right;
-      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 12px;
       letter-spacing: .8px;
       padding: 0 0 4px;
