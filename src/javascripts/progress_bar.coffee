@@ -174,7 +174,7 @@ class ProgressBar
     @barWidth()/@player.duration
 
   updatePlayed: () =>
-    newWidth = @media.currentTime * @timeRailFactor()
+    newWidth = (@media.currentTime || @player.currentTimeInSeconds) * @timeRailFactor()
     @playedElement.width(newWidth)
 
 module.exports = ProgressBar
