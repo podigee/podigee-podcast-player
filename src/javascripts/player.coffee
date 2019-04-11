@@ -126,7 +126,10 @@ class Player
 
   setDuration: =>
     if @app.episode.duration
-      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      if @app.episode.duration < 3600
+        humanDuration = humanDuration.replace(/^00:/, '')
+      @app.episode.humanDuration = humanDuration
       @duration = @app.episode.duration
       return
 
