@@ -17,6 +17,16 @@ $mobile-breakpoint: 521px !default;
   color: $black;
   font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
   padding: 24px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  button {
+    color: $black;
+    font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+  }
 
   .hidden {
     display: none;
@@ -117,7 +127,8 @@ $mobile-breakpoint: 521px !default;
     width: calc(100% - 80px);
 
     .progress-bar-time-played {
-      font-size: 12px;
+      font-size: 14px;
+      display: block;
       position: relative;
       top: 35px;
     }
@@ -146,7 +157,7 @@ $mobile-breakpoint: 521px !default;
         content: '';
         height: 10px;
         position: absolute;
-        left: 0;
+        left: -4px;
         top: -3px;
         width: 10px;
       }
@@ -154,7 +165,7 @@ $mobile-breakpoint: 521px !default;
       &:after {
         background-color: $progress;
         left: auto;
-        right: 0;
+        right: -4px;
       }
     }
   }
@@ -180,14 +191,15 @@ $mobile-breakpoint: 521px !default;
     content: '';
     height: 18px;
     position: absolute;
-    right: -14px;
+    right: -8px;
     top: -7px;
     width: 18px;
+    z-index: 1;
   }
 
   .progress-bar-rail:active .progress-bar-played:after {
     height: 13px;
-    right: -11px;
+    right: -6px;
     top: -5px;
     width: 13px;
   }
@@ -234,7 +246,7 @@ $mobile-breakpoint: 521px !default;
 
   .duration {
     float: right;
-    font-size: 12px;
+    font-size: 14px;
     position: relative;
     top: -9px;
   }
@@ -252,6 +264,7 @@ $mobile-breakpoint: 521px !default;
       background: transparent;
       border-bottom: 1px solid;
       color: $black;
+      float: left;
       font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 12px;
       letter-spacing: .8px;
