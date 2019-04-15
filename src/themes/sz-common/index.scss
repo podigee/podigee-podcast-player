@@ -38,20 +38,20 @@ $mobile-breakpoint: 521px !default;
 
   .cover-image {
     float: right;
-    height: 95px;
+    height: 75px;
     margin-left: 16px;
-    width: 95px;
+    width: 75px;
   }
 
   .podcast-info {
-    margin-bottom: 15px;
+    margin-bottom: 0;
     overflow: hidden;
     width: 100%;
 
     .podcast-title {
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: .2px;
+      letter-spacing: .5px;
       margin-bottom: 7px;
     }
 
@@ -127,8 +127,9 @@ $mobile-breakpoint: 521px !default;
     width: calc(100% - 80px);
 
     .progress-bar-time-played {
-      font-size: 14px;
+      font-size: 12px;
       display: block;
+      letter-spacing: 0.7px;
       position: relative;
       top: 35px;
     }
@@ -246,7 +247,8 @@ $mobile-breakpoint: 521px !default;
 
   .duration {
     float: right;
-    font-size: 14px;
+    font-size: 12px;
+    letter-spacing: 0.7px;
     position: relative;
     top: -9px;
   }
@@ -311,23 +313,14 @@ $mobile-breakpoint: 521px !default;
 .podcast-player {
   @media (max-width: $mobile-breakpoint) {
     .podcast-info {
-      margin-bottom: 29px;
+      margin-bottom: 19px;
     }
     .podcast-info .podcast-subtitle {
       width: 100%;
     }
 
-    .cover-image {
-      height: 75px;
-      width: 75px;
-    }
-
     .progress-bar {
       margin-top: 15px;
-    }
-
-    .controls {
-      margin-bottom: 15px;
     }
   }
 }
