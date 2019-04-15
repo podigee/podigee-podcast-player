@@ -134,9 +134,6 @@ class Configuration
       elem.innerHTML
 
     rivets.formatters.scale = (url, size) =>
-      return url if url == null
-      return url unless url.match(/images\.podigee\.com/)
-
-      url.replace(/\/\d+x,/, "/#{size}x,")
+      Utils.scaleImage(url, size)
 
 module.exports = Configuration

@@ -171,9 +171,25 @@ class Player
 
         $(@media).on('loadedmetadata', setTime)
 
-    @media.play()
+    @media.play().then(() => @setMediaSessionInfo())
     @playing = true
     @app.togglePlayState()
+
+  setMediaSessionInfo: () =>
+    return unless navigator.mediaSession
+
+    artwork = [96, 128, 192, 256, 384, 512].map (size) =>
+      {
+        src: Utils.scaleImage(@app.episode.coverUrl, size),
+        sizes: "#{size}x#{size}",
+        type: 'image/png'
+      }
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: @app.episode.title,
+      album: @app.podcast.title,
+      artwork: artwork
+    })
 
   pause: () ->
     return if @media.paused
