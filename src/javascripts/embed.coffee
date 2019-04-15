@@ -29,7 +29,7 @@ class Iframe
     @setupSubscribeButton()
 
   getInSiteConfig: (config) ->
-    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./)
+    inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./) && !config.match(/^\//)
       configSplit = config.split('.')
       tempConfig = null
       configSplit.forEach (cfg) ->
@@ -68,7 +68,10 @@ class Iframe
     @iframe.style.border = '0'
     @iframe.style.overflowY = 'hidden'
     @iframe.style.transition = 'height 100ms linear'
-    @iframe.width = "100%"
+    @iframe.style.minWidth = '100%'
+    @iframe.width = '1px'
+    @iframe.title = 'Podcast'
+    @iframe.setAttribute('aria-label', 'Podcast')
     @iframe
 
   setupListeners: ->

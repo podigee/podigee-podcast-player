@@ -24,7 +24,9 @@ var paths = {
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
     html: ['./src/themes/**/index.html'],
-    css: ['./src/themes/**/*.scss']
+    css: ['./src/themes/**/index.scss'],
+    css_all: ['./src/themes/**/*.scss'],
+    images: ['./src/themes/**/*.png', './src/themes/**/*.jpg']
   }
 };
 
@@ -136,6 +138,10 @@ gulp.task('themes', function() {
     .pipe(gulp.dest('./build/themes'))
     .pipe(connect.reload())
 
+  gulp.src(paths.themes.images)
+    .pipe(gulp.dest('./build/themes'))
+    .pipe(connect.reload())
+
   return gulp.src(paths.themes.css)
     .pipe(sass({style: 'compressed'}))
     .pipe(gulp.dest('./build/themes'))
@@ -168,7 +174,8 @@ gulp.task('watch', function() {
   gulp.watch(paths.html, ['html-dev'])
   gulp.watch(paths.images, ['images'])
   gulp.watch(paths.themes.html, ['themes'])
-  gulp.watch(paths.themes.css, ['themes'])
+  gulp.watch(paths.themes.css_all, ['themes'])
+  gulp.watch(paths.themes.images, ['themes'])
 })
 
 gulp.task('connect', function() {

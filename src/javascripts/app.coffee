@@ -22,9 +22,9 @@ class PodigeePodcastPlayer
     ChapterMarks,
     Download,
     EpisodeInfo,
+    Share,
     Playlist,
     Playerjs,
-    Share,
     Transcript,
   ]
 
@@ -93,7 +93,7 @@ class PodigeePodcastPlayer
   mediaEnded: =>
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
-    @togglePlayState()
+    @theme.removePlayingClass()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
@@ -149,9 +149,11 @@ class PodigeePodcastPlayer
     @theme.removeButtons()
     @theme.removePanels()
     PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
-      self.extensions[extension.extension.name] = new extension(self)
+      name = extension.extension.name
+      self.extensions[name] = new extension(self)
+      return if self.options.startPanels && self.options.startPanels.length
       if currentlyActiveExtension instanceof extension
-        self.theme.togglePanel(self.extensions[extension.extension.name].panel)
+        self.theme.togglePanel(self.extensions[name].panel)
 
   bindWindowResizing: =>
     $(window).on('resize', _.debounce(@sendSizeChange, 250))
@@ -168,6 +170,9 @@ class PodigeePodcastPlayer
     window.parent.postMessage(resizeData, '*')
 
     @extensions.ProgressBar?.updateBarWidths()
+
+  isInMultiPanelMode: ->
+    @options.startPanels && @options.startPanels.length
 
   isInIframeMode: ->
     @options.iframeMode == 'iframe'

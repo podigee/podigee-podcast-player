@@ -93,7 +93,7 @@ class ProgressBar
   template:
     """
     <div class="progress-bar">
-      <div class="progress-bar-time-played" title="Switch display mode">{ time }</div>
+      <button class="progress-bar-time-played" title="Switch display mode" aria-label="Switch display mode">{ time }</button>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>
@@ -165,6 +165,9 @@ class ProgressBar
 
   handleDrop: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
+
+    # catch drop positions outside of progress bar
+    position = 0.001 if position < 0
     if position <= @barWidth()
       @jumpToPosition(position)
 
@@ -174,7 +177,7 @@ class ProgressBar
     @barWidth()/@player.duration
 
   updatePlayed: () =>
-    newWidth = @media.currentTime * @timeRailFactor()
+    newWidth = (@media.currentTime || @player.currentTimeInSeconds) * @timeRailFactor()
     @playedElement.width(newWidth)
 
 module.exports = ProgressBar

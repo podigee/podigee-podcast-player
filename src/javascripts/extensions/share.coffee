@@ -35,13 +35,12 @@ class Share extends Extension
   shareLinks: (currentTimeInSeconds) =>
     url = encodeURI(@shareUrl())
     fileUrl = @audioFileUrl()
-    title = encodeURI(@episode.title)
+    title = encodeURIComponent(@episode.title)
     coverUrl = encodeURI(@episode.coverUrl)
 
     shareLinks =
       email: "mailto:?subject=Podcast: #{title}&body=#{url}"
       facebook: "https://www.facebook.com/sharer/sharer.php?u=#{url}&t=#{title}"
-      googleplus: "https://plus.google.com/share?url=#{url}"
       twitter: "https://twitter.com/intent/tweet?url=#{url}&text=#{title}"
       whatsapp: "whatsapp://send?text=#{title}: #{url}"
 
@@ -100,7 +99,6 @@ class Share extends Extension
       <h3 class="share-title">#{@t('share.episode')}</h3>
       <ul class="share-social-links">
         <li><a pp-href="shareLinks.facebook" class="share-link-facebook" target="_blank">Facebook</a></li>
-        <li><a pp-href="shareLinks.googleplus" class="share-link-googleplus" target="_blank">Google+</a></li>
         <li><a pp-href="shareLinks.twitter" class="share-link-twitter" target="_blank">Twitter</a></li>
         <li><a pp-href="shareLinks.whatsapp" class="share-link-whatsapp" target="_blank">Whatsapp</a></li>
         <li><a pp-href="shareLinks.email" class="share-link-email" target="_blank">#{@t('share.email')}</a></li>

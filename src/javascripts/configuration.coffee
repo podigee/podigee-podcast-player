@@ -133,4 +133,7 @@ class Configuration
       Array.prototype.forEach.call(links, (link) => link.target = '_parent')
       elem.innerHTML
 
+    rivets.formatters.scale = (url, size) =>
+      Utils.scaleImage(url, size)
+
 module.exports = Configuration
