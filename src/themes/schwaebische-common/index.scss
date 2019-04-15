@@ -158,6 +158,7 @@ $mobile-breakpoint: 800px;
   }
 
   .controls {
+    overflow: hidden;
     text-align: center;
 
     button {
@@ -184,8 +185,16 @@ $mobile-breakpoint: 800px;
     }
   }
 
-  &.loading .controls .play-button {
-    background: $text-color;
+  &.loading .controls {
+    .play-button {
+      background: $text-color;
+      height: 107px;
+    }
+
+    .forward-button,
+    .backward-button {
+      top: -34px;
+    }
   }
 
   .graphics {
@@ -305,6 +314,19 @@ $mobile-breakpoint: 800px;
       display: block;
       float: none;
       margin-top: 10px;
+    }
+  }
+}
+
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) {
+    .podcast-player.loading .controls {
+      height: 110px;
+
+      .forward-button,
+      .backward-button {
+        top: 20px
+      }
     }
   }
 }
