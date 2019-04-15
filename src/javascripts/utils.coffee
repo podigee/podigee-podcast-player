@@ -79,4 +79,10 @@ class Utils
     catch
       return false
 
+  @scaleImage: (url, size) ->
+    return url if url == null
+    return url unless url.match(/images\.podigee\.com/)
+
+    url.replace(/\/\d+x,/, "/#{size}x,")
+
 module.exports = Utils

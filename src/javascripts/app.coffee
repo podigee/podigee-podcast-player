@@ -93,7 +93,7 @@ class PodigeePodcastPlayer
   mediaEnded: =>
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
-    @togglePlayState()
+    @theme.removePlayingClass()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
