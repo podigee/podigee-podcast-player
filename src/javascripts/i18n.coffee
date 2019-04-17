@@ -64,6 +64,8 @@ class I18n
         show: 'Show playlist'
         title: 'Playlist'
         load_more: 'Load more episodes'
+      progress_bar:
+        switch_time_mode: 'Switch time display mode'
       share:
         copy_episode_link: 'Copy episode link'
         email: 'Email'
@@ -105,6 +107,8 @@ class I18n
         show: 'Wiedergabeliste anzeigen'
         title: 'Wiedergabeliste'
         load_more: 'Mehr Episoden laden'
+      progress_bar:
+        switch_time_mode: 'Anzeigemodus ändern'
       share:
         copy_episode_link: 'Link zur Episode kopieren'
         email: 'E-Mail'
@@ -146,6 +150,8 @@ class I18n
         show: 'Mostrar lista de reproducción'
         title: 'Lista de reproducción'
         load_more: 'Más capítulos'
+      progress_bar:
+        switch_time_mode: 'Cambiar el modo de visualización'
       share:
         copy_episode_link: 'Copiar enlace del capítulo'
         email: 'Correo electrónico'
