@@ -26,6 +26,10 @@ $mobile-breakpoint: 521px !default;
   button {
     color: $black;
     font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+
+    &:focus {
+      outline: auto !important;
+    }
   }
 
   .hidden {
@@ -306,6 +310,14 @@ $mobile-breakpoint: 521px !default;
       letter-spacing: .8px;
       padding: 0 0 4px;
       text-decoration: none;
+    }
+  }
+}
+
+.podcast-player {
+  @media (max-width: 790px) {
+    .podcast-info {
+      margin-bottom: 19px;
     }
   }
 }
