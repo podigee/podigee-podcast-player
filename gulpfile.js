@@ -30,6 +30,12 @@ var paths = {
   }
 };
 
+var getVersion = function() {
+  return require('child_process')
+    .execSync('git rev-parse HEAD')
+    .toString().trim().substring(0, 5)
+}
+
 gulp.task('stylesheets', function() {
   return gulp.src(paths.main_stylesheet)
     .pipe(sass({style: 'compressed'}))
@@ -108,6 +114,14 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
         transform: function (filePath, file) {
           var fileContents = file.contents.toString('utf8')
           return '<script>' + fileContents + '</script>'
+        }
+      })
+    )
+    .pipe(
+      inject(gulp.src(['./build/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
+        starttag: '<!-- inject:head:version -->',
+        transform: function (filePath, file) {
+          return '<script>window.VERSION = "' + getVersion() + '"</script>'
         }
       })
     )
