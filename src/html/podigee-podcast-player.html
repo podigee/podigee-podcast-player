@@ -10,6 +10,12 @@
     <!-- inject:head:js -->
     <script src="javascripts/podigee-podcast-player-embed.js"></script>
     <!-- endinject -->
+
+    <!-- inject:head:version -->
+    <script>
+      window.VERSION = Math.round((new Date()).getTime() / 1000)
+    </script>
+    <!-- endinject -->
     <style>
       html,
       body {

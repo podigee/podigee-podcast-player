@@ -29,6 +29,7 @@ class PodigeePodcastPlayer
   ]
 
   constructor: (@elemClass) ->
+    @version = window.VERSION
     @getConfiguration().loaded.done =>
       @renderTheme().done =>
         @initPlayer()

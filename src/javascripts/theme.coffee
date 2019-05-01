@@ -87,8 +87,8 @@ class Theme
 
   loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss(themeCss || "#{pathPrefix}.css")
-    @loadHtml(themeHtml || "#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css?#{@app.version}")
+    @loadHtml(themeHtml || "#{pathPrefix}.html?#{@app.version}")
 
   loadHtml: (path) =>
     loaded = $.Deferred()
