@@ -35,7 +35,7 @@ class Share extends Extension
   shareLinks: (currentTimeInSeconds) =>
     url = encodeURI(@shareUrl())
     fileUrl = @audioFileUrl()
-    title = encodeURIComponent("#001 | Hallo Küchenherde | Gastro Hacks für Gastronomen")
+    title = encodeURIComponent(@episode.title)
     coverUrl = encodeURI(@episode.coverUrl)
 
     shareLinks =

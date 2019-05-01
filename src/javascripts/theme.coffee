@@ -87,8 +87,8 @@ class Theme
 
   loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss(themeCss || "#{pathPrefix}.css")
-    @loadHtml(themeHtml || "#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css?#{@app.version}")
+    @loadHtml(themeHtml || "#{pathPrefix}.html?#{@app.version}")
 
   loadHtml: (path) =>
     loaded = $.Deferred()
@@ -186,6 +186,7 @@ class Theme
 
     if @app.options.startPanels && @app.options.startPanels.indexOf(extension.name()) != -1
       extension.panel.show()
+      @panels.toggleClass("#{extension.panel[0].className}-open")
 
     if !@app.options.startPanel && @app.isInIframeMode()
       @buttons.hide()
@@ -198,20 +199,27 @@ class Theme
   activePanel: null
   togglePanel: (elem) =>
     return unless elem
-    if @activePanel?
-      if @activePanel == elem
-        if !@app.isInIframeMode()
-          @activePanel.slideToggle(@animationOptions())
-          @panels.slideToggle(@animationOptions())
-          @activePanel = null
-      else
-        @activePanel.slideToggle(@animationOptions())
-        elem.slideToggle(@animationOptions())
-        @activePanel = elem
-    else
-      unless @app.isInIframeMode()
-        @panels.slideToggle(@animationOptions())
+    if @app.isInMultiPanelMode()
       elem.slideToggle(@animationOptions())
-      @activePanel = elem
+      @panels.toggleClass("#{elem[0].className}-open")
+    else
+      if @activePanel?
+        if @activePanel == elem
+          if !@app.isInIframeMode()
+            @activePanel.slideToggle(@animationOptions())
+            @panels.slideToggle(@animationOptions())
+            @panels.removeClass("#{elem[0].className}-open")
+            @activePanel = null
+        else
+          @activePanel.slideToggle(@animationOptions())
+          elem.slideToggle(@animationOptions())
+          @panels.addClass("#{elem[0].className}-open")
+          @activePanel = elem
+      else
+        unless @app.isInIframeMode()
+          @panels.slideToggle(@animationOptions())
+        elem.slideToggle(@animationOptions())
+        @panels.addClass("#{elem[0].className}-open")
+        @activePanel = elem
 
 module.exports = Theme

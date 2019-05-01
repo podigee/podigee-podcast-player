@@ -4,7 +4,9 @@ rivets = require('rivets')
 
 Utils = require('./utils.coffee')
 
-class ProgressBar
+Extension = require('./extension.coffee')
+
+class ProgressBar extends Extension
   @extension:
     name: 'ProgressBar'
     type: 'progress'
@@ -85,15 +87,15 @@ class ProgressBar
     }
 
   render: () ->
-    html = $(@template)
+    html = $(@template())
     @view = rivets.bind(html, @context())
     @elem.replaceWith(html)
     @elem = $('.progress-bar')
 
-  template:
+  template: ->
     """
     <div class="progress-bar">
-      <button class="progress-bar-time-played" title="Switch display mode" aria-label="Switch display mode">{ time }</button>
+      <button class="progress-bar-time-played" title="#{@t('progress_bar.switch_time_mode')}" aria-label="Switch display mode">{ time }</button>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>
@@ -165,6 +167,9 @@ class ProgressBar
 
   handleDrop: (event) =>
     position = Utils.calculateCursorPosition(event, @elem[0])
+
+    # catch drop positions outside of progress bar
+    position = 0.001 if position < 0
     if position <= @barWidth()
       @jumpToPosition(position)
 
@@ -174,7 +179,7 @@ class ProgressBar
     @barWidth()/@player.duration
 
   updatePlayed: () =>
-    newWidth = @media.currentTime * @timeRailFactor()
+    newWidth = (@media.currentTime || @player.currentTimeInSeconds) * @timeRailFactor()
     @playedElement.width(newWidth)
 
 module.exports = ProgressBar
