@@ -260,10 +260,10 @@ $mobile-breakpoint: 521px !default;
   .player-footer {
     background: $footer-background;
     bottom: 25px;
-    left: -23px;
+    left: -24px;
     padding: 14px 23px;
     position: relative;
-    width: calc(100% + 46px);
+    width: calc(100% + 48px);
 
     .subscribe-button,
     .subscribe-button-external {
