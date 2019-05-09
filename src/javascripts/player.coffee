@@ -110,6 +110,10 @@ class Player
       @media.currentTime = time
     else
       @currentTimeInSeconds = @media.currentTime
+    # Safari sometimes plays "over the file's end", this prevents
+    # the player from displaying a weird time in this case
+    if @currentTimeInSeconds > @duration
+      @currentTimeInSeconds = @duration
     @currentTime = Utils.secondsToHHMMSS(@currentTimeInSeconds)
     @app.updateTime(@currentTimeInSeconds)
     @emitEvent('timeupdate')
@@ -122,7 +126,10 @@ class Player
 
   setDuration: =>
     if @app.episode.duration
-      @app.episode.humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      humanDuration = Utils.secondsToHHMMSS(_.clone(@app.episode.duration))
+      if @app.episode.duration < 3600
+        humanDuration = humanDuration.replace(/^00:/, '')
+      @app.episode.humanDuration = humanDuration
       @duration = @app.episode.duration
       return
 
@@ -152,18 +159,37 @@ class Player
     unless @media.src
       @media.src = @src
 
-    if @media.readyState < 2 # can play current position
+    if @media.readyState < 2 # can not play current position
       @app.theme.addLoadingClass()
-    if @media.readyState < 1 # has metadata available
+    if @media.readyState < 1 # metadata not yet available
       if @currentTimeInSeconds && @currentTimeInSeconds != @media.currentTime
+        # temporarily save time because Safari will reset it once metadata was loaded
+        time = @currentTimeInSeconds
         setTime = () =>
-          @media.currentTime = @currentTimeInSeconds
+          @media.currentTime = time
           $(@media).off('loadedmetadata', setTime)
 
         $(@media).on('loadedmetadata', setTime)
-    @media.play()
+
+    @media.play().then(() => @setMediaSessionInfo())
     @playing = true
     @app.togglePlayState()
+
+  setMediaSessionInfo: () =>
+    return unless navigator.mediaSession
+
+    artwork = [96, 128, 192, 256, 384, 512].map (size) =>
+      {
+        src: Utils.scaleImage(@app.episode.coverUrl, size),
+        sizes: "#{size}x#{size}",
+        type: 'image/png'
+      }
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: @app.episode.title,
+      album: @app.podcast.title,
+      artwork: artwork
+    })
 
   pause: () ->
     return if @media.paused

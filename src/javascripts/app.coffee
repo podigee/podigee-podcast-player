@@ -29,6 +29,7 @@ class PodigeePodcastPlayer
   ]
 
   constructor: (@elemClass) ->
+    @version = window.VERSION
     @getConfiguration().loaded.done =>
       @renderTheme().done =>
         @initPlayer()
@@ -93,7 +94,7 @@ class PodigeePodcastPlayer
   mediaEnded: =>
     @player.media.currentTime = 0
     @extensions.ProgressBar.updateTime()
-    @togglePlayState()
+    @theme.removePlayingClass()
 
   tempPlayBackSpeed: null
   adjustPlaySpeed: (timeString) =>
