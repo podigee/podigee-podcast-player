@@ -4,28 +4,15 @@
   <div class="main-player">
 
     <div class="podcast-info">
+    <img class="cover-image" pp-src="coverUrl" />
       <div class="podcast-title" pp-html="podcastTitle"></div>
       <div class="episode-title"><span pp-html="title"></span></div>
     </div>
-    <img class="cover-image" pp-src="coverUrl" />
-
 
     <progressbar/>
     <div class="duration">{ humanDuration }</div>
 
     <div class="controls">
-      <button class="skip-backward-button" title="Skip to previous Episode">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-          <g fill="none" fill-rule="evenodd">
-            <circle cx="15" cy="15" r="15" fill="#F8F8F8" transform="rotate(-180 15 15)"/>
-            <g fill="#29293A" stroke="#29293A" stroke-width=".5">
-              <path d="M22.224 9.6c.147 0 .295.058.407.176a.619.619 0 0 1 0 .848L18.43 15l4.202 4.376a.619.619 0 0 1 0 .848.56.56 0 0 1-.815 0L16.8 15l5.016-5.224a.563.563 0 0 1 .408-.176"/>
-              <path d="M17.424 9.6c.147 0 .295.058.407.176a.619.619 0 0 1 0 .848L13.63 15l4.202 4.376a.619.619 0 0 1 0 .848.56.56 0 0 1-.815 0L12 15l5.016-5.224a.563.563 0 0 1 .408-.176M10.2 9.6c.332 0 .6.26.6.579v9.642a.59.59 0 0 1-.6.579.59.59 0 0 1-.6-.579V10.18a.59.59 0 0 1 .6-.579"/>
-            </g>
-          </g>
-        </svg>
-      </button>
-
       <button class="play-button">
         <svg class="icon-play-button" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
           <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
@@ -39,18 +26,6 @@
             <circle cx="22" cy="22" r="25" fill="#F8F8F8"/>
             <rect id="Rectangle-6" fill="#252525" x="12" y="10" width="8" height="25"></rect>
             <rect id="Rectangle-6" fill="#252525" x="25" y="10" width="8" height="25"></rect>
-          </g>
-        </svg>
-      </button>
-
-      <button class="skip-forward-button" title="Skip to next Episode">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-          <g fill="none" fill-rule="evenodd">
-            <circle cx="15" cy="15" r="15" fill="#F8F8F8"/>
-            <g fill="#29293A" stroke="#29293A" stroke-width=".5">
-              <path d="M7.776 20.4a.563.563 0 0 1-.407-.176.619.619 0 0 1 0-.848L11.57 15l-4.202-4.376a.619.619 0 0 1 0-.848.56.56 0 0 1 .815 0L13.2 15l-5.016 5.224a.563.563 0 0 1-.408.176"/>
-              <path d="M12.576 20.4a.563.563 0 0 1-.407-.176.619.619 0 0 1 0-.848L16.37 15l-4.202-4.376a.619.619 0 0 1 0-.848.56.56 0 0 1 .815 0L18 15l-5.016 5.224a.563.563 0 0 1-.408.176M19.8 20.4a.59.59 0 0 1-.6-.579V10.18a.59.59 0 0 1 .6-.579c.332 0 .6.26.6.579v9.642a.59.59 0 0 1-.6.579"/>
-            </g>
           </g>
         </svg>
       </button>
@@ -74,13 +49,6 @@
 
       <a class="all-episodes-link" pp-href="or | call customOptions.allEpisodesAppUrl podcastUrl" target="_blank">
         Alle Folgen
-
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="9" viewBox="0 0 20 9">
-          <defs>
-            <path id="a" d="M15.966 0l-.925 1.013 2.31 2.289H3v1.396h14.35l-2.309 2.289L15.966 8 20 4z"/>
-          </defs>
-          <use fill="#29293A" fill-rule="evenodd" stroke="#29293A" stroke-width=".3" xlink:href="#a"/>
-        </svg>
       </a>
     </div>
   </div>

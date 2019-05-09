@@ -1,0 +1,338 @@
+$background: #81d1c6 !default;
+$footer-background: #68C1B4 !default;
+$black: #29293A !default;
+$progress: $black !default;
+$progress-loaded: $black !default;
+$progress-played: #009990 !default;
+$mobile-breakpoint: 521px !default;
+
+@import url('https://www.sueddeutsche.de/assets/contracts/fonts/fonts2019.1.css');
+
+.loading-animation .spinner > div {
+  background-color: #313131 !important;
+}
+
+.podcast-player {
+  background-color: $background;
+  color: $black;
+  font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+  padding: 24px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  button {
+    color: $black;
+    font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+
+    &:focus {
+      outline: auto !important;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .main-player {
+    margin-bottom: -49px;
+  }
+
+  .cover-image {
+    float: right;
+    height: 75px;
+    margin-left: 16px;
+    width: 75px;
+  }
+
+  .podcast-info {
+    margin-bottom: 0;
+    overflow: hidden;
+    width: 100%;
+
+    .podcast-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      margin-bottom: 7px;
+    }
+
+    .podcast-subtitle {
+      font-size: 16px;
+      width: 80%;
+    }
+  }
+
+  .episode-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    line-height: 28px;
+  }
+
+  .controls {
+    position: relative;
+    top: -50px;
+    width: 50px;
+  }
+
+  button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+
+    &:before {
+      content: '';
+      display: none;
+    }
+
+    &.play-button {
+      border: none;
+      color: transparent;
+      height: 50px;
+      margin: 0;
+      padding: 0;
+      width: 50px;
+
+      .icon-pause-button {
+        display: none;
+      }
+    }
+  }
+
+  &.playing button.play-button {
+    .icon-play-button {
+      display: none;
+    }
+
+    .icon-pause-button {
+      display: block;
+    }
+  }
+
+  &.loading button.play-button {
+    animation: none;
+    background: transparent;
+  }
+
+  .skip-backward-button,
+  .skip-forward-button {
+    display: none;
+  }
+
+  .progress-bar {
+    display: block;
+    margin:0 0 23px 80px;
+    width: calc(100% - 80px);
+
+    .progress-bar-time-played {
+      font-size: 12px;
+      display: block;
+      letter-spacing: 0.7px;
+      position: relative;
+      top: 35px;
+    }
+
+    .progress-bar-rail {
+      background-color: $progress;
+      border-radius: 3px;
+      cursor: move; /* fallback if grab cursor is unsupported */
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+      min-height: 4px;
+      position: relative;
+      width: 100%;
+
+      &:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
+
+      &:before,
+      &:after {
+        background-color: $progress-played;
+        border-radius: 50px;
+        content: '';
+        height: 10px;
+        position: absolute;
+        left: -4px;
+        top: -3px;
+        width: 10px;
+      }
+
+      &:after {
+        background-color: $progress;
+        left: auto;
+        right: -4px;
+      }
+    }
+  }
+
+  &.playing .progress-bar .progress-bar-time-played {
+    display: block;
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $progress-played;
+    border-radius: 10px;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-played:after {
+    background-color: $progress-played;
+    border-radius: 50px;
+    content: '';
+    height: 18px;
+    position: absolute;
+    right: -8px;
+    top: -7px;
+    width: 18px;
+    z-index: 1;
+  }
+
+  .progress-bar-rail:active .progress-bar-played:after {
+    height: 13px;
+    right: -6px;
+    top: -5px;
+    width: 13px;
+  }
+
+  .progress-bar-loaded {
+    background-color: $progress-loaded;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, .2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, .2) 50%,
+      rgba(255, 255, 255, .2) 75%,
+      transparent 75%,
+      transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .duration {
+    float: right;
+    font-size: 12px;
+    letter-spacing: 0.7px;
+    position: relative;
+    top: -9px;
+  }
+
+  .player-footer {
+    background: $footer-background;
+    bottom: 25px;
+    left: -24px;
+    padding: 14px 23px;
+    position: relative;
+    width: calc(100% + 48px);
+
+    .subscribe-button,
+    .subscribe-button-external {
+      background: transparent;
+      border-bottom: 1px solid;
+      color: $black;
+      float: left;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 12px;
+      letter-spacing: .8px;
+      outline: none;
+      padding: 0 0 4px;
+      text-decoration: none;
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        color: $black;
+        fill: currentColor;
+        vertical-align: middle;
+      }
+    }
+
+    .all-episodes-link {
+      border-bottom: 1px solid $black;
+      color: $black;
+      float: right;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 12px;
+      letter-spacing: .8px;
+      padding: 0 0 4px;
+      text-decoration: none;
+    }
+  }
+}
+
+.podcast-player {
+  @media (max-width: 790px) {
+    .podcast-info {
+      margin-bottom: 19px;
+    }
+  }
+}
+
+.podcast-player {
+  @media (max-width: $mobile-breakpoint) {
+    .podcast-info {
+      margin-bottom: 19px;
+    }
+    .podcast-info .podcast-subtitle {
+      width: 100%;
+    }
+
+    .progress-bar {
+      margin-top: 15px;
+    }
+  }
+}
