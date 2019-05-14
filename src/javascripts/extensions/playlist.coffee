@@ -76,6 +76,7 @@ class Playlist extends Extension
   playItem: (episode) =>
     @updateEpisodeData(episode)
     @app.player.loadFile()
+    @app.player.setCurrentTime(0)
     @app.player.play()
     @app.initializeExtensions(this)
     @app.extensions.ProgressBar.updateView()
