@@ -140,7 +140,9 @@ class Theme
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
 
-    @subscribeButton.on 'click', () => SubscribeButton.open(@app)
+    @subscribeButton.on 'click', () =>
+      @app.emit('subscribeIntent', 'podlove')
+      SubscribeButton.open(@app)
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')

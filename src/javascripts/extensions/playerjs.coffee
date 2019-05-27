@@ -11,7 +11,7 @@ class Playerjs extends Extension
     @player = @app.player
 
     @receiver = new Receiver()
-    new Adapter(@player, @receiver)
+    new Adapter(@app, @player, @receiver)
 
     @receiver.ready()
 
