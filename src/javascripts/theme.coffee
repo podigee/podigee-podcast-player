@@ -141,7 +141,7 @@ class Theme
     @subscribeButton = @elem.find('.subscribe-button')
 
     @subscribeButton.on 'click', () =>
-      @app.emit('subscribeIntent', 'podlove')
+      @app.emit('subscribeIntent', 'subscribeButton')
       SubscribeButton.open(@app)
 
     @buttons = @elem.find('.buttons')

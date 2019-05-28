@@ -1,5 +1,6 @@
 class Adapter
-  constructor: (@app, @player, @receiver) ->
+  constructor: (@app, @receiver) ->
+    @player = @app.player
     @setupEvents()
     @setupMethods()
 
