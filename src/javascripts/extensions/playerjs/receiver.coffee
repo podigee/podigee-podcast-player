@@ -16,6 +16,7 @@ class Receiver
       'ended'
       'error'
       'timeupdate'
+      'subscribeIntent'
     ]
     methods: [
       'play'

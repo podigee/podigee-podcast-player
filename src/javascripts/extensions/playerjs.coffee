@@ -8,10 +8,8 @@ class Playerjs extends Extension
     type: 'internal'
 
   constructor: (@app) ->
-    @player = @app.player
-
     @receiver = new Receiver()
-    new Adapter(@player, @receiver)
+    new Adapter(@app, @receiver)
 
     @receiver.ready()
 
