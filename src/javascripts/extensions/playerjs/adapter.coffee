@@ -1,9 +1,13 @@
 class Adapter
-  constructor: (@player, @receiver) ->
+  constructor: (@app, @receiver) ->
+    @player = @app.player
     @setupEvents()
     @setupMethods()
 
   setupEvents: () ->
+    @app.addEventListener 'subscribeIntent', (payload) =>
+      @receiver.emit('subscribeIntent', payload)
+
     @player.media.addEventListener 'playing', () =>
       @receiver.emit('play')
 

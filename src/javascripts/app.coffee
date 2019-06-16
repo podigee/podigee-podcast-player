@@ -29,11 +29,28 @@ class PodigeePodcastPlayer
   ]
 
   constructor: (@elemClass) ->
+    @version = window.VERSION
     @getConfiguration().loaded.done =>
       @renderTheme().done =>
         @initPlayer()
 
   extensions: {}
+
+  # at the moment only 'subscribeIntent'
+  listener: {}
+
+  addEventListener: (kind, callback) ->
+    existingListeners = @listener[kind]
+    if (!existingListeners)
+      @listener[kind] = []
+
+    @listener[kind].push(callback)
+
+  emit: (kind, payload) =>
+    callbacks = @listener[kind]
+    return false unless callbacks or callbacks.length == 0
+
+    callbacks.forEach (cb) => cb?(payload)
 
   getProductionData: () ->
     return unless @episode.productionDataUrl

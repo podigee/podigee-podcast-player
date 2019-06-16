@@ -83,8 +83,8 @@ class Theme
 
   loadInternalTheme: (name, themeHtml, themeCss) =>
     pathPrefix = "themes/#{name}/index"
-    @loadCss(themeCss || "#{pathPrefix}.css")
-    @loadHtml(themeHtml || "#{pathPrefix}.html")
+    @loadCss(themeCss || "#{pathPrefix}.css?#{@app.version}")
+    @loadHtml(themeHtml || "#{pathPrefix}.html?#{@app.version}")
 
   loadHtml: (path) =>
     loaded = $.Deferred()
@@ -140,7 +140,9 @@ class Theme
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
 
-    @subscribeButton.on 'click', () => SubscribeButton.open(@app)
+    @subscribeButton.on 'click', () =>
+      @app.emit('subscribeIntent', 'subscribeButton')
+      SubscribeButton.open(@app)
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
