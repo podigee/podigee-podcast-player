@@ -78,6 +78,8 @@ class CustomStyles
       color: #{@textHover};
     }
 
+    .podcast-player .panels .chaptermarks ul li.active,
+    .podcast-player .panels .playlist ul li.active,
     .podcast-player .panels .transcript .transcript-text li.active {
       color: #{@primary};
     }
