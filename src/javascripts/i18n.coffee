@@ -1,9 +1,9 @@
 class I18n
   # List of locales that follow BCP-47
-  SUPPORTED_LOCALES = ['en-US', 'de-DE', 'es-ES']
+  SUPPORTED_LOCALES = ['en-US', 'de-DE', 'es-ES', 'nl-NL']
   # E.g a user with en-GB will get the language 'en'
   # The languages are in ISO 639-1
-  SUPPORTED_LANGUAGES = ['en', 'de', 'es']
+  SUPPORTED_LANGUAGES = ['en', 'de', 'es', 'nl']
 
   # locale<string> BCP-47, e.g. "en-US", can be nil
   # defaultLocale<string> BCP-47, e.g. "de-DE", should not be nil
@@ -35,6 +35,7 @@ class I18n
       when "en" then "en-US"
       when "de" then "de-DE"
       when "es" then "es-ES"
+      when "nl" then "nl-NL"
 
   t: (key) ->
     keys = key.split('.')
@@ -177,5 +178,48 @@ class I18n
         podcastOnDeezer: 'Ver podcast en Deezer'
         podcastOnAlexa: 'Ver podcast en Alexa'
         subscribe: 'Suscríbete'
+       
+    'nl-NL':
+      chaptermarks:
+        show: 'Toon hoofdstukmarkeringen'
+        title: 'Hoofdstukmarkeringen'
+      chromecast:
+        play: 'Speel af op chromecast'
+      download:
+        episode: 'Download aflevering'
+      episode_info:
+        more_info: 'Toon meer info'
+        title: 'Aflevering info'
+      playlist:
+        show: 'Toon afspeellijst'
+        title: 'Afspeellijst'
+        load_more: 'Laad meer afleveringen'
+      progress_bar:
+        switch_time_mode: 'Verander tijdweergave'
+      share:
+        copy_episode_link: 'Kopieër link naar aflevering'
+        email: 'E-mail'
+        embed_player: 'Embed speler'
+        episode: 'Aflevering'
+        episode_url: 'Deel link naar aflevering'
+        start_at: 'Begin op'
+      theme:
+        playPause: 'Afspelen'
+        play: 'Afspelen'
+        pause: 'Pauzeren'
+        backward: 'Terug 10s'
+        forward: 'Vooruit 30s'
+        changePlaybackSpeed: 'Verander afspeelsnelheid'
+      transcript:
+        search: 'Zoek in transcript'
+        show: 'Toon transcriptie'
+        title: 'Transcriptie'
+      subscribeBar:
+        allEpisodes: 'Alle Afleveringen'
+        podcastOnItunes: 'Toon Podcast op Apple Podcasts'
+        podcastOnSpotify: 'Toon Podcast op Spotify'
+        podcastOnDeezer: 'Toon Podcast op Deezer'
+        podcastOnAlexa: 'Toon Podcast op Alexa'
+        subscribe: 'Abonneer'
 
 module.exports = I18n
