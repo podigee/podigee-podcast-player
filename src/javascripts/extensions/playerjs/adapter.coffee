@@ -26,6 +26,9 @@ class Adapter
       @receiver.emit 'buffered',
         percent: @player.media.buffered.length
 
+    @player.media.addEventListener 'seeked', () =>
+      @receiver.emit('seeked')
+
   setupMethods: () ->
     @receiver.on 'play', () =>
       @player.play()
