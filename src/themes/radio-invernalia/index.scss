@@ -1,0 +1,918 @@
+@import url('https://fonts.googleapis.com/css?family=Cinzel+Decorative|Marcellus');
+@import 'variables';
+
+.podcast-player {
+  color: $color-05;
+  font-family: 'Marcellus', serif;
+  min-width: 100%;
+  padding: 60px 60px 40px;
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  &, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  a {
+    color: $color-04;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .episode-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 20px;
+    text-transform: capitalize;
+  }
+
+  .episode-subtitle {
+    margin-bottom: 30px;
+    position: relative;
+
+    @media (max-width: $mobile-breakpoint) {
+      margin-top: 20px;
+    }
+
+    &::after {
+      background-color: $color-03;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+      width: 200px;
+      height: 1px;
+
+      @media (max-width: $mobile-breakpoint) {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  .episode-title,
+  .episode-subtitle {
+    text-align: right;
+
+    @media (max-width: $mobile-breakpoint) {
+      text-align: center;
+    }
+  }
+
+  .episode-title a {
+    color: $color-05;
+
+    &:hover,
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  .background {
+    background-color: $color-01;
+    background-image: url("background.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 10px solid $color-01;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    &::after {
+      border: 1px solid $color-03;
+      content: "";
+      display: block;
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+    }
+  }
+
+  .background__corner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 0;
+
+    &::after,
+    &::before {
+      border: 1px solid $color-03;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 10px;
+    }
+
+    &::after {
+      left: -1px;
+    }
+
+    &::before {
+      right: -1px;
+    }
+  }
+
+  .background__corner--bottom {
+    bottom: 9px;
+  }
+
+  .background__corner--top {
+    top: -1px;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    color: $color-00;
+    cursor: pointer;
+    font-size: 22px;
+    outline: none;
+  }
+
+  .controls {
+    padding: 10px;
+    height: 80px;
+    width: 80px;
+    z-index: 1;
+
+    .play-button {
+      border: 3px solid $color-04;
+      border-radius: 100px;
+      background-color: $color-00;
+      color: $color-01;
+      font-size: 44px;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+      width: 60px;
+    }
+  }
+
+  .controls-advanced {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    z-index: 0;
+
+    @media (max-width: $mobile-breakpoint) {
+      display: flex;
+      justify-content: space-between;
+      bottom: auto;
+      top: 28px;
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+    }
+
+    button {
+      transition: transform 0.125s ease-in-out;
+
+      &:active,
+      &:hover {
+        transform: scale(1.25);
+      }
+    }
+  }
+
+  .cover-image {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    width: 200px;
+    height: 200px;
+
+    @media (max-width: $mobile-breakpoint) {
+      margin: 0 auto;
+      display: block;
+    }
+  }
+
+  .main {
+    margin-bottom: 120px;
+    position: relative;
+
+    &::after {
+      background-color: $color-03;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+    }
+
+    &::before {
+      background-image: url("ornament.png");
+      background-position: 50% 50%;
+      background-size: contain;
+      content: "";
+      position: absolute;
+      bottom: -68px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 15px;
+      transform: scale(1.4);
+    }
+  }
+
+  .main-content {
+    float: right;
+    margin-top: 10px;
+    width: calc(100% - 220px);
+
+    @media (max-width: $mobile-breakpoint) {
+      margin-top: 0;
+      float: none;
+      width: 100%;
+    }
+  }
+
+  .main-player {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    @media (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+      margin-top: 20px;
+    }
+  }
+
+  .progress-bar {
+    width: calc(100% - 80px);
+
+    @media (max-width: $mobile-breakpoint) {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .progress-bar-time-played {
+      display: none;
+    }
+
+    .progress-bar-rail {
+      background-color: $color-04;
+      border: 1px solid $color-05;
+      border-radius: 5px;
+      cursor: ew-resize;
+      min-height: 10px;
+      position: relative;
+    }
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $color-04;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-played {
+    background-color: $color-00;
+    box-shadow: $color-00 0 0 40px 0;
+  }
+
+  // TODO check
+  .progress-bar-loaded {
+    background-color: $color-04;
+  }
+
+  // TODO check
+  .progress-bar-buffering {
+    background-color: $color-00;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .buttons {
+    position: absolute;
+    right: 20px;
+    top: 60px;
+
+    button {
+      color: $color-04;
+      display: inline-block;
+      font-size: 16px;
+      text-align: center;
+      width: 26px;
+    }
+
+    button:hover,
+    button.button-active {
+      color: $color-05;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
+
+  .panels {
+    color: $color-05;
+    display: flex;
+    font-size: 14px;
+    font-weight: 300;
+    height: auto;
+    line-height: 18px;
+    position: relative;
+
+    &::after {
+      background-color: $color-03;
+      content: "";
+      display: none;
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+    }
+
+    &::before {
+      background-image: url("ornament.png");
+      background-position: 50% 50%;
+      background-size: contain;
+      content: "";
+      display: none;
+      position: absolute;
+      bottom: -68px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 15px;
+      transform: scale(1.4);
+    }
+
+    & > div {
+      height: 100%;
+      overflow: hidden;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    h3 {
+      margin: 12px 0;
+    }
+  }
+
+  .buttons {
+    padding-bottom: 10px;
+    position: static;
+    text-align: center;
+    width: 100%;
+
+    button {
+      font-size: 18px;
+      width: auto;
+    }
+
+    .playlist-button:before {
+      content: attr(title) "";
+    }
+
+    .download-button,
+    .episode-info-button,
+    .share-button {
+      display: none;
+    }
+  }
+
+  .panels {
+    min-height: 240px;
+
+    .playlist {
+      order: 1;
+      padding: 0;
+      width: calc(100% - 320px);
+      height: 514px;
+
+      @media (max-width: $mobile-breakpoint) {
+        float: none;
+        margin-top: 80px;
+        width: 100%;
+      }
+
+      h3 {
+        margin-bottom: 40px;
+        text-align: center;
+        position: relative;
+
+        &::after {
+          background-color: $color-03;
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: -20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 140px;
+          height: 1px;
+        }
+
+        &::before {
+          background-image: url("ornament.png");
+          background-position: 50% 50%;
+          background-size: contain;
+          content: "";
+          position: absolute;
+          bottom: -28px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 10px;
+          height: 15px;
+        }
+      }
+
+      ul {
+        display: block;
+        height: calc(100% - 93px);
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
+
+        li {
+          cursor: pointer;
+          display: flex;
+          justify-content: stretch;
+          line-height: 30px;
+          list-style: none;
+          padding: 5px 25px 5px 5px;
+          position: relative;
+
+          &+li {
+            border-top: 1px solid $color-05;
+          }
+
+          &:hover {
+            background-color: $color-03;
+          }
+
+          &.active {
+            background-color: darken($color-03, 15%);
+          }
+
+          img {
+            float: left;
+            width: 30px;
+          }
+
+          span {
+            line-height: 1.5;
+            overflow: hidden;
+          }
+
+          .playlist-episode-duration {
+            min-width: 60px;
+            margin-left: 10px;
+            text-align: right;
+          }
+
+          .playlist-episode-number {
+            min-width: 40px;
+          }
+
+          .playlist-episode-title {
+            width: 100%;
+          }
+
+          a {
+            font-size: 16px;
+            height: 13px;
+            padding: 0;
+            position: absolute;
+            right: 5px;
+            top: 3px;
+            width: 13px;
+
+            svg {
+              color: $color-05;
+              fill: currentColor;
+            }
+          }
+        }
+      }
+
+      .buttons {
+        position: relative;
+        right: 0;
+        text-align: center;
+        top: 2px;
+
+        button {
+          width: auto;
+        }
+      }
+    }
+
+    .episode-info {
+      display: inline-block;
+      font-size: 16px;
+      height: calc(100% - 12px);
+      line-height: 1.5;
+      overflow-y: auto;
+      padding: 0;
+      width: calc(100% - 280px);
+
+      @media (max-width: $mobile-breakpoint) {
+        width: 100%;
+      }
+
+      h3,
+      .episode-subtitle {
+        display: none;
+      }
+    }
+
+    .share {
+      border: 1px solid $color-03;
+      box-shadow: $color-00--alpha 0 0 80px;
+      float: right;
+      left: 70px;
+      margin: 10px;
+      order: 2;
+      overflow: visible;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+      top: 20px;
+      width: 240px;
+
+      @media (max-width: $mobile-breakpoint) {
+        float: none;
+        margin: 40px auto 0 auto;
+        width: 100%;
+        max-width: 280px;
+        transform: translateX(-10px);
+      }
+
+      &::after,
+      &::before {
+        border: 1px solid $color-03;
+        box-shadow: $color-00 0 0 30px;
+        content: "";
+        display: block;
+        position: absolute;
+        top: -10px;
+        width: 10px;
+        height: 10px;
+      }
+
+      &::after {
+        left: -10px;
+      }
+
+      &::before {
+        right: -10px;
+      }
+
+      .share-social-links {
+        margin: 0;
+        height: auto;
+
+        &::after,
+        &::before {
+          border: 1px solid $color-03;
+          box-shadow: $color-00 0 0 30px;
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: -10px;
+          width: 10px;
+          height: 10px;
+        }
+
+        &::after {
+          left: -10px;
+        }
+
+        &::before {
+          right: -10px;
+        }
+
+        li {
+          padding: 0;
+          height: auto;
+        }
+      }
+
+      .share-link-facebook,
+      .share-link-twitter,
+      .share-link-email {
+        background-size: contain;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        width: 60px;
+        height: 60px;
+        transition: transform 0.125s ease-in-out;
+
+        &:active,
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &::before {
+          display: none;
+          content: "";
+        }
+      }
+
+      .share-title {
+        padding-bottom: 12px;
+        position: relative;
+
+        &::after {
+          background-color: $color-03;
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: -6px;
+          left: 20px;
+          right: 20px;
+          width: calc(100% - 40px);
+          height: 1px;
+        }
+      }
+
+      .share-link-email {
+        background-image: url("icon-mail.png");
+      }
+
+      .share-link-facebook {
+        background-image: url("icon-facebook.png");
+      }
+
+      .share-link-twitter {
+        background-image: url("icon-twitter.png");
+      }
+
+      .share-episode-link,
+      .share-deeplink,
+      .share-embed,
+      .share-link-googleplus,
+      .share-link-whatsapp {
+        display: none;
+      }
+    }
+  }
+
+  .subscribe {
+    background-color: $color-04;
+    box-shadow: $color-04--alpha 0 0 80px 0;
+    color: $color-03;
+    padding: 20px;
+    position: absolute;
+    right: 100px;
+    text-align: center;
+    top: 420px;
+    width: 280px;
+
+    @media (max-width: $mobile-breakpoint) {
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &::after {
+      background-color: $color-04;
+      box-shadow: $color-04--alpha 0 0 80px 0;
+      content: "";
+      display: block;
+      position: absolute;
+      top: -11px;
+      left: 10px;
+      width: 260px;
+      height: 10px;
+
+      @media (max-width: $mobile-breakpoint) {
+        width: calc(100% - 20px);
+      }
+    }
+  }
+
+  .panels.playlist-open + .subscribe {
+    margin-top: 140px;
+    right: 40px;
+    top: 540px;
+  }
+
+  .subscribe__button {
+    background-image: url("subscribe.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    color: $color-03;
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 14px;
+    margin: 30px 0 20px 0;
+    padding: 0;
+    text-transform: capitalize;
+    width: 150px;
+    height: 30px;
+    transition: transform 0.125s ease-in-out;
+
+    &:active,
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .subscribe__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .subscribe__links__item {
+    padding: 5px 0;
+  }
+
+  .subscribe__links__item__link {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .subscribe__title {
+    margin: 10px 0 40px 0;
+    position: relative;
+
+    &::after {
+      background-color: $color-03;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 1px;
+    }
+
+    &::before {
+      background-image: url("ornament.png");
+      background-position: 50% 50%;
+      background-size: contain;
+      content: "";
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 15px;
+    }
+  }
+
+  .powered-by {
+    text-align: center;
+
+    svg {
+      position: relative;
+      top: 20px;
+      width: 160px;
+
+      .cls-1 {
+        fill: #fff;
+        stroke: #000;
+      }
+
+      .cls-2 {
+        fill: #000;
+        // stroke: #fff;
+      }
+
+      #TEXT {
+        fill: #fff;
+      }
+    }
+  }
+}
+
+.podcast-player.playing {
+  .controls .play-button {
+    box-shadow: $color-00 0 0 60px 0;
+  }
+}
+
+.podcast-player.mode-script {
+
+  @media (max-width: $mobile-breakpoint) {
+    .buttons {
+      padding-bottom: 10px;
+      position: static;
+      text-align: center;
+      width: 100%;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+        width: auto;
+      }
+    }
+
+    .playlist {
+      height: 434px;
+      margin-top: 0px;
+
+      .buttons button {
+        font-size: 18px;
+      }
+    }
+
+    .share {
+      left: 0;
+      margin: 20px auto 40px;
+      transform: none;
+    }
+
+    &.playing .progress-bar .progress-bar-time-played {
+      display: none;
+    }
+
+    .panels {
+      flex-direction: column;
+    }
+
+    .panels::before,
+    .panels::after {
+      display: none;
+    }
+
+    .subscribe {
+      position: static;
+    }
+
+    .panels.playlist-open + .subscribe {
+      margin-top: 20px;
+    }
+  }
+}
+
+.podcast-player.mode-iframe {
+
+  @media (max-width: $mobile-breakpoint) {
+    .buttons {
+      right: 0;
+    }
+  }
+}
