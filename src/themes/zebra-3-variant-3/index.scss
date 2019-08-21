@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css?family=Andika|Staatliches');
+@import 'variables';
+
+.podcast-player {
+  background-color: $background-color;
+  color: #222;
+  font-family: 'Andika', sans-serif;
+  font-size: 14px;
+  line-height: 1.5em;
+  font-weight: 400;
+  min-width: 100%;
+  overflow: hidden;
+  
+  &, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  a {
+    font-family: "Staatliches", cursive;
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  h1, h2, h3, h4, h5, h6, nav {
+    font-family: 'Staatliches', cursive;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    line-height: 1.5em;
+  }
+
+  .main-player {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .controls-wrapper {
+    position: relative;
+  }
+
+  .controls {
+    padding: 10px;
+    height: 90px;
+    width: 90px;
+
+    .play-button {
+      background-color: $light-grey;
+      border: 2px solid $highlight1;
+      border-radius: 100px;
+      color: $highlight1;
+      font-size: 56px;
+      height: 70px;
+      margin: 0;
+      padding: 0;
+      width: 70px;
+    }
+  }
+
+  .controls-advanced {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: 200px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .progress-bar {
+    padding: 10px 0;
+    width: 100%;
+
+    .progress-bar-time-played {
+      display: none;
+    }
+
+    .progress-bar-rail {
+      background-color: $light-grey;
+      border-radius: 5px;
+      cursor: ew-resize;
+      min-height: 6px;
+      margin: 0 auto;
+      position: relative;
+      width: calc(100% - 70px)
+    }
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $highlight1;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-loaded {
+    background-color: $dark-grey;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .progress-bar-played {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+
+    &:after {
+      background-color: $highlight1;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      position: absolute;
+      right: -7px;
+      top: -7px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // TODO check
+  .progress-bar-buffering {
+    background-color: $default-color;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .buttons {
+    margin-top: 20px;
+
+    button {
+      color: $default-color;
+      display: inline-block;
+      font-size: 16px;
+      text-align: center;
+      width: 26px;
+    }
+
+    button:hover,
+    button.button-active {
+      color: $highlight1;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
+
+  .backward-button,
+  .forward-button {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border: 2px solid $highlight1;
+    border-radius: 50%;
+    background-color: $light-grey;
+    color: $highlight1;
+  }
+
+  .panels {
+    color: $default-color;
+    font-size: 14px;
+    font-weight: 300;
+    height: auto;
+    line-height: 18px;
+
+    & > div {
+      height: 100%;
+      overflow: hidden;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    h3 {
+      margin: 12px 0;
+    }
+  }
+
+  .panels {
+    .chaptermarks,
+    .playlist {
+      height: 400px;
+
+      ul {
+        display: block;
+        height: calc(100% - 54px);
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
+
+        li {
+          background-color: none;
+          cursor: pointer;
+          line-height: 30px;
+          list-style: none;
+          padding: 0 25px 0 5px;
+          position: relative;
+
+          &+li {
+            border-top: 1px solid $light-grey;
+          }
+
+          &:hover {
+            background-color: $light-grey;
+          }
+
+          &.active {
+            background-color: lighten($highlight2, 55%);
+          }
+
+          img {
+            float: left;
+            width: 30px;
+          }
+
+          span {
+            display: inline;
+            // height: 100%;
+            margin: 0 0 0 10px;
+            overflow: hidden;
+          }
+
+          .chaptermark-start {
+            float: left;
+            margin-left: 0;
+          }
+
+          .chaptermark-image + .chaptermark-start {
+            margin-left: 10px;
+          }
+
+          .chaptermark-href
+
+          .episode-link,
+          .playlist-episode-number {
+            display: none;
+          }
+
+          .playlist-episode-duration {
+            float: right;
+          }
+
+          a {
+            font-size: 16px;
+            height: 13px;
+            padding: 0;
+            position: absolute;
+            right: 5px;
+            top: 3px;
+            width: 13px;
+
+            svg {
+              color: $default-color;
+              fill: currentColor;
+            }
+          }
+        }
+      }
+    }
+
+    .playlist ul li {
+      span {
+        margin-left: 0;
+      }
+    }
+
+    .episode-info {
+      font-size: 16px;
+      height: calc(100% - 12px);
+      line-height: 1.5;
+      overflow-y: auto;
+      padding: 0 20px;
+
+      .episode-title {
+        font-size: 30px;
+        font-weight: 300;
+      }
+
+      .episode-subtitle {
+        font-size: 18px;
+        font-weight: 300;
+      }
+    }
+
+    .share {
+      padding: 12px;
+
+      .share-copy-url,
+      .share-embed-code {
+        background: transparent;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        color: rgb(77, 77, 77);
+        font-size: 20px;
+        outline: none;
+        padding: 4px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .transcript {
+      height: 400px;
+
+      h3 {
+        float: left;
+      }
+
+      .search,
+      .search-result {
+        display: inline-block;
+      }
+
+      .search {
+        float: right;
+        padding: 10px 15px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 52px);
+        position: absolute;
+        top: 7px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 54px);
+        list-style: none;
+        overflow-y: auto;
+        padding: 0 12px 0 0;
+        width: 100%;
+
+        li {
+          cursor: pointer;
+          font-size: 1.2em;
+          line-height: 1.4em;
+          margin-bottom: 8px;
+
+          &:hover,
+          &.active {
+            color: #222;
+          }
+
+          &.search-highlight > * {
+            background-color: $transcript-search-highlight;
+          }
+        }
+      }
+    }
+  }
+}
+
+.podcast-player.mode-script {
+
+  @media (max-width: $mobile-breakpoint) {
+    .buttons {
+      padding-bottom: 10px;
+      position: static;
+      text-align: center;
+      width: 100%;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+        width: 35px;
+      }
+    }
+
+    &.playing .progress-bar .progress-bar-time-played {
+      display: none;
+    }
+
+    .panels .transcript {
+      h3 {
+        float: none;
+      }
+
+      .search {
+        display: block;
+        float: none;
+        overflow: hidden;
+        padding: 0 24px 0 0;
+        position: relative;
+      }
+
+      .search-input {
+        float: left;
+        padding-right: 100px;
+        width: 100%;
+      }
+
+      .search-result {
+        float: right;
+        position: absolute;
+        right: 44px;
+        top: 4px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 44px);
+        position: absolute;
+        top: -2px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 90px);
+      }
+    }
+  }
+}
+
+.podcast-player.mode-iframe {
+
+  @media (max-width: $mobile-breakpoint) {
+    .buttons {
+      right: 0;
+    }
+  }
+}
