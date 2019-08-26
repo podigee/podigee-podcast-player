@@ -34,15 +34,14 @@ class Share extends Extension
 
   shareLinks: (currentTimeInSeconds) =>
     url = encodeURI(@shareUrl())
-    fileUrl = @audioFileUrl()
     title = encodeURIComponent(@episode.title)
-    coverUrl = encodeURI(@episode.coverUrl)
+    whatsappText = encodeURIComponent("#{@episode.title}: #{url}")
 
     shareLinks =
       email: "mailto:?subject=Podcast: #{title}&body=#{url}"
       facebook: "https://www.facebook.com/sharer/sharer.php?u=#{url}&t=#{title}"
       twitter: "https://twitter.com/intent/tweet?url=#{url}&text=#{title}"
-      whatsapp: "whatsapp://send?text=#{title}: #{url}"
+      whatsapp: "https://wa.me/?text=#{whatsappText}"
 
   audioFileUrl: () ->
     url = @app.episode.media.mp3 || @app.episode.media.m4a
