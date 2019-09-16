@@ -6,32 +6,7 @@ $progress-loaded: $black !default;
 $progress-played: #009990 !default;
 $mobile-breakpoint: 521px !default;
 
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 800;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Black.otf") format("opentype")
-}
-
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 200;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Light.otf") format("opentype")
-}
-
-@font-face {
-  font-family: "SZoSans2017";
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: 400;
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.eot");
-  src: url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.eot?#iefix") format("embedded-opentype"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.woff2") format("woff2"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.woff") format("woff"),url("https://media-cdn.sueddeutsche.de/globalassets/components/szfonts/fonts/SZoSans2017/SZoSans2017-Regular.otf") format("opentype")
-}
+@import url('https://www.sueddeutsche.de/assets/contracts/fonts/fonts2019.1.css');
 
 .loading-animation .spinner > div {
   background-color: #313131 !important;
@@ -40,8 +15,22 @@ $mobile-breakpoint: 521px !default;
 .podcast-player {
   background-color: $background;
   color: $black;
-  font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
   padding: 24px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  button {
+    color: $black;
+    font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
+
+    &:focus {
+      outline: auto !important;
+    }
+  }
 
   .hidden {
     display: none;
@@ -53,20 +42,20 @@ $mobile-breakpoint: 521px !default;
 
   .cover-image {
     float: right;
-    height: 95px;
+    height: 75px;
     margin-left: 16px;
-    width: 95px;
+    width: 75px;
   }
 
   .podcast-info {
-    margin-bottom: 15px;
+    margin-bottom: 0;
     overflow: hidden;
     width: 100%;
 
     .podcast-title {
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: .2px;
+      letter-spacing: .5px;
       margin-bottom: 7px;
     }
 
@@ -143,6 +132,8 @@ $mobile-breakpoint: 521px !default;
 
     .progress-bar-time-played {
       font-size: 12px;
+      display: block;
+      letter-spacing: 0.7px;
       position: relative;
       top: 35px;
     }
@@ -171,7 +162,7 @@ $mobile-breakpoint: 521px !default;
         content: '';
         height: 10px;
         position: absolute;
-        left: 0;
+        left: -4px;
         top: -3px;
         width: 10px;
       }
@@ -179,7 +170,7 @@ $mobile-breakpoint: 521px !default;
       &:after {
         background-color: $progress;
         left: auto;
-        right: 0;
+        right: -4px;
       }
     }
   }
@@ -205,14 +196,15 @@ $mobile-breakpoint: 521px !default;
     content: '';
     height: 18px;
     position: absolute;
-    right: -14px;
+    right: -8px;
     top: -7px;
     width: 18px;
+    z-index: 1;
   }
 
   .progress-bar-rail:active .progress-bar-played:after {
     height: 13px;
-    right: -11px;
+    right: -6px;
     top: -5px;
     width: 13px;
   }
@@ -260,6 +252,7 @@ $mobile-breakpoint: 521px !default;
   .duration {
     float: right;
     font-size: 12px;
+    letter-spacing: 0.7px;
     position: relative;
     top: -9px;
   }
@@ -267,17 +260,18 @@ $mobile-breakpoint: 521px !default;
   .player-footer {
     background: $footer-background;
     bottom: 25px;
-    left: -23px;
+    left: -24px;
     padding: 14px 23px;
     position: relative;
-    width: calc(100% + 46px);
+    width: calc(100% + 48px);
 
     .subscribe-button,
     .subscribe-button-external {
       background: transparent;
       border-bottom: 1px solid;
       color: $black;
-      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      float: left;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 12px;
       letter-spacing: .8px;
       outline: none;
@@ -311,7 +305,7 @@ $mobile-breakpoint: 521px !default;
       border-bottom: 1px solid $black;
       color: $black;
       float: right;
-      font-family: "SZoSans2017", "Helvetica Neue", Helvetica, sans-serif;
+      font-family: "SZSansDigital", "Helvetica Neue", Helvetica, sans-serif;
       font-size: 12px;
       letter-spacing: .8px;
       padding: 0 0 4px;
@@ -321,25 +315,24 @@ $mobile-breakpoint: 521px !default;
 }
 
 .podcast-player {
+  @media (max-width: 790px) {
+    .podcast-info {
+      margin-bottom: 19px;
+    }
+  }
+}
+
+.podcast-player {
   @media (max-width: $mobile-breakpoint) {
     .podcast-info {
-      margin-bottom: 29px;
+      margin-bottom: 19px;
     }
     .podcast-info .podcast-subtitle {
       width: 100%;
     }
 
-    .cover-image {
-      height: 75px;
-      width: 75px;
-    }
-
     .progress-bar {
       margin-top: 15px;
-    }
-
-    .controls {
-      margin-bottom: 15px;
     }
   }
 }
