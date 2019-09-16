@@ -16,6 +16,7 @@ class Receiver
       'ended'
       'error'
       'timeupdate'
+      'subscribeIntent'
     ]
     methods: [
       'play'
@@ -35,6 +36,7 @@ class Receiver
     try
       data = window.JSON.parse(e.originalEvent.data)
     catch error
+      console.debug("[podigee] error handling player.js data:", error, e)
       return
 
     unless data.method

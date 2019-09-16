@@ -204,6 +204,7 @@ class Player
     @eventListeners[type] = listener
 
   emitEvent: (type, options) ->
+    return unless @eventListeners[type]
     @eventListeners[type](options)
 
 module.exports = Player

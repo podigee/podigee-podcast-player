@@ -144,7 +144,12 @@ class Theme
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
 
-    @subscribeButton.on 'click', () => SubscribeButton.open(@app)
+    @subscribeButton.on 'click', () =>
+      @app.emit('subscribeIntent', 'subscribeButton')
+      SubscribeButton.open(@app)
+
+    @connectionLinks = @elem.find('.podcast-connections-items a')
+    @connectionLinks.on 'click', @handleConnectionClick
 
     @buttons = @elem.find('.buttons')
     @panels = @elem.find('.panels')
@@ -154,6 +159,12 @@ class Theme
   bindCoverLoad: =>
     @coverImage.on 'load', =>
       @app.sendSizeChange()
+
+  handleConnectionClick: (event) =>
+    link = event.currentTarget
+    linkTarget = link.attributes['pp-href'].value
+    service = linkTarget.split('.')[1]
+    @app.emit('subscribeIntent', service)
 
   initializeSpeedToggle: =>
     @speedElement.text('1x')

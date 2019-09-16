@@ -84,9 +84,8 @@
   }
 
   .controls-advanced {
-    bottom: 8px;
-    display: none;
     left: 155px;
+    margin-top: -1px;
     position: absolute;
 
     button {
@@ -117,12 +116,11 @@
     .progress-bar-time-played {
       color: $dark-grey;
       cursor: pointer;
-      display: none;
       font-size: 14px;
-      left: 92px;
+      left: 85px;
       position: absolute;
       text-align: left;
-      top: 71px;
+      top: 69px;
       width: 70px;
     }
 

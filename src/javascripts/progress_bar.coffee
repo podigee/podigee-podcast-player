@@ -17,6 +17,7 @@ class ProgressBar extends Extension
     @elem = @app.theme.progressBarElement
     @player = @app.player
     @media = @app.player.media
+    @timeMode = 'countup'
 
     @init()
 
@@ -38,33 +39,29 @@ class ProgressBar extends Extension
       'countdown'
     else
       'countup'
-
     @updateTime()
 
   updateBarWidths: () =>
     @updatePlayed()
     @updateLoaded()
 
-  updateTime: (time) =>
-    return unless typeof time == 'number'
-    currentTime = time || @media.currentTime
-    time = if @timeMode == 'countup'
-      prefix = ''
-      currentTime
-    else
-      prefix = '-'
-      @player.duration - currentTime
-
-    time = 0 if isNaN(time)
+  buildTimeString: (time) =>
     timeString = Utils.secondsToHHMMSS(time)
     if @player.duration < 3600
       timeString = timeString.replace(/^00:/, '')
-    @currentTime = prefix + timeString
+    timeString
+
+  updateTime: (time) =>
+    return unless typeof time == 'number'
+    currentTime = time || @media.currentTime
+    @timeLeft = @buildTimeString(@player.duration - currentTime)
+    @timePlayed = @buildTimeString(currentTime)
+
     @view.update(@context())
 
     @updatePlayed()
 
-    return timeString
+    return currentTime
 
   updateView: () =>
     newElem = $('<progress-bar>')
@@ -83,7 +80,10 @@ class ProgressBar extends Extension
 
   context: () ->
     {
-      time: @currentTime || Utils.secondsToHHMMSS(0)
+      timeLeft: @timeLeft,
+      timePlayed: @timePlayed,
+      timeCountdown: @timeMode == 'countdown',
+      timeCountup: @timeMode == 'countup'
     }
 
   render: () ->
@@ -95,7 +95,8 @@ class ProgressBar extends Extension
   template: ->
     """
     <div class="progress-bar">
-      <button class="progress-bar-time-played" title="#{@t('progress_bar.switch_time_mode')}" aria-label="Switch display mode">{ time }</button>
+      <button class="progress-bar-time-played time-remaining" pp-show="timeCountdown" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">-{ timeLeft }</button>
+      <button class="progress-bar-time-played time-played" pp-show="timeCountup" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">{ timePlayed }</button>
       <div class="progress-bar-rail">
         <span class="progress-bar-loaded"></span>
         <span class="progress-bar-buffering"></span>
@@ -105,7 +106,7 @@ class ProgressBar extends Extension
     """
 
   findElements: () ->
-    @timeElement = @elem.find('.progress-bar-time-played')
+    @timeElements = @elem.find('.progress-bar-time-played')
     @railElement = @elem.find('.progress-bar-rail')
     @playedElement = @elem.find('.progress-bar-played')
     @loadedElement = @elem.find('.progress-bar-loaded')
@@ -132,7 +133,7 @@ class ProgressBar extends Extension
     @handleDrop(event)
 
   handlePickup: (event) =>
-    return if (event.target.className == 'progress-bar-time-played')
+    return if (event.target.className.includes('progress-bar-time-played'))
     $(@app.elem).on 'mousemove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo
@@ -140,7 +141,7 @@ class ProgressBar extends Extension
     $(@app.elem).on 'touchend', @handleLetgo
 
   bindEvents: () ->
-    @timeElement.on 'click', @switchTimeDisplay
+    @timeElements.on 'click', @switchTimeDisplay
 
     $(@media).on('timeupdate', @updateTime)
       .on('play', @triggerPlaying)
