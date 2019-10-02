@@ -30,7 +30,7 @@ class PodigeePodcastPlayer
 
   constructor: (@elemClass) ->
     @version = window.VERSION
-    @getConfiguration().loaded.done =>
+    @initConfiguration().loaded.done =>
       @renderTheme().done =>
         @initPlayer()
 
@@ -59,8 +59,8 @@ class PodigeePodcastPlayer
     $.getJSON(@episode.productionDataUrl).done (data) =>
       self.episode.productionData = data.data
 
-  getConfiguration: () ->
-    @configuration = new Configuration(this)
+  initConfiguration: (configurationUrl) ->
+    @configuration = new Configuration(this, configurationUrl)
 
   renderTheme: =>
     rendered = $.Deferred()
@@ -82,6 +82,16 @@ class PodigeePodcastPlayer
     @bindButtons()
     @initializeExtensions()
     @bindWindowResizing()
+
+  switchEpisode: (episode, activeExtension) =>
+    @episode = episode
+    @theme.updateView()
+
+    @player.loadFile()
+    @player.setCurrentTime(0)
+    @player.play()
+    @initializeExtensions(activeExtension)
+    @extensions.ProgressBar.updateView()
 
   mediaLoaded: =>
     window.setTimeout @sendSizeChange, 0
@@ -162,6 +172,9 @@ class PodigeePodcastPlayer
 
   initializeExtensions: (currentlyActiveExtension) =>
     self = this
+    Object.keys(@extensions).forEach (name) =>
+      @extensions[name].destroy()
+
     @extensions = {}
     @theme.removeButtons()
     @theme.removePanels()
