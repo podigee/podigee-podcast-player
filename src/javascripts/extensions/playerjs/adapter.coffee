@@ -48,4 +48,8 @@ class Adapter
     @receiver.on 'getDuration', (callback) =>
       callback(@player.media.duration)
 
+    @receiver.on 'setConfiguration', (configuration) =>
+      @app.initConfiguration(configuration).loaded.done (configuration) =>
+        @app.switchEpisode(@app.episode)
+
 module.exports = Adapter

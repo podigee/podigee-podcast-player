@@ -13,4 +13,7 @@ class Playerjs extends Extension
 
     @receiver.ready()
 
+  destroy: () ->
+    @receiver.unbind()
+
 module.exports = Playerjs
