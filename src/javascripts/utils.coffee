@@ -22,7 +22,7 @@ class Utils
     return unless typeof seconds == 'number'
     hours   = Math.floor(seconds / 3600)
     minutes = Math.floor((seconds - (hours * 3600)) / 60)
-    seconds = seconds - (hours * 3600) - (minutes * 60)
+    seconds = Math.floor(seconds - (hours * 3600) - (minutes * 60))
 
     seconds = seconds.toFixed(0)
 
