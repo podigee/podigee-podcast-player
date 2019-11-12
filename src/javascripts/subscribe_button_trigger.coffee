@@ -11,7 +11,7 @@ class SubscribeButtonTrigger
   buildTags: () ->
     @scriptTag = document.createElement('script')
     @scriptTag.className = "podlove-subscribe-button"
-    @scriptTag.src = "https://cdn.podlove.org/subscribe-button/javascripts/app.js"
+    @scriptTag.src = "https://cdn.podigee.com/subscribe-button/javascripts/app.js"
     @scriptTag.dataset.language = 'en'
     @scriptTag.dataset.size = 'medium'
     @scriptTag.setAttribute('data-hide', true)

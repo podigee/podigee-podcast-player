@@ -3,8 +3,7 @@ $ = require('jquery')
 class Receiver
   constructor: ->
     @isReady = false
-    $(window).on 'message', (e) =>
-      @receive(e)
+    window.addEventListener 'message', @receive
 
   context: 'player.js'
   version: '0.0.11'
@@ -16,6 +15,7 @@ class Receiver
       'ended'
       'error'
       'timeupdate'
+      'subscribeIntent'
     ]
     methods: [
       'play'
@@ -26,15 +26,20 @@ class Receiver
       'getDuration'
       'setCurrentTime'
       'getCurrentTime'
+      'setConfiguration'
     ]
 
   methods: {}
   eventListeners: {}
 
-  receive: (e) ->
+  unbind: () ->
+    window.removeEventListener 'message', @receive
+
+  receive: (e) =>
     try
-      data = window.JSON.parse(e.originalEvent.data)
+      data = window.JSON.parse(e.data)
     catch error
+      console.debug("[podigee] error handling player.js data:", error, e)
       return
 
     unless data.method

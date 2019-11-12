@@ -171,7 +171,7 @@ class Player
 
         $(@media).on('loadedmetadata', setTime)
 
-    @media.play().then(() => @setMediaSessionInfo())
+    @media.play().then(() => @setMediaSessionInfo()).catch((e) => console.debug(e))
     @playing = true
     @app.togglePlayState()
 
@@ -204,6 +204,7 @@ class Player
     @eventListeners[type] = listener
 
   emitEvent: (type, options) ->
+    return unless @eventListeners[type]
     @eventListeners[type](options)
 
 module.exports = Player

@@ -11,6 +11,8 @@ class Extension
 
   defaultOptions: {}
 
+  destroy: => return
+
   renderButton: =>
     @button = $(@buttonHtml())
     @button.on 'click', =>
