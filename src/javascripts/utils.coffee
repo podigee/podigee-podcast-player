@@ -68,6 +68,12 @@ class Utils
     catch
       return true
 
+  @isLteIE11: () ->
+    try
+      return navigator.appVersion.indexOf("Trident/7.0") != -1
+    catch
+      return true
+
   # check if Safari 10 or below is used
   @isLteSafari10: () ->
     try

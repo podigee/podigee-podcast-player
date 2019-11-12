@@ -133,7 +133,7 @@ class ProgressBar extends Extension
     @handleDrop(event)
 
   handlePickup: (event) =>
-    return if (event.target.className.includes('progress-bar-time-played'))
+    return if (event.target.className.indexOf('progress-bar-time-played') != -1)
     $(@app.elem).on 'mousemove', @handleDrag
     $(@app.elem).on 'mouseup', @handleLetgo
     $(@app.elem).on 'mouseleave', @handleLetgo
