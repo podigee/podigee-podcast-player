@@ -33,7 +33,8 @@ class Theme
         subscribe: @t('subscribeBar.subscribe')
       },
       customOptions: @app.customOptions,
-      or: @orFunction
+      or: @orFunction,
+      locale: @app.i18n.locale
     }
 
   # used in template to fall back to arg2 if arg1 is undefined or null

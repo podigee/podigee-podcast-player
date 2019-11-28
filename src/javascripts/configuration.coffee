@@ -140,4 +140,8 @@ class Configuration
     rivets.formatters.scale = (url, size) =>
       Utils.scaleImage(url, size)
 
+    rivets.formatters.date = (datestring, locale) =>
+      date = new Date(datestring)
+      new Intl.DateTimeFormat(locale).format(date)
+
 module.exports = Configuration
