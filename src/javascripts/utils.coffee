@@ -22,7 +22,7 @@ class Utils
     return unless typeof seconds == 'number'
     hours   = Math.floor(seconds / 3600)
     minutes = Math.floor((seconds - (hours * 3600)) / 60)
-    seconds = seconds - (hours * 3600) - (minutes * 60)
+    seconds = Math.floor(seconds - (hours * 3600) - (minutes * 60))
 
     seconds = seconds.toFixed(0)
 
@@ -65,6 +65,12 @@ class Utils
       version = parseFloat(navigator.appVersion.split("MSIE")[1])
       return false if version > 9
       return true
+    catch
+      return true
+
+  @isLteIE11: () ->
+    try
+      return navigator.appVersion.indexOf("Trident/7.0") != -1
     catch
       return true
 

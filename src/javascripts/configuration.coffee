@@ -8,13 +8,17 @@ I18n = require('./i18n.coffee')
 Podcast = require('./podcast.coffee')
 
 class Configuration
-  constructor: (@app) ->
+  constructor: (@app, configurationUrl) ->
     @loader = $.Deferred()
     @loaded = @loader.promise()
 
     @frameOptions = Utils.locationToOptions(window.location.search)
 
-    if @frameOptions.configuration
+    if configurationUrl
+      @configuration =
+        json_config: configurationUrl
+      @fetchJsonConfiguration()
+    else if @frameOptions.configuration
       @configuration =
         json_config: @frameOptions.configuration
       @fetchJsonConfiguration()
@@ -135,5 +139,9 @@ class Configuration
 
     rivets.formatters.scale = (url, size) =>
       Utils.scaleImage(url, size)
+
+    rivets.formatters.date = (datestring, locale) =>
+      date = new Date(datestring)
+      new Intl.DateTimeFormat(locale).format(date)
 
 module.exports = Configuration

@@ -34,7 +34,8 @@ class Theme
       },
       customOptions: @app.customOptions,
       or: @orFunction,
-      externalSubscribeUrl: @externalSubscribeUrlFunction
+      externalSubscribeUrl: @externalSubscribeUrlFunction,
+      locale: @app.i18n.locale
     }
 
   # used in template to fall back to arg2 if arg1 is undefined or null

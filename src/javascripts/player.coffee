@@ -171,7 +171,10 @@ class Player
 
         $(@media).on('loadedmetadata', setTime)
 
-    @media.play().then(() => @setMediaSessionInfo())
+    unless Utils.isLteIE11()
+      @media.play().then(() => @setMediaSessionInfo()).catch((e) => console.debug(e))
+    else
+      @media.play()
     @playing = true
     @app.togglePlayState()
 

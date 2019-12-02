@@ -55,7 +55,7 @@
   "dependencies": {
     "elasticlunr": "^0.9.0",
     "jquery": "^2.2.4",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.13",
     "rivets": "^0.9.6",
     "sightglass": "^0.2.4",
     "tinycolor2": "^1.4.1",

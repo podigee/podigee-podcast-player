@@ -68,27 +68,19 @@ class Playlist extends Extension
     if @currentEpisode && event.data == @currentEpisode.feedItem
       @app.player.playPause()
     else
-      @playItem(event.data)
-
-  playItem: (episode) =>
-    @updateEpisodeData(episode)
-    @app.player.loadFile()
-    @app.player.setCurrentTime(0)
-    @app.player.play()
-    @app.initializeExtensions(this)
-    @app.extensions.ProgressBar.updateView()
+      @app.switchEpisode(event.data)
 
   playPrevious: () =>
     return if @isFirstEntry()
 
     prevItem = @playlist[@currentIndex() + 1]
-    @playItem(prevItem.episode)
+    @app.switchEpisode(prevItem.episode)
 
   playNext: () =>
     return if @isLastEntry()
 
     nextItem = @playlist[@currentIndex() - 1]
-    @playItem(nextItem.episode)
+    @app.switchEpisode(nextItem.episode)
 
   isFirstEntry: () =>
     (@currentIndex() + 1) > @playlist.length
@@ -103,11 +95,6 @@ class Playlist extends Extension
       @app.theme.skipForwardElement.addClass('disabled')
     if @isFirstEntry()
       @app.theme.skipBackwardElement.addClass('disabled')
-
-  updateEpisodeData: (episode) ->
-    @app.episode = episode
-
-    @app.theme.updateView()
 
   loadMoreEpisodes: () =>
     @app.playlistLoader.loadNextPage().done (data) =>
