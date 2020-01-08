@@ -1,5 +1,31 @@
 @import 'variables';
 
+@font-face {
+  font-family: 'KienbaumFont';
+  font-display: auto;
+  src: url('../../fonts/montserrat-v12-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local('Montserrat Regular'), local('Montserrat-Regular'), url('../../fonts/montserrat-v12-latin-regular.eot?#iefix') format('embedded-opentype'), url('../../fonts/montserrat-v12-latin-regular.woff2') format('woff2'), url('../../fonts/montserrat-v12-latin-regular.woff') format('woff'), url('fonts/montserrat-v12-latin-regular.ttf') format('truetype'), url('../../fonts/montserrat-v12-latin-regular.svg#Montserrat') format('svg');
+  /* IE6-IE8 */
+  /* Super Modern Browsers */
+  /* Pretty Modern Browsers */
+  /* Safari, Android, iOS */
+  /* Legacy iOS */
+}
+@font-face {
+  font-family: 'KienbaumFontBold';
+  font-display: auto;
+  font-weight: 700;
+  src: url('fonts/montserrat-v12-latin-700.eot');
+  /* IE9 Compat Modes */
+  src: local('Montserrat Bold'), local('Montserrat-Bold'), url('../../fonts/montserrat-v12-latin-700.eot?#iefix') format('embedded-opentype'), url('../../fonts/montserrat-v12-latin-700.woff2') format('woff2'), url('../../fonts/montserrat-v12-latin-700.woff') format('woff'), url('../../fonts/montserrat-v12-latin-700.ttf') format('truetype'), url('../../fonts/montserrat-v12-latin-700.svg#Montserrat') format('svg');
+  /* IE6-IE8 */
+  /* Super Modern Browsers */
+  /* Pretty Modern Browsers */
+  /* Safari, Android, iOS */
+  /* Legacy iOS */
+}
+
 .podcast-player {
   &, *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -9,7 +35,7 @@
 
   background-color: $background-color;
   color: #222;
-  font-family: Helvetica;
+  font-family: 'KienbaumFont', Arial, sans-serif;
   min-width: 100%;
   overflow: hidden;
   position: relative;
@@ -43,6 +69,7 @@
 
     .episode-title {
       color: $highlight1;
+      font-family: 'KienbaumFontBold', Arial, sans-serif;
       font-size: 18px;
       font-weight: 600;
       line-height: 1.4em;
@@ -143,7 +170,7 @@
 
   .progress-bar-played,
   .progress-bar-loaded {
-    background-color: $highlight2;
+    background-color: $highlight1;
     display: block;
     height: 100%;
     position: absolute;
@@ -152,7 +179,7 @@
   }
 
   .progress-bar-loaded {
-    background-color: $dark-grey;
+    background-color: $light-grey;
   }
 
   .progress-bar-buffering {
@@ -423,13 +450,14 @@
 
     .subscribe-button {
       background: transparent;
-      border: 1px solid;
+      border: 1px solid rgb(40, 67, 79);
       border-radius: 3px;
       font-size: 14px;
       font-weight: bold;
       letter-spacing: .8px;
       outline: none;
       padding: 4px 6px;
+      color: rgb(40, 67, 79);
     }
 
     .podcast-connections-items {
