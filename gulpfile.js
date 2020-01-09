@@ -26,7 +26,8 @@ var paths = {
     html: ['./src/themes/**/index.html'],
     css: ['./src/themes/**/index.scss'],
     css_all: ['./src/themes/**/*.scss'],
-    images: ['./src/themes/**/*.png', './src/themes/**/*.jpg']
+    images: ['./src/themes/**/*.png', './src/themes/**/*.jpg'],
+    fonts: ['./src/themes/*/fonts/**']
   }
 };
 
@@ -149,6 +150,10 @@ gulp.task('fonts', function() {
 
 gulp.task('themes', function() {
   gulp.src(paths.themes.html)
+    .pipe(gulp.dest('./build/themes'))
+    .pipe(connect.reload())
+
+  gulp.src(paths.themes.fonts)
     .pipe(gulp.dest('./build/themes'))
     .pipe(connect.reload())
 

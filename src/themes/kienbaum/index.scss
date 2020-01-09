@@ -1,0 +1,626 @@
+@import 'variables';
+
+@font-face {
+  font-family: 'KienbaumFont';
+  font-display: auto;
+  src: url('fonts/montserrat-v12-latin-regular.eot');
+  /* IE9 Compat Modes */
+  src: local('Montserrat Regular'), local('Montserrat-Regular'), url('fonts/montserrat-v12-latin-regular.eot?#iefix') format('embedded-opentype'), url('fonts/montserrat-v12-latin-regular.woff2') format('woff2'), url('fonts/montserrat-v12-latin-regular.woff') format('woff'), url('fonts/montserrat-v12-latin-regular.ttf') format('truetype'), url('fonts/montserrat-v12-latin-regular.svg#Montserrat') format('svg');
+  /* IE6-IE8 */
+  /* Super Modern Browsers */
+  /* Pretty Modern Browsers */
+  /* Safari, Android, iOS */
+  /* Legacy iOS */
+}
+@font-face {
+  font-family: 'KienbaumFontBold';
+  font-display: auto;
+  font-weight: 700;
+  src: url('fonts/montserrat-v12-latin-700.eot');
+  /* IE9 Compat Modes */
+  src: local('Montserrat Bold'), local('Montserrat-Bold'), url('fonts/montserrat-v12-latin-700.eot?#iefix') format('embedded-opentype'), url('fonts/montserrat-v12-latin-700.woff2') format('woff2'), url('fonts/montserrat-v12-latin-700.woff') format('woff'), url('fonts/montserrat-v12-latin-700.ttf') format('truetype'), url('fonts/montserrat-v12-latin-700.svg#Montserrat') format('svg');
+  /* IE6-IE8 */
+  /* Super Modern Browsers */
+  /* Pretty Modern Browsers */
+  /* Safari, Android, iOS */
+  /* Legacy iOS */
+}
+
+.podcast-player {
+  &, *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  background-color: $background-color;
+  color: #222;
+  font-family: 'KienbaumFont', Arial, sans-serif;
+  min-width: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 1px;
+
+  a {
+    color: $highlight1;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .main-player {
+    position: relative;
+  }
+
+  .episode-basic-info {
+    max-height: 90px;
+    padding: 23px $default-padding 0;
+    position: relative;
+    overflow: hidden;
+
+    .episode-title {
+      color: $highlight1;
+      font-family: 'KienbaumFontBold', Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.4em;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .episode-subtitle {
+      color: $default-color;
+      font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .cover-image {
+    float: right;
+    height: 90px;
+    padding: 5px;
+  }
+
+  .controls {
+    float: left;
+    height: 90px;
+
+    .play-button {
+      border: 3px solid $light-grey;
+      border-radius: 100px;
+      color: $dark-grey;
+      font-size: 56px;
+      height: 70px;
+      margin: 10px 0 0 10px;
+      padding: 0;
+      width: 70px;
+    }
+  }
+
+  .controls-advanced {
+    left: 155px;
+    margin-top: -1px;
+    position: absolute;
+
+    button {
+      color: $dark-grey;
+      font-size: 18px;
+    }
+
+    button:hover {
+      color: $highlight1;
+    }
+
+    .speed-toggle {
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+      top: -3px;
+    }
+  }
+
+  &.playing .controls-advanced {
+    display: block;
+  }
+
+  .progress-bar {
+    clear: both;
+    overflow: hidden;
+
+    .progress-bar-time-played {
+      color: $dark-grey;
+      cursor: pointer;
+      font-size: 14px;
+      left: 85px;
+      position: absolute;
+      text-align: left;
+      top: 69px;
+      width: 70px;
+    }
+
+    .progress-bar-time-played:hover {
+      color: $highlight1;
+    }
+
+    .progress-bar-rail {
+      background-color: $light-grey;
+      cursor: ew-resize;
+      min-height: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  &.playing .progress-bar .progress-bar-time-played {
+    display: block;
+  }
+
+  .progress-bar-played,
+  .progress-bar-loaded {
+    background-color: $highlight1;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+
+  .progress-bar-loaded {
+    background-color: $light-grey;
+  }
+
+  .progress-bar-buffering {
+    background-color: red;
+
+    &:after {
+      animation: move 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 50px 50px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      content: "";
+      overflow: hidden;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    @keyframes move {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+  }
+
+  .buttons {
+    position: absolute;
+    right: 90px;
+    top: 68px;
+
+    button {
+      color: $dark-grey;
+      display: inline-block;
+      font-size: 16px;
+      text-align: center;
+      width: 26px;
+    }
+
+    button:hover,
+    button.button-active {
+      color: $highlight1;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
+
+  .panels {
+    color: $default-color;
+    font-size: 14px;
+    font-weight: 300;
+    height: auto;
+    line-height: 18px;
+
+    & > div {
+      height: 100%;
+      overflow: hidden;
+      padding: 0 0 0 $default-padding;
+      position: relative;
+    }
+
+    h3 {
+      margin: 12px 0;
+    }
+  }
+
+  .panels {
+    .chaptermarks,
+    .playlist {
+      height: 400px;
+
+      ul {
+        display: block;
+        height: calc(100% - 90px);
+        margin: 0;
+        padding: 0;
+        overflow-y: scroll;
+
+        li {
+          background-color: none;
+          cursor: pointer;
+          line-height: 30px;
+          list-style: none;
+          padding: 0 25px 0 5px;
+          position: relative;
+
+          &+li {
+            border-top: 1px solid $light-grey;
+          }
+
+          &:hover {
+            background-color: $light-grey;
+          }
+
+          &.active {
+            background-color: lighten($highlight2, 55%);
+          }
+
+          img {
+            float: left;
+            width: 30px;
+          }
+
+          span {
+            display: inline;
+            height: 100%;
+            margin: 0 0 0 10px;
+            overflow: hidden;
+          }
+
+          .chaptermark-start {
+            float: left;
+            margin-left: 0;
+          }
+
+          .chaptermark-image + .chaptermark-start {
+            margin-left: 10px;
+          }
+
+          .chaptermark-href
+
+          .episode-link,
+          .playlist-episode-number {
+            display: none;
+          }
+
+          .playlist-episode-duration {
+            float: right;
+          }
+
+          a {
+            font-size: 16px;
+            height: 13px;
+            padding: 0;
+            position: absolute;
+            right: 5px;
+            top: 3px;
+            width: 13px;
+
+            svg {
+              color: $default-color;
+              fill: currentColor;
+            }
+          }
+        }
+      }
+
+      .buttons {
+        padding-top: 5px;
+        position: static;
+        text-align: center;
+
+        button {
+          font-size: 14px;
+          width: auto;
+        }
+      }
+    }
+
+    .playlist ul li {
+      span {
+        margin-left: 0;
+      }
+    }
+
+    .episode-info {
+      font-size: 16px;
+      height: calc(100% - 12px);
+      overflow-y: auto;
+      padding: 0 12px;
+
+      .episode-title {
+        font-size: 22px;
+      }
+
+      .episode-subtitle {
+        font-size: 18px;
+        font-weight: 300;
+      }
+    }
+
+    .share {
+      padding: 12px;
+
+      .share-copy-url,
+      .share-embed-code {
+        background: transparent;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        color: rgb(77, 77, 77);
+        font-size: 20px;
+        outline: none;
+        padding: 4px;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .transcript {
+      height: 400px;
+
+      h3 {
+        float: left;
+      }
+
+      .search,
+      .search-result {
+        display: inline-block;
+      }
+
+      .search {
+        float: right;
+        padding: 10px 15px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 40px);
+        position: absolute;
+        top: 6px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 54px);
+        list-style: none;
+        overflow-y: auto;
+        padding: 0 12px 0 0;
+        width: 100%;
+
+        li {
+          cursor: pointer;
+          font-size: 1.2em;
+          line-height: 1.4em;
+          margin-bottom: 8px;
+
+          &:hover,
+          &.active {
+            color: #222;
+          }
+
+          &.search-highlight > * {
+            background-color: $transcript-search-highlight;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    padding: 12px;
+    position: relative;
+    width: 100%;
+
+    .subscribe-button {
+      background: transparent;
+      border: 1px solid rgb(40, 67, 79);
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      outline: none;
+      padding: 4px 6px;
+      color: rgb(40, 67, 79);
+    }
+
+    .podcast-connections-items {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .podcast-connections-item {
+      display: inline;
+      list-style: none;
+      margin-left: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      svg {
+        fill: currentColor;
+        vertical-align: middle;
+      }
+
+      &.podcast-connections-item-alexa {
+        margin-left: 0;
+      }
+    }
+
+    .all-episodes-link {
+      float: right;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .8px;
+      padding: 6px 6px;
+      text-decoration: none;
+    }
+  }
+}
+
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+    .cover-image {
+      border: 12px solid $background-color;
+      border-bottom: 0;
+      display: none;
+      float: none;
+      height: auto;
+      width: 100%;
+    }
+
+    .episode-basic-info {
+      .episode-title {
+        font-size: 16px;
+      }
+
+      .episode-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    .controls {
+      height: 115px;
+      position: relative;
+    }
+
+    .controls-advanced {
+      bottom: 20px;
+      left: 0;
+      top: auto;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+      }
+    }
+
+    .buttons {
+      margin-top: 25px;
+      position: static;
+      text-align: right;
+
+      button {
+        font-size: 24px;
+        padding: 0 8px;
+        width: 35px;
+      }
+    }
+
+    .progress-bar {
+      .progress-bar-rail {
+        min-height: 20px;
+      }
+    }
+
+    &.playing .progress-bar .progress-bar-time-played {
+      display: none;
+    }
+
+    .panels .transcript {
+      h3 {
+        float: none;
+      }
+
+      .search {
+        display: block;
+        float: none;
+        overflow: hidden;
+        padding: 0 24px 0 0;
+        position: relative;
+      }
+
+      .search-input {
+        float: left;
+        padding-right: 100px;
+        width: 100%;
+      }
+
+      .search-result {
+        float: right;
+        position: absolute;
+        right: 44px;
+        top: 4px;
+      }
+
+      .search-clear {
+        color: inherit;
+        font-size: 150%;
+        left: calc(100% - 44px);
+        position: absolute;
+        top: -2px;
+      }
+
+      .transcript-text {
+        height: calc(100% - 90px);
+      }
+    }
+
+    .footer {
+      padding: 12px 6px;
+
+      .subscribe-button {
+        font-size: 12px;
+      }
+
+      .podcast-connections-item {
+        margin-left: 5px;
+      }
+
+      .all-episodes-link {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+.podcast-player.mode-iframe {
+  @media (max-width: $mobile-breakpoint) {
+    .cover-image {
+      display: none;
+    }
+
+    .buttons {
+      right: 0;
+    }
+  }
+}
