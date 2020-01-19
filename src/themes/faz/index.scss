@@ -61,7 +61,7 @@
     display: inline-block;
     float: left;
     height: 30px;
-    width: 30%;
+    width: 285px;
 
     button {
       color: $color-text;
@@ -116,7 +116,7 @@
   .progress-bar {
     display: inline-block;
     padding-top: 25px;
-    width: calc(70% - 5px);
+    width: calc(100% - 290px);
 
     .progress-bar-time-played {
       color: $color-text-light;
