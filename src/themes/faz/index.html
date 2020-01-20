@@ -39,7 +39,9 @@
           </li>
         </ul>
 
-        <button class="subscribe-button" pp-html="translations.subscribe" pp-aria-label="translations.subscribe" pp-if="showSubscribeButton"></button>
+        <span pp-if="showSubscribeBar">
+          <button class="subscribe-button" pp-html="translations.subscribe" pp-aria-label="translations.subscribe" pp-if="showSubscribeButton"></button>
+        </span>
       </div>
     </div>
 
