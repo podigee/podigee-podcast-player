@@ -1,7 +1,10 @@
 @import 'variables';
 
 .podcast-player {
-  &, *, *:before, *:after {
+  &,
+  *,
+  *:before,
+  *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -9,7 +12,7 @@
 
   background-color: $color-background;
   color: $color-text;
-  font-family: "FAZGoldSans-Bold", "Helvetica Neue", helvetica, sans-serif;
+  font-family: 'FAZGoldSans-Bold', 'Helvetica Neue', helvetica, sans-serif;
   min-width: 100%;
   overflow: hidden;
   position: relative;
@@ -34,6 +37,14 @@
   .main-player {
     height: 91px;
     position: relative;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
   }
 
   .top {
@@ -188,11 +199,11 @@
       animation: move 2s linear infinite;
       background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, .2) 25%,
+        rgba(255, 255, 255, 0.2) 25%,
         transparent 25%,
         transparent 50%,
-        rgba(255, 255, 255, .2) 50%,
-        rgba(255, 255, 255, .2) 75%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
         transparent 75%,
         transparent
       );
@@ -201,10 +212,13 @@
       border-bottom-right-radius: 8px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
-      content: "";
+      content: '';
       overflow: hidden;
       position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
 
     @keyframes move {
@@ -229,7 +243,6 @@
   }
 
   .subscribe-bar {
-    display: inline-block;
     float: right;
     font-size: 12px;
     padding: $default-padding $default-padding 0;
@@ -277,6 +290,14 @@
 
 .podcast-player.mode-script {
   @media (max-width: $mobile-breakpoint) {
+    .mobile {
+      display: block;
+    }
+
+    .desktop {
+      display: none;
+    }
+
     .cover-image {
       border: 12px solid $color-background;
       border-bottom: 0;
@@ -297,8 +318,10 @@
     }
 
     .controls {
-      height: 115px;
+      height: 70px;
       position: relative;
+      text-align: center;
+      width: 100%;
     }
 
     .controls-advanced {
@@ -324,14 +347,12 @@
       }
     }
 
-    .progress-bar {
-      .progress-bar-rail {
-        min-height: 20px;
-      }
-    }
-
     &.playing .progress-bar .progress-bar-time-played {
       display: none;
+    }
+
+    .progress-bar-time-played {
+      top: -18px;
     }
 
     .panels .transcript {
@@ -374,7 +395,8 @@
     }
 
     .subscribe-bar {
-      padding: 12px 6px;
+      float: left;
+      padding: 0 12px 12px 12px;
 
       .subscribe-button {
         font-size: 12px;
@@ -388,6 +410,14 @@
         font-size: 12px;
         margin-top: 4px;
       }
+    }
+
+    .progress-bar {
+      display: block;
+      padding-left: 65px;
+      padding-top: 60px;
+      position: relative;
+      width: auto;
     }
   }
 }
