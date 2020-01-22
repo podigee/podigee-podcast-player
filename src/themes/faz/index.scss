@@ -50,12 +50,14 @@
   .top {
     overflow: hidden;
   }
+
   .episode-basic-info {
     display: inline-block;
     float: left;
     max-height: 90px;
     padding: $default-padding $default-padding 0;
     overflow: hidden;
+    width: calc(100% - 315px);
 
     .episode-title {
       font-size: 13px;
@@ -308,6 +310,8 @@
     }
 
     .episode-basic-info {
+      width: 100%;
+
       .episode-title {
         font-size: 16px;
       }
