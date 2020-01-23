@@ -130,10 +130,10 @@ class I18n
         title: 'Transkript'
       subscribeBar:
         allEpisodes: 'Alle Episoden'
-        podcastOnItunes: 'Podcast auf Apple Podcasts ansehen'
-        podcastOnSpotify: 'Podcast auf Spotify ansehen'
-        podcastOnDeezer: 'Podcast auf Deezer ansehen'
-        podcastOnAlexa: 'Podcast auf Alexa ansehen'
+        podcastOnItunes: 'Podcast auf Apple Podcasts anhören'
+        podcastOnSpotify: 'Podcast auf Spotify anhören'
+        podcastOnDeezer: 'Podcast auf Deezer anhören'
+        podcastOnAlexa: 'Podcast auf Alexa anhören'
         subscribe: 'Abonnieren'
 
     'es-ES':
