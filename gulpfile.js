@@ -39,15 +39,15 @@ var getVersion = function() {
 gulp.task('stylesheets', function() {
   return gulp.src(paths.main_stylesheet)
     .pipe(sass({style: 'compressed'}))
-    .pipe(gulp.dest('./build/stylesheets'))
+    .pipe(gulp.dest(dest + '/stylesheets'))
     .pipe(gzip())
-    .pipe(gulp.dest('./build/stylesheets'))
+    .pipe(gulp.dest(dest + '/stylesheets'))
 })
 
 gulp.task('stylesheets-dev', function() {
   return gulp.src(paths.main_stylesheet)
     .pipe(sass())
-    .pipe(gulp.dest('./build/stylesheets'))
+    .pipe(gulp.dest(dest + '/stylesheets'))
     .pipe(connect.reload())
 })
 
@@ -59,9 +59,9 @@ gulp.task('javascripts', function() {
     }))
     .pipe(uglify())
     .pipe(rename('podigee-podcast-player.js'))
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(gzip())
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
 
   return gulp.src(paths.embed_javascript, {read: false})
     .pipe(browserify({
@@ -70,9 +70,9 @@ gulp.task('javascripts', function() {
     }))
     .pipe(uglify())
     .pipe(rename('podigee-podcast-player-embed.js'))
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(gzip())
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
 
 })
 
@@ -83,7 +83,7 @@ gulp.task('javascripts-dev', function() {
       extensions: ['.coffee']
     }))
     .pipe(rename('podigee-podcast-player.js'))
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(connect.reload())
 
   gulp.src(paths.embed_javascript, {read: false})
@@ -92,14 +92,14 @@ gulp.task('javascripts-dev', function() {
       extensions: ['.coffee']
     }))
     .pipe(rename('podigee-podcast-player-embed.js'))
-    .pipe(gulp.dest('./build/javascripts'))
+    .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(connect.reload())
 })
 
 gulp.task('html', ['javascripts', 'stylesheets'], function() {
   return gulp.src(paths.html)
     .pipe(
-      inject(gulp.src(['./build/stylesheets/app.css'], {read: true}), {
+      inject(gulp.src([dest + '/stylesheets/app.css'], {read: true}), {
         starttag: '<!-- inject:head:{{ext}} -->',
         transform: function (filePath, file) {
           var fileContents = file.contents.toString('utf8')
@@ -109,7 +109,7 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
       })
     )
     .pipe(
-      inject(gulp.src(['./build/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
+      inject(gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
         starttag: '<!-- inject:head:{{ext}} -->',
         transform: function (filePath, file) {
           var fileContents = file.contents.toString('utf8')
@@ -118,47 +118,47 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
       })
     )
     .pipe(
-      inject(gulp.src(['./build/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
+      inject(gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
         starttag: '<!-- inject:head:version -->',
         transform: function (filePath, file) {
           return '<script>window.VERSION = "' + getVersion() + '"</script>'
         }
       })
     )
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest(dest))
     .pipe(connect.reload())
 })
 
 gulp.task('html-dev', function() {
   return gulp.src(paths.html)
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest(dest))
     .pipe(connect.reload())
 })
 
 gulp.task('images', function() {
   return gulp.src(paths.images)
-    .pipe(gulp.dest('./build/images'))
+    .pipe(gulp.dest(dest + '/images'))
     .pipe(connect.reload())
 })
 
 gulp.task('fonts', function() {
   return gulp.src(paths.fonts)
-    .pipe(gulp.dest('./build/fonts'))
+    .pipe(gulp.dest(dest + '/fonts'))
     .pipe(connect.reload())
 })
 
 gulp.task('themes', function() {
   gulp.src(paths.themes.html)
-    .pipe(gulp.dest('./build/themes'))
+    .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 
   gulp.src(paths.themes.images)
-    .pipe(gulp.dest('./build/themes'))
+    .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 
   return gulp.src(paths.themes.css)
     .pipe(sass({style: 'compressed'}))
-    .pipe(gulp.dest('./build/themes'))
+    .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 })
 
