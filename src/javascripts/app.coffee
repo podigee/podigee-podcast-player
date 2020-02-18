@@ -167,6 +167,11 @@ class PodigeePodcastPlayer
       @player.changePlaySpeed()
       @updateSpeedDisplay()
 
+    @theme.speedSelectElement.change (event) =>
+      newSpeed = parseFloat(event.target.value)
+      @player.changePlaySpeed(newSpeed)
+      @updateSpeedDisplay()
+
   updateSpeedDisplay: () ->
     @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
