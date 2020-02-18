@@ -142,6 +142,7 @@ class Theme
     @skipForwardElement = @elem.find('.skip-forward-button')
     @skipBackwardElement = @elem.find('.skip-backward-button')
     @speedElement = @elem.find('.speed-toggle')
+    @speedSelectElement = @elem.find('.speed-select')
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
 
@@ -169,6 +170,7 @@ class Theme
 
   initializeSpeedToggle: =>
     @speedElement.text('1x')
+    @speedSelectElement.val('1.0')
 
   changeActiveButton: (event) =>
     button = $(event.target)
