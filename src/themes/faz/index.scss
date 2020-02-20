@@ -324,7 +324,9 @@
     }
 
     .controls {
-      height: 70px;
+      float: none;
+      height: 50px;
+      margin-bottom: 0;
       position: relative;
       text-align: center;
       width: 100%;
@@ -351,14 +353,6 @@
         padding: 0 8px;
         width: 35px;
       }
-    }
-
-    &.playing .progress-bar .progress-bar-time-played {
-      display: none;
-    }
-
-    .progress-bar-time-played {
-      top: -18px;
     }
 
     .panels .transcript {
@@ -421,9 +415,17 @@
     .progress-bar {
       display: block;
       padding-left: 65px;
-      padding-top: 60px;
+      padding-top: 10px;
       position: relative;
-      width: auto;
+      width: 100%;
+
+      .progress-bar-rail {
+        width: 80%;
+      }
+    }
+
+    .duration {
+      left: calc(100% - 154px);
     }
   }
 }
