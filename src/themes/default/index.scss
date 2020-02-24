@@ -61,6 +61,12 @@
     }
   }
 
+  .episode-info-open .episode-description {
+    img {
+      max-width: 100%;
+    }
+  }
+
   .cover-image {
     float: right;
     height: 90px;
