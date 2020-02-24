@@ -414,14 +414,11 @@
 
     .progress-bar {
       display: block;
-      padding-left: 65px;
+      margin-left: 65px;
+      margin-right: 65px;
       padding-top: 10px;
       position: relative;
-      width: 100%;
-
-      .progress-bar-rail {
-        width: 80%;
-      }
+      width: calc(100% - 60px);
     }
 
     .duration {
