@@ -265,12 +265,14 @@
         li {
           background-color: none;
           cursor: pointer;
+          display: inline-block;
           line-height: 30px;
           list-style: none;
           padding: 0 25px 0 5px;
           position: relative;
+          width: 100%;
 
-          &+li {
+          & + li {
             border-top: 1px solid $light-grey;
           }
 
