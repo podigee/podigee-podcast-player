@@ -1,0 +1,33 @@
+$background-color: #a7003f;
+$text-color: #fff;
+$dark: #a7003f;
+$mobile-breakpoint: 800px;
+
+@import '../schwaebische-common/index';
+
+.podcast-player {
+  .graphics {
+    .icon {
+      background-image: url('logo.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 155px;
+      left: 80%;
+      position: relative;
+      top: 23%;
+      width: 170px;
+    }
+  }
+}
+
+.podcast-player.mode-script {
+  @media (max-width: $mobile-breakpoint) {
+    .graphics {
+      .icon {
+        height: 70px;
+        left: calc(50% - 50px);
+        width: 100px;
+      }
+    }
+  }
+}
