@@ -1,9 +1,9 @@
 class I18n
   # List of locales that follow BCP-47
-  SUPPORTED_LOCALES = ['en-US', 'de-DE', 'es-ES', 'nl-NL']
+  SUPPORTED_LOCALES = ['en-US', 'de-DE', 'es-ES', 'nl-NL', 'pl-PL']
   # E.g a user with en-GB will get the language 'en'
   # The languages are in ISO 639-1
-  SUPPORTED_LANGUAGES = ['en', 'de', 'es', 'nl']
+  SUPPORTED_LANGUAGES = ['en', 'de', 'es', 'nl', 'pl']
 
   # locale<string> BCP-47, e.g. "en-US", can be nil
   # defaultLocale<string> BCP-47, e.g. "de-DE", should not be nil
@@ -36,6 +36,7 @@ class I18n
       when "de" then "de-DE"
       when "es" then "es-ES"
       when "nl" then "nl-NL"
+      when "pl" then "pl-PL"
 
   t: (key) ->
     keys = key.split('.')
@@ -221,5 +222,48 @@ class I18n
         podcastOnDeezer: 'Toon Podcast op Deezer'
         podcastOnAlexa: 'Toon Podcast op Alexa'
         subscribe: 'Abonneer'
+
+    'pl-PL':
+      chaptermarks:
+        show: 'Pokaż znaczniki rozdziałów'
+        title: 'Rozdziały'
+      chromecast:
+        play: 'Odtwórz w chromecast'
+      download:
+        episode: 'Pobierz odcinek'
+      episode_info:
+        more_info: 'Pokaż więcej informacji'
+        title: 'Informacje o odcinku'
+      playlist:
+        show: 'Pokaż listę odtwarzania'
+        title: 'Lista odtwarzania'
+        load_more: 'Załaduj więcej odcinków'
+      progress_bar:
+        switch_time_mode: 'Przełącz tryb wyświetlania czasu'
+      share:
+        copy_episode_link: 'Kopiuj link do odcinka'
+        email: 'E-mail'
+        embed_player: 'Osadź odtwarzacz'
+        episode: 'Odcinek'
+        episode_url: 'Udostępnij link do odcinka'
+        start_at: 'Rozpocznij od'
+      theme:
+        playPause: 'Odtwórz'
+        play: 'Odtwórz'
+        pause: 'Pauza'
+        backward: '10s wstecz'
+        forward: '30s do przodu'
+        changePlaybackSpeed: 'Zmień prędkość odtwarzania'
+      transcript:
+        search: 'Szukaj w transkrypcji'
+        show: 'Pokaż transkrypcję'
+        title: 'Transkrypcja'
+      subscribeBar:
+        allEpisodes: 'Wszystkie odcinki'
+        podcastOnItunes: 'Zobacz podcast na Apple Podcasts'
+        podcastOnSpotify: 'Zobacz podcast na Spotify'
+        podcastOnDeezer: 'Zobacz podcast na Deezer'
+        podcastOnAlexa: 'Zobacz podcast na Alexa'
+        subscribe: 'Subskrybuj'
 
 module.exports = I18n
