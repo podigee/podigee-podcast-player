@@ -53,6 +53,10 @@ class CustomStyles
       color: #{@progressBarAlt};
     }
 
+    .podcast-player .controls-advanced button {
+      color: #{@primary};
+    }
+
     .podcast-player .progress-bar .progress-bar-rail {
       background: #{@progressBar};
     }
