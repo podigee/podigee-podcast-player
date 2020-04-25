@@ -76,7 +76,7 @@ gulp.task('javascripts', function() {
 
 })
 
-gulp.task('javascripts-dev', function() {
+gulp.task('javascripts-dev', async function() {
   gulp.src(paths.main_javascript, {read: false})
     .pipe(browserify({
       transform: ['coffeeify'],
@@ -183,13 +183,13 @@ gulp.task('dev', gulp.series(
 ))
 
 gulp.task('watch', function() {
-  gulp.watch(paths.stylesheets, ['stylesheets-dev'])
-  gulp.watch(paths.javascripts, ['javascripts-dev'])
-  gulp.watch(paths.html, ['html-dev'])
-  gulp.watch(paths.images, ['images'])
-  gulp.watch(paths.themes.html, ['themes'])
-  gulp.watch(paths.themes.css_all, ['themes'])
-  gulp.watch(paths.themes.images, ['themes'])
+  gulp.watch(paths.stylesheets, gulp.series('stylesheets-dev'))
+  gulp.watch(paths.javascripts, gulp.series('javascripts-dev'))
+  gulp.watch(paths.html, gulp.series('html-dev'))
+  gulp.watch(paths.images, gulp.series('images'))
+  gulp.watch(paths.themes.html, gulp.series('themes'))
+  gulp.watch(paths.themes.css_all, gulp.series('themes'))
+  gulp.watch(paths.themes.images, gulp.series('themes'))
 })
 
 gulp.task('connect', function() {
@@ -202,4 +202,4 @@ gulp.task('connect', function() {
 });
 
 // Serve
-gulp.task('serve', gulp.series('connect', 'watch'));
+gulp.task('serve', gulp.parallel('connect', 'watch'));
