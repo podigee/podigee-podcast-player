@@ -12,6 +12,7 @@ class Share extends Extension
     type: 'panel'
 
   constructor: (@app) ->
+    super()
     @episode = @app.episode
     return unless @episode
 

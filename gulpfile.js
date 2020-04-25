@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     coffee = require('gulp-coffee'),
     watch = require('gulp-watch'),
-    uglify = require('gulp-uglify'),
+    uglify = require('gulp-uglify-es').default,
     concat = require('gulp-concat'),
     browserify = require('gulp-browserify'),
     rename = require('gulp-rename'),
@@ -12,14 +12,14 @@ var gulp = require('gulp'),
     fs = require('fs'),
     inject = require('gulp-inject')
 
-var dest = './dist';
+var dest = './build';
 var paths = {
   main_stylesheet: ['./src/stylesheets/app.scss'],
   stylesheets: ['./src/stylesheets/*.scss'],
   embed_javascript: ['./src/javascripts/app.coffee'],
   main_javascript: ['./src/javascripts/embed.coffee'],
   javascripts: ['./src/javascripts/**/*.coffee'],
-  html: ['./src/html/podigee-podcast-player.html', './src/html/embed-example.html'],
+  html: ['./src/html/podigee-podcast-player.html'],
   images: ['./src/images/**'],
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
@@ -96,7 +96,7 @@ gulp.task('javascripts-dev', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('html', ['javascripts', 'stylesheets'], function() {
+gulp.task('html', gulp.series('javascripts', 'stylesheets', function() {
   return gulp.src(paths.html)
     .pipe(
       inject(gulp.src([dest + '/stylesheets/app.css'], {read: true}), {
@@ -127,7 +127,7 @@ gulp.task('html', ['javascripts', 'stylesheets'], function() {
     )
     .pipe(gulp.dest(dest))
     .pipe(connect.reload())
-})
+}))
 
 gulp.task('html-dev', function() {
   return gulp.src(paths.html)
@@ -162,25 +162,25 @@ gulp.task('themes', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('build', [
+gulp.task('build', gulp.series(
   'stylesheets',
   'javascripts',
   'html',
   'images',
   'fonts',
   'themes'
-])
+))
 
-gulp.task('default', ['build'])
+gulp.task('default', gulp.series('build'))
 
-gulp.task('dev', [
+gulp.task('dev', gulp.series(
   'stylesheets-dev',
   'javascripts-dev',
   'html-dev',
   'images',
   'fonts',
   'themes'
-])
+))
 
 gulp.task('watch', function() {
   gulp.watch(paths.stylesheets, ['stylesheets-dev'])
@@ -202,4 +202,4 @@ gulp.task('connect', function() {
 });
 
 // Serve
-gulp.task('serve', ['connect', 'watch']);
+gulp.task('serve', gulp.series('connect', 'watch'));

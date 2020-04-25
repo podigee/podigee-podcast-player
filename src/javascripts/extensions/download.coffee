@@ -11,6 +11,7 @@ class Download extends Extension
     type: 'panel'
 
   constructor: (@app) ->
+    super()
     @options = _.extend(@defaultOptions, @app.extensionOptions.Download)
     return if @options.disabled
 

@@ -11,6 +11,7 @@ class EpisodeInfo extends Extension
     type: 'panel'
 
   constructor: (@app) ->
+    super()
     @options = _.extend(@defaultOptions, @app.extensionOptions.EpisodeInfo)
     return if @options.disabled
 
