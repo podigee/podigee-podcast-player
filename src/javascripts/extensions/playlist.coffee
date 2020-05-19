@@ -14,6 +14,7 @@ class Playlist extends Extension
     type: 'panel'
 
   constructor: (@app) ->
+    super()
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
