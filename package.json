@@ -35,7 +35,6 @@
     "coffeescript": "<2.0",
     "gulp": "^4.0.2",
     "gulp-browserify": "^0.5.1",
-    "gulp-coffee": "^3.0.3",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^5.7.0",
     "gulp-gzip": "^1.2.0",

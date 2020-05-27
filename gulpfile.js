@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     sass = require('gulp-sass'),
-    coffee = require('gulp-coffee'),
     watch = require('gulp-watch'),
     uglify = require('gulp-uglify-es').default,
     concat = require('gulp-concat'),
