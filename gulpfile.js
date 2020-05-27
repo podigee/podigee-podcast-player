@@ -1,18 +1,17 @@
 var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    sass = require('gulp-sass'),
-    coffee = require('gulp-coffee'),
-    watch = require('gulp-watch'),
-    uglify = require('gulp-uglify-es').default,
-    concat = require('gulp-concat'),
-    browserify = require('gulp-browserify'),
-    rename = require('gulp-rename'),
-    connect = require('gulp-connect'),
-    gzip = require('gulp-gzip'),
-    fs = require('fs'),
-    inject = require('gulp-inject')
+  gutil = require('gulp-util'),
+  sass = require('gulp-sass'),
+  watch = require('gulp-watch'),
+  uglify = require('gulp-uglify-es').default,
+  concat = require('gulp-concat'),
+  browserify = require('gulp-browserify'),
+  rename = require('gulp-rename'),
+  connect = require('gulp-connect'),
+  gzip = require('gulp-gzip'),
+  fs = require('fs'),
+  inject = require('gulp-inject')
 
-var dest = './build';
+var dest = './build'
 var paths = {
   main_stylesheet: ['./src/stylesheets/app.scss'],
   stylesheets: ['./src/stylesheets/*.scss'],
@@ -26,161 +25,197 @@ var paths = {
     html: ['./src/themes/**/index.html'],
     css: ['./src/themes/**/index.scss'],
     css_all: ['./src/themes/**/*.scss'],
-    images: ['./src/themes/**/*.png', './src/themes/**/*.jpg']
-  }
-};
+    images: ['./src/themes/**/*.png', './src/themes/**/*.jpg'],
+  },
+}
 
 var getVersion = function() {
   return require('child_process')
     .execSync('git rev-parse HEAD')
-    .toString().trim().substring(0, 5)
+    .toString()
+    .trim()
+    .substring(0, 5)
 }
 
 gulp.task('stylesheets', function() {
-  return gulp.src(paths.main_stylesheet)
-    .pipe(sass({style: 'compressed'}))
+  return gulp
+    .src(paths.main_stylesheet)
+    .pipe(sass({ style: 'compressed' }))
     .pipe(gulp.dest(dest + '/stylesheets'))
     .pipe(gzip())
     .pipe(gulp.dest(dest + '/stylesheets'))
 })
 
 gulp.task('stylesheets-dev', function() {
-  return gulp.src(paths.main_stylesheet)
+  return gulp
+    .src(paths.main_stylesheet)
     .pipe(sass())
     .pipe(gulp.dest(dest + '/stylesheets'))
     .pipe(connect.reload())
 })
 
 gulp.task('javascripts', function() {
-  gulp.src(paths.main_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
+  gulp
+    .src(paths.main_javascript, { read: false })
+    .pipe(
+      browserify({
+        transform: ['coffeeify'],
+        extensions: ['.coffee'],
+      })
+    )
     .pipe(uglify())
     .pipe(rename('podigee-podcast-player.js'))
     .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(gzip())
     .pipe(gulp.dest(dest + '/javascripts'))
 
-  return gulp.src(paths.embed_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
+  return gulp
+    .src(paths.embed_javascript, { read: false })
+    .pipe(
+      browserify({
+        transform: ['coffeeify'],
+        extensions: ['.coffee'],
+      })
+    )
     .pipe(uglify())
     .pipe(rename('podigee-podcast-player-embed.js'))
     .pipe(gulp.dest(dest + '/javascripts'))
     .pipe(gzip())
     .pipe(gulp.dest(dest + '/javascripts'))
-
 })
 
 gulp.task('javascripts-dev', async function() {
-  gulp.src(paths.main_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
-    .pipe(rename('podigee-podcast-player.js'))
-    .pipe(gulp.dest(dest + '/javascripts'))
-    .pipe(connect.reload())
+  return Promise.all([
+    gulp
+      .src(paths.main_javascript, { read: false })
+      .pipe(
+        browserify({
+          transform: ['coffeeify'],
+          extensions: ['.coffee'],
+        })
+      )
+      .pipe(rename('podigee-podcast-player.js'))
+      .pipe(gulp.dest(dest + '/javascripts'))
+      .pipe(connect.reload()),
 
-  gulp.src(paths.embed_javascript, {read: false})
-    .pipe(browserify({
-      transform: ['coffeeify'],
-      extensions: ['.coffee']
-    }))
-    .pipe(rename('podigee-podcast-player-embed.js'))
-    .pipe(gulp.dest(dest + '/javascripts'))
-    .pipe(connect.reload())
+    gulp
+      .src(paths.embed_javascript, { read: false })
+      .pipe(
+        browserify({
+          transform: ['coffeeify'],
+          extensions: ['.coffee'],
+        })
+      )
+      .pipe(rename('podigee-podcast-player-embed.js'))
+      .pipe(gulp.dest(dest + '/javascripts'))
+      .pipe(connect.reload()),
+  ])
 })
 
-gulp.task('html', gulp.series('javascripts', 'stylesheets', function() {
-  return gulp.src(paths.html)
-    .pipe(
-      inject(gulp.src([dest + '/stylesheets/app.css'], {read: true}), {
-        starttag: '<!-- inject:head:{{ext}} -->',
-        transform: function (filePath, file) {
-          var fileContents = file.contents.toString('utf8')
-          fileContents = fileContents.replace('url("../', 'url("')
-          return '<style>' + fileContents + '</style>'
-        }
-      })
-    )
-    .pipe(
-      inject(gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
-        starttag: '<!-- inject:head:{{ext}} -->',
-        transform: function (filePath, file) {
-          var fileContents = file.contents.toString('utf8')
-          return '<script>' + fileContents + '</script>'
-        }
-      })
-    )
-    .pipe(
-      inject(gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {read: true}), {
-        starttag: '<!-- inject:head:version -->',
-        transform: function (filePath, file) {
-          return '<script>window.VERSION = "' + getVersion() + '"</script>'
-        }
-      })
-    )
-    .pipe(gulp.dest(dest))
-    .pipe(connect.reload())
-}))
+gulp.task(
+  'html',
+  gulp.series('javascripts', 'stylesheets', function() {
+    return gulp
+      .src(paths.html)
+      .pipe(
+        inject(gulp.src([dest + '/stylesheets/app.css'], { read: true }), {
+          starttag: '<!-- inject:head:{{ext}} -->',
+          transform: function(filePath, file) {
+            var fileContents = file.contents.toString('utf8')
+            fileContents = fileContents.replace('url("../', 'url("')
+            return '<style>' + fileContents + '</style>'
+          },
+        })
+      )
+      .pipe(
+        inject(
+          gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {
+            read: true,
+          }),
+          {
+            starttag: '<!-- inject:head:{{ext}} -->',
+            transform: function(filePath, file) {
+              var fileContents = file.contents.toString('utf8')
+              return '<script>' + fileContents + '</script>'
+            },
+          }
+        )
+      )
+      .pipe(
+        inject(
+          gulp.src([dest + '/javascripts/podigee-podcast-player-embed.js'], {
+            read: true,
+          }),
+          {
+            starttag: '<!-- inject:head:version -->',
+            transform: function(filePath, file) {
+              return '<script>window.VERSION = "' + getVersion() + '"</script>'
+            },
+          }
+        )
+      )
+      .pipe(gulp.dest(dest))
+      .pipe(connect.reload())
+  })
+)
 
 gulp.task('html-dev', function() {
-  return gulp.src(paths.html)
+  return gulp
+    .src(paths.html)
     .pipe(gulp.dest(dest))
     .pipe(connect.reload())
 })
 
 gulp.task('images', function() {
-  return gulp.src(paths.images)
+  return gulp
+    .src(paths.images)
     .pipe(gulp.dest(dest + '/images'))
     .pipe(connect.reload())
 })
 
 gulp.task('fonts', function() {
-  return gulp.src(paths.fonts)
+  return gulp
+    .src(paths.fonts)
     .pipe(gulp.dest(dest + '/fonts'))
     .pipe(connect.reload())
 })
 
 gulp.task('themes', function() {
-  gulp.src(paths.themes.html)
+  gulp
+    .src(paths.themes.html)
     .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 
-  gulp.src(paths.themes.images)
+  gulp
+    .src(paths.themes.images)
     .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 
-  return gulp.src(paths.themes.css)
-    .pipe(sass({style: 'compressed'}))
+  return gulp
+    .src(paths.themes.css)
+    .pipe(sass({ style: 'compressed' }))
     .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 })
 
-gulp.task('build', gulp.series(
-  'stylesheets',
-  'javascripts',
-  'html',
-  'images',
-  'fonts',
-  'themes'
-))
+gulp.task(
+  'build',
+  gulp.series('stylesheets', 'javascripts', 'html', 'images', 'fonts', 'themes')
+)
 
 gulp.task('default', gulp.series('build'))
 
-gulp.task('dev', gulp.series(
-  'stylesheets-dev',
-  'javascripts-dev',
-  'html-dev',
-  'images',
-  'fonts',
-  'themes'
-))
+gulp.task(
+  'dev',
+  gulp.series(
+    'stylesheets-dev',
+    'javascripts-dev',
+    'html-dev',
+    'images',
+    'fonts',
+    'themes'
+  )
+)
 
 gulp.task('watch', function() {
   gulp.watch(paths.stylesheets, gulp.series('stylesheets-dev'))
@@ -197,9 +232,9 @@ gulp.task('connect', function() {
     host: '0.0.0.0',
     port: 8081,
     root: [__dirname],
-    livereload: true
-  });
-});
+    livereload: true,
+  })
+})
 
 // Serve
-gulp.task('serve', gulp.parallel('connect', 'watch'));
+gulp.task('serve', gulp.parallel('connect', 'dev', 'watch'))
