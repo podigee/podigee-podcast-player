@@ -237,4 +237,4 @@ gulp.task('connect', function() {
 })
 
 // Serve
-gulp.task('serve', gulp.parallel('connect', 'watch'))
+gulp.task('serve', gulp.parallel('connect', 'dev', 'watch'))
