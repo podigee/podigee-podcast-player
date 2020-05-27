@@ -2,7 +2,7 @@
 
 The Podigee Podcast Player is a state of the art web audio player specially crafted for listening to podcasts.
 
-[Demo](https://podigee.github.com/podigee-podcast-player "Podigee Podcast Player Demo")
+[Demo](https://www.podigee.com/en/podcast-player/ 'Podigee Podcast Player Demo')
 
 - [Features](#features)
 - [Extensions](#extensions)

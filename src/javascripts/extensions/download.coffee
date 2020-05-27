@@ -10,8 +10,8 @@ class Download extends Extension
     name: 'Download'
     type: 'panel'
 
-  constructor: (@app) ->
-    super()
+  constructor: (app) ->
+    super(app)
     @options = _.extend(@defaultOptions, @app.extensionOptions.Download)
     return if @options.disabled
 
@@ -66,4 +66,3 @@ class Download extends Extension
     """
 
 module.exports = Download
-
