@@ -91,11 +91,11 @@ class ProgressBar extends Extension
     html = $(@template())
     @view = rivets.bind(html, @context())
     @elem.replaceWith(html)
-    @elem = $('.progress-bar')
+    @elem = $(".#{@progressClassFromAppId()}")
 
   template: ->
     """
-    <div class="progress-bar">
+    <div class="progress-bar #{@progressClassFromAppId()}">
       <button class="progress-bar-time-played time-remaining" pp-show="timeCountdown" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">-{ timeLeft }</button>
       <button class="progress-bar-time-played time-played" pp-show="timeCountup" title="#{@t('progress_bar.switch_time_mode')}" aria-label="#{@t('progress_bar.switch_time_mode')}">{ timePlayed }</button>
       <div class="progress-bar-rail">
@@ -105,6 +105,9 @@ class ProgressBar extends Extension
       </div>
     </div>
     """
+
+  progressClassFromAppId: () =>
+    "progress-bar-#{@app.elemClass.replace('#','')}"
 
   findElements: () ->
     @timeElements = @elem.find('.progress-bar-time-played')

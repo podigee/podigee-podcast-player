@@ -90,14 +90,19 @@ class Theme
   loadHtml: (path) =>
     loaded = $.Deferred()
     self = this
-
-    $.get(path).done (html) =>
-      self.html = html
-      loaded.resolve()
+    if @app.origin
+      $.ajax("#{@app.origin}/#{path}").done (html) =>
+        self.html = html
+        loaded.resolve()
+    else
+      $.get(path).done (html) =>
+        self.html = html
+        loaded.resolve()
 
     @loaded = loaded.promise()
 
   loadCss: (path) =>
+    path = if @app.origin then "#{@app.origin}/#{path}" else path
     style = $('<link>').attr
       href: path
       rel: 'stylesheet'
