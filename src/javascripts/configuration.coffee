@@ -18,7 +18,7 @@ class Configuration
       @frameOptions = directConfiguration.customOptions || {}
       @frameOptions.configuration = directConfiguration.json_config
       @frameOptions.id = directConfiguration.id
-      @frameOptions.iframeMode = 'false'
+      @frameOptions.iframeMode = 'direct'
     else
       @frameOptions = Utils.locationToOptions(window.location.search)
   
