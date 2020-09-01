@@ -1,4 +1,3 @@
-IframeResizer = require('./iframe_resizer.coffee')
 SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 PodigeePodcastPlayer = require('./app.coffee')
 $ = require('jquery')
@@ -9,25 +8,19 @@ class Direct
 
     config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
     @id = @randomId(config)
+    @configuration = @getInSiteConfig(config) || {json_config: config}
 
-    @configuration = if typeof config == 'string'
-      if config.match(/^{/)
-        JSON.parse(config)
-      else
-        @getInSiteConfig(config) || {json_config: config}
-    else
-      config
     try
       @configuration.customOptions = JSON.parse(@elem.getAttribute('data-options'))
     catch
       console.debug('[Podigee Podcast Player] data-options has invalid JSON')
-    
+
     @buildPlayer(html)
     @configuration.id = @player.id
     @setupSubscribeButton()
     new PodigeePodcastPlayer("##{@playerId()}", @configuration, scriptSrc)
     @replaceElem()
-    
+
   getInSiteConfig: (config) ->
     inSiteConfig = if !(config.indexOf('http') == 0) && config.match(/\./) && !config.match(/^\//)
       configSplit = config.split('.')
@@ -79,7 +72,7 @@ class Direct
     @elem.parentNode.replaceChild(@player, @elem)
 
 
-class DirectWrapper 
+class DirectWrapper
   constructor: () ->
     @setUpPlayers()
 
@@ -88,7 +81,7 @@ class DirectWrapper
     unless window.location.protocol.match(/^https/)
       @scriptSrc = scriptSrc.replace(/^https/, 'http')
     @scriptSrc = @scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
-    
+
 
   getDirectHtml: () ->
     rendered = $.Deferred()
@@ -116,7 +109,7 @@ class DirectWrapper
         players = []
         elems = document.querySelectorAll('script.podigee-podcast-player')
 
-        if elems.length 
+        if elems.length
           self.origin(elems[0])
           self.getDirectHtml().done =>
             self.appendCss()
