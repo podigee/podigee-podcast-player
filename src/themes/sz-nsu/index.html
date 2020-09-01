@@ -1,0 +1,38 @@
+<div class="podcast-player">
+  <audio preload="none"></audio>
+
+  <div class="main-player">
+    <div class="podcast-info">
+      <img class="cover-image"/>
+      <div class="podcast-title" pp-html="podcastTitle"></div>
+      <div class="episode-title"><span pp-html="title"></span></div>
+    </div>
+
+    <progressbar/>
+    <div class="duration">{ humanDuration }</div>
+
+    <div class="controls">
+      <button class="play-button">
+        <svg class="icon-play-button" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+          <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+            <circle cx="22" cy="22" r="25" fill="#F8F8F8"/>
+            <path fill="#29293A" d="M17.83 10.394l14.616 11.829-14.617 11.83z"/>
+          </g>
+        </svg>
+
+        <svg class="icon-pause-button" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+          <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+            <circle cx="22" cy="22" r="25" fill="#F8F8F8"/>
+            <rect id="Rectangle-6" fill="#252525" x="12" y="10" width="8" height="25"></rect>
+            <rect id="Rectangle-6" fill="#252525" x="25" y="10" width="8" height="25"></rect>
+          </g>
+        </svg>
+      </button>
+    </div>
+
+    <div class="player-footer">
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://www.sueddeutsche.de/assets/contracts/fonts/fonts2019.3.css"></link>

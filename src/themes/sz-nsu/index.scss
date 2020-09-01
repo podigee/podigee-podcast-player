@@ -1,0 +1,9 @@
+$background: #b6806d !important;
+$footer-background: #d9c68e;
+
+.cover-image {
+  background-image: url('./ligatur.png');
+  background-size: cover;
+}
+
+@import '../sz-common/index.scss';
