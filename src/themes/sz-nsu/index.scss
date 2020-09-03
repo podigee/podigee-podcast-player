@@ -1,9 +1,7 @@
+$black: #29293a !important;
 $background: #b6806d !important;
-$footer-background: #d9c68e;
+$footer-background: $black;
+$progress: $black;
+$progress-played: $black;
 
-.cover-image {
-  background-image: url('./ligatur.png');
-  background-size: cover;
-}
-
-@import '../sz-common/index.scss';
+@import "../sz-common/index.scss";
