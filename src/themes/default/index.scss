@@ -58,6 +58,7 @@
     .episode-subtitle {
       color: $default-color;
       font-size: 16px;
+      min-height: 18px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -508,6 +509,7 @@
 
       .episode-subtitle {
         font-size: 14px;
+        min-height: 16px;
       }
     }
 
