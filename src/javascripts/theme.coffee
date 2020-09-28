@@ -108,7 +108,17 @@ class Theme
       rel: 'stylesheet'
       type: 'text/css'
       media: 'all'
-    $('head').append(style)
+    unless @stylesheetExists(path)
+      $('head').append(style)
+
+  stylesheetExists: (path) ->
+    result = false
+    stylesheets = document.querySelectorAll('link')
+    for stylesheet in stylesheets
+      if stylesheet.href == path
+        result = true
+
+    result
 
   addPlayingClass: ->
     @elem.addClass('playing')
