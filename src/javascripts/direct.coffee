@@ -1,6 +1,6 @@
 SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 PodigeePodcastPlayer = require('./app.coffee')
-$ = require('jquery')
+ExternalData = require('./external_data.coffee')
 
 class Direct
   constructor: (@elem, html, scriptSrc)->
@@ -77,28 +77,24 @@ class DirectWrapper
     @setUpPlayers()
 
   origin: (elem) ->
-    @scriptSrc = elem.src || elem.getAttribute('src')
+    scriptSrc = elem.src || elem.getAttribute('src')
     unless window.location.protocol.match(/^https/)
-      @scriptSrc = scriptSrc.replace(/^https/, 'http')
-    @scriptSrc = @scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
+      scriptSrc = scriptSrc.replace(/^https/, 'http')
+    scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
 
 
-  getDirectHtml: () ->
-    rendered = $.Deferred()
-    $.ajax("#{@scriptSrc}/podigee-podcast-player-direct.html").done (html) =>
-      @html = html
-      rendered.resolve()
+  getDirectHtml: (scriptSrc) ->
+    externalData = new ExternalData()
+    externalData.get("#{scriptSrc}/podigee-podcast-player-direct.html")
 
-    rendered.promise()
-
-  appendCss: () ->
-    path = "#{@scriptSrc}/stylesheets/app-direct.css"
-    style = $('<link>').attr
-      href: path
-      rel: 'stylesheet'
-      type: 'text/css'
-      media: 'all'
-    $('head').append(style)
+  appendCss: (scriptSrc) ->
+    path = "#{scriptSrc}/stylesheets/app-direct.css"
+    style = document.createElement('link')
+    style.href = path
+    style.rel = 'stylesheet'
+    style.type = 'text/css'
+    style.media = 'all'
+    document.querySelector('head').append(style)
 
   setUpPlayers: () ->
     self = @
@@ -107,14 +103,15 @@ class DirectWrapper
         window.podigeePlayersLoaded = true
         window.VERSION = Math.round((new Date()).getTime() / 1000)
         players = []
-        elems = document.querySelectorAll('script.podigee-podcast-player')
+        scriptElem = document.querySelector('script.podigee-podcast-player')
+        elems = document.querySelectorAll('div.podigee-podcast-player')
 
         if elems.length
-          self.origin(elems[0])
-          self.getDirectHtml().done =>
-            self.appendCss()
+          scriptSrc = self.origin(scriptElem)
+          self.getDirectHtml(scriptSrc).done (html) =>
+            self.appendCss(scriptSrc)
             for elem in elems
-              players.push(new Direct(elem, self.html, self.scriptSrc))
+              players.push(new Direct(elem, html, scriptSrc))
             window.podigeePodcastPlayers = players
 
     return
