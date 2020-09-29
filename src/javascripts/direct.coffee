@@ -103,8 +103,8 @@ class DirectWrapper
         window.podigeePlayersLoaded = true
         window.VERSION = Math.round((new Date()).getTime() / 1000)
         players = []
-        scriptElem = document.querySelector('script.podigee-podcast-player')
-        elems = document.querySelectorAll('div.podigee-podcast-player')
+        scriptElem = document.querySelector('script.podigee-podcast-player-direct')
+        elems = document.querySelectorAll('div.podigee-podcast-player-direct')
 
         if elems.length
           scriptSrc = self.origin(scriptElem)
