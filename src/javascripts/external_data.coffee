@@ -3,7 +3,8 @@ $ = require('jquery')
 class ExternalData
 
   constructor: (app) ->
-    @sslProxy = app.options.sslProxy
+    if app
+      @sslProxy = app.options.sslProxy
 
   get: (url, params) ->
     deferred = $.Deferred()
