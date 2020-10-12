@@ -13,12 +13,19 @@ var gulp = require('gulp'),
 
 var dest = './build'
 var paths = {
-  main_stylesheet: ['./src/stylesheets/app.scss'],
+  main_stylesheet: [
+    './src/stylesheets/app.scss',
+    './src/stylesheets/app-direct.scss',
+  ],
   stylesheets: ['./src/stylesheets/*.scss'],
   embed_javascript: ['./src/javascripts/app.coffee'],
   main_javascript: ['./src/javascripts/embed.coffee'],
+  direct_javascript: ['./src/javascripts/direct.coffee'],
   javascripts: ['./src/javascripts/**/*.coffee'],
-  html: ['./src/html/podigee-podcast-player.html'],
+  html: [
+    './src/html/podigee-podcast-player.html',
+    './src/html/podigee-podcast-player-direct.html',
+  ],
   images: ['./src/images/**'],
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
@@ -70,6 +77,20 @@ gulp.task('javascripts', function() {
     .pipe(gzip())
     .pipe(gulp.dest(dest + '/javascripts'))
 
+  gulp
+    .src(paths.direct_javascript, { read: false })
+    .pipe(
+      browserify({
+        transform: ['coffeeify'],
+        extensions: ['.coffee'],
+      })
+    )
+    .pipe(uglify())
+    .pipe(rename('podigee-podcast-player-direct.js'))
+    .pipe(gulp.dest(dest + '/javascripts'))
+    .pipe(gzip())
+    .pipe(gulp.dest(dest + '/javascripts'))
+
   return gulp
     .src(paths.embed_javascript, { read: false })
     .pipe(
@@ -100,6 +121,18 @@ gulp.task('javascripts-dev', async function() {
       .pipe(connect.reload()),
 
     gulp
+      .src(paths.direct_javascript, { read: false })
+      .pipe(
+        browserify({
+          transform: ['coffeeify'],
+          extensions: ['.coffee'],
+        })
+      )
+      .pipe(rename('podigee-podcast-player-direct.js'))
+      .pipe(gulp.dest(dest + '/javascripts'))
+      .pipe(connect.reload()),
+
+    gulp
       .src(paths.embed_javascript, { read: false })
       .pipe(
         browserify({
@@ -121,7 +154,7 @@ gulp.task(
       .pipe(
         inject(gulp.src([dest + '/stylesheets/app.css'], { read: true }), {
           starttag: '<!-- inject:head:{{ext}} -->',
-          transform: function(filePath, file) {
+          transform: function (filePath, file) {
             var fileContents = file.contents.toString('utf8')
             fileContents = fileContents.replace('url("../', 'url("')
             return '<style>' + fileContents + '</style>'
@@ -135,7 +168,7 @@ gulp.task(
           }),
           {
             starttag: '<!-- inject:head:{{ext}} -->',
-            transform: function(filePath, file) {
+            transform: function (filePath, file) {
               var fileContents = file.contents.toString('utf8')
               return '<script>' + fileContents + '</script>'
             },
@@ -149,7 +182,7 @@ gulp.task(
           }),
           {
             starttag: '<!-- inject:head:version -->',
-            transform: function(filePath, file) {
+            transform: function (filePath, file) {
               return '<script>window.VERSION = "' + getVersion() + '"</script>'
             },
           }
@@ -160,11 +193,8 @@ gulp.task(
   })
 )
 
-gulp.task('html-dev', function() {
-  return gulp
-    .src(paths.html)
-    .pipe(gulp.dest(dest))
-    .pipe(connect.reload())
+gulp.task('html-dev', function () {
+  return gulp.src(paths.html).pipe(gulp.dest(dest)).pipe(connect.reload())
 })
 
 gulp.task('images', function() {
@@ -223,6 +253,11 @@ gulp.task(
   )
 )
 
+var cors = function (_, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  next()
+}
+
 gulp.task('watch', function() {
   gulp.watch(paths.stylesheets, gulp.series('stylesheets-dev'))
   gulp.watch(paths.javascripts, gulp.series('javascripts-dev'))
@@ -239,6 +274,7 @@ gulp.task('connect', function() {
     port: 8081,
     root: [__dirname],
     livereload: true,
+    middleware: () => [cors],
   })
 })
 
