@@ -8,12 +8,20 @@ I18n = require('./i18n.coffee')
 Podcast = require('./podcast.coffee')
 
 class Configuration
-  constructor: (@app, configurationUrl) ->
+  constructor: (@app, configurationUrl, directConfiguration) ->
     @loader = $.Deferred()
     @loaded = @loader.promise()
 
-    @frameOptions = Utils.locationToOptions(window.location.search)
+    @frameOptions = {}
 
+    if directConfiguration 
+      @frameOptions = directConfiguration.customOptions || {}
+      @frameOptions.configuration = directConfiguration.json_config
+      @frameOptions.id = directConfiguration.id
+      @frameOptions.iframeMode = 'direct'
+    else
+      @frameOptions = Utils.locationToOptions(window.location.search)
+  
     if configurationUrl
       @configuration =
         json_config: configurationUrl
