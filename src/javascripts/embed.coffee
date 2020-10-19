@@ -1,5 +1,6 @@
 IframeResizer = require('./iframe_resizer.coffee')
 SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
+_ = require('lodash')
 
 class Iframe
   constructor: (@elem)->
@@ -52,7 +53,10 @@ class Iframe
 
     hsh(string.charCodeAt(i)) for i in [0..string.length]
 
-    return hash.toString(16).substring(1)
+    potentialId = hash.toString(16).substring(1)
+    return potentialId if _.isNumber(potentialId.substring(0, 1))
+
+    "a#{potentialId.substring(1, potentialId.length)}"
 
   origin: () ->
     scriptSrc = @elem.src || @elem.getAttribute('src')
