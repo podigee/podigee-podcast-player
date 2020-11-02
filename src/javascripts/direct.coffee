@@ -94,7 +94,7 @@ class DirectWrapper
     style.rel = 'stylesheet'
     style.type = 'text/css'
     style.media = 'all'
-    document.querySelector('head').append(style)
+    document.querySelector('head').appendChild(style)
 
   setUpPlayers: () ->
     self = @
