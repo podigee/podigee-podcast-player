@@ -18,6 +18,7 @@ class Configuration
       @frameOptions = directConfiguration.customOptions || {}
       @frameOptions.configuration = directConfiguration.json_config
       @frameOptions.id = directConfiguration.id
+      @frameOptions.parentLocationHash = directConfiguration.parentLocationHash
       @frameOptions.iframeMode = 'direct'
     else
       @frameOptions = Utils.locationToOptions(window.location.search)
@@ -83,7 +84,7 @@ class Configuration
     @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
-    @app.options.parentLocationHash = @configuration.parentLocationHash
+    @app.options.parentLocationHash = @configuration.parentLocationHash || @frameOptions.parentLocationHash
     @app.options.configViaJSON = viaJSON
     @app.externalData = new ExternalData(@app)
 

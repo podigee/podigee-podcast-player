@@ -15,6 +15,7 @@ class Direct
     catch
       console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
+    @configuration.parentLocationHash = window.location.hash
     @buildPlayer(html)
     @configuration.id = @player.id
     @setupSubscribeButton()
