@@ -138,12 +138,15 @@ class Configuration
       prefix: 'pp'
     )
 
-    # make links text open in parent window
+    # open links in parent window when not specified to open in new window / tab
     rivets.formatters.description = (text) =>
       elem = document.createElement('div')
       elem.innerHTML = text.trim()
       links = elem.querySelectorAll('a')
-      Array.prototype.forEach.call(links, (link) => link.target = '_parent')
+      Array.prototype.forEach.call(links, (link) => (
+        if !link.target || (link.target && link.target != '_blank')
+          link.target = '_parent'
+      ))
       elem.innerHTML
 
     rivets.formatters.scale = (url, size) =>
