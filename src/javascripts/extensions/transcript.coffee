@@ -25,6 +25,9 @@ class Transcript extends Extension
     return unless @app.episode
     return unless @app.episode.transcript
 
+    @data =
+      transcript: ""
+
     @transcript = @app.episode.transcript
 
     @search = new Search(@app)
@@ -41,9 +44,6 @@ class Transcript extends Extension
 
   transcriptFileFormat: ->
     _.last(@transcript.split('.'))
-
-  data:
-    transcript: ''
 
   load: =>
     promise = @app.externalData.get(@transcript)
@@ -122,7 +122,7 @@ class Transcript extends Extension
     raw.transcription.map (segment) =>
       data =
         time: Utils.secondsToHHMMSS(segment.start)
-        timestamp: segment.start.toString()
+        timestamp: segment.start?.toString()
         speaker: segment.speaker
         text: segment.text
       @renderLine(data)
