@@ -30,6 +30,7 @@ class Theme
         podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
         podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
         podcastOnAlexa: @t('subscribeBar.podcastOnAlexa'),
+        podcastOnPodimo: @t('subscribeBar.podcastOnPodimo'),
         subscribe: @t('subscribeBar.subscribe')
       },
       customOptions: @app.customOptions,
