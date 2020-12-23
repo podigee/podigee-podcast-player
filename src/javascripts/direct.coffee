@@ -15,6 +15,7 @@ class Direct
     catch
       console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
+    @configuration.parentLocationHash = window.location.hash
     @buildPlayer(html)
     @configuration.id = @player.id
     @setupSubscribeButton()
@@ -94,7 +95,7 @@ class DirectWrapper
     style.rel = 'stylesheet'
     style.type = 'text/css'
     style.media = 'all'
-    document.querySelector('head').append(style)
+    document.querySelector('head').appendChild(style)
 
   setUpPlayers: () ->
     self = @

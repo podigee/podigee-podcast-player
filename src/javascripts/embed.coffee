@@ -52,12 +52,10 @@ class Iframe
 
     hsh(string.charCodeAt(i)) for i in [0..string.length]
 
-    return hash.toString(16).substring(1)
+    "pdg-#{hash.toString(16).substring(1)}"
 
   origin: () ->
     scriptSrc = @elem.src || @elem.getAttribute('src')
-    unless window.location.protocol.match(/^https/)
-      scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
 
   buildIframe: ->

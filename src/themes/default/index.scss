@@ -491,7 +491,8 @@
   }
 }
 
-.podcast-player.mode-script {
+.podcast-player.mode-script,
+.podcast-player.mode-direct {
   @media (max-width: $mobile-breakpoint) {
     .cover-image {
       border: 12px solid $background-color;

@@ -14,14 +14,15 @@ class Configuration
 
     @frameOptions = {}
 
-    if directConfiguration 
+    if directConfiguration
       @frameOptions = directConfiguration.customOptions || {}
       @frameOptions.configuration = directConfiguration.json_config
       @frameOptions.id = directConfiguration.id
+      @frameOptions.parentLocationHash = directConfiguration.parentLocationHash
       @frameOptions.iframeMode = 'direct'
     else
       @frameOptions = Utils.locationToOptions(window.location.search)
-  
+
     if configurationUrl
       @configuration =
         json_config: configurationUrl
@@ -83,7 +84,7 @@ class Configuration
     @app.customOptions = @configuration.customOptions
     @configuration.options ?= {}
     @app.options = _.extend(@defaultOptions, @configuration.options, @frameOptions)
-    @app.options.parentLocationHash = @configuration.parentLocationHash
+    @app.options.parentLocationHash = @configuration.parentLocationHash || @frameOptions.parentLocationHash
     @app.options.configViaJSON = viaJSON
     @app.externalData = new ExternalData(@app)
 
@@ -137,12 +138,15 @@ class Configuration
       prefix: 'pp'
     )
 
-    # make links text open in parent window
+    # open links in parent window when not specified to open in new window / tab
     rivets.formatters.description = (text) =>
       elem = document.createElement('div')
       elem.innerHTML = text.trim()
       links = elem.querySelectorAll('a')
-      Array.prototype.forEach.call(links, (link) => link.target = '_parent')
+      Array.prototype.forEach.call(links, (link) => (
+        if !link.target || (link.target && link.target != '_blank')
+          link.target = '_parent'
+      ))
       elem.innerHTML
 
     rivets.formatters.scale = (url, size) =>

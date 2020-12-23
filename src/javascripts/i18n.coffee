@@ -92,6 +92,7 @@ class I18n
         podcastOnSpotify: 'View Podcast on Spotify'
         podcastOnDeezer: 'View Podcast on Deezer'
         podcastOnAlexa: 'View Podcast on Alexa'
+        podcastOnPodimo: 'View Podcast on Podimo'
         subscribe: 'Subscribe'
 
     'de-DE':
@@ -135,6 +136,7 @@ class I18n
         podcastOnSpotify: 'Podcast auf Spotify ansehen'
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
         podcastOnAlexa: 'Podcast auf Alexa ansehen'
+        podcastOnPodimo: 'Podcast auf Podimo ansehen'
         subscribe: 'Abonnieren'
 
     'es-ES':
@@ -178,8 +180,9 @@ class I18n
         podcastOnSpotify: 'Ver podcast en Spotify'
         podcastOnDeezer: 'Ver podcast en Deezer'
         podcastOnAlexa: 'Ver podcast en Alexa'
+        podcastOnPodimo: 'Ver podcast en Podimo'
         subscribe: 'Suscríbete'
-       
+
     'nl-NL':
       chaptermarks:
         show: 'Toon hoofdstukmarkeringen'
@@ -221,6 +224,7 @@ class I18n
         podcastOnSpotify: 'Toon Podcast op Spotify'
         podcastOnDeezer: 'Toon Podcast op Deezer'
         podcastOnAlexa: 'Toon Podcast op Alexa'
+        podcastOnPodimo: 'Toon Podcast op Podimo'
         subscribe: 'Abonneer'
 
     'pl-PL':
@@ -264,6 +268,7 @@ class I18n
         podcastOnSpotify: 'Zobacz podcast na Spotify'
         podcastOnDeezer: 'Zobacz podcast na Deezer'
         podcastOnAlexa: 'Zobacz podcast na Alexa'
+        podcastOnPodimo: 'Zobacz podcast na Podimo'
         subscribe: 'Subskrybuj'
 
 module.exports = I18n
