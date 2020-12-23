@@ -56,8 +56,6 @@ class Iframe
 
   origin: () ->
     scriptSrc = @elem.src || @elem.getAttribute('src')
-    unless window.location.protocol.match(/^https/)
-      scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
 
   buildIframe: ->
