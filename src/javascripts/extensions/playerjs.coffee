@@ -7,7 +7,8 @@ class Playerjs extends Extension
     name: 'Playerjs'
     type: 'internal'
 
-  constructor: (@app) ->
+  constructor: (app) ->
+    super(app)
     @receiver = new Receiver()
     new Adapter(@app, @receiver)
 

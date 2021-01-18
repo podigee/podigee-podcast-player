@@ -35,12 +35,14 @@ class Player
     @pause()
     @app.extensions.Playlist.playNext()
 
-  changePlaySpeed: () =>
-    nextRateIndex = @app.options.playbackRates.indexOf(@app.options.currentPlaybackRate) + 1
-    if nextRateIndex >= @app.options.playbackRates.length
-      nextRateIndex = 0
+  changePlaySpeed: (speed) =>
+    unless speed
+      nextRateIndex = @app.options.playbackRates.indexOf(@app.options.currentPlaybackRate) + 1
+      if nextRateIndex >= @app.options.playbackRates.length
+        nextRateIndex = 0
+      speed = @app.options.playbackRates[nextRateIndex]
 
-    @setPlaySpeed(@app.options.playbackRates[nextRateIndex])
+    @setPlaySpeed(speed)
 
   currentFile: =>
     @media.src
@@ -175,6 +177,7 @@ class Player
       @media.play().then(() => @setMediaSessionInfo()).catch((e) => console.debug(e))
     else
       @media.play()
+    @media.playbackRate = @app.options.currentPlaybackRate
     @playing = true
     @app.togglePlayState()
 

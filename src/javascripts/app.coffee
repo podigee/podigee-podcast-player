@@ -28,9 +28,10 @@ class PodigeePodcastPlayer
     Transcript,
   ]
 
-  constructor: (@elemClass) ->
+  constructor: (@elemClass, configuration, origin) ->
     @version = window.VERSION
-    @initConfiguration().loaded.done =>
+    @origin = origin
+    @initConfiguration(undefined, configuration).loaded.done =>
       @renderTheme().done =>
         @initPlayer()
 
@@ -59,8 +60,8 @@ class PodigeePodcastPlayer
     $.getJSON(@episode.productionDataUrl).done (data) =>
       self.episode.productionData = data.data
 
-  initConfiguration: (configurationUrl) ->
-    @configuration = new Configuration(this, configurationUrl)
+  initConfiguration: (configurationUrl, configuration) ->
+    @configuration = new Configuration(this, configurationUrl, configuration)
 
   renderTheme: =>
     rendered = $.Deferred()
@@ -167,6 +168,11 @@ class PodigeePodcastPlayer
       @player.changePlaySpeed()
       @updateSpeedDisplay()
 
+    @theme.speedSelectElement.change (event) =>
+      newSpeed = parseFloat(event.target.value)
+      @player.changePlaySpeed(newSpeed)
+      @updateSpeedDisplay()
+
   updateSpeedDisplay: () ->
     @theme.speedElement.text("#{@options.currentPlaybackRate}x")
 
@@ -212,3 +218,5 @@ class PodigeePodcastPlayer
 
 if window.inEmbed
   window.PodigeePodcastPlayer = PodigeePodcastPlayer
+
+module.exports = PodigeePodcastPlayer

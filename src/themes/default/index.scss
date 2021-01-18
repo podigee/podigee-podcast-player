@@ -1,7 +1,10 @@
 @import 'variables';
 
 .podcast-player {
-  &, *, *:before, *:after {
+  &,
+  *,
+  *:before,
+  *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -55,9 +58,16 @@
     .episode-subtitle {
       color: $default-color;
       font-size: 16px;
+      min-height: 18px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+
+  .episode-info-open .episode-description {
+    img {
+      max-width: 100%;
     }
   }
 
@@ -97,11 +107,21 @@
       color: $highlight1;
     }
 
-    .speed-toggle {
-      cursor: pointer;
+    .speed-select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      border: 0;
+      background-color: transparent;
+      color: $dark-grey;
       font-size: 14px;
+      outline: 0;
       position: relative;
       top: -3px;
+    }
+
+    .speed-select::-ms-expand {
+      display: none;
     }
   }
 
@@ -162,11 +182,11 @@
       animation: move 2s linear infinite;
       background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, .2) 25%,
+        rgba(255, 255, 255, 0.2) 25%,
         transparent 25%,
         transparent 50%,
-        rgba(255, 255, 255, .2) 50%,
-        rgba(255, 255, 255, .2) 75%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
         transparent 75%,
         transparent
       );
@@ -175,10 +195,13 @@
       border-bottom-right-radius: 8px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
-      content: "";
+      content: '';
       overflow: hidden;
       position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
 
     @keyframes move {
@@ -248,12 +271,14 @@
         li {
           background-color: none;
           cursor: pointer;
+          display: inline-block;
           line-height: 30px;
           list-style: none;
           padding: 0 25px 0 5px;
           position: relative;
+          width: 100%;
 
-          &+li {
+          & + li {
             border-top: 1px solid $light-grey;
           }
 
@@ -286,9 +311,7 @@
             margin-left: 10px;
           }
 
-          .chaptermark-href
-
-          .episode-link,
+          .chaptermark-href .episode-link,
           .playlist-episode-number {
             display: none;
           }
@@ -427,7 +450,7 @@
       border-radius: 3px;
       font-size: 14px;
       font-weight: bold;
-      letter-spacing: .8px;
+      letter-spacing: 0.8px;
       outline: none;
       padding: 4px 6px;
     }
@@ -461,14 +484,15 @@
       float: right;
       font-size: 14px;
       font-weight: bold;
-      letter-spacing: .8px;
+      letter-spacing: 0.8px;
       padding: 6px 6px;
       text-decoration: none;
     }
   }
 }
 
-.podcast-player.mode-script {
+.podcast-player.mode-script,
+.podcast-player.mode-direct {
   @media (max-width: $mobile-breakpoint) {
     .cover-image {
       border: 12px solid $background-color;
@@ -486,6 +510,7 @@
 
       .episode-subtitle {
         font-size: 14px;
+        min-height: 16px;
       }
     }
 

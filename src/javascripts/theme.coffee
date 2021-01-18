@@ -30,6 +30,7 @@ class Theme
         podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
         podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
         podcastOnAlexa: @t('subscribeBar.podcastOnAlexa'),
+        podcastOnPodimo: @t('subscribeBar.podcastOnPodimo'),
         subscribe: @t('subscribeBar.subscribe')
       },
       customOptions: @app.customOptions,
@@ -94,20 +95,35 @@ class Theme
   loadHtml: (path) =>
     loaded = $.Deferred()
     self = this
-
-    $.get(path).done (html) =>
-      self.html = html
-      loaded.resolve()
+    if @app.origin and path.indexOf('http') != 0
+      $.ajax("#{@app.origin}/#{path}").done (html) =>
+        self.html = html
+        loaded.resolve()
+    else
+      $.get(path).done (html) =>
+        self.html = html
+        loaded.resolve()
 
     @loaded = loaded.promise()
 
   loadCss: (path) =>
+    path = if @app.origin and path.indexOf('http') != 0 then "#{@app.origin}/#{path}" else path
     style = $('<link>').attr
       href: path
       rel: 'stylesheet'
       type: 'text/css'
       media: 'all'
-    $('head').append(style)
+    unless @stylesheetExists(path)
+      $('head').append(style)
+
+  stylesheetExists: (path) ->
+    result = false
+    stylesheets = document.querySelectorAll('link')
+    for stylesheet in stylesheets
+      if stylesheet.href == path
+        result = true
+
+    result
 
   addPlayingClass: ->
     @elem.addClass('playing')
@@ -142,6 +158,7 @@ class Theme
     @skipForwardElement = @elem.find('.skip-forward-button')
     @skipBackwardElement = @elem.find('.skip-backward-button')
     @speedElement = @elem.find('.speed-toggle')
+    @speedSelectElement = @elem.find('.speed-select')
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
 
@@ -169,6 +186,7 @@ class Theme
 
   initializeSpeedToggle: =>
     @speedElement.text('1x')
+    @speedSelectElement.val('1.0')
 
   changeActiveButton: (event) =>
     button = $(event.target)

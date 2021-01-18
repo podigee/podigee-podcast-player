@@ -8,7 +8,12 @@ class SubscribeButton
         subtitle: @app.podcast.subtitle,
         cover: @app.episode.coverUrl,
         feeds: [
-          {url: @app.podcast.feed.feedUrl, "type": "audio", "format": "mp3"}
+          {
+            url: @app.podcast.feed.feedUrl, 
+            "type": "audio", 
+            "format": "mp3",
+            "directory-url-itunes": @app.podcast.connections.itunes
+          }
         ],
         options: {
           language: @app.podcast.language

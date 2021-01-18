@@ -43,7 +43,8 @@ class ChapterMarks extends Extension
     name: 'ChapterMarks'
     type: 'panel'
 
-  constructor: (@app) ->
+  constructor: (app) ->
+    super(app)
     @options = _.extend(@defaultOptions, @app.extensionOptions.ChapterMarks)
     return if @options.disabled
 
