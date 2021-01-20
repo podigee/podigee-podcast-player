@@ -166,12 +166,12 @@ class ProgressBar extends Extension
         @player.setCurrentTime(newTime)
 
   handleDrag: (event) =>
-    position = Utils.calculateCursorPosition(event, @elem[0])
+    position = Utils.calculateCursorPosition(event, @railElement[0])
     if position <= @barWidth()
       @playedElement.width(position + 'px')
 
   handleDrop: (event) =>
-    position = Utils.calculateCursorPosition(event, @elem[0])
+    position = Utils.calculateCursorPosition(event, @railElement[0])
 
     # catch drop positions outside of progress bar
     position = 0.001 if position < 0
