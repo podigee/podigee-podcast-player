@@ -6,6 +6,16 @@ $mobile-breakpoint: 500px;
 .podcast-player {
   background: $background;
 
+  h1,
+  h2,
+  a {
+    color: black;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   .play-button {
     svg {
       cursor: pointer;
@@ -37,7 +47,8 @@ $mobile-breakpoint: 500px;
 
   .main-player {
     .cover-image {
-      width: 9rem;
+      min-width: 9rem;
+      width: 7rem;
       overflow: hidden;
       position: relative;
       margin: 2% 2% 0 2%;
@@ -55,6 +66,7 @@ $mobile-breakpoint: 500px;
 
       .episode-basic-info {
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: space-between;
 
@@ -71,7 +83,7 @@ $mobile-breakpoint: 500px;
         }
 
         .dropdown-buttons {
-          margin-bottom: 2%;
+          margin-bottom: 5px;
           button {
             font-size: 18px;
             font-weight: 700;
@@ -100,7 +112,7 @@ $mobile-breakpoint: 500px;
       display: flex;
       justify-content: center;
       background: $footer-background;
-      padding: 10px;
+      padding: 10px 15px;
       height: 100px;
 
       .player-part {
@@ -141,8 +153,15 @@ $mobile-breakpoint: 500px;
             font-size: 13px;
             font-weight: 700;
 
+            &.time-played {
+              display: inline !important;
+              display: -ms-flexbox !important;
+              order: 0;
+            }
+
             &.time-remaining {
               display: inline !important;
+              display: -ms-flexbox !important;
               order: 2;
             }
           }
@@ -151,7 +170,7 @@ $mobile-breakpoint: 500px;
             min-height: 10px;
             background-color: black;
             position: relative;
-            width: 100%;
+            flex: 1;
 
             .progress-bar-played,
             .progress-bar-loaded {
