@@ -1,6 +1,7 @@
 $background: #ee6e91;
 $footer-background: #f18ba7;
 $progress-played: #864d5f;
+$mobile-breakpoint: 500px;
 
 .podcast-player {
   background: $background;
@@ -36,7 +37,7 @@ $progress-played: #864d5f;
 
   .main-player {
     .cover-image {
-      width: 17%;
+      width: 9rem;
       overflow: hidden;
       position: relative;
       margin: 2% 2% 0 2%;
@@ -59,12 +60,13 @@ $progress-played: #864d5f;
 
         h1 {
           font-size: 18px;
-          font-weight: 700;
+          font-weight: 800;
           text-transform: uppercase;
+          font-style: italic;
         }
 
         h3 {
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 500;
         }
 
@@ -73,11 +75,12 @@ $progress-played: #864d5f;
           button {
             font-size: 18px;
             font-weight: 700;
-            padding: 5px 10px;
+            padding: 5px 0;
 
             &.button-active {
               background-color: black;
               color: white;
+              padding: 5px 10px;
             }
 
             &:last-of-type {
@@ -98,6 +101,7 @@ $progress-played: #864d5f;
       justify-content: center;
       background: $footer-background;
       padding: 10px;
+      height: 100px;
 
       .player-part {
         width: 100%;
@@ -165,29 +169,48 @@ $progress-played: #864d5f;
         }
       }
 
-      .subscribe-part {
+      .subscribe-part,
+      .follow-part {
         display: none;
         width: 100%;
-        justify-content: space-between;
+        align-items: center;
 
-        .button-player img {
-          width: 25px;
-        }
-
-        ul.podcast-connections-items {
-          list-style-type: none;
-          display: flex;
-          padding: 0;
-
-          .podcast-connections-item {
-            img {
-              width: 25px;
-              margin: 5px;
-              cursor: pointer;
-            }
+        a {
+          img {
+            height: 35px;
+            margin: 5px;
+            cursor: pointer;
           }
         }
       }
+
+      .button-player {
+        display: none;
+        padding: 0;
+        img {
+          height: 35px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    h1,
+    h3 {
+      margin: 5px 0;
+    }
+
+    .dropdown-buttons {
+      margin-top: 10px;
+    }
+
+    .main-player .divider {
+      height: 5px;
+    }
+
+    .bottom-part {
+      height: 75px;
+      padding: 0 10px;
     }
   }
 }
