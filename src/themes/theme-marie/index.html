@@ -26,8 +26,6 @@
       </div>
     </div>
 
-    <div class="divider"></div>
-
     <div class="bottom-part">
       <div class="player-part">
         <div class="controls">
@@ -65,37 +63,29 @@
           >
             <svg
               class="play"
-              version="1.0"
               xmlns="http://www.w3.org/2000/svg"
-              width="371.000000pt"
-              height="369.000000pt"
-              viewBox="0 0 371.000000 369.000000"
-              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 108 108"
+              width="108"
+              height="108"
             >
-              <g
-                transform="translate(0.000000,369.000000) scale(0.100000,-0.100000)"
-                fill="#000000"
-                stroke="none"
-              >
-                <path
-                  d="M1675 3631 c-22 -5 -71 -13 -110 -19 -275 -43 -562 -167 -800 -346
-                    -96 -72 -273 -246 -342 -336 -49 -63 -133 -190 -146 -220 -4 -8 -16 -29 -26
-                    -47 -11 -17 -36 -71 -56 -120 -20 -48 -41 -96 -46 -105 -5 -10 -13 -34 -18
-                    -55 -6 -21 -21 -78 -35 -127 -14 -49 -28 -117 -32 -152 -3 -35 -10 -64 -15
-                    -64 -5 0 -9 -101 -9 -225 0 -124 4 -225 9 -225 5 0 12 -29 15 -64 6 -54 26
-                    -134 66 -271 24 -83 101 -260 143 -330 298 -497 721 -796 1282 -907 80 -16
-                    530 -16 610 0 499 99 892 349 1189 757 98 134 204 354 251 520 9 33 21 74 26
-                    90 4 17 14 65 20 108 6 42 15 77 20 77 5 0 9 110 9 245 0 135 -4 245 -9 245
-                    -5 0 -12 26 -16 58 -27 223 -164 554 -311 752 -19 25 -44 59 -57 75 -47 63
-                    -226 240 -304 302 -107 82 -285 190 -393 235 -156 66 -237 90 -475 138 -71 15
-                    -383 22 -440 11z m-163 -1017 c311 -170 1173 -715 1217 -768 28 -34 8 -59
-                    -114 -146 -324 -231 -1188 -750 -1249 -750 -8 0 -27 10 -42 23 l-26 23 -10
-                    254 c-12 307 -4 1289 10 1343 12 46 48 87 75 87 11 0 74 -30 139 -66z"
+              <defs>
+                <image
+                  width="108"
+                  height="108"
+                  id="img1"
+                  href="data:image/png;base64,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"
                 />
-                <path
-                  d="M1506 2355 c-9 -26 -18 -864 -9 -986 l8 -117 90 52 c189 110 805 497
-                    805 506 -1 11 -206 148 -430 287 -191 118 -448 273 -453 273 -3 0 -7 -7 -11
-                    -15z"
+              </defs>
+              <style>
+                tspan {
+                  white-space: pre;
+                }
+              </style>
+              <g id="Ebene 1">
+                <use
+                  id="-e-&lt;Path&gt;"
+                  href="#img1"
+                  transform="matrix(1,0,0,1,0,0)"
                 />
               </g>
             </svg>
@@ -282,6 +272,6 @@
 </div>
 
 <link
-  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,800&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;0,700;1,800&display=swap"
   rel="stylesheet"
 />
