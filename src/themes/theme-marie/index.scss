@@ -7,7 +7,7 @@ $middle-breakpoint: 500px;
 .podcast-player {
   background: $background;
   font-family: 'Open Sans';
-  font-size: 18px;
+  font-size: 19px;
 
   display: inline-block;
   position: relative;
@@ -82,12 +82,13 @@ $middle-breakpoint: 500px;
     .top-part {
       display: flex;
       height: 65%;
+      padding-top: 0.4vw;
 
       .episode-basic-info {
         display: flex;
         flex: 1;
         flex-direction: column;
-        padding-right: 10px;
+        padding: 0 5px;
 
         h1 {
           font-size: 0.8em;
@@ -95,10 +96,11 @@ $middle-breakpoint: 500px;
           text-transform: uppercase;
           font-style: italic;
           overflow: hidden;
+          margin-top: 2%;
         }
 
         h3 {
-          font-size: 0.6em;
+          font-size: 0.65em;
           font-weight: 600;
           overflow: hidden;
         }
@@ -118,7 +120,7 @@ $middle-breakpoint: 500px;
             }
 
             &:last-of-type {
-              margin-left: 20px;
+              margin-left: 10px;
             }
           }
         }
@@ -164,10 +166,10 @@ $middle-breakpoint: 500px;
         .progress-bar {
           display: flex;
           align-items: center;
-          margin-top: 2px;
+          margin-top: 0.5vw;
 
           .progress-bar-time-played {
-            font-size: 0.6em;
+            font-size: 0.65em;
             font-weight: 700;
 
             &.time-played {
@@ -241,13 +243,21 @@ $middle-breakpoint: 500px;
 
     .main-player {
       .top-part {
+        padding: 2vw 1.2vw 0;
+
         .cover-image {
-          width: 30%;
+          width: 25%;
         }
         .episode-basic-info {
           size: 0.7em;
+
+          .episode-subtitle {
+            h3 {
+              margin-top: 0;
+            }
+          }
           .dropdown-buttons {
-            margin-bottom: 10vh;
+            margin-bottom: 4vh;
 
             button {
               font-size: 0.8em;
