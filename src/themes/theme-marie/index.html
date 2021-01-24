@@ -222,48 +222,48 @@
       </button>
     </div>
   </div>
-
-  <script>
-    var playerPart = document.querySelector('.player-part')
-    var subscribePart = document.querySelector('.subscribe-part')
-    var followPart = document.querySelector('.follow-part')
-    var playerBtn = document.querySelector('.button-player')
-    var subscribeBtn = document.querySelector('.button-subscribe')
-    var followBtn = document.querySelector('.button-follow')
-
-    subscribeBtn.addEventListener('click', function () {
-      removeActiveBtn()
-      subscribeBtn.classList.add('button-active')
-      playerBtn.style.display = 'block'
-
-      playerPart.style.display = 'none'
-      followPart.style.display = 'none'
-      subscribePart.style.display = 'flex'
-    })
-    followBtn.addEventListener('click', function () {
-      removeActiveBtn()
-      followBtn.classList.add('button-active')
-      playerBtn.style.display = 'block'
-
-      playerPart.style.display = 'none'
-      subscribePart.style.display = 'none'
-      followPart.style.display = 'flex'
-    })
-    playerBtn.addEventListener('click', function () {
-      removeActiveBtn()
-      playerBtn.style.display = 'none'
-
-      followPart.style.display = 'none'
-      subscribePart.style.display = 'none'
-      playerPart.style.display = 'block'
-    })
-
-    function removeActiveBtn() {
-      subscribeBtn.classList.remove('button-active')
-      followBtn.classList.remove('button-active')
-    }
-  </script>
 </div>
+
+<script>
+  var playerPart = document.querySelector('.player-part')
+  var subscribePart = document.querySelector('.subscribe-part')
+  var followPart = document.querySelector('.follow-part')
+  var playerBtn = document.querySelector('.button-player')
+  var subscribeBtn = document.querySelector('.button-subscribe')
+  var followBtn = document.querySelector('.button-follow')
+
+  subscribeBtn.addEventListener('click', function () {
+    removeActiveBtn()
+    subscribeBtn.classList.add('button-active')
+    playerBtn.style.display = 'block'
+
+    playerPart.style.display = 'none'
+    followPart.style.display = 'none'
+    subscribePart.style.display = 'flex'
+  })
+  followBtn.addEventListener('click', function () {
+    removeActiveBtn()
+    followBtn.classList.add('button-active')
+    playerBtn.style.display = 'block'
+
+    playerPart.style.display = 'none'
+    subscribePart.style.display = 'none'
+    followPart.style.display = 'flex'
+  })
+  playerBtn.addEventListener('click', function () {
+    removeActiveBtn()
+    playerBtn.style.display = 'none'
+
+    followPart.style.display = 'none'
+    subscribePart.style.display = 'none'
+    playerPart.style.display = 'block'
+  })
+
+  function removeActiveBtn() {
+    subscribeBtn.classList.remove('button-active')
+    followBtn.classList.remove('button-active')
+  }
+</script>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;0,700;1,800&display=swap"
