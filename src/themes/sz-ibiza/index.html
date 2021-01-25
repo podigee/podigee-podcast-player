@@ -4,7 +4,7 @@
   <div class="main-player">
 
     <div class="podcast-info">
-      <img class="cover-image" pp-src="coverUrl" />
+      <div class="cover-image"></div>
       <div class="podcast-title" pp-html="podcastTitle"></div>
       <div class="episode-title"><span pp-html="title"></span></div>
     </div>
@@ -33,8 +33,6 @@
     </div>
 
     <div class="player-footer">
-      <a class="subscribe-button-external" target="_blank" pp-href="externalSubscribeUrl | call podcastUrl">Abonnieren</a>
-
       <ul class="podcast-connections-items">
         <li class="podcast-connections-item" pp-if="podcastConnections.itunes">
           <a pp-href="podcastConnections.itunes" title="Podcast bei iTunes" target="_parent">
@@ -48,7 +46,7 @@
         </li>
       </ul>
 
-      <a class="all-episodes-link" pp-href="or | call customOptions.allEpisodesAppUrl podcastUrl" target="_blank">
+      <a class="all-episodes-link" href="https://projekte.sueddeutsche.de/artikel/medien/artikel-e370761/" target="_blank">
         Alle Folgen
       </a>
     </div>
