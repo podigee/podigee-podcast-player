@@ -50,6 +50,10 @@ $mobile-breakpoint: 521px !default;
     overflow: hidden;
     width: 100%;
 
+    &.no-cover-image {
+      min-height: 75px;
+    }
+
     .podcast-title {
       font-size: 14px;
       font-weight: 700;
