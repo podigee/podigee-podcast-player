@@ -95,14 +95,25 @@ $middle-breakpoint: 500px;
           font-weight: 800;
           text-transform: uppercase;
           font-style: italic;
-          overflow: hidden;
           margin-top: 2%;
+          display: block;
+          text-overflow: ellipsis;
+          word-wrap: break-word !important;
+          overflow: hidden;
+          max-height: 2em;
+          line-height: 1em;
+          font-weight: 600;
         }
 
         h3 {
           font-size: 0.65em;
-          font-weight: 600;
+          display: block;
+          text-overflow: ellipsis;
+          word-wrap: break-word !important;
           overflow: hidden;
+          max-height: 2.4em;
+          line-height: 1.2em;
+          font-weight: 600;
         }
 
         .dropdown-buttons {
