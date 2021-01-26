@@ -12,22 +12,27 @@ $highlight1: #dc4439;
 .podcast-title {
   color: #ffffff;
 }
+
 .progress-bar-time-played {
   &.time-played {
     color: #ffffff;
   }
 }
+
 .podcast-player {
   .duration {
     color: #ffffff;
   }
+
   .episode-title span {
     color: $highlight1;
   }
+
   .player-footer {
     .subscribe-button-external {
       color: #ffffff;
     }
+
     .all-episodes-link {
       color: #ffffff;
       border-color: #ffffff;
