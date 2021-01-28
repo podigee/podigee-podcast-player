@@ -75,6 +75,10 @@ class Share extends Extension
     rivets.bind(@panel, @context)
     @panel.hide()
 
+    @followSection = $('.follow-part').first()
+    if @followSection
+      rivets.bind(@followSection, @context)
+
     @bindEvents()
 
   attachEvents: =>
