@@ -22,7 +22,7 @@ class Podcast
       podcastSubtitle: @subtitle,
       podcastUrl: @url,
       podcastConnections: @connections,
-      feed: @feed.feedUrl
+      feed: @feed?.feedUrl
     }
 
   feed: null
