@@ -75,6 +75,7 @@ class I18n
         episode: 'Episode'
         episode_url: 'Share link to episode'
         start_at: 'Start at'
+        title: 'Share'
       theme:
         playPause: 'Play'
         play: 'Play'
@@ -82,6 +83,8 @@ class I18n
         backward: 'Backward 10s'
         forward: 'Forward 30s'
         changePlaybackSpeed: 'Change Playback Speed'
+        previous: 'Previous episode'
+        next: 'Next episode'
       transcript:
         search: 'Search in transcript'
         show: 'Show transcription'
@@ -94,6 +97,15 @@ class I18n
         podcastOnAlexa: 'View Podcast on Alexa'
         podcastOnPodimo: 'View Podcast on Podimo'
         subscribe: 'Subscribe'
+      splash:
+        playEpisode: 'Play episode'
+      menu:
+        chaptermarks: 'Chaptermarks'
+        transcript: 'Transcript'
+        episodeInfo: 'Episode info'
+        allEpisodes: 'All Episodes'
+      podigee:
+        title: 'Start podcasting with Podigee'
 
     'de-DE':
       chaptermarks:
@@ -119,6 +131,7 @@ class I18n
         episode: 'Episode'
         episode_url: 'Link zur Episode teilen'
         start_at: 'Wiedergabe ab'
+        title: 'Teilen'
       theme:
         playPause: 'Play'
         play: 'Play'
@@ -126,6 +139,8 @@ class I18n
         backward: '10s zurück'
         forward: '30s vorwärts'
         changePlaybackSpeed: 'Abspielgeschwindigkeit ändern'
+        previous: 'Vorherige Episode'
+        next: 'Nächste Episode'
       transcript:
         search: 'Transkript durchsuchen'
         show: 'Transkript anzeigen'
@@ -138,6 +153,15 @@ class I18n
         podcastOnAlexa: 'Podcast auf Alexa ansehen'
         podcastOnPodimo: 'Podcast auf Podimo ansehen'
         subscribe: 'Abonnieren'
+      splash:
+        playEpisode: 'Episode abspielen'
+      menu:
+        chaptermarks: 'Kapitelmarken'
+        transcript: 'Transkript'
+        episodeInfo: 'Episode info'
+        allEpisodes: 'Alle Episoden'
+      podigee:
+        title: 'Podcast erstellen mit Podigee'
 
     'es-ES':
       chaptermarks:
@@ -163,6 +187,7 @@ class I18n
         episode: 'Capítulo'
         episode_url: 'Compartir enlace del capítulo'
         start_at: 'Empezar en'
+        title: 'Compartir'
       theme:
         playPause: 'Reproducir'
         play: 'Reproducir'
@@ -170,6 +195,8 @@ class I18n
         backward: 'Rebobinar 10s'
         forward: 'Avanzar 30s'
         changePlaybackSpeed: 'Cambiar velocidad de reproducción'
+        previous: 'Episodio anterior'
+        next: 'Próximo episodio'
       transcript:
         search: 'Buscar en transcripción'
         show: 'Mostrar transcripción'
@@ -182,6 +209,15 @@ class I18n
         podcastOnAlexa: 'Ver podcast en Alexa'
         podcastOnPodimo: 'Ver podcast en Podimo'
         subscribe: 'Suscríbete'
+      splash:
+        playEpisode: 'Reproducir episodio'
+      menu:
+        chaptermarks: 'Marcas capitulares'
+        transcript: 'Transcripción'
+        episodeInfo: 'Información del episodio'
+        allEpisodes: 'Todos los capítulos'
+      podigee:
+        title: 'Empieza a hacer podcasting con Podigee'
 
     'nl-NL':
       chaptermarks:
@@ -207,6 +243,7 @@ class I18n
         episode: 'Aflevering'
         episode_url: 'Deel link naar aflevering'
         start_at: 'Begin op'
+        title: 'Aandeel'
       theme:
         playPause: 'Afspelen'
         play: 'Afspelen'
@@ -214,6 +251,8 @@ class I18n
         backward: 'Terug 10s'
         forward: 'Vooruit 30s'
         changePlaybackSpeed: 'Verander afspeelsnelheid'
+        previous: 'Vorige aflevering'
+        next: 'Volgende aflevering'
       transcript:
         search: 'Zoek in transcript'
         show: 'Toon transcriptie'
@@ -226,6 +265,15 @@ class I18n
         podcastOnAlexa: 'Toon Podcast op Alexa'
         podcastOnPodimo: 'Toon Podcast op Podimo'
         subscribe: 'Abonneer'
+      splash:
+        playEpisode: 'Afspelen'
+      menu:
+        chaptermarks: 'Chaptermarks'
+        transcript: 'Transcript'
+        episodeInfo: 'Aflevering info'
+        allEpisodes: 'Alle Afleveringen'
+      podigee:
+        title: 'Begin met podcasten met Podigee'
 
     'pl-PL':
       chaptermarks:
@@ -251,6 +299,7 @@ class I18n
         episode: 'Odcinek'
         episode_url: 'Udostępnij link do odcinka'
         start_at: 'Rozpocznij od'
+        title: 'Udział'
       theme:
         playPause: 'Odtwórz'
         play: 'Odtwórz'
@@ -258,6 +307,8 @@ class I18n
         backward: '10s wstecz'
         forward: '30s do przodu'
         changePlaybackSpeed: 'Zmień prędkość odtwarzania'
+        previous: 'Poprzedni odcinek'
+        next: 'Następny odcinek'
       transcript:
         search: 'Szukaj w transkrypcji'
         show: 'Pokaż transkrypcję'
@@ -270,5 +321,14 @@ class I18n
         podcastOnAlexa: 'Zobacz podcast na Alexa'
         podcastOnPodimo: 'Zobacz podcast na Podimo'
         subscribe: 'Subskrybuj'
+      splash:
+        playEpisode: 'Odtwórz odcinek'
+      menu:
+        chaptermarks: 'Zakładki rozdziałów'
+        transcript: 'Transkrypt'
+        episodeInfo: 'Informacje o odcinku'
+        allEpisodes: 'Wszystkie odcinki'
+      podigee:
+        title: 'Rozpocznij podcasting z Podigee'
 
 module.exports = I18n

@@ -54,7 +54,7 @@ class Download extends Extension
 
   panelHtml: ->
     """
-    <div class="download">
+    <div class="download single-panel">
       <h3 class="download-title">#{@t('download.episode')}</h3>
       <div class="icon icon-download"></div>
       <ul class="download-links">

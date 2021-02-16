@@ -61,6 +61,10 @@ class ChapterMarks extends Extension
     showOnStart: false
 
   click: (event) =>
+    ## Redesigned theme extras start -->
+    if @app.elem.hasClass('podcast-player-redesign') && @app.theme.splashButton.is(":visible")
+      @app.theme.showPlayer()
+    ## Redesigned theme extras end <--
     time = event.data.start
     @app.player.setCurrentTime(Utils.hhmmssToSeconds(time))
     @app.player.play()
@@ -107,8 +111,8 @@ class ChapterMarks extends Extension
 
   panelHtml: =>
     """
-    <div class="chaptermarks">
-      <h3>#{@t('chaptermarks.title')}</h3>
+    <div class="chaptermarks single-panel">
+      <h3 class="single-panel-title">#{@t('chaptermarks.title')}</h3>
 
       <ul></ul>
     </div>

@@ -24,6 +24,8 @@ class Theme
         backward: @t('theme.backward'),
         forward: @t('theme.forward'),
         changePlaybackSpeed: @t('theme.changePlaybackSpeed'),
+        previous: @t('theme.previous'),
+        next: @t('theme.next'),
 
         allEpisodes: @t('subscribeBar.allEpisodes'),
         podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
@@ -31,7 +33,21 @@ class Theme
         podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
         podcastOnAlexa: @t('subscribeBar.podcastOnAlexa'),
         podcastOnPodimo: @t('subscribeBar.podcastOnPodimo'),
-        subscribe: @t('subscribeBar.subscribe')
+        subscribe: @t('subscribeBar.subscribe'),
+
+        shareText: @t('share.title'),
+
+        playEpisode: @t('splash.playEpisode'),
+
+        chaptermarksMenu: @t('menu.chaptermarks'),
+        transcriptMenu: @t('menu.transcript'),
+        episodeInfoMenu: @t('menu.episodeInfo'),
+        allEpisodesMenu: @t('menu.allEpisodes'),
+
+        downloadEpisode: @t('download.episode'),
+        shareEmail: @t('share.email'),
+        
+        podigeeTitle: @t('podigee.title')
       },
       customOptions: @app.customOptions,
       or: @orFunction,
@@ -75,6 +91,7 @@ class Theme
 
   loadThemeFiles: () =>
     theme = @app.options.theme || 'default'
+    # theme = 'default-redesign'
     themeHtml = @app.options.themeHtml || theme.html
     themeCss = @app.options.themeCss || theme.css
     if themeHtml && themeCss
@@ -157,6 +174,49 @@ class Theme
     @speedSelectElement = @elem.find('.speed-select')
     @coverImage = @elem.find('.cover-image')
     @subscribeButton = @elem.find('.subscribe-button')
+    ## Redesigned theme extras start -->
+    # Splash button
+    @splashButton = @elem.find('.splash-button')
+    @mainPlayer = @elem.find('.main-player')
+    # More menu
+    @moreMenu = @elem.find('.more-menu')
+    @moreMenuButton = @elem.find('.more-menu-button')
+    @allEpisodesMenuButton = @elem.find('.all-episodes-menu-button')
+    @episodeInfoMenuButton = @elem.find('.episode-info-menu-button')
+    @transcriptMenuButton = @elem.find('.transcript-menu-button')
+    @chaptermarksMenuButton = @elem.find('.chaptermarks-menu-button')
+    # Share menu
+    @shareMenu = @elem.find('.share-menu')
+    @shareMenuFooterButton = @elem.find('.share-menu-button')
+    # Subscribe menu
+    @subscribeMenu = @elem.find('.subscribe-menu')
+    @subscribeMenuFooterButton = @elem.find('.subscribe-menu-button')
+    # Close button
+    @closeButton = @elem.find('.close-button')
+    # Embed button
+    @embedList = @elem.find('.embed-list')
+    @embedButton = @elem.find('.embed-button')
+    # Panels tabs
+    @panelsTabs = @elem.find('.panels-tabs')
+    @panelsTabButton = @elem.find('.panels-tab-button')
+    @allEpisodesTabButton = @elem.find('.all-episodes-tab-button')
+    @episodeInfoTabButton = @elem.find('.episode-info-tab-button')
+    @transcriptTabButton = @elem.find('.transcript-tab-button')
+    @chaptermarksTabButton = @elem.find('.chaptermarks-tab-button')
+    # Panels tabs click events
+    @panelsTabButton.on 'click', @changeTabsActiveButton
+    @allEpisodesTabButton.on 'click', @showAllEpisodesPanel
+    @episodeInfoTabButton.on 'click', @showEpisodeInfoPanel
+    @transcriptTabButton.on 'click', @showTranscriptPanel
+    @chaptermarksTabButton.on 'click', @showChaptermarksPanel
+    # Embed button click event
+    @embedButton.on 'click', @changeEmbedActiveButton
+    # More menu button events
+    @allEpisodesMenuButton.on 'click', @toggleAllEpisodesPanel
+    @episodeInfoMenuButton.on 'click', @toggleEpisodeInfoPanel
+    @transcriptMenuButton.on 'click', @toggleTranscriptPanel
+    @chaptermarksMenuButton.on 'click', @toggleChaptermarksPanel
+    ## Redesigned theme extras end <--
 
     @subscribeButton.on 'click', () =>
       @app.emit('subscribeIntent', 'subscribeButton')
@@ -179,6 +239,127 @@ class Theme
     linkTarget = link.attributes['pp-href'].value
     service = linkTarget.split('.')[1]
     @app.emit('subscribeIntent', service)
+
+  ## Redesigned theme extras start -->
+  showPlayer: =>
+    @splashButton.hide()
+    @mainPlayer.fadeIn()
+
+  openMoreMenu: =>
+    @elem.addClass('more-menu-open')
+    @moreMenu.stop().fadeIn(300).css('display', 'flex')
+  
+  # openShareMenu and openSubscribeMenu could be merged?
+  openShareMenu: =>
+    @elem.addClass('share-menu-open')
+    @shareMenuFooterButton.addClass('button-active')
+    @shareMenu.stop().fadeIn(300).css('display', 'flex')
+
+  openSubscribeMenu: =>
+    @elem.addClass('subscribe-menu-open')
+    @subscribeMenuFooterButton.addClass('button-active')
+    @subscribeMenu.stop().fadeIn(300).css('display', 'flex')
+  
+  closeMoreMenu: =>
+    @elem.removeClass('more-menu-open')
+    @moreMenu.stop().fadeOut(300)
+  
+  # closeShareMenu and closeSubscribeMenu could be merged?
+  closeShareMenu: =>
+    @elem.removeClass('share-menu-open')
+    @shareMenuFooterButton.removeClass('button-active')
+    @shareMenu.stop().fadeOut(300)
+  
+  closeSubscribeMenu: =>
+    @elem.removeClass('subscribe-menu-open')
+    @subscribeMenuFooterButton.removeClass('button-active')
+    @subscribeMenu.stop().fadeOut(300)
+
+  # changeTabsActiveButton and changeEmbedActiveButton could be merged?
+  changeTabsActiveButton: (event) =>
+    button = $(event.target)
+    @panelsTabs.find('.button-active').removeClass('button-active')
+    button.addClass('button-active')
+  
+  changeEmbedActiveButton: (event) =>
+    button = $(event.target)
+    @embedList.find('.button-active').removeClass('button-active')
+    button.addClass('button-active')
+
+  showPanels: =>
+    if @panelsTabs.is(":hidden") && @panels.is(":hidden")
+      @panelsTabs.slideDown()
+      @panels.slideDown()
+
+  hidePanels: =>
+    if @panelsTabs.is(":visible") && @panels.is(":visible")
+      @panelsTabs.slideUp()
+      @panels.slideUp()
+
+  toggleAllEpisodesPanel: =>
+    @closeMoreMenu()
+    if @allEpisodesPanel.is(':visible')
+      @hidePanels()
+    else
+      @showAllEpisodesPanel()
+  
+  toggleEpisodeInfoPanel: =>
+    @closeMoreMenu()
+    if @episodeInfoPanel.is(':visible')
+      @hidePanels()
+    else
+      @showEpisodeInfoPanel()
+  
+  toggleTranscriptPanel: =>
+    @closeMoreMenu()
+    if @transcriptPanel.is(':visible')
+      @hidePanels()
+    else
+      @showTranscriptPanel()
+  
+  toggleChaptermarksPanel: =>
+    @closeMoreMenu()
+    if @chaptermarksPanel.is(':visible')
+      @hidePanels()
+    else
+      @showChaptermarksPanel()
+
+  showAllEpisodesPanel: =>
+    @closeMoreMenu()
+    @showPanels()
+    @panelsTabButton.removeClass('button-active')
+    @allEpisodesTabButton.addClass('button-active')
+    @singlePanel.not('.playlist').hide()
+    if @allEpisodesPanel.is(':hidden')
+      @allEpisodesPanel.fadeIn()      
+
+  showEpisodeInfoPanel: =>
+    @closeMoreMenu()
+    @showPanels()
+    @panelsTabButton.removeClass('button-active')
+    @episodeInfoTabButton.addClass('button-active')
+    @singlePanel.not('.episode-info').hide()
+    if @episodeInfoPanel.is(':hidden')
+      @episodeInfoPanel.fadeIn()
+  
+  showTranscriptPanel: =>
+    @closeMoreMenu()
+    @showPanels()
+    @panelsTabButton.removeClass('button-active')
+    @transcriptTabButton.addClass('button-active')
+    @singlePanel.not('.transcript').hide()
+    if @transcriptPanel.is(':hidden')
+      @transcriptPanel.fadeIn()
+  
+  showChaptermarksPanel: =>
+    @closeMoreMenu()
+    @showPanels()
+    @panelsTabButton.removeClass('button-active')
+    @chaptermarksTabButton.addClass('button-active')
+    @singlePanel.not('.chaptermarks').hide()
+    if @chaptermarksPanel.is(':hidden')
+      @chaptermarksPanel.fadeIn()
+  ## Redesigned theme extras end <--
 
   initializeSpeedToggle: =>
     @speedElement.text('1x')
@@ -217,6 +398,15 @@ class Theme
     if !@app.options.startPanel && @app.isInIframeMode()
       @buttons.hide()
       @panels.hide()
+
+    ## Redesigned theme extras start -->
+    # Find panels when extensions loaded
+    @singlePanel = @elem.find('.single-panel')
+    @episodeInfoPanel = @elem.find('.episode-info')
+    @allEpisodesPanel = @elem.find('.playlist')
+    @transcriptPanel = @elem.find('.transcript')
+    @chaptermarksPanel = @elem.find('.chaptermarks')
+    ## Redesigned theme extras end <--
 
   animationOptions: ->
     duration: 300

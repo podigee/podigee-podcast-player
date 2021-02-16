@@ -1,0 +1,44 @@
+@mixin view($media) {
+    @if $media==xxs {
+        @media only screen and (max-width: 320px) {
+            @content;
+        }
+    }
+
+    @else if $media==xs {
+        @media only screen and (max-width: 575px) {
+            @content;
+        }
+    }
+
+    @else if $media==sm {
+        @media only screen and (max-width: 767px) {
+            @content;
+        }
+    }
+
+    @else if $media==md {
+        @media only screen and (max-width: 991px) {
+            @content;
+        }
+    }
+
+    @else if $media==lg {
+        @media only screen and (max-width: 1199px) {
+            @content;
+        }
+    }
+
+    @else if $media==xl {
+        @media only screen and (min-width: 1200px) {
+            @content;
+        }
+    }
+
+    @else if $media==xxl {
+        @media only screen and (min-width: 1600px) {
+            @content;
+        }
+    }
+
+}

@@ -93,6 +93,15 @@ class PodigeePodcastPlayer
     @player.play()
     @initializeExtensions(activeExtension)
     @extensions.ProgressBar.updateView()
+  
+  ## Redesigned theme extras start -->
+  switchEpisodeNoUpdate: (episode, activeExtension) =>
+    @episode = episode
+
+    @player.loadFile()
+    @player.setCurrentTime(0)
+    @player.play()
+  ## Redesigned theme extras end <--
 
   mediaLoaded: =>
     window.setTimeout @sendSizeChange, 0
@@ -151,6 +160,46 @@ class PodigeePodcastPlayer
       else
         @player.playPause()
     @theme.playPauseElement.on 'click', triggerPlayPause
+
+    ## Redesigned theme extras start -->
+    @theme.splashButton.click =>
+      @theme.showPlayer()
+      @player.play()
+
+    @theme.closeButton.click =>
+      @theme.closeShareMenu()
+      @theme.closeSubscribeMenu()
+    
+    @theme.moreMenuButton.click =>
+      if @elem.hasClass('more-menu-open')
+        @theme.closeMoreMenu()
+      else if @elem.hasClass('share-menu-open') || @elem.hasClass('subscribe-menu-open')
+        @theme.closeShareMenu()
+        @theme.closeSubscribeMenu()
+        @theme.openMoreMenu()
+      else
+        @theme.openMoreMenu()
+    
+    @theme.shareMenuFooterButton.click =>
+      if @elem.hasClass('share-menu-open')
+        @theme.closeShareMenu()
+      else if @elem.hasClass('more-menu-open') || @elem.hasClass('subscribe-menu-open')
+        @theme.closeMoreMenu()
+        @theme.closeSubscribeMenu()
+        @theme.openShareMenu()
+      else
+        @theme.openShareMenu()
+    
+    @theme.subscribeMenuFooterButton.click =>
+      if @elem.hasClass('subscribe-menu-open')
+        @theme.closeSubscribeMenu()
+      else if @elem.hasClass('more-menu-open') || @elem.hasClass('share-menu-open')
+        @theme.closeMoreMenu()
+        @theme.closeShareMenu()
+        @theme.openSubscribeMenu()
+      else
+        @theme.openSubscribeMenu()
+    ## Redesigned theme extras end <--
 
     @theme.backwardElement.click =>
       @player.jumpBackward()

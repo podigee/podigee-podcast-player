@@ -66,10 +66,20 @@ class Playlist extends Extension
     file.join('.')
 
   click: (event) =>
-    if @currentEpisode && event.data == @currentEpisode.feedItem
-      @app.player.playPause()
+    ## Redesigned theme extras start -->
+    if @app.elem.hasClass('podcast-player-redesign')
+      episodeListItem = $(event.target)
+      episodeListItem.closest('.playlist').find('.single-playlist-episode').removeClass('active')
+      episodeListItem.closest('.single-playlist-episode').addClass('active')
+      if @app.theme.splashButton.is(":visible")
+        @app.theme.showPlayer()
+      @app.switchEpisodeNoUpdate(event.data)
     else
-      @app.switchEpisode(event.data)
+    ## Redesigned theme extras end <--
+      if @currentEpisode && event.data == @currentEpisode.feedItem
+        @app.player.playPause()
+      else
+        @app.switchEpisode(event.data)
 
   playPrevious: () =>
     return if @isFirstEntry()
@@ -134,8 +144,8 @@ class Playlist extends Extension
 
   panelHtml: ->
     """
-    <div class="playlist">
-      <h3>#{@t('playlist.title')}</h3>
+    <div class="playlist single-panel">
+      <h3 class="single-panel-title">#{@t('playlist.title')}</h3>
 
       <ul></ul>
 
