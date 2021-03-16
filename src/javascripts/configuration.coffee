@@ -107,6 +107,7 @@ class Configuration
       @app.episode.coverUrl ?= @configuration.episode.cover_url
 
     @app.episode.embedCode ?= @configuration.embedCode
+    @app.episode.iframeCode = @generateIframeCode()
     @app.getProductionData()
 
     @loader.resolve()
@@ -133,6 +134,9 @@ class Configuration
     startPanel: null
   }
 
+  generateIframeCode: () =>
+    return """<iframe src="#{@configuration.json_config}" style="border: 0" border="0" height="100" width="100%"></iframe>"""
+
   configureTemplating: =>
     rivets.configure(
       prefix: 'pp'
@@ -155,5 +159,11 @@ class Configuration
     rivets.formatters.date = (datestring, locale) =>
       date = new Date(datestring)
       new Intl.DateTimeFormat(locale).format(date)
+
+    rivets.binders['classinverted-*'] = (el, value) ->
+      if(!value)
+         el.classList.add(@args[0])
+      else
+        el.classList.remove(@args[0])
 
 module.exports = Configuration

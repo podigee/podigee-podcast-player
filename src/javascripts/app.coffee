@@ -16,6 +16,14 @@ Playerjs = require('./extensions/playerjs.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
 
+ChapterMarksV2 = require('./extensionsV2/chaptermarks.coffee')
+EpisodeInfoV2 = require('./extensionsV2/episode_info.coffee')
+PlaylistV2 = require('./extensionsV2/playlist.coffee')
+TranscriptV2 = require('./extensionsV2/transcript.coffee')
+ExtraOptionsV2 = require('./extensionsV2/extra_options.coffee')
+ShareV2 = require('./extensionsV2/share.coffee')
+SubscribeV2 = require('./extensionsV2/subscribe.coffee')
+
 class PodigeePodcastPlayer
   @defaultExtensions: [
     ProgressBar,
@@ -26,6 +34,18 @@ class PodigeePodcastPlayer
     Playlist,
     Playerjs,
     Transcript,
+  ]
+
+  @defaultExtensionsV2: [
+    ProgressBar,
+    Playerjs,
+    SubscribeV2,
+    ShareV2,
+    ExtraOptionsV2,
+    ChapterMarksV2,
+    EpisodeInfoV2,
+    PlaylistV2,
+    TranscriptV2,
   ]
 
   constructor: (@elemClass, configuration, origin) ->
@@ -93,7 +113,7 @@ class PodigeePodcastPlayer
     @player.play()
     @initializeExtensions(activeExtension)
     @extensions.ProgressBar.updateView()
-  
+
   ## Redesigned theme extras start -->
   switchEpisodeNoUpdate: (episode, activeExtension) =>
     @episode = episode
@@ -161,46 +181,6 @@ class PodigeePodcastPlayer
         @player.playPause()
     @theme.playPauseElement.on 'click', triggerPlayPause
 
-    ## Redesigned theme extras start -->
-    @theme.splashButton.click =>
-      @theme.showPlayer()
-      @player.play()
-
-    @theme.closeButton.click =>
-      @theme.closeShareMenu()
-      @theme.closeSubscribeMenu()
-    
-    @theme.moreMenuButton.click =>
-      if @elem.hasClass('more-menu-open')
-        @theme.closeMoreMenu()
-      else if @elem.hasClass('share-menu-open') || @elem.hasClass('subscribe-menu-open')
-        @theme.closeShareMenu()
-        @theme.closeSubscribeMenu()
-        @theme.openMoreMenu()
-      else
-        @theme.openMoreMenu()
-    
-    @theme.shareMenuFooterButton.click =>
-      if @elem.hasClass('share-menu-open')
-        @theme.closeShareMenu()
-      else if @elem.hasClass('more-menu-open') || @elem.hasClass('subscribe-menu-open')
-        @theme.closeMoreMenu()
-        @theme.closeSubscribeMenu()
-        @theme.openShareMenu()
-      else
-        @theme.openShareMenu()
-    
-    @theme.subscribeMenuFooterButton.click =>
-      if @elem.hasClass('subscribe-menu-open')
-        @theme.closeSubscribeMenu()
-      else if @elem.hasClass('more-menu-open') || @elem.hasClass('share-menu-open')
-        @theme.closeMoreMenu()
-        @theme.closeShareMenu()
-        @theme.openSubscribeMenu()
-      else
-        @theme.openSubscribeMenu()
-    ## Redesigned theme extras end <--
-
     @theme.backwardElement.click =>
       @player.jumpBackward()
 
@@ -233,7 +213,11 @@ class PodigeePodcastPlayer
     @extensions = {}
     @theme.removeButtons()
     @theme.removePanels()
-    PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
+
+    defaultExtensions = PodigeePodcastPlayer.defaultExtensions
+    if @options.themeVersion == 2
+      defaultExtensions = PodigeePodcastPlayer.defaultExtensionsV2
+    defaultExtensions.forEach (extension) =>
       name = extension.extension.name
       self.extensions[name] = new extension(self)
       return if self.options.startPanels && self.options.startPanels.length

@@ -70,6 +70,7 @@ class I18n
         switch_time_mode: 'Switch time display mode'
       share:
         copy_episode_link: 'Copy episode link'
+        copy_embed_code: 'Copy embed code'
         email: 'Email'
         embed_player: 'Embed player'
         episode: 'Episode'
@@ -126,6 +127,7 @@ class I18n
         switch_time_mode: 'Anzeigemodus ändern'
       share:
         copy_episode_link: 'Link zur Episode kopieren'
+        copy_embed_code: 'Link zum Einbetten kopieren'
         email: 'E-Mail'
         embed_player: 'Player einbetten'
         episode: 'Episode'
@@ -182,6 +184,7 @@ class I18n
         switch_time_mode: 'Cambiar el modo de visualización'
       share:
         copy_episode_link: 'Copiar enlace del capítulo'
+        copy_embed_code: 'Copiar enlace de incrustación'
         email: 'Correo electrónico'
         embed_player: 'Embed del reproductor'
         episode: 'Capítulo'
@@ -238,6 +241,7 @@ class I18n
         switch_time_mode: 'Verander tijdweergave'
       share:
         copy_episode_link: 'Kopieër link naar aflevering'
+        copy_embed_code: 'Kopieër embed link'
         email: 'E-mail'
         embed_player: 'Embed speler'
         episode: 'Aflevering'
@@ -294,6 +298,7 @@ class I18n
         switch_time_mode: 'Przełącz tryb wyświetlania czasu'
       share:
         copy_episode_link: 'Kopiuj link do odcinka'
+        copy_embed_code: 'Kopiuj link do osadzenia'
         email: 'E-mail'
         embed_player: 'Osadź odtwarzacz'
         episode: 'Odcinek'
