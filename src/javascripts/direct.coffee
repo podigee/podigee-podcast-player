@@ -1,9 +1,10 @@
 SubscribeButtonTrigger = require('./subscribe_button_trigger.coffee')
 PodigeePodcastPlayer = require('./app.coffee')
 ExternalData = require('./external_data.coffee')
+DirectMarkup = require('./direct-markup.coffee')
 
 class Direct
-  constructor: (@elem, html, scriptSrc)->
+  constructor: (@elem, scriptSrc)->
     return unless @elem
 
     config = @elem.getAttribute('data-configuration').replace(/(^\s+|\s+$)/g, '')
@@ -16,7 +17,7 @@ class Direct
       console.debug('[Podigee Podcast Player] data-options has invalid JSON')
 
     @configuration.parentLocationHash = window.location.hash
-    @buildPlayer(html)
+    @buildPlayer(DirectMarkup)
     @configuration.id = @player.id
     @setupSubscribeButton()
     new PodigeePodcastPlayer("##{@playerId()}", @configuration, scriptSrc)
@@ -83,11 +84,6 @@ class DirectWrapper
       scriptSrc = scriptSrc.replace(/^https/, 'http')
     scriptSrc.match(/(^.*\/)/)[0].replace(/javascripts\/$/, '').replace(/\/$/, '')
 
-
-  getDirectHtml: (scriptSrc) ->
-    externalData = new ExternalData()
-    externalData.get("#{scriptSrc}/podigee-podcast-player-direct.html")
-
   appendCss: (scriptSrc) ->
     path = "#{scriptSrc}/stylesheets/app-direct.css"
     style = document.createElement('link')
@@ -109,11 +105,10 @@ class DirectWrapper
 
         if elems.length
           scriptSrc = self.origin(scriptElem)
-          self.getDirectHtml(scriptSrc).done (html) =>
-            self.appendCss(scriptSrc)
-            for elem in elems
-              players.push(new Direct(elem, html, scriptSrc))
-            window.podigeePodcastPlayers = players
+          self.appendCss(scriptSrc)
+          for elem in elems
+            players.push(new Direct(elem, scriptSrc))
+          window.podigeePodcastPlayers = players
 
     return
 
