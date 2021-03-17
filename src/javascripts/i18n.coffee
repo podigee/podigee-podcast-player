@@ -97,6 +97,8 @@ class I18n
         podcastOnDeezer: 'View Podcast on Deezer'
         podcastOnAlexa: 'View Podcast on Alexa'
         podcastOnPodimo: 'View Podcast on Podimo'
+        podcastOnGoogle: 'View Podcast on Google'
+        rssCopy: 'Copy RSS link'
         subscribe: 'Subscribe'
       splash:
         playEpisode: 'Play episode'
@@ -154,6 +156,8 @@ class I18n
         podcastOnDeezer: 'Podcast auf Deezer ansehen'
         podcastOnAlexa: 'Podcast auf Alexa ansehen'
         podcastOnPodimo: 'Podcast auf Podimo ansehen'
+        podcastOnGoogle: 'Podcast auf Google ansehen'
+        rssCopy: 'RSS-Link kopieren'
         subscribe: 'Abonnieren'
       splash:
         playEpisode: 'Episode abspielen'
@@ -211,6 +215,8 @@ class I18n
         podcastOnDeezer: 'Ver podcast en Deezer'
         podcastOnAlexa: 'Ver podcast en Alexa'
         podcastOnPodimo: 'Ver podcast en Podimo'
+        podcastOnGoogle: 'Ver podcast en Google'
+        rssCopy: 'Copiar enlace RSS'
         subscribe: 'Suscríbete'
       splash:
         playEpisode: 'Reproducir episodio'
@@ -268,6 +274,8 @@ class I18n
         podcastOnDeezer: 'Toon Podcast op Deezer'
         podcastOnAlexa: 'Toon Podcast op Alexa'
         podcastOnPodimo: 'Toon Podcast op Podimo'
+        podcastOnGoogle: 'Toon Podcast op Google'
+        rssCopy: 'Kopieer de RSS-link'
         subscribe: 'Abonneer'
       splash:
         playEpisode: 'Afspelen'
@@ -325,6 +333,8 @@ class I18n
         podcastOnDeezer: 'Zobacz podcast na Deezer'
         podcastOnAlexa: 'Zobacz podcast na Alexa'
         podcastOnPodimo: 'Zobacz podcast na Podimo'
+        podcastOnGoogle: 'Zobacz podcast na Google'
+        rssCopy: 'Kopiuj link do RSS'
         subscribe: 'Subskrybuj'
       splash:
         playEpisode: 'Odtwórz odcinek'
