@@ -16,6 +16,7 @@ Playerjs = require('./extensions/playerjs.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
 
+ProgressBarV2 = require('./extensionsV2/progress_bar.coffee')
 ChapterMarksV2 = require('./extensionsV2/chaptermarks.coffee')
 EpisodeInfoV2 = require('./extensionsV2/episode_info.coffee')
 PlaylistV2 = require('./extensionsV2/playlist.coffee')
@@ -37,15 +38,15 @@ class PodigeePodcastPlayer
   ]
 
   @defaultExtensionsV2: [
-    ProgressBar,
+    ProgressBarV2,
     Playerjs,
     SubscribeV2,
     ShareV2,
     ExtraOptionsV2,
-    ChapterMarksV2,
     EpisodeInfoV2,
-    PlaylistV2,
     TranscriptV2,
+    ChapterMarksV2,
+    PlaylistV2,
   ]
 
   constructor: (@elemClass, configuration, origin) ->
@@ -113,15 +114,6 @@ class PodigeePodcastPlayer
     @player.play()
     @initializeExtensions(activeExtension)
     @extensions.ProgressBar.updateView()
-
-  ## Redesigned theme extras start -->
-  switchEpisodeNoUpdate: (episode, activeExtension) =>
-    @episode = episode
-
-    @player.loadFile()
-    @player.setCurrentTime(0)
-    @player.play()
-  ## Redesigned theme extras end <--
 
   mediaLoaded: =>
     window.setTimeout @sendSizeChange, 0

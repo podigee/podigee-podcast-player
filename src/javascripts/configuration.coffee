@@ -132,6 +132,7 @@ class Configuration
     themeCss: null
     customStyle: null
     startPanel: null
+    themeVersion: 1
   }
 
   generateIframeCode: () =>

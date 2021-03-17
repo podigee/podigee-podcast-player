@@ -15,15 +15,18 @@ class Playlist extends Extension
 
   constructor: (app) ->
     super(app)
+    @playlist = []
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
     return unless @app.podcast.hasEpisodes()
 
+    @loadExtension()
+
+  loadExtension: () =>
     if @app.podcast.episodes.length
       @finishLoading()
     else
-      @app.playlistLoader = new PlaylistLoader(@app)
       @app.playlistLoader = new PlaylistLoader(@app)
       @app.playlistLoader.loadEpisodes().done(@finishLoading)
 
@@ -66,20 +69,10 @@ class Playlist extends Extension
     file.join('.')
 
   click: (event) =>
-    ## Redesigned theme extras start -->
-    if @app.elem.hasClass('podcast-player-redesign')
-      episodeListItem = $(event.target)
-      episodeListItem.closest('.playlist').find('.single-playlist-episode').removeClass('active')
-      episodeListItem.closest('.single-playlist-episode').addClass('active')
-      if @app.theme.splashButton.is(":visible")
-        @app.theme.showPlayer()
-      @app.switchEpisodeNoUpdate(event.data)
+    if @currentEpisode && event.data == @currentEpisode.feedItem
+      @app.player.playPause()
     else
-    ## Redesigned theme extras end <--
-      if @currentEpisode && event.data == @currentEpisode.feedItem
-        @app.player.playPause()
-      else
-        @app.switchEpisode(event.data)
+      @app.switchEpisode(event.data)
 
   playPrevious: () =>
     return if @isFirstEntry()
@@ -94,7 +87,7 @@ class Playlist extends Extension
     @app.switchEpisode(nextItem.episode)
 
   isFirstEntry: () =>
-    (@currentIndex() + 1) > @playlist.length
+    (@currentIndex() + 1) == @playlist.length
 
   isLastEntry: () =>
     @currentIndex() == 0
@@ -131,7 +124,7 @@ class Playlist extends Extension
     @renderPlaylistItems(@episodes)
 
     loadMoreButton = @panel.find('button.load-more')
-    if @app.podcast.playlistUrl?
+    if @app.podcast.playlistUrl? && @app.podcast.episodes.length > 10
       loadMoreButton.on('click', @loadMoreEpisodes)
     else
       loadMoreButton.hide()
@@ -144,7 +137,7 @@ class Playlist extends Extension
 
   panelHtml: ->
     """
-    <div class="playlist single-panel">
+    <div class="single-panel playlist">
       <h3 class="single-panel-title">#{@t('playlist.title')}</h3>
 
       <ul></ul>

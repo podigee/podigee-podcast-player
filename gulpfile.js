@@ -9,7 +9,8 @@ var gulp = require('gulp'),
   connect = require('gulp-connect'),
   gzip = require('gulp-gzip'),
   fs = require('fs'),
-  inject = require('gulp-inject')
+  inject = require('gulp-inject'),
+  autoprefixer = require('gulp-autoprefixer')
 
 var dest = './build'
 var paths = {
@@ -221,6 +222,7 @@ gulp.task('themes', function () {
   return gulp
     .src(paths.themes.css)
     .pipe(sass({ style: 'compressed' }))
+    .pipe(autoprefixer())
     .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 })

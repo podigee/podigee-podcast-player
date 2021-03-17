@@ -14,9 +14,6 @@ class ExternalData
     else
       url
 
-    if url.indexOf('transcript') > -1
-      url = url.replace('http', 'https')
-
     $.get url, (params || {}), (data) -> deferred.resolve(data)
 
     deferred.promise()

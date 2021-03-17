@@ -182,7 +182,7 @@ class Transcript extends Extension
 
   panelHtml: ->
     """
-    <div class="transcript single-panel">
+    <div class="single-panel transcript">
       <h3 class="single-panel-title">#{@t('transcript.title')}</h3>
 
       <div class="search"></div>

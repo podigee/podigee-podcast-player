@@ -39,7 +39,7 @@ class EpisodeInfo extends Extension
 
   panelHtml: ->
     """
-    <div class="episode-info single-panel">
+    <div class="single-panel episode-info">
       <h3 class="single-panel-title">#{@t('episode_info.title')}</h3>
       <h3 class="episode-title" pp-html="title"></h3>
       <p class="episode-subtitle" pp-html="subtitle"></p>

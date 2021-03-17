@@ -12,16 +12,15 @@ class ShareV2 extends Extension
     type: 'menu'
 
   constructor: (app) ->
-    @type = 'menu'
     super(app)
-    @episode = @app.episode
-    return unless @episode
 
-    return unless @episode.url
+    @episode = @app.episode
+    return unless @episode and @episode.url
 
     @options = _.extend(@defaultOptions, @app.extensionOptions.Share)
 
     return if @options.disabled
+    @type = 'menu'
 
     @buildContext()
 
@@ -61,6 +60,12 @@ class ShareV2 extends Extension
     @context.showEmbedUrl = @app.options.configViaJSON
     @context.downloadLink = @audioFileUrl()
 
+  updateTime: =>
+    @context.currentTime = @app.player.currentTime
+    @context.currentTimeInSeconds = @app.player.currentTimeInSeconds
+    @context.shareLinks = @shareLinks(@context.currentTimeInSeconds)
+    @context.url = @shareUrl()
+
   shareUrl: =>
     parsed = Uri(@episode.url)
     if @context?.showUrlWithTime
@@ -76,7 +81,7 @@ class ShareV2 extends Extension
     @bindEvents()
 
   attachEvents: =>
-    @app.player.addEventListener('timeupdate', @buildContext)
+    @app.player.addEventListener('timeupdate', @updateTime)
 
   closePanel: () =>
     @app.theme.togglePanel(@panel)
@@ -144,9 +149,9 @@ class ShareV2 extends Extension
       </div>
 
       <div class="copy-embed flex-item">
-        <button class="share-embed-url-btn" title="Copy embed code" aria-label="Copy embed code">
+        <button class="share-embed-url-btn" title="#{@t('share.copy_embed_code')}" aria-label="#{@t('share.copy_embed_code')}">
           <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <title>Copy embed code</title>
+            <title>#{@t('share.copy_embed_code')}</title>
             <path
               d="M18 4H6C5.46957 4 4.96086 4.21071 4.58579 4.58579C4.21071 4.96086 4 5.46957 4 6V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H18C18.5304 20 19.0391 19.7893 19.4142 19.4142C19.7893 19.0391 20 18.5304 20 18V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4V4ZM18 18H6V6H18V18Z"
             />
@@ -154,7 +159,7 @@ class ShareV2 extends Extension
               d="M2 2H16V0H2C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V16H2V2Z"
             />
           </svg>
-          <span>Copy embed code</span>
+          <span>#{@t('share.copy_embed_code')}</span>
         </button>
         <ul class="items-list embed-list">
           <li class="list-item">

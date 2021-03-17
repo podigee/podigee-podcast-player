@@ -12,14 +12,15 @@ class SubscribeV2 extends Extension
     type: 'menu'
 
   constructor: (app) ->
-    @type = 'menu'
     super(app)
+
     @podcast = @app.podcast
-    return unless @podcast
+    return unless @podcast && @podcast.title
 
     @options = _.extend(@defaultOptions, @app.extensionOptions.SubscribeBar)
 
     return if @options.disabled
+    @type = 'menu'
 
     @buildContext()
 
