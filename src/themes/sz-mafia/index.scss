@@ -1,0 +1,45 @@
+$background: #29293a;
+$footer-background: #555C9B;
+$black: #dc4439;
+$progress: #f2f2f2;
+$progress-loaded: $black;
+$progress-played: #f2f2f2;
+$mobile-breakpoint: 521px;
+$highlight1: #C29057;
+
+@import '../sz-common/index.scss';
+
+.podcast-title {
+  color: $progress;
+}
+
+.progress-bar-time-played {
+  &.time-played {
+    color: #ffffff;
+  }
+}
+
+.podcast-player {
+  .duration {
+    color: #ffffff;
+  }
+
+  .episode-title span {
+    color: $highlight1;
+  }
+
+  .player-footer {
+    .subscribe-button-external {
+      color: #ffffff;
+    }
+
+    .all-episodes-link {
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .podcast-connections-item svg {
+      color: $background;
+    }
+  }
+}
