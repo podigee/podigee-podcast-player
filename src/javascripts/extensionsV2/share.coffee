@@ -53,7 +53,7 @@ class ShareV2 extends Extension
     @context.currentTimeInSeconds = @app.player.currentTimeInSeconds
     @context.shareLinks = @shareLinks(@context.currentTimeInSeconds)
     @context.url = @shareUrl()
-    @context.showUrlWithTime ?= false
+    @context.showUrlWithTime ?= true
     @context.embedCode = @app.episode.embedCode
     @context.embedScript = true
     @context.iframeCode = @app.episode.iframeCode
