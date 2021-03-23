@@ -15,10 +15,10 @@ class CustomStylesV2 extends CustomStyles
     "
 
   buildColors: () =>
-    @primary = new TinyColor(@config.primary)
+    @primary = new TinyColor(@config.main)
     @lightColor = @primary.clone().brighten(50)
     @contrastText = new TinyColor('#fff')
-    if TinyColor.readability(@config.primary, "#fff") < 3.5
+    if TinyColor.readability(@config.main, "#fff") < 3.5
       @contrastText = new TinyColor('#000')
 
 module.exports = CustomStylesV2

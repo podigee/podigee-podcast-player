@@ -26,7 +26,7 @@ class ExtraOptionsV2 extends Extension
     @app.theme.addExtension(this)
 
   destroy: () ->
-    @panelTabs?.empty()
+    @panelTabs?.remove()
 
   defaultOptions:
     showOnStart: false
