@@ -1,4 +1,4 @@
-<style>
+module.exports = '<style>
   .loading-animation {
     margin: 0 auto;
   }
@@ -75,4 +75,4 @@
     <div class="rect4"></div>
     <div class="rect5"></div>
   </div>
-</div>
+</div>'

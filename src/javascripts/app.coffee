@@ -16,6 +16,15 @@ Playerjs = require('./extensions/playerjs.coffee')
 Share = require('./extensions/share.coffee')
 Transcript = require('./extensions/transcript.coffee')
 
+ProgressBarV2 = require('./extensionsV2/progress_bar.coffee')
+ChapterMarksV2 = require('./extensionsV2/chaptermarks.coffee')
+EpisodeInfoV2 = require('./extensionsV2/episode_info.coffee')
+PlaylistV2 = require('./extensionsV2/playlist.coffee')
+TranscriptV2 = require('./extensionsV2/transcript.coffee')
+ExtraOptionsV2 = require('./extensionsV2/extra_options.coffee')
+ShareV2 = require('./extensionsV2/share.coffee')
+SubscribeV2 = require('./extensionsV2/subscribe.coffee')
+
 class PodigeePodcastPlayer
   @defaultExtensions: [
     ProgressBar,
@@ -26,6 +35,18 @@ class PodigeePodcastPlayer
     Playlist,
     Playerjs,
     Transcript,
+  ]
+
+  @defaultExtensionsV2: [
+    ProgressBarV2,
+    Playerjs,
+    SubscribeV2,
+    ShareV2,
+    ExtraOptionsV2,
+    EpisodeInfoV2,
+    TranscriptV2,
+    ChapterMarksV2,
+    PlaylistV2,
   ]
 
   constructor: (@elemClass, configuration, origin) ->
@@ -184,7 +205,11 @@ class PodigeePodcastPlayer
     @extensions = {}
     @theme.removeButtons()
     @theme.removePanels()
-    PodigeePodcastPlayer.defaultExtensions.forEach (extension) =>
+
+    defaultExtensions = PodigeePodcastPlayer.defaultExtensions
+    if @options.themeVersion == 2
+      defaultExtensions = PodigeePodcastPlayer.defaultExtensionsV2
+    defaultExtensions.forEach (extension) =>
       name = extension.extension.name
       self.extensions[name] = new extension(self)
       return if self.options.startPanels && self.options.startPanels.length
