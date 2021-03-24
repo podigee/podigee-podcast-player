@@ -15,7 +15,7 @@ class CustomStylesV2 extends CustomStyles
     "
 
   buildColors: () =>
-    @primary = new TinyColor(@config.main)
+    @primary = new TinyColor(@config.main || '#db4615')
     @lightColor = @primary.clone().brighten(50)
     @contrastText = new TinyColor('#fff')
     if TinyColor.readability(@config.main, "#fff") < 3.5
