@@ -142,6 +142,37 @@
       display: flex;
       align-items: center;
       margin-bottom: 20px;
+      &.copy-episode {
+        @include view(xs) {
+          flex-wrap: wrap;
+        }
+        .share-copy-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 5px;
+          }
+          + div {
+            padding-left: 30px;
+          }
+        }
+      }
+      &.copy-embed {
+        @include view(xs) {
+          flex-wrap: wrap;
+        }
+        .share-embed-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 0px;
+          }
+        }
+      }
+      .embed-list {
+        @include view(xs) {
+          height: 30px;
+          padding-left: 30px;
+        }
+      }
       button {
         font-size: 16px;
         @include view(sm) {
@@ -337,9 +368,10 @@
     @include view(sm) {
       padding: 20px;
       height: 100%;
-      max-height: 250px;
+      max-height: 255px;
     }
     @include view(xs) {
+      height: auto;
       max-height: 285px;
     }
   }
@@ -359,6 +391,12 @@
     @include view(xs) {
       max-width: none;
       padding-left: 12px;
+    }
+  }
+  .share-menu {
+    max-width: 560px;
+    @include view(xs) {
+      max-height: 320px;
     }
   }
 
@@ -553,6 +591,10 @@
         @include view(sm) {
           font-size: 20px;
           line-height: 28px;
+        }
+        @include view(xs) {
+          padding-left: 10px;
+          padding-right: 10px;
         }
         @include view(xxs) {
           font-size: 16px;
@@ -910,9 +952,6 @@
             left: 0;
             right: 0;
             height: 2px;
-            @include view(sm) {
-              bottom: 0px;
-            }
           }
         }
       }
@@ -944,7 +983,7 @@
         right: 0;
         height: 2px;
         @include view(sm) {
-          bottom: 0px;
+          bottom: 4px;
         }
       }
     }
