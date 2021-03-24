@@ -154,7 +154,6 @@
       &.copy-embed,
       &.copy-episode {
         ul {
-          margin-left: 20px;
           li {
             margin-right: 10px;
             margin-left: 0;
@@ -169,6 +168,7 @@
         > button {
           margin-left: -5px;
           padding: 5px;
+          margin-right: 20px;
         }
       }
       &.share-buttons {
@@ -340,7 +340,7 @@
       max-height: 250px;
     }
     @include view(xs) {
-      max-height: 245px;
+      max-height: 285px;
     }
   }
   .share-menu,
@@ -888,7 +888,10 @@
     .list-item {
       display: flex;
       height: 100%;
-      margin-left: 10px;
+      &:not(:first-of-type) {
+        margin-left: 10px;
+      }
+
       .list-button {
         position: relative;
         padding: 0;
@@ -909,7 +912,7 @@
             right: 0;
             height: 2px;
             @include view(sm) {
-              bottom: 4px;
+              bottom: 0px;
             }
           }
         }
@@ -942,7 +945,7 @@
         right: 0;
         height: 2px;
         @include view(sm) {
-          bottom: 4px;
+          bottom: 0px;
         }
       }
     }
@@ -1038,7 +1041,6 @@
     }
     .list-item {
       z-index: 5;
-      margin-left: 20px;
       &.share-menu-item,
       &.subscribe-menu-item,
       &.more-menu-item {
@@ -1114,7 +1116,7 @@
       margin: 0;
       @include view(sm) {
         padding-left: 10px;
-        overflow-x: scroll;
+        overflow-x: auto;
         white-space: nowrap;
       }
       &:before {
@@ -1163,7 +1165,7 @@
     padding: 0 20px;
     height: 100%;
     &.single-panel {
-      overflow-y: scroll;
+      overflow-y: auto;
     }
     max-height: 250px;
     @include view(sm) {
