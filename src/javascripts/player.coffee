@@ -133,6 +133,8 @@ class Player
         humanDuration = humanDuration.replace(/^00:/, '')
       @app.episode.humanDuration = humanDuration
       @duration = @app.episode.duration
+      if @app.options.themeVersion == 2 && @app.episode?.media?.mp3?.indexOf('adn.podigee-cdn.net') == -1
+        @app.theme.elem.find('.splash-time').text(humanDuration)
       return
 
     clear = -> window.clearInterval(interval)
