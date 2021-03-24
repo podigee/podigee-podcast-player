@@ -68,6 +68,8 @@ class Theme
     @findElements()
     @bindCoverLoad()
     @initializeSpeedToggle()
+    if @app.options.themeVersion == 2
+      @changeLogoUrl()
 
     return @elem
 
@@ -288,5 +290,11 @@ class Theme
   showPlayer: =>
     @splashButton.hide()
     @mainPlayer.fadeIn()
+
+  changeLogoUrl: =>
+    href = 'https://www.podigee.com/en/start-a-podcast-with-podigee?utm_source=podigee&utm_medium=referral&utm_campaign=w-en-en-webplayer'
+    if @app.podcast?.language? == 'de'
+      href = 'https://www.podigee.com/de/podcast-mit-podigee-starten?utm_source=podigee&utm_medium=referral&utm_campaign=w-de-de-webplayer'
+    @elem.find('.podigee-link').attr("href", href)
 
 module.exports = Theme
