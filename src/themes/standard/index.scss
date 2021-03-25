@@ -143,34 +143,48 @@
       align-items: center;
       margin-bottom: 20px;
       &.copy-episode {
+        width: 100%;
         @include view(xs) {
           flex-wrap: wrap;
+          justify-content: center; // test
         }
         .share-copy-url-btn {
           @include view(xs) {
             width: 100%;
             margin-bottom: 5px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
           }
-          + div {
-            padding-left: 30px;
+        }
+        .start-at-wrap {
+          display: flex;
+          @include view(xs) {
+            margin-left: 0;
+            _padding-left: 30px;
           }
         }
       }
       &.copy-embed {
+        width: 100%;
         @include view(xs) {
           flex-wrap: wrap;
+          justify-content: center; // test
         }
         .share-embed-url-btn {
           @include view(xs) {
             width: 100%;
             margin-bottom: 0px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
           }
         }
       }
       .embed-list {
         @include view(xs) {
           height: 30px;
-          padding-left: 30px;
+          _padding-left: 30px;
         }
       }
       button {
@@ -332,6 +346,9 @@
         align-items: center;
         margin-left: 20px;
         color: var(--player-contrast-text);
+        @include view(sm) {
+          margin-left: 10px;
+        }
       }
       ul {
         display: flex;
@@ -394,7 +411,8 @@
     }
   }
   .share-menu {
-    max-width: 560px;
+    max-width: 550px;
+    // width: 100%;
     @include view(xs) {
       max-height: 320px;
     }
