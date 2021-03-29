@@ -1361,6 +1361,7 @@
         .list-play-icon {
           display: flex;
           margin-right: 23px;
+          align-items: center;
           @include view(sm) {
             margin-right: 10px;
           }
