@@ -184,7 +184,6 @@
       .embed-list {
         @include view(xs) {
           height: 30px;
-          _padding-left: 30px;
         }
       }
       button {
@@ -214,6 +213,10 @@
           margin-left: -5px;
           padding: 5px;
           margin-right: 20px;
+          flex: 1;
+          @include view(sm) {
+            flex: none;
+          }
         }
       }
       &.share-buttons {
@@ -247,6 +250,7 @@
               svg {
                 width: 20px;
                 height: 20px;
+                margin: 0;
                 @include view(sm) {
                   width: 18px;
                   height: 18px;
@@ -408,11 +412,11 @@
     @include view(xs) {
       max-width: none;
       padding-left: 12px;
+      padding-right: 12px;
     }
   }
   .share-menu {
     max-width: 550px;
-    // width: 100%;
     @include view(xs) {
       max-height: 320px;
     }
@@ -1529,15 +1533,6 @@
       button {
         position: relative;
         z-index: 1;
-        // color: var(--white);
-
-        &:hover {
-          // color: var(--white);
-        }
-        &.button-active:not(.more-menu-button) {
-          // border-bottom: 1px solid var(--white);
-          // padding-bottom: 3px;
-        }
         &.more-menu-button {
           z-index: 1;
           span {
@@ -1549,10 +1544,6 @@
   }
 
   .single-panel {
-    // padding-top: 30px;
-    @include view(sm) {
-      // padding-top: 20px;
-    }
     .single-panel-title {
       display: none;
     }
