@@ -214,7 +214,7 @@
           padding: 5px;
           margin-right: 20px;
           flex: 1;
-          @include view(sm) {
+          @include view(xs) {
             flex: none;
           }
         }
