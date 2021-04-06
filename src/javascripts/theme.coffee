@@ -293,9 +293,8 @@ class Theme
 
   changeLogoUrl: =>
     href = 'https://www.podigee.com/en/start-a-podcast-with-podigee?utm_source=podigee&utm_medium=referral&utm_campaign=w-en-en-webplayer'
-    language = navigator.languages[0] or navigator.userLanguage or navigator.language or navigator.browserLanguage or
-    'en'
-    if language.startsWith('de')
+    language = window.navigator.userLanguage || window.navigator.language || 'en'
+    if language.indexOf('de') > -1
       href = 'https://www.podigee.com/de/podcast-mit-podigee-starten?utm_source=podigee&utm_medium=referral&utm_campaign=w-de-de-webplayer'
     @elem.find('.podigee-link').attr("href", href)
 
