@@ -144,10 +144,10 @@ class ShareV2 extends Extension
           </svg>
           <span>#{@t('share.copy_episode_link')}</span>
         </button>
-      </div>
-      <div class="flex-item">
-        <div>#{@t('share.start_at')}</div>
-        <div class="start-at" pp-html="currentTime"></div>
+        <div class="start-at-wrap">
+          <div>#{@t('share.start_at')}</div>
+          <div class="start-at" pp-html="currentTime"></div>
+        </div>
       </div>
 
       <div class="copy-embed flex-item">
@@ -163,17 +163,15 @@ class ShareV2 extends Extension
           </svg>
           <span>#{@t('share.copy_embed_code')}</span>
         </button>
+        <ul class="items-list embed-list">
+          <li class="list-item">
+            <button class="list-button script-button" pp-class-button-active="embedScript">JavaScript</button>
+          </li>
+          <li class="list-item">
+            <button class="list-button iframe-button" pp-classinverted-button-active="embedScript">iFrame</button>
+          </li>
+        </ul>
       </div>
-       <div class="flex-item">
-          <ul class="items-list embed-list">
-            <li class="list-item">
-              <button class="list-button script-button" pp-class-button-active="embedScript">JavaScript</button>
-            </li>
-            <li class="list-item">
-              <button class="list-button iframe-button" pp-classinverted-button-active="embedScript">iFrame</button>
-            </li>
-          </ul>
-        </div>
 
       <div class="share-buttons flex-item">
         <ul>
