@@ -1331,12 +1331,6 @@
         .waveform-icon {
           display: block;
         }
-        .playlist-episode-info,
-        .chaptermark-info,
-        .transcript-line-timestamp {
-        }
-        .list-play-icon {
-        }
       }
     }
     .chaptermark {
@@ -1352,6 +1346,7 @@
       button {
         &.load-more {
           width: auto;
+          font-weight: 700;
         }
       }
     }
@@ -1524,7 +1519,8 @@
     max-width: 820px;
   }
   .episode-info {
-    img, .episode-description img {
+    img,
+    .episode-description img {
       max-width: 100%;
       height: auto;
     }

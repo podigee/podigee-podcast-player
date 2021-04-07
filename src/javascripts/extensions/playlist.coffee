@@ -102,10 +102,9 @@ class Playlist extends Extension
 
   loadMoreEpisodes: () =>
     @app.playlistLoader.loadNextPage().done (data) =>
-      if data.episodes.length == 0
+      if data.episodes.length < 10
         @panel.find('button.load-more').hide()
-      else
-        @renderPlaylistItems(data.episodes)
+      @renderPlaylistItems(data.episodes)
 
   buildPlaylistItem: (episode, index) =>
     playlistItem = new PlaylistItem(episode, @click)
@@ -124,7 +123,7 @@ class Playlist extends Extension
     @renderPlaylistItems(@episodes)
 
     loadMoreButton = @panel.find('button.load-more')
-    if @app.podcast.playlistUrl? && @app.podcast.episodes.length > 10
+    if @app.podcast.playlistUrl? && @app.podcast.episodes.length == 10
       loadMoreButton.on('click', @loadMoreEpisodes)
     else
       loadMoreButton.hide()
