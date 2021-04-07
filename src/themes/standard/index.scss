@@ -143,6 +143,50 @@
       display: flex;
       align-items: center;
       margin-bottom: 20px;
+      &.copy-episode {
+        width: 100%;
+        @include view(xs) {
+          flex-wrap: wrap;
+          justify-content: center; // test
+        }
+        .share-copy-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 5px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
+          }
+        }
+        .start-at-wrap {
+          display: flex;
+          @include view(xs) {
+            margin-left: 0;
+            _padding-left: 30px;
+          }
+        }
+      }
+      &.copy-embed {
+        width: 100%;
+        @include view(xs) {
+          flex-wrap: wrap;
+          justify-content: center; // test
+        }
+        .share-embed-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 0px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
+          }
+        }
+      }
+      .embed-list {
+        @include view(xs) {
+          height: 30px;
+        }
+      }
       button {
         font-size: 16px;
         @include view(sm) {
@@ -170,6 +214,10 @@
           margin-left: -5px;
           padding: 5px;
           margin-right: 20px;
+          flex: 1;
+          @include view(xs) {
+            flex: none;
+          }
         }
       }
       &.share-buttons {
@@ -203,6 +251,7 @@
               svg {
                 width: 20px;
                 height: 20px;
+                margin: 0;
                 @include view(sm) {
                   width: 18px;
                   height: 18px;
@@ -303,6 +352,9 @@
         align-items: center;
         margin-left: 20px;
         color: var(--player-contrast-text);
+        @include view(sm) {
+          margin-left: 10px;
+        }
       }
       ul {
         display: flex;
@@ -339,9 +391,10 @@
     @include view(sm) {
       padding: 20px;
       height: 100%;
-      max-height: 250px;
+      max-height: 255px;
     }
     @include view(xs) {
+      height: auto;
       max-height: 285px;
     }
   }
@@ -361,6 +414,13 @@
     @include view(xs) {
       max-width: none;
       padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+  .share-menu {
+    max-width: 550px;
+    @include view(xs) {
+      max-height: 320px;
     }
   }
 
@@ -555,6 +615,10 @@
         @include view(sm) {
           font-size: 20px;
           line-height: 28px;
+        }
+        @include view(xs) {
+          padding-left: 10px;
+          padding-right: 10px;
         }
         @include view(xxs) {
           font-size: 16px;
@@ -912,9 +976,6 @@
             left: 0;
             right: 0;
             height: 2px;
-            @include view(sm) {
-              bottom: 0px;
-            }
           }
         }
       }
@@ -946,7 +1007,7 @@
         right: 0;
         height: 2px;
         @include view(sm) {
-          bottom: 0px;
+          bottom: 4px;
         }
       }
     }
@@ -986,8 +1047,7 @@
         }
         &:hover {
           svg {
-            #circle,
-            #text {
+            #circle {
               fill: var(--podigee-color);
             }
           }
@@ -1307,6 +1367,7 @@
         .list-play-icon {
           display: flex;
           margin-right: 23px;
+          align-items: center;
           @include view(sm) {
             margin-right: 10px;
           }
@@ -1469,15 +1530,6 @@
       button {
         position: relative;
         z-index: 1;
-        // color: var(--white);
-
-        &:hover {
-          // color: var(--white);
-        }
-        &.button-active:not(.more-menu-button) {
-          // border-bottom: 1px solid var(--white);
-          // padding-bottom: 3px;
-        }
         &.more-menu-button {
           z-index: 1;
           span {
@@ -1489,10 +1541,6 @@
   }
 
   .single-panel {
-    // padding-top: 30px;
-    @include view(sm) {
-      // padding-top: 20px;
-    }
     .single-panel-title {
       display: none;
     }
