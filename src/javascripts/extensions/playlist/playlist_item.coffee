@@ -40,7 +40,7 @@ class PlaylistItem
 
   defaultHtml:
     """
-    <li pp-class-active="active">
+    <li pp-class-active="active" class="single-playlist-episode">
       <a class="episode-link" pp-if="url" pp-href="url" target="_blank">
         <svg id="icon-chain" viewBox="0 0 26 28">
           <title>chain</title>

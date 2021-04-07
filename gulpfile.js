@@ -9,7 +9,8 @@ var gulp = require('gulp'),
   connect = require('gulp-connect'),
   gzip = require('gulp-gzip'),
   fs = require('fs'),
-  inject = require('gulp-inject')
+  inject = require('gulp-inject'),
+  autoprefixer = require('gulp-autoprefixer')
 
 var dest = './build'
 var paths = {
@@ -22,10 +23,7 @@ var paths = {
   main_javascript: ['./src/javascripts/embed.coffee'],
   direct_javascript: ['./src/javascripts/direct.coffee'],
   javascripts: ['./src/javascripts/**/*.coffee'],
-  html: [
-    './src/html/podigee-podcast-player.html',
-    './src/html/podigee-podcast-player-direct.html',
-  ],
+  html: ['./src/html/podigee-podcast-player.html'],
   images: ['./src/images/**'],
   fonts: ['./src/fonts/**', './vendor/fonts/**'],
   themes: {
@@ -36,7 +34,7 @@ var paths = {
   },
 }
 
-var getVersion = function() {
+var getVersion = function () {
   return require('child_process')
     .execSync('git rev-parse HEAD')
     .toString()
@@ -44,7 +42,7 @@ var getVersion = function() {
     .substring(0, 5)
 }
 
-gulp.task('stylesheets', function() {
+gulp.task('stylesheets', function () {
   return gulp
     .src(paths.main_stylesheet)
     .pipe(sass({ style: 'compressed' }))
@@ -53,7 +51,7 @@ gulp.task('stylesheets', function() {
     .pipe(gulp.dest(dest + '/stylesheets'))
 })
 
-gulp.task('stylesheets-dev', function() {
+gulp.task('stylesheets-dev', function () {
   return gulp
     .src(paths.main_stylesheet)
     .pipe(sass())
@@ -61,7 +59,7 @@ gulp.task('stylesheets-dev', function() {
     .pipe(connect.reload())
 })
 
-gulp.task('javascripts', function() {
+gulp.task('javascripts', function () {
   gulp
     .src(paths.main_javascript, { read: false })
     .pipe(
@@ -105,7 +103,7 @@ gulp.task('javascripts', function() {
     .pipe(gulp.dest(dest + '/javascripts'))
 })
 
-gulp.task('javascripts-dev', async function() {
+gulp.task('javascripts-dev', async function () {
   return Promise.all([
     gulp
       .src(paths.main_javascript, { read: false })
@@ -147,7 +145,7 @@ gulp.task('javascripts-dev', async function() {
 
 gulp.task(
   'html',
-  gulp.series('javascripts', 'stylesheets', function() {
+  gulp.series('javascripts', 'stylesheets', function () {
     return gulp
       .src(paths.html)
       .pipe(
@@ -196,21 +194,21 @@ gulp.task('html-dev', function () {
   return gulp.src(paths.html).pipe(gulp.dest(dest)).pipe(connect.reload())
 })
 
-gulp.task('images', function() {
+gulp.task('images', function () {
   return gulp
     .src(paths.images)
     .pipe(gulp.dest(dest + '/images'))
     .pipe(connect.reload())
 })
 
-gulp.task('fonts', function() {
+gulp.task('fonts', function () {
   return gulp
     .src(paths.fonts)
     .pipe(gulp.dest(dest + '/fonts'))
     .pipe(connect.reload())
 })
 
-gulp.task('themes', function() {
+gulp.task('themes', function () {
   gulp
     .src(paths.themes.html)
     .pipe(gulp.dest(dest + '/themes'))
@@ -224,6 +222,7 @@ gulp.task('themes', function() {
   return gulp
     .src(paths.themes.css)
     .pipe(sass({ style: 'compressed' }))
+    .pipe(autoprefixer())
     .pipe(gulp.dest(dest + '/themes'))
     .pipe(connect.reload())
 })
@@ -252,7 +251,7 @@ var cors = function (_, res, next) {
   next()
 }
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(paths.stylesheets, gulp.series('stylesheets-dev'))
   gulp.watch(paths.javascripts, gulp.series('javascripts-dev'))
   gulp.watch(paths.html, gulp.series('html-dev'))
@@ -262,7 +261,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.themes.images, gulp.series('themes'))
 })
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   connect.server({
     host: '0.0.0.0',
     port: 8081,

@@ -1,0 +1,1616 @@
+@import 'variables';
+@import 'media';
+
+:root {
+  --podigee-color: #db4615;
+  --main-player-color: #dc4415;
+  --main-player-light-color: #f7d5cf;
+  --player-contrast-text: #ffffff;
+  --black: #000000;
+  --white: #ffffff;
+  --grey: #808080;
+}
+
+.podcast-player {
+  &,
+  *,
+  *:before,
+  *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  background-color: var(--white);
+  color: var(--black);
+  font-family: 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  min-width: 100%;
+  overflow: hidden;
+  margin-bottom: 1px;
+  position: relative;
+  width: 1px;
+  -webkit-font-smoothing: antialiased;
+  border-radius: 15px;
+
+  //Override default button font
+  button {
+    font-family: 'Avenir', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
+  }
+
+  .podcast-player-inside {
+    border: 1px solid #000;
+    border-radius: 15px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  #subscribe-menu-btn {
+    display: none;
+    &:checked {
+      + label {
+        color: var(--player-contrast-text);
+        z-index: 20;
+      }
+      ~ .subscribe-menu {
+        display: block;
+      }
+    }
+  }
+  #subscribe-menu-btn {
+    display: none;
+    &:checked {
+      + label {
+        color: var(--player-contrast-text);
+        z-index: 20;
+      }
+      ~ .subscribe-menu {
+        display: block;
+      }
+    }
+  }
+  // MENUS //
+  .more-menu,
+  .share-menu,
+  .subscribe-menu {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 70px 40px;
+    border-radius: 15px;
+    background-color: var(--main-player-color);
+    font-weight: 500;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      li {
+        margin-bottom: 20px;
+        button {
+          color: var(--player-contrast-text);
+          font-size: 18px;
+          line-height: 25px;
+          transition: color 0.3s ease-in-out;
+          @include view(sm) {
+            font-size: 16px;
+            line-height: 22px;
+          }
+          &:hover {
+            color: var(--main-player-light-color);
+          }
+        }
+        @include view(sm) {
+          margin-bottom: 17px;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    button,
+    input {
+      font-weight: 500;
+    }
+  }
+
+  .share-menu,
+  .subscribe-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--player-contrast-text);
+    font-size: 16px;
+    max-height: 448px;
+    @include view(xs) {
+      width: 100%;
+    }
+    .flex-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      &.copy-episode {
+        width: 100%;
+        @include view(xs) {
+          flex-wrap: wrap;
+          justify-content: center; // test
+        }
+        .share-copy-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 5px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
+          }
+        }
+        .start-at-wrap {
+          display: flex;
+          @include view(xs) {
+            margin-left: 0;
+            _padding-left: 30px;
+          }
+        }
+      }
+      &.copy-embed {
+        width: 100%;
+        @include view(xs) {
+          flex-wrap: wrap;
+          justify-content: center; // test
+        }
+        .share-embed-url-btn {
+          @include view(xs) {
+            width: 100%;
+            margin-bottom: 0px;
+            justify-content: center; // test
+            margin-left: 0; // test
+            margin-right: 0; // test
+          }
+        }
+      }
+      .embed-list {
+        @include view(xs) {
+          height: 30px;
+        }
+      }
+      button {
+        font-size: 16px;
+        @include view(sm) {
+          font-size: 14px;
+        }
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &.copy-embed,
+      &.copy-episode {
+        ul {
+          li {
+            margin-right: 10px;
+            margin-left: 0;
+            &:last-child {
+              margin-right: 0;
+            }
+            button {
+              padding: 0;
+            }
+          }
+        }
+        > button {
+          margin-left: -5px;
+          padding: 5px;
+          margin-right: 20px;
+          flex: 1;
+          @include view(xs) {
+            flex: none;
+          }
+        }
+      }
+      &.share-buttons {
+        width: 100%;
+        ul {
+          width: 100%;
+          justify-content: space-between;
+          li {
+            display: flex;
+            &:first-child {
+              margin-left: -5px;
+            }
+            &:last-child {
+              margin-right: -5px;
+            }
+            a {
+              display: flex;
+              padding: 5px;
+            }
+            &.share-mail {
+              svg {
+                width: 28px;
+                height: 28px;
+                @include view(sm) {
+                  width: 26px;
+                  height: 26px;
+                }
+              }
+            }
+            &.share-download {
+              svg {
+                width: 20px;
+                height: 20px;
+                margin: 0;
+                @include view(sm) {
+                  width: 18px;
+                  height: 18px;
+                }
+              }
+            }
+          }
+        }
+        svg {
+          width: 22px;
+          @include view(sm) {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+      &.copy-rss {
+        margin-bottom: 22px;
+        @include view(xs) {
+          margin-bottom: 20px;
+        }
+        .rss-svg {
+          width: 24px;
+          height: 24px;
+          margin-right: 10px;
+          @include view(xs) {
+            display: none;
+          }
+        }
+        span {
+          margin-right: 5px;
+          @include view(xs) {
+            order: 2;
+          }
+        }
+        input {
+          border: 0;
+          width: 275px;
+          padding: 5px;
+          margin-right: 10px;
+          background-color: transparent;
+          color: var(--main-player-light-color);
+          @include view(sm) {
+            width: 245px;
+          }
+          @include view(xs) {
+            display: none;
+          }
+        }
+        button {
+          margin-right: -5px;
+          @include view(xs) {
+            margin-left: -5px;
+            margin-right: 5px;
+            order: 1;
+          }
+          svg {
+            margin: 0;
+          }
+        }
+      }
+      &.subscribe-items {
+        width: 100%;
+        ul {
+          flex-wrap: wrap;
+          li {
+            margin-bottom: 20px;
+            margin-right: 20px;
+            a {
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+      button,
+      a {
+        display: flex;
+        align-items: center;
+        svg {
+          margin-right: 10px;
+        }
+        &:hover {
+          span {
+            color: var(--main-player-light-color);
+          }
+          svg {
+            fill: var(--main-player-light-color);
+          }
+        }
+      }
+      .start-at {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+        color: var(--player-contrast-text);
+        @include view(sm) {
+          margin-left: 10px;
+        }
+      }
+      ul {
+        display: flex;
+        li {
+          margin-bottom: 0;
+        }
+      }
+    }
+    svg {
+      transition: fill 0.3s ease-in-out;
+      fill: var(--player-contrast-text);
+      width: 20px;
+      height: 20px;
+    }
+    span {
+      transition: color 0.3s ease-in-out;
+      color: var(--player-contrast-text);
+    }
+    ul {
+      li {
+        font-size: 16px;
+        line-height: 22px;
+        @include view(sm) {
+          font-size: 14px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
+
+  .more-menu,
+  .share-menu,
+  .subscribe-menu {
+    @include view(sm) {
+      padding: 20px;
+      height: 100%;
+      max-height: 255px;
+    }
+    @include view(xs) {
+      height: auto;
+      max-height: 285px;
+    }
+  }
+  .share-menu,
+  .subscribe-menu {
+    max-width: 456px;
+    padding: 115px 40px;
+    height: 100%;
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      height: auto;
+    }
+    @include view(sm) {
+      max-width: 388px;
+      font-size: 14px;
+      padding: 55px 25px 65px 20px;
+    }
+    @include view(xs) {
+      max-width: none;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+  .share-menu {
+    max-width: 550px;
+    @include view(xs) {
+      max-height: 320px;
+    }
+  }
+
+  .more-menu {
+    @include view(sm) {
+      padding: 50px 20px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    button {
+      color: var(--player-contrast-text);
+      font-size: 18px;
+      line-height: 25px;
+      transition: color 0.3s ease-in-out;
+      margin-bottom: 20px;
+      font-weight: 500;
+      @include view(sm) {
+        font-size: 16px;
+        line-height: 22px;
+        margin-bottom: 17px;
+      }
+      &:hover {
+        color: var(--main-player-light-color);
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // CLOSE BUTTON //
+  button {
+    &.close-button {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      padding: 5px;
+      @include view(sm) {
+        right: 10px;
+        top: 10px;
+      }
+      svg {
+        width: 18px;
+        height: 18px;
+        fill: var(--player-contrast-text);
+        @include view(sm) {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+
+  // MAIN PLAYER //
+  .cover-image-player-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 20px 20px 0;
+    @include view(sm) {
+      padding: 10px 10px 0;
+    }
+    @include view(xs) {
+      padding-top: 20px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cover-image-wrap {
+      width: 300px;
+      height: 300px;
+      @include view(md) {
+        width: 280px;
+        height: 280px;
+      }
+      @include view(sm) {
+        width: 200px;
+        height: 200px;
+      }
+
+      .cover-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        vertical-align: bottom;
+      }
+    }
+
+    .player-info-wrap {
+      flex: 1;
+      width: 100%;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      @include view(sm) {
+        padding-left: 10px;
+      }
+      @include view(xs) {
+        padding-left: 0;
+      }
+
+      .episode-basic-info {
+        padding: 10px 0 0;
+        position: relative;
+        color: var(--black);
+        @include view(xs) {
+          padding-top: 20px;
+          margin-bottom: 20px;
+        }
+
+        a {
+          display: block;
+          color: var(--black);
+          transition: color 0.3s ease-in-out;
+          &:hover {
+            color: var(--main-player-color);
+          }
+        }
+
+        h1,
+        h2 {
+          font-size: 24px;
+          line-height: 33px;
+          margin: 0;
+          @include view(md) {
+            font-size: 22px;
+            line-height: 30px;
+          }
+          @include view(sm) {
+            font-size: 16px !important;
+            line-height: 22px !important;
+          }
+        }
+
+        .episode-title {
+          font-weight: 700 !important;
+          margin-bottom: 10px;
+          @include view(sm) {
+            margin-bottom: 5px;
+          }
+          @include view(xs) {
+            margin-bottom: 2px;
+          }
+          h1 {
+            font-weight: 700;
+            a {
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              @include view(sm) {
+                -webkit-line-clamp: 2;
+              }
+              @include view(xs) {
+                -webkit-line-clamp: 1;
+              }
+            }
+          }
+        }
+
+        .episode-subtitle {
+          margin-bottom: 10px;
+          h2 {
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            @include view(sm) {
+              -webkit-line-clamp: 1;
+            }
+          }
+        }
+      }
+
+      .splash-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        padding: 25px;
+        background-color: var(--main-player-color);
+        font-size: 24px;
+        line-height: 33px;
+        @include view(md) {
+          font-size: 22px;
+          line-height: 30px;
+        }
+        @include view(sm) {
+          font-size: 20px;
+          line-height: 28px;
+        }
+        @include view(xs) {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        @include view(xxs) {
+          font-size: 16px;
+          line-height: 22px;
+        }
+        &.play-button {
+          font-family: inherit !important;
+          font-weight: inherit;
+          font-style: inherit;
+          &:before {
+            content: none;
+          }
+        }
+        .splash-item {
+          margin-left: 10px;
+          margin-right: 10px;
+          font-weight: 600;
+          @include view(xxs) {
+            margin-left: 8px;
+            margin-right: 8px;
+          }
+          &.splash-text {
+            color: var(--player-contrast-text);
+          }
+          &.splash-time {
+            color: var(--player-contrast-text);
+          }
+        }
+        svg {
+          height: 22px;
+          width: 22px;
+          fill: var(--player-contrast-text);
+          @include view(md) {
+            height: 20px;
+          }
+          @include view(sm) {
+            height: 18px;
+          }
+          @include view(xxs) {
+            height: 16px;
+          }
+        }
+      }
+
+      .main-player {
+        display: none;
+        position: relative;
+        border-radius: 10px;
+        background-color: var(--main-player-light-color);
+
+        .controls {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 15px;
+          @include view(sm) {
+            padding: 17px 15px 13px;
+          }
+
+          .previous-button,
+          .next-button {
+            &.disabled {
+              svg {
+                fill: grey;
+              }
+            }
+          }
+
+          button {
+            display: flex;
+            padding: 5px;
+            margin: 0 10px;
+            svg {
+              fill: var(--black);
+              transition: fill 0.3s ease-in-out;
+              vertical-align: bottom;
+            }
+            &:hover {
+              svg {
+                fill: var(--main-player-color);
+              }
+            }
+          }
+
+          .previous-button,
+          .next-button {
+            &:before {
+              display: none;
+            }
+            svg {
+              height: 20px;
+              width: 20px;
+              @include view(sm) {
+                height: 12px;
+                width: 20px;
+              }
+            }
+          }
+
+          .play-button {
+            &:before {
+              content: none;
+            }
+            svg {
+              height: 40px;
+              width: 40px;
+              @include view(sm) {
+                height: 32px;
+                width: 32px;
+              }
+            }
+          }
+
+          .forward-button,
+          .backward-button {
+            margin: 0 10px;
+            svg {
+              height: 24px;
+              width: 24px;
+              @include view(sm) {
+                height: 18px;
+                width: 18px;
+              }
+            }
+            &:before {
+              content: none;
+            }
+            svg {
+              height: 24px;
+              width: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // PLAY BUTTON //
+  .play-button {
+    svg {
+      &.stop {
+        display: none;
+      }
+    }
+  }
+  &.playing {
+    .play-button {
+      svg {
+        &.play {
+          display: none;
+        }
+        &.stop {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  // SPEED SELECT //
+  .controls-bottom {
+    padding: 5px 10px 10px;
+    @include view(sm) {
+      padding: 3px 8px 5px;
+    }
+    .speed-select {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      background-color: transparent;
+      color: var(--black);
+      font-size: 18px;
+      line-height: 25px;
+      font-weight: 600;
+      outline: 0;
+      @include view(sm) {
+        font-size: 14px;
+        line-height: 19px;
+      }
+    }
+    .speed-select::-ms-expand {
+      display: none;
+    }
+  }
+
+  // PROGRESS BARS //
+  .progress-bar {
+    overflow: hidden;
+    button {
+      padding: 0;
+    }
+    .progress-bar-time-played {
+      color: var(--black);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 25px;
+      font-weight: 600;
+      right: 10px;
+      position: absolute;
+      text-align: right;
+      bottom: 10px;
+      @include view(sm) {
+        font-size: 14px;
+        line-height: 19px;
+        bottom: 5px;
+        right: 8px;
+      }
+    }
+
+    .progress-bar-rail {
+      cursor: ew-resize;
+      height: 8px;
+      // overflow: hidden;
+      position: relative;
+      @include view(sm) {
+        height: 7px;
+      }
+      // Is this used or is this the same with progress-bar-loaded?
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 2px;
+        background-color: var(--black);
+      }
+    }
+
+    .progress-bar-played,
+    .progress-bar-loaded {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) scaleY(1);
+      width: 0;
+    }
+
+    .progress-bar-loaded {
+      height: 2px;
+      background-color: var(--black);
+    }
+
+    .progress-bar-played {
+      height: 7px;
+      z-index: 1;
+      border-radius: 0 5px 5px 0;
+      background-color: var(--main-player-color);
+      transition: transform 0.2s ease-out;
+      -webkit-font-smoothing: subpixel-antialiased;
+      @include view(sm) {
+        height: 5px;
+      }
+      &:hover {
+        transform: translateY(-50%) scaleY(1.143);
+        @include view(sm) {
+          transform: translateY(-50%) scaleY(1.4);
+        }
+        .progress-tooltip {
+          visibility: visible;
+        }
+      }
+      .progress-tooltip {
+        visibility: hidden;
+        position: absolute;
+        right: 0;
+        top: -5px;
+        transform: translateX(50%) translateY(-100%) scaleY(0.874);
+        background-color: var(--black);
+        color: var(--white);
+        padding: 5px;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+        font-weight: 500;
+        box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.2);
+        @include view(sm) {
+          font-size: 14px;
+          line-height: 19px;
+          transform: translateX(50%) translateY(-100%) scaleY(0.714);
+        }
+      }
+    }
+
+    .progress-bar-buffering {
+      &:after {
+        animation: move 2s linear infinite;
+        background-image: linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 1) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 1) 50%,
+          rgba(255, 255, 255, 1) 75%,
+          transparent 75%,
+          transparent
+        );
+        background-size: 50px 50px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        content: '';
+        overflow: hidden;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 7px;
+        left: 0;
+        right: 0;
+      }
+
+      @keyframes move {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 50px 50px;
+        }
+      }
+    }
+  }
+
+  // GENERIC LIST ITEMS //
+  .items-list {
+    height: 100%;
+    &.embed-list {
+      button {
+        margin: 0;
+      }
+    }
+    .list-item {
+      display: flex;
+      height: 100%;
+      &:not(:first-of-type) {
+        margin-left: 10px;
+      }
+
+      .list-button {
+        position: relative;
+        padding: 0;
+        font-size: 16px;
+        line-height: 22px;
+        @include view(sm) {
+          font-size: 13px;
+          line-height: 17px;
+        }
+        &.button-active {
+          &:after {
+            content: '';
+            position: absolute;
+            background-color: var(--player-contrast-text);
+            width: 100%;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+          }
+        }
+      }
+    }
+  }
+  .list-button {
+    position: relative;
+    padding: 0;
+    font-size: 16px;
+    line-height: 22px;
+    margin-left: 20px;
+    @include view(sm) {
+      font-size: 13px;
+      line-height: 17px;
+    }
+  }
+  .buttons {
+    display: flex;
+    height: 100%;
+    .subscribe-menu-button.button-active,
+    .share-menu-button.button-active {
+      &:after {
+        content: '';
+        position: absolute;
+        background-color: var(--player-contrast-text);
+        width: 100%;
+        bottom: 2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        @include view(sm) {
+          bottom: 4px;
+        }
+      }
+    }
+  }
+
+  // FOOTER //
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 15px 20px 15px;
+    @include view(sm) {
+      padding: 5px 10px 5px;
+    }
+    @include view(xs) {
+      padding-top: 15px;
+    }
+    .footer-left {
+      .podigee-link {
+        display: block;
+        padding: 5px;
+        margin-left: -5px;
+        svg {
+          vertical-align: bottom;
+          max-width: 80px;
+          max-height: 20px;
+          #circle,
+          #text {
+            fill: var(--black);
+          }
+          #waves {
+            fill: var(--white);
+          }
+          path {
+            transition: fill 0.3s ease-in-out;
+          }
+        }
+        &:hover {
+          svg {
+            #circle {
+              fill: var(--podigee-color);
+            }
+          }
+        }
+      }
+    }
+    .footer-right {
+      display: flex;
+      align-items: center;
+      .items-list {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .share-menu-button,
+      .subscribe-menu-button {
+        // font-size: 16px;
+        color: black;
+        font-weight: 500;
+        transition: color 0.3s ease-in-out;
+        &:hover {
+          color: var(--main-player-color);
+        }
+      }
+      .more-menu-button {
+        p {
+          display: inline-flex;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: content-box;
+          height: 100%;
+          width: 26px;
+          margin: 0;
+        }
+        span {
+          display: block;
+          width: 6px;
+          height: 6px;
+          border-radius: 6px;
+          background-color: var(--black);
+          transition: background-color 0.3s ease-in-out;
+        }
+        &:hover {
+          span {
+            background-color: var(--main-player-color);
+          }
+        }
+      }
+    }
+    .list-item {
+      z-index: 5;
+      &.share-menu-item,
+      &.subscribe-menu-item,
+      &.more-menu-item {
+        z-index: 20;
+      }
+      .list-button {
+        color: var(--black);
+        transition: color 0.3s ease-in-out;
+        font-weight: 500;
+        &:hover {
+          color: var(--main-player-color);
+        }
+      }
+    }
+  }
+
+  // OPEN MENUS //
+  &.more-menu-open {
+    .more-menu {
+      z-index: 20;
+    }
+    .footer {
+      .list-item {
+        &.more-menu-item {
+          z-index: 20;
+        }
+        &.share-menu-item,
+        &.subscribe-menu-item {
+          z-index: 10;
+        }
+        .list-button {
+          &.more-menu-button {
+            span {
+              background-color: var(--player-contrast-text);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // PANELS TABS //
+  .panels-tabs {
+    padding-top: 33px;
+    display: none;
+    @include view(xs) {
+      padding-top: 23px;
+    }
+    &.chaptermarks-open {
+      $c: &;
+      > #{$c}-el {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0px;
+          height: 1px;
+          background-color: var(--black);
+        }
+      }
+    }
+  }
+  .panels-tabs-menu {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    ul {
+      list-style-type: none;
+      display: flex;
+      padding: 0 0 2px 0;
+      margin: 0;
+      @include view(sm) {
+        padding-left: 10px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 1px;
+        height: 1px;
+        background-color: var(--black);
+      }
+      li {
+        margin-right: 40px;
+        &:last-child {
+          margin-right: 0;
+          @include view(sm) {
+            padding-right: 10px;
+          }
+        }
+        .panels-tab-button {
+          padding: 5px 0;
+          position: relative;
+          font-size: 18px;
+          line-height: 23px;
+          font-weight: 500;
+          @include view(sm) {
+            font-size: 16px;
+            line-height: 20px;
+          }
+          &.button-active {
+            &:after {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: -2px;
+              height: 3px;
+              background-color: var(--black);
+            }
+          }
+        }
+      }
+    }
+  }
+  .panels {
+    padding: 0 20px;
+    height: 100% !important;
+    &.single-panel {
+      overflow-y: auto;
+    }
+    max-height: 250px;
+    @include view(sm) {
+      padding: 0 15px;
+    }
+    .single-panel {
+      padding-top: 30px;
+      @include view(sm) {
+        padding-top: 20px;
+      }
+      .single-panel-title {
+        display: none;
+      }
+      .episode-title,
+      .episode-subtitle {
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        margin: 0 0 15px;
+        color: var(--black);
+      }
+      .episode-subtitle {
+        font-weight: 500;
+      }
+      &.playlist,
+      &.chaptermarks {
+        padding-top: 25px;
+        @include view(sm) {
+          padding-top: 15px;
+        }
+      }
+    }
+    .episode-info,
+    .transcript-line {
+      max-width: 820px;
+    }
+    h3 {
+      font-size: 18px;
+      line-height: 25px;
+      margin: 0 0 25px;
+      @include view(sm) {
+        font-size: 16px;
+        line-height: 22px;
+      }
+    }
+    p {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+
+  // PLAYLIST, CHAPTERMARK, TRANSCRIPT PANEL TABS //
+  .playlist,
+  .chaptermarks,
+  .transcript {
+    ul {
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+    }
+    .single-playlist-episode,
+    .chaptermark,
+    .transcript-line {
+      display: flex;
+      font-size: 18px;
+      line-height: 25px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      padding: 5px 0;
+      cursor: pointer;
+      @include view(sm) {
+        font-size: 16px;
+        line-height: 22px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .play-icon {
+        width: 16px;
+        height: 16px;
+        padding-right: 2px;
+        @include view(sm) {
+          width: 14px;
+          height: 14px;
+        }
+        @include view(xs) {
+          width: 12px;
+          height: 12px;
+        }
+      }
+      .waveform-icon {
+        display: none;
+        width: 16px;
+        height: 16px;
+        @include view(sm) {
+          width: 14px;
+          height: 14px;
+        }
+        @include view(xs) {
+          width: 12px;
+          height: 12px;
+        }
+        path {
+          fill: var(--main-player-color);
+        }
+      }
+      .playlist-episode-duration,
+      .chaptermark-start,
+      .transcript-line-timestamp {
+        color: var(--grey);
+        margin-left: auto;
+        @include view(sm) {
+          font-size: 14px;
+          line-height: 20px;
+          margin-left: 24px;
+        }
+        @include view(xs) {
+          margin-left: 22px;
+        }
+      }
+      .chaptermark-start {
+        @include view(sm) {
+          margin-left: auto;
+        }
+      }
+      .transcript-line-timestamp {
+        margin-left: 0;
+        color: var(--black);
+        font-weight: 600;
+      }
+      .playlist-episode-info,
+      .chaptermark-info,
+      .transcript-info {
+        display: flex;
+        padding-right: 5px;
+        @include view(sm) {
+          padding-right: 0;
+        }
+        .list-play-icon {
+          display: flex;
+          margin-right: 23px;
+          align-items: center;
+          @include view(sm) {
+            margin-right: 10px;
+          }
+        }
+        .playlist-episode-number {
+          margin-right: 8px;
+        }
+      }
+      .transcript-info {
+        margin-bottom: 5px;
+        .list-play-icon {
+          margin-right: 10px;
+        }
+      }
+      .transcript-line-text {
+        font-weight: 400;
+      }
+      &.active {
+        color: var(--main-player-color);
+        .play-icon {
+          display: none;
+        }
+        .waveform-icon {
+          display: block;
+        }
+      }
+    }
+    .chaptermark {
+      @include view(sm) {
+        flex-wrap: nowrap;
+      }
+    }
+    .transcript-line {
+      flex-direction: column;
+    }
+    .buttons {
+      text-align: center;
+      button {
+        &.load-more {
+          width: auto;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  // GENERAL RULES //
+  .display-sm-desktop {
+    display: flex;
+    @include view(xs) {
+      display: none;
+    }
+  }
+  .display-xs-mobile {
+    display: none;
+    @include view(xs) {
+      display: flex;
+    }
+  }
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hover-opacity {
+    transition: opacity 0.3s ease-in-out;
+    &:hover {
+      opacity: 0.88;
+    }
+  }
+
+  .more-menu {
+    button {
+      display: block;
+      color: var(--player-contrast-text);
+      font-size: 18px;
+      line-height: 25px;
+      transition: color 0.3s ease-in-out;
+      font-weight: 500;
+      @include view(sm) {
+        font-size: 16px;
+        line-height: 22px;
+      }
+      &:hover {
+        color: var(--main-player-light-color);
+      }
+      &::before {
+        content: '';
+      }
+    }
+  }
+
+  //Styling for active elements
+  .panels[class$='open']:not(.single-panel) {
+    &.more-menu-open,
+    &.more-menu {
+      ~ .footer {
+        .subscribe-menu-button,
+        .share-menu-button {
+          display: none;
+        }
+        .more-menu-button {
+          span {
+            background-color: var(--player-contrast-text);
+          }
+        }
+      }
+    }
+    &.share-menu,
+    &.subscribe-menu,
+    &.share-menu-open,
+    &.subscribe-menu-open {
+      ~ .footer {
+        .subscribe-menu-button,
+        .share-menu-button {
+          color: var(--player-contrast-text);
+        }
+        .more-menu-button {
+          span {
+            background-color: var(--player-contrast-text);
+          }
+        }
+        .footer-left {
+          z-index: 20;
+          #circle,
+          #text {
+            @include view(xs) {
+              fill: white;
+            }
+          }
+          #waves {
+            @include view(xs) {
+              fill: var(--main-player-color);
+            }
+          }
+        }
+      }
+    }
+    &.more-menu-open,
+    &.more-menu {
+      .more-menu {
+        @include view(sm) {
+          display: flex !important;
+        }
+      }
+    }
+    &.share-menu-open,
+    &.share-menu {
+      .share-menu {
+        display: flex !important;
+      }
+    }
+    &.subscribe-menu-open,
+    &.subscribe-menu {
+      .subscribe-menu {
+        display: flex !important;
+      }
+    }
+    ~ .footer {
+      button {
+        position: relative;
+        z-index: 1;
+        &.more-menu-button {
+          z-index: 1;
+          span {
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+
+  .single-panel {
+    .single-panel-title {
+      display: none;
+    }
+    .episode-title,
+    .episode-subtitle {
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+      margin: 0 0 15px;
+      color: var(--black);
+    }
+    .episode-subtitle {
+      font-weight: 500;
+    }
+    &.playlist,
+    &.chaptermarks {
+      padding-top: 25px;
+      @include view(sm) {
+        padding-top: 15px;
+      }
+    }
+  }
+  .episode-info,
+  .transcript-line {
+    max-width: 820px;
+  }
+  .episode-info {
+    img,
+    .episode-description img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 25px;
+    margin: 0 0 25px;
+    @include view(sm) {
+      font-size: 16px;
+      line-height: 22px;
+    }
+  }
+  p {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+@mixin single-panel-active-button {
+  $c: &;
+  #{$c}-el {
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 3px;
+      background-color: var(--black);
+    }
+  }
+}
+
+$panels: '.chaptermarks-open', '.transcript-open', '.episode-info-open',
+  '.playlist-open';
+
+@each $panel in $panels {
+  #{$panel} {
+    @include single-panel-active-button;
+  }
+}

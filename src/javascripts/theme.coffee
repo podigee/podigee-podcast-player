@@ -5,6 +5,7 @@ rivets = require('rivets')
 
 Utils = require('./utils.coffee')
 CustomStyles = require('./custom_styles.coffee')
+CustomStylesV2 = require('./custom_styles_v2.coffee')
 SubscribeButton = require('./extensions/subscribe_button.coffee')
 
 class Theme
@@ -24,14 +25,19 @@ class Theme
         backward: @t('theme.backward'),
         forward: @t('theme.forward'),
         changePlaybackSpeed: @t('theme.changePlaybackSpeed'),
-
+        previous: @t('theme.previous'),
+        next: @t('theme.next'),
         allEpisodes: @t('subscribeBar.allEpisodes'),
         podcastOnItunes: @t('subscribeBar.podcastOnItunes'),
         podcastOnSpotify: @t('subscribeBar.podcastOnSpotify'),
         podcastOnDeezer: @t('subscribeBar.podcastOnDeezer'),
         podcastOnAlexa: @t('subscribeBar.podcastOnAlexa'),
         podcastOnPodimo: @t('subscribeBar.podcastOnPodimo'),
-        subscribe: @t('subscribeBar.subscribe')
+        subscribe: @t('subscribeBar.subscribe'),
+        playEpisode: @t('splash.playEpisode'),
+        downloadEpisode: @t('download.episode'),
+        shareEmail: @t('share.email'),
+        podigeeTitle: @t('podigee.title')
       },
       customOptions: @app.customOptions,
       or: @orFunction,
@@ -62,6 +68,8 @@ class Theme
     @findElements()
     @bindCoverLoad()
     @initializeSpeedToggle()
+    if @app.options.themeVersion == 2
+      @changeLogoUrl()
 
     return @elem
 
@@ -69,7 +77,10 @@ class Theme
     @view.update(@context())
 
   addCustomStyles: () =>
-    tag = new CustomStyles(@app.options.customStyle).toStyleTag()
+    if @app.options.themeVersion == 2
+      tag = new CustomStylesV2(@app.options.customStyle).toStyleTag()
+    else
+      tag = new CustomStyles(@app.options.customStyle).toStyleTag()
     return unless tag
     $('head').append(tag)
 
@@ -170,6 +181,15 @@ class Theme
     @panels.hide() unless @app.isInIframeMode() || @app.options.startPanels
     @subscribeButton.hide() if @app.isInIframeMode()
 
+    # Theme V2
+    @splashButton = @elem.find('.splash-button')
+    @mainPlayer = @elem.find('.main-player')
+    @moreMenuButton = @elem.find('.more-menu-button')
+
+    @splashButton.on 'click', () =>
+      @showPlayer()
+      @app.player.play()
+
   bindCoverLoad: =>
     @coverImage.on 'load', =>
       @app.sendSizeChange()
@@ -203,8 +223,25 @@ class Theme
     @buttons.append(button)
     button.on 'click', @changeActiveButton
 
+  addMoreMenuButton: (button) =>
+    moreMenu = @elem.find('.more-menu')
+    moreMenu.append(button)
+
+  handleMoreMenuVisiblity: (elem) =>
+    if @app.options.themeVersion == 2
+      panelsTabs = @elem.find('.panels-tabs')
+      panelsTabs.attr('class', 'panels-tabs')
+      if elem[0].className.indexOf('single-panel') > -1 and @activePanel
+        panelsTabs.css('display', 'block')
+        panelsTabs.addClass("#{elem[0].className}-open")
+      else
+        panelsTabs.css('display', 'none')
+
   addExtension: (extension) =>
-    @addButton(extension.button)
+    if @app.options.themeVersion == 2 and extension.type != 'menu'
+      @addMoreMenuButton(extension.button)
+    else
+      @addButton(extension.button)
     @panels.append(extension.panel)
 
     if extension.name() == @app.options.startPanel
@@ -230,7 +267,7 @@ class Theme
       @panels.toggleClass("#{elem[0].className}-open")
     else
       if @activePanel?
-        if @activePanel == elem
+        if @activePanel.is(elem)
           if !@app.isInIframeMode()
             @activePanel.slideToggle(@animationOptions())
             @panels.slideToggle(@animationOptions())
@@ -239,13 +276,23 @@ class Theme
         else
           @activePanel.slideToggle(@animationOptions())
           elem.slideToggle(@animationOptions())
+          @panels.removeClass("#{@activePanel[0].className}-open")
           @panels.addClass("#{elem[0].className}-open")
           @activePanel = elem
       else
         unless @app.isInIframeMode()
           @panels.slideToggle(@animationOptions())
-        elem.slideToggle(@animationOptions())
+          elem.slideToggle(@animationOptions())
         @panels.addClass("#{elem[0].className}-open")
         @activePanel = elem
+    @handleMoreMenuVisiblity(elem)
+
+  showPlayer: =>
+    @splashButton.hide()
+    @mainPlayer.fadeIn()
+
+  changeLogoUrl: =>
+    href = 'https://www.podigee.com/en/start-a-podcast-with-podigee?utm_source=podigee&utm_medium=referral&utm_campaign=w-en-en-webplayer'
+    @elem.find('.podigee-link').attr("href", href)
 
 module.exports = Theme

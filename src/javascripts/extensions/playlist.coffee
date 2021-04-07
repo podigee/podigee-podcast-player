@@ -15,15 +15,18 @@ class Playlist extends Extension
 
   constructor: (app) ->
     super(app)
+    @playlist = []
     @options = _.extend(@defaultOptions, @app.extensionOptions.Playlist)
     return if @options.disabled
 
     return unless @app.podcast.hasEpisodes()
 
+    @loadExtension()
+
+  loadExtension: () =>
     if @app.podcast.episodes.length
       @finishLoading()
     else
-      @app.playlistLoader = new PlaylistLoader(@app)
       @app.playlistLoader = new PlaylistLoader(@app)
       @app.playlistLoader.loadEpisodes().done(@finishLoading)
 
@@ -84,7 +87,7 @@ class Playlist extends Extension
     @app.switchEpisode(nextItem.episode)
 
   isFirstEntry: () =>
-    (@currentIndex() + 1) > @playlist.length
+    (@currentIndex() + 1) == @playlist.length
 
   isLastEntry: () =>
     @currentIndex() == 0
@@ -99,10 +102,9 @@ class Playlist extends Extension
 
   loadMoreEpisodes: () =>
     @app.playlistLoader.loadNextPage().done (data) =>
-      if data.episodes.length == 0
+      if data.episodes.length < 10
         @panel.find('button.load-more').hide()
-      else
-        @renderPlaylistItems(data.episodes)
+      @renderPlaylistItems(data.episodes)
 
   buildPlaylistItem: (episode, index) =>
     playlistItem = new PlaylistItem(episode, @click)
@@ -121,7 +123,7 @@ class Playlist extends Extension
     @renderPlaylistItems(@episodes)
 
     loadMoreButton = @panel.find('button.load-more')
-    if @app.podcast.playlistUrl?
+    if @app.podcast.playlistUrl? && @app.podcast.episodes.length == 10
       loadMoreButton.on('click', @loadMoreEpisodes)
     else
       loadMoreButton.hide()
@@ -134,8 +136,8 @@ class Playlist extends Extension
 
   panelHtml: ->
     """
-    <div class="playlist">
-      <h3>#{@t('playlist.title')}</h3>
+    <div class="single-panel playlist">
+      <h3 class="single-panel-title">#{@t('playlist.title')}</h3>
 
       <ul></ul>
 
