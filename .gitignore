@@ -5,3 +5,4 @@ staging-examples/
 dev/
 build/
 aws.json
+.idea/
