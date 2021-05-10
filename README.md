@@ -81,7 +81,7 @@ iframe {
   width: 100%;
 }
 
-<iframe class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/podigee-podcast-player.html?configuration=https://example.com/my-podcast-episode.json"></script>
+<iframe class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/podigee-podcast-player.html?configuration=https://example.com/my-podcast-episode.json"></iframe>
 ```
 
 Please note that with this method you need to either specify a `startPanel` to show by default and adjust the iframe height accordingly or disable all extensions to just show the player. With this method the player will not automatically resize when a panel is opened.
