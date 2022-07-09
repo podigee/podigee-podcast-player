@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: 16
 
-      - name: yarn install
-        run: yarn install
+      - name: make init
+        run: make init
 
-      - name: gulp build
-        run: gulp build
+      - name: make clean
+        run: make clean
 
-      #- name: Run make build
-      #  run: make build
+      - name: make build
+        run: make build
