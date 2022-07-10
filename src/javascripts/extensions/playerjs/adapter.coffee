@@ -9,7 +9,14 @@ class Adapter
       @receiver.emit('subscribeIntent', payload)
 
     @player.media.addEventListener 'playing', () =>
-      @receiver.emit('play')
+      # This is diverging from the playerjs spec.
+      # According to the spec, the play event don't deliver
+      # any data. However, we find it quite useful to know
+      # at which time the person has pressed play.
+      # This can be either due to a chapter mark or
+      # by clicking somehwere in the progressbar/timeline.
+      @receiver.emit 'play',
+        seconds: @player.media.currentTime
 
     @player.media.addEventListener 'pause', () =>
       @receiver.emit('pause')
