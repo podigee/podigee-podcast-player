@@ -13,6 +13,19 @@ The Podigee Podcast Player is a state of the art web audio player specially craf
 - [Contribute](#contribute)
 - [License](#license)
 
+## Fork notice
+
+This is **not** the original project, but an active fork.
+Mainly because the original project is not actively maintained anmore.
+
+Main changes since forking:
+* Dependencies: Up to date dependencies
+* Compile: Being able to build the package (via Make or GitHub Actions)
+* Player.js: Extended `player.js` adapter events with additional data (for `play` and `pause`)
+
+This forks main branch is [*development*](https://github.com/EngineeringKiosk/podigee-podcast-player/tree/development).
+The origins branch (`master`) is still available.
+
 ## Features
 
 The PPP at it's core is an **embeddable HTML5 audio player**. It supports **theming**, **extensions** and **unicorns**.
