@@ -19,7 +19,12 @@ class Adapter
         seconds: @player.media.currentTime
 
     @player.media.addEventListener 'pause', () =>
-      @receiver.emit('pause')
+      # This is diverging from the playerjs spec.
+      # According to the spec, the pause event don't deliver
+      # any data. However, we find it quite useful to know
+      # when the listener has paused the media.
+      @receiver.emit 'pause',
+        seconds: @player.media.currentTime
 
     @player.media.addEventListener 'ended', () =>
       @receiver.emit('ended')
