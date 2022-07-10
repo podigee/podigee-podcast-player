@@ -6,7 +6,7 @@ class Receiver
     window.addEventListener 'message', @receive
 
   context: 'player.js'
-  version: '0.0.11'
+  version: '0.1.0'
 
   supported:
     events: [
