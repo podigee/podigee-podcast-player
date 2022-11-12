@@ -26,6 +26,16 @@ Main changes since forking:
 This forks main branch is [*development*](https://github.com/EngineeringKiosk/podigee-podcast-player/tree/development).
 The origins branch (`master`) is still available.
 
+### Compile a version
+
+```sh
+$ make clean
+$ make init
+$ make build
+```
+
+Your new build is available in the `./build` folder.
+
 ## Features
 
 The PPP at it's core is an **embeddable HTML5 audio player**. It supports **theming**, **extensions** and **unicorns**.
