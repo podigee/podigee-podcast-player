@@ -10,7 +10,8 @@ build: ## Compiles the application into static content
 
 .PHONY: clean
 clean: ## Deletes the generated content
-	rm -rf ./dist
+	rm -rf ./node_modules
+	rm -rf ./build
 
 .PHONY: init
 init: ## Installs dependencies
