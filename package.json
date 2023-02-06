@@ -61,7 +61,7 @@
     "lodash": "^4.17.21",
     "rivets": "^0.9.6",
     "sightglass": "^0.2.4",
-    "tinycolor2": "^1.4.2",
+    "tinycolor2": "^1.6.0",
     "vtt.js": "^0.13.0"
   }
 }
