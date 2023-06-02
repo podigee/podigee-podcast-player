@@ -59,7 +59,7 @@ window.playerConfiguration = {
     "title": "Transcript Test"
   }
 }
-<script class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
+<script class="podigee-podcast-player" src="https://player.podigee-cdn.net/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="playerConfiguration"></script>
 ```
 
 ### Remote configuration
@@ -67,7 +67,7 @@ window.playerConfiguration = {
 `data-configuration` should be set to a URL to a JSON [configuration](docs/configuration.md) file.
 
 ```html
-<script class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="https://example.com/my-podcast-episode.json"></script>
+<script class="podigee-podcast-player" src="https://player.podigee-cdn.net/podcast-player/javascripts/podigee-podcast-player.js" data-configuration="https://example.com/my-podcast-episode.json"></script>
 ```
 
 ### Simple Iframe with external configuration
@@ -81,7 +81,7 @@ iframe {
   width: 100%;
 }
 
-<iframe class="podigee-podcast-player" src="https://cdn.podigee.com/podcast-player/podigee-podcast-player.html?configuration=https://example.com/my-podcast-episode.json"></script>
+<iframe class="podigee-podcast-player" src="https://player.podigee-cdn.net/podcast-player/podigee-podcast-player.html?configuration=https://example.com/my-podcast-episode.json"></iframe>
 ```
 
 Please note that with this method you need to either specify a `startPanel` to show by default and adjust the iframe height accordingly or disable all extensions to just show the player. With this method the player will not automatically resize when a panel is opened.
