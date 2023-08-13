@@ -33,6 +33,7 @@
   "devDependencies": {
     "coffeeify": "^3.0.1",
     "coffeescript": "<3.0",
+    "esprima-fb": "15001.1001.0-dev-harmony-fb",
     "gulp": "^4.0.2",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
@@ -47,8 +48,7 @@
     "node-sass": "^9.0.0",
     "sass": "1.65.1",
     "source-map": "^0.7.4",
-    "urijs": "^1.19.11",
-    "esprima-fb": "15001.1001.0-dev-harmony-fb"
+    "urijs": "^1.19.11"
   },
   "engines": {
     "node": ">=13.13.0",
