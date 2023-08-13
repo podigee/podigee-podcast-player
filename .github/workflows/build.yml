@@ -9,13 +9,13 @@ on:
 jobs:
   build:
     name: Building the player
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v3.5.3
+      - uses: actions/setup-node@v3.7.0
         with:
-          node-version: 16
+          node-version: 20.5.0
 
       - name: make clean
         run: make clean
