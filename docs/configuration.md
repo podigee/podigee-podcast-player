@@ -86,7 +86,9 @@ The configuration passed into the player either as a Javascript Object or as a J
 ### General options
 
 `options.theme` - The name of the theme to use (defaults to `default`)
+
 `options.sslProxy` - URI of an application capable of proxying non-SSL requests
+
 `options.startPanel` - The name of the panel which should be opened on start
 
 ### Podcast
