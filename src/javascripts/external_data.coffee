@@ -14,7 +14,12 @@ class ExternalData
     else
       url
 
-    $.get url, (params || {}), (data) -> deferred.resolve(data)
+    $.ajax
+      url: url
+      data: (params || {})
+      success: (data) -> deferred.resolve(data)
+      xhrFields:
+        withCredentials: true
 
     deferred.promise()
 
